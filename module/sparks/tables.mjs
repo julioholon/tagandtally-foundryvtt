@@ -15,6 +15,12 @@ class SparkTableStore {
 
   async load() {
     if (this.loaded) return this;
+    if (this._loading) return this._loading;
+    return (this._loading = this._load());
+  }
+
+  async _load() {
+    for (const hook of ["createRollTable", "updateRollTable", "deleteRollTable"]) Hooks.on(hook, () => this.invalidateOverrides());
     const base = `systems/${SYSTEM_ID}/data/sparks`;
     const index = await foundry.utils.fetchJsonWithTimeout(`${base}/index.json`);
     for (const file of index) {
@@ -71,10 +77,20 @@ class SparkTableStore {
     return groups;
   }
 
-  /** A world RollTable overriding a bundled table, if any. */
+  /** A world RollTable overriding a bundled table, if any (cached; invalidated by RollTable hooks). */
   worldOverride(name) {
-    return game.tables?.find((t) => t.name === name || t.getFlag(SYSTEM_ID, "sparkTable") === name) ?? null;
+    if (!this._overrides) {
+      this._overrides = new Map();
+      for (const t of game.tables ?? []) {
+        this._overrides.set(t.name, t);
+        const flag = t.getFlag(SYSTEM_ID, "sparkTable");
+        if (flag) this._overrides.set(flag, t);
+      }
+    }
+    return this._overrides.get(name) ?? null;
   }
+
+  invalidateOverrides() { this._overrides = null; }
 
   /**
    * Roll on a table. Returns { value, row, total, table, source }.

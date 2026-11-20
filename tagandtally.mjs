@@ -94,12 +94,14 @@ Hooks.once("init", () => {
   return preloadTemplates();
 });
 
-Hooks.once("setup", async () => {
-  await sparkTables.load();
-  await loadGeneratorDefs();
+let sparksLoading = Promise.resolve();
+Hooks.once("setup", () => {
+  sparksLoading = Promise.all([sparkTables.load(), loadGeneratorDefs()]).catch((err) => console.error(`${SYSTEM_ID} | Sparks data failed to load`, err));
+  game.tagandtally.sparks.ready = sparksLoading;
 });
 
 Hooks.once("ready", async () => {
+  await sparksLoading;
   registerCombatFlowSocket();
   // Scene controls: Sparks and Combat Flow buttons on the token layer.
   if (!game.settings.get(SYSTEM_ID, "welcomeShown") && game.user.isGM) {

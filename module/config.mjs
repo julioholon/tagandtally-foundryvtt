@@ -218,6 +218,8 @@ TAGANDTALLY.spell = {
   additionalAxisCost: [1, 2, 5],
   maxAspects: 3,
   maxTypes: 3,
+  /** SRD: "not more than 5 combined axis" (2 base + up to 3 additional). */
+  maxCombinedAxes: 5,
   levelRanges: [
     { min: 4, max: 5, level: 1 }, { min: 6, max: 7, level: 2 }, { min: 8, max: 9, level: 3 },
     { min: 10, max: 11, level: 4 }, { min: 12, max: 13, level: 5 }, { min: 14, max: 15, level: 6 },

@@ -47,7 +47,7 @@ export async function generateAppearanceFor(actor) {
   const v = r.values;
   const update = {
     "system.pronoun": plain(v["character-pronoun"]),
-    "system.appearance.height": plain(v["character-build-height.height"] ?? ""),
+    "system.appearance.height": r.text.match(/Height:\s*(.+)/)?.[1]?.trim() ?? "",
     "system.appearance.build": plain(v["character-build-height"]),
     "system.appearance.hair": [v["character-hair-texture"], v["character-hair-style"], v["character-hair-color"]].map(plain).filter(Boolean).join(", "),
     "system.appearance.eyes": plain(v["character-eye-color"]),
@@ -56,8 +56,6 @@ export async function generateAppearanceFor(actor) {
     "system.appearance.voice": plain(v["character-voice"]),
     "system.appearance.distinguishing": plain(v["character-distinguishing-feature"])
   };
-  // Height comes from a row field; re-read it from the generated text when missing.
-  if (!update["system.appearance.height"]) update["system.appearance.height"] = r.text.match(/Height:\s*(.+)/)?.[1]?.trim() ?? "";
   if (actor.type === "character") return actor.update(update);
   return actor.update({ "system.notes": `${actor.system.notes ?? ""}<p>${r.html}</p>` });
 }
@@ -96,7 +94,7 @@ export function npcDataFromGeneration(r, { creature = false } = {}) {
       damageType: plain(v["wound-damage"])
     };
   }
-  return { name, type: "npc", system, img: creature ? "icons/svg/mystery-man.svg" : "icons/svg/mystery-man.svg" };
+  return { name, type: "npc", system, img: "icons/svg/mystery-man.svg" };
 }
 
 /** Create a new NPC/creature actor from a generator. */

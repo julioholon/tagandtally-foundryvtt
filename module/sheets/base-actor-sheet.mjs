@@ -13,7 +13,6 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
     window: { resizable: true, icon: "fa-solid fa-tags" },
     form: { submitOnChange: true },
     actions: {
-      editImage: BaseActorSheet.#onEditImage,
       rollTask: BaseActorSheet.#onRollTask,
       rollInjury: BaseActorSheet.#onRollInjury,
       openCombatFlow: BaseActorSheet.#onOpenCombatFlow,
@@ -61,9 +60,40 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
   }
 
   /** @override */
-  async _preparePartContext(partId, context) {
+  async _preparePartContext(partId, context, options) {
+    context = await super._preparePartContext(partId, context, options);
     context.tab = context.tabs?.[partId];
     return context;
+  }
+
+  /**
+   * Foundry v14's ActorSheetV2 handles item drag/drop natively (keyed on data-item-id).
+   * v13 does not, so install a DragDrop handler there.
+   */
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+    if (typeof this._onDropItem === "function" || typeof this._onDrop === "function") return;
+    new foundry.applications.ux.DragDrop.implementation({
+      dragSelector: "[data-item-id]",
+      dropSelector: null,
+      permissions: { dragstart: () => this.isEditable, drop: () => this.isEditable },
+      callbacks: { dragstart: this.#onDragStartV13.bind(this), drop: this.#onDropV13.bind(this) }
+    }).bind(this.element);
+  }
+
+  #onDragStartV13(event) {
+    const item = this._getItem(event.currentTarget);
+    if (!item) return;
+    event.dataTransfer.setData("text/plain", JSON.stringify(item.toDragData()));
+  }
+
+  async #onDropV13(event) {
+    const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+    if (data?.type !== "Item") return;
+    const item = await Item.implementation.fromDropData(data);
+    if (!item) return;
+    if (item.parent === this.actor) return; // same sheet: ignore (no manual sorting on v13)
+    return this.actor.createEmbeddedDocuments("Item", [item.toObject()]);
   }
 
   _prepareItems() {
@@ -94,17 +124,6 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
   _getItem(target) {
     const id = target.closest("[data-item-id]")?.dataset.itemId;
     return id ? this.actor.items.get(id) : null;
-  }
-
-  static async #onEditImage(event, target) {
-    const attr = target.dataset.edit ?? "img";
-    const current = foundry.utils.getProperty(this.document, attr);
-    const fp = new foundry.applications.apps.FilePicker.implementation({
-      type: "image", current,
-      callback: (path) => this.document.update({ [attr]: path }),
-      position: { top: this.position.top + 40, left: this.position.left + 10 }
-    });
-    return fp.browse();
   }
 
   /* -------------------------------- Actions ------------------------------- */
@@ -191,6 +210,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
     const track = target.dataset.track;
     const result = await this.actor.applyWound(track);
     const filled = result.filled[0];
+    if (!filled) return ui.notifications.warn(game.i18n.format("TAGANDTALLY.Chat.Dying", { name: this.actor.name }));
     if (filled !== "strain" && !event.shiftKey) await createWoundItemFromSpark(this.actor, { injuryType: filled });
     if (result.dying) ui.notifications.warn(game.i18n.format("TAGANDTALLY.Chat.Dying", { name: this.actor.name }));
   }

@@ -10,7 +10,6 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
     window: { resizable: true },
     form: { submitOnChange: true },
     actions: {
-      editImage: TagAndTallyItemSheet.#onEditImage,
       use: TagAndTallyItemSheet.#onUse,
       toChat: TagAndTallyItemSheet.#onToChat,
       toggleAxis: TagAndTallyItemSheet.#onToggleAxis,
@@ -85,20 +84,18 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
     return context;
   }
 
-  async _preparePartContext(partId, context) {
+  async _preparePartContext(partId, context, options) {
+    context = await super._preparePartContext(partId, context, options);
     context.tab = context.tabs?.[partId];
     return context;
   }
 
-  static async #onEditImage(event, target) {
-    const attr = target.dataset.edit ?? "img";
-    const current = foundry.utils.getProperty(this.document, attr);
-    const fp = new foundry.applications.apps.FilePicker.implementation({
-      type: "image", current,
-      callback: (path) => this.document.update({ [attr]: path }),
-      position: { top: this.position.top + 40, left: this.position.left + 10 }
-    });
-    return fp.browse();
+  /** Quest steps are submitted as an object keyed by index; make sure they stay an array. */
+  _processFormData(event, form, formData) {
+    const data = super._processFormData(event, form, formData);
+    const steps = foundry.utils.getProperty(data, "system.steps");
+    if (steps && !Array.isArray(steps)) foundry.utils.setProperty(data, "system.steps", Object.values(steps));
+    return data;
   }
 
   static #onUse() { return this.item.use(); }
@@ -113,7 +110,8 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
     if (idx >= 0) list.splice(idx, 1);
     else {
       const max = axis === "aspects" ? TAGANDTALLY.spell.maxAspects : TAGANDTALLY.spell.maxTypes;
-      if (list.length >= max) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Spell.MaxAxes"));
+      const other = axis === "aspects" ? this.item.system.types.length : this.item.system.aspects.length;
+      if (list.length >= max || list.length + other >= TAGANDTALLY.spell.maxCombinedAxes) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Spell.MaxAxes"));
       list.push(key);
     }
     return this.item.update({ [`system.${axis}`]: list });

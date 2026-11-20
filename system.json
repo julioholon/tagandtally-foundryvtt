@@ -33,7 +33,7 @@
     }
   },
   "primaryTokenAttribute": "wounds.vitality",
-  "secondaryTokenAttribute": "wealth",
+  "secondaryTokenAttribute": "wealth.value",
   "grid": { "distance": 5, "units": "ft" },
   "socket": true,
   "flags": {

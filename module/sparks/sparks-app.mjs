@@ -19,7 +19,7 @@ export class SparksApp extends HandlebarsApplicationMixin(ApplicationV2) {
     this.results = [];
     this.filter = "";
     this.selectedGenerator = "npc";
-    this.options = {};
+    this.generatorOptions = {};
   }
 
   static DEFAULT_OPTIONS = {
@@ -73,7 +73,7 @@ export class SparksApp extends HandlebarsApplicationMixin(ApplicationV2) {
     for (const opt of generator?.options ?? []) {
       let choices = opt.choices;
       if (!choices && opt.table) choices = (sparkTables.get(opt.table)?.table ?? []).map((r) => r.value);
-      optionFields.push({ key: opt.key, label: opt.label, choices: choices ?? [], value: this.options[opt.key] ?? "" });
+      optionFields.push({ key: opt.key, label: opt.label, choices: choices ?? [], value: this.generatorOptions[opt.key] ?? "" });
     }
     const grouped = sparkTables.grouped();
     const filter = this.filter.toLowerCase();
@@ -87,20 +87,22 @@ export class SparksApp extends HandlebarsApplicationMixin(ApplicationV2) {
       theme: this.theme,
       actor: this.actor, isGM: game.user.isGM,
       tableGroups, filter: this.filter, tableCount: sparkTables.tables.size,
-      likelihoods: (sparkTables.get("oracle-likelihood")?.table ?? []).map((r) => ({ value: r.level, label: `${r.value} (${game.i18n.localize(TAGANDTALLY.levels[r.level])})` }))
+      likelihoods: (sparkTables.get("oracle-likelihood")?.table ?? Object.keys(TAGANDTALLY.levels).map((l) => ({ level: Number(l), value: "" }))).map((r) => ({ value: r.level, label: `${r.value ? `${r.value} ` : ""}(${game.i18n.localize(TAGANDTALLY.levels[r.level])})` }))
     };
   }
 
-  async _preparePartContext(partId, context) {
+  async _preparePartContext(partId, context, options) {
+    context = await super._preparePartContext(partId, context, options);
     context.tab = context.tabs?.[partId];
     return context;
   }
 
-  _onRender() {
+  async _onRender(context, options) {
+    await super._onRender(context, options);
     const el = this.element;
     el.querySelector("[name='theme']")?.addEventListener("change", (ev) => { this.theme = ev.target.value; this.render(); });
-    el.querySelector("[name='generator']")?.addEventListener("change", (ev) => { this.selectedGenerator = ev.target.value; this.options = {}; this.render(); });
-    el.querySelectorAll("[data-option]").forEach((input) => input.addEventListener("change", (ev) => { this.options[input.dataset.option] = ev.target.value; }));
+    el.querySelector("[name='generator']")?.addEventListener("change", (ev) => { this.selectedGenerator = ev.target.value; this.generatorOptions = {}; this.render(); });
+    el.querySelectorAll("[data-option]").forEach((input) => input.addEventListener("change", (ev) => { this.generatorOptions[input.dataset.option] = ev.target.value; }));
     el.querySelector("[name='tableFilter']")?.addEventListener("input", (ev) => {
       this.filter = ev.target.value;
       const q = this.filter.toLowerCase();
@@ -112,7 +114,7 @@ export class SparksApp extends HandlebarsApplicationMixin(ApplicationV2) {
   static async #onGenerate(event, target) {
     const id = target.dataset.generator ?? this.selectedGenerator;
     this.selectedGenerator = id;
-    const r = await generate(id, { theme: this.theme, values: this.options });
+    const r = await generate(id, { theme: this.theme, values: this.generatorOptions });
     this.results.unshift({ uid: foundry.utils.randomID(), id, label: r.generator.label, text: r.text, html: r.html, generator: r.generator, values: r.values, name: r.name, tags: r.tags });
     this.results = this.results.slice(0, 20);
     this.render();

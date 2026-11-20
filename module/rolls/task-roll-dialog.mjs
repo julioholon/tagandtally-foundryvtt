@@ -17,6 +17,7 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     this.resolvePromise = resolve;
     this.fixedEases = fixedEases;
     this.fixedHinders = fixedHinders;
+    this.lockRollType = rollType !== "task";
     this.state = {
       title: title ?? "",
       rollType,
@@ -75,6 +76,7 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _prepareContext() {
+    await sparkTables.load();
     const { eases, hinders } = this.collect();
     const calc = computeEffectiveLevel(this.state.level, eases, hinders);
     const ignoredIds = new Set(calc.ignored.map((e) => e.itemId).filter(Boolean));
@@ -94,7 +96,8 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
       actor: this.actor, state: this.state, tags, gear, levels, rollTypes, calc,
       fixedEases: this.fixedEases, fixedHinders: this.fixedHinders,
       effectiveLabel: game.i18n.localize(TAGANDTALLY.levels[calc.effective]),
-      hasActor: Boolean(this.actor)
+      hasActor: Boolean(this.actor),
+      lockRollType: this.lockRollType
     };
   }
 
@@ -112,7 +115,7 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     const fd = new foundry.applications.ux.FormDataExtended(this.element);
     const data = fd.object;
     this.state.title = data.title ?? this.state.title;
-    this.state.rollType = data.rollType ?? this.state.rollType;
+    if (!this.lockRollType && data.rollType) this.state.rollType = data.rollType;
     this.state.level = Math.clamp(Number(data.level) || 1, 1, 10);
     this.state.manualEase = Math.max(0, Number(data.manualEase) || 0);
     this.state.manualHinder = Math.max(0, Number(data.manualHinder) || 0);

@@ -72,7 +72,7 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
     const defaultLevel = Number(canvas?.scene?.getFlag(SYSTEM_ID, "level")) || game.settings.get(SYSTEM_ID, "defaultLevel");
     return {
       uuid: actor.uuid, name: actor.name, img: actor.img,
-      opponentLevel: actor.type === "npc" ? defaultLevel : defaultLevel,
+      opponentLevel: defaultLevel,
       opponentUuid: null,
       phase: 0,
       results: {},
@@ -121,7 +121,8 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
     return { participants, isGM: game.user.isGM, levels: TAGANDTALLY.levels, hasCombat: Boolean(game.combat) };
   }
 
-  _onRender() {
+  async _onRender(context, options) {
+    await super._onRender(context, options);
     this.element.querySelectorAll("select[data-opponent-level]").forEach((el) => {
       el.addEventListener("change", (ev) => CombatFlow.#setLevel(el.dataset.opponentLevel, Number(ev.target.value)));
     });
@@ -227,7 +228,7 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!actor || !track) return;
     const res = await actor.applyWound(track);
     const filled = res.filled[0];
-    if (filled !== "strain") await createWoundItemFromSpark(actor, { injuryType: filled });
+    if (filled && filled !== "strain") await createWoundItemFromSpark(actor, { injuryType: filled });
     p.woundApplied = true;
     await CombatFlow.setState(state);
     if (res.dying) ui.notifications.warn(game.i18n.format("TAGANDTALLY.Chat.Dying", { name: actor.name }));

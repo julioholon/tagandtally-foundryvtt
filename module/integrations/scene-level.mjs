@@ -32,8 +32,8 @@ export function registerSceneLevel() {
   Hooks.on("preUpdateScene", (scene, changes) => {
     const level = foundry.utils.getProperty(changes, `flags.${SYSTEM_ID}.level`);
     if (level === "" || level === null) {
-      foundry.utils.setProperty(changes, `flags.${SYSTEM_ID}.-=level`, null);
       delete changes.flags[SYSTEM_ID].level;
+      if (scene.getFlag(SYSTEM_ID, "level") !== undefined) foundry.utils.setProperty(changes, `flags.${SYSTEM_ID}.-=level`, null);
     } else if (level !== undefined) {
       foundry.utils.setProperty(changes, `flags.${SYSTEM_ID}.level`, Number(level));
     }

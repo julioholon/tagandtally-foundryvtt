@@ -3,6 +3,8 @@ import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
 /**
  * Item Piles: gear items are tradeable, Wealth is the currency (attribute
  * currency 0-6), and NPCs flagged as merchants sell at their items' cost level.
+ * Note: Item Piles subtracts the cost level from Wealth on purchase, which is a
+ * simplification of the Tag & Tally Wealth check; GMs can adjust Wealth afterwards.
  */
 export function registerItemPiles() {
   Hooks.once("item-piles-ready", async () => {
@@ -12,9 +14,6 @@ export function registerItemPiles() {
       await api.addSystemIntegration({
         VERSION: "1.0.0",
         ACTOR_CLASS_TYPE: "npc",
-        ITEM_CLASS_LOOT_TYPE: "gear",
-        ITEM_CLASS_WEAPON_TYPE: "gear",
-        ITEM_CLASS_EQUIPMENT_TYPE: "gear",
         ITEM_QUANTITY_ATTRIBUTE: "system.quantity",
         ITEM_PRICE_ATTRIBUTE: "system.cost",
         QUANTITY_FOR_PRICE_ATTRIBUTE: "flags.item-piles.system.quantityForPrice",
@@ -24,6 +23,8 @@ export function registerItemPiles() {
         ITEM_SIMILARITIES: ["name", "type", "system.gearType", "system.level"],
         UNSTACKABLE_ITEM_TYPES: [],
         PILE_DEFAULTS: { merchantColumns: [{ label: "Level", path: "system.level", formatting: "{#}" }] },
+        TOKEN_FLAG_DEFAULTS: {},
+        SECONDARY_CURRENCIES: [],
         CURRENCIES: [
           {
             type: "attribute",
@@ -35,7 +36,7 @@ export function registerItemPiles() {
             exchangeRate: 1
           }
         ],
-        CURRENCY_DECIMAL_DIGITS: 1
+        CURRENCY_DECIMAL_DIGITS: 0
       });
     } catch (err) {
       console.error(`${SYSTEM_ID} | Item Piles integration failed`, err);

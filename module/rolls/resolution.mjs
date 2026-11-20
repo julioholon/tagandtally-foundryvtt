@@ -15,8 +15,8 @@ export function bandFor(total, dc) {
 
 /** The current scene's task level (GM sets it in Scene Config), default from settings. */
 export function sceneLevel(scene = canvas?.scene ?? game.scenes?.active) {
-  const flag = scene?.getFlag(SYSTEM_ID, "level");
-  if (Number.isInteger(flag) && flag > 0) return Math.clamp(flag, 1, 10);
+  const flag = Number(scene?.getFlag(SYSTEM_ID, "level"));
+  if (Number.isFinite(flag) && flag > 0) return Math.clamp(Math.round(flag), 1, 10);
   return game.settings.get(SYSTEM_ID, "defaultLevel") ?? 3;
 }
 

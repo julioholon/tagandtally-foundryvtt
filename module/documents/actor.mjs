@@ -95,11 +95,32 @@ export default class TagAndTallyActor extends Actor {
         if (wounds[key].value < max) { wounds[key].value += 1; placed = key; break; }
         idx += 1;
       }
-      filled.push(placed ?? "lastingScar");
+      filled.push(placed);
     }
     await this.update({ "system.wounds": wounds });
     const dying = wounds.lastingScar.value >= TAGANDTALLY.woundTracks.lastingScar.max;
     return { filled, dying, wounds };
+  }
+
+  /**
+   * Token bar edits on the derived vitality bar: a decrease marks strain
+   * (overflowing upward), an increase heals from the mildest track first.
+   */
+  async modifyTokenAttribute(attribute, value, isDelta = false, isBar = true) {
+    if (attribute !== "wounds.vitality") return super.modifyTokenAttribute(attribute, value, isDelta, isBar);
+    const current = this.system.wounds.vitality.value;
+    const target = isDelta ? current + value : value;
+    let delta = Math.round(target - current);
+    if (delta < 0) return this.applyWound("strain", { amount: -delta });
+    const order = [...TAGANDTALLY.woundTrackOrder];
+    const wounds = foundry.utils.deepClone(this.system._source.wounds);
+    while (delta > 0) {
+      const key = order.find((k) => wounds[k].value > 0);
+      if (!key) break;
+      wounds[key].value -= 1;
+      delta -= 1;
+    }
+    return this.update({ "system.wounds": wounds });
   }
 
   /** Clear one box from a wound track. */

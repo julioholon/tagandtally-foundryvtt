@@ -1,5 +1,5 @@
 import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
-import { generate } from "../sparks/engine.mjs";
+import { sparkTables } from "../sparks/tables.mjs";
 import { createWoundItemFromSpark } from "../sparks/create.mjs";
 
 /** Wire the buttons on roll and spark chat cards. */
@@ -44,6 +44,7 @@ async function onChatAction(event, message, el) {
         if (!t.isOwner) continue;
         const result = await t.applyWound(track);
         const filled = result.filled[0];
+        if (!filled) { ui.notifications.warn(game.i18n.format("TAGANDTALLY.Chat.Dying", { name: t.name })); continue; }
         ui.notifications.info(game.i18n.format("TAGANDTALLY.Chat.WoundApplied", { name: t.name, track: game.i18n.localize(TAGANDTALLY.woundTracks[filled].label) }));
         if (result.dying) ui.notifications.warn(game.i18n.format("TAGANDTALLY.Chat.Dying", { name: t.name }));
         if (el.dataset.sentence === "true") {
@@ -53,15 +54,9 @@ async function onChatAction(event, message, el) {
       break;
     }
     case "rollMishap": {
-      const r = await generate("spell-mishap", {}).catch(() => null);
-      let text;
-      if (r) text = r.text;
-      else {
-        const { sparkTables } = await import("../sparks/tables.mjs");
-        const verb = await sparkTables.roll("spell-mishap-verb");
-        const noun = await sparkTables.roll("spell-mishap-noun");
-        text = `[${verb?.value}] [${noun?.value}]`;
-      }
+      const verb = await sparkTables.roll("spell-mishap-verb");
+      const noun = await sparkTables.roll("spell-mishap-noun");
+      const text = `[${verb?.value}] [${noun?.value}]`;
       await ChatMessage.create({
         speaker: message.speaker,
         content: `<div class="tagandtally chat-card"><h3>${game.i18n.localize("TAGANDTALLY.Spell.Mishap")}</h3><p>${text.replace(/\[([^\]]+)\]/g, '<span class="tt-tag">$1</span>')}</p></div>`

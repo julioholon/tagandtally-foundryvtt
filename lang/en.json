@@ -94,7 +94,7 @@
       "MaiLong": "Magical Aptitude Index (MAI)", "MaiBase": "Base MAI", "MaiHint": "base from species or type, +1 per magical sentence tag, max +3",
       "MaiHindrance": "MAI check (MAI {mai} vs level {level})", "MaiCheckRequired": "MAI check required", "NoCheck": "No MAI check needed",
       "Overpowered": "Overpowered", "BloodMagic": "Blood magic (eases by 2)", "Mastered": "Mastered (eases by 1)", "MasteryTallies": "Mastery tallies",
-      "RequiresChaos": "More than one aspect or type requires the Chaos base.", "MaxAxes": "A spell can have at most three aspects and three types.",
+      "RequiresChaos": "More than one aspect or type requires the Chaos base.", "MaxAxes": "A spell can have at most three aspects, three types, and five axes in total.",
       "Points": "Points", "AxisCost": "axis cost", "BaseLevel": "Spell level", "FinalLevel": "Final level", "LevelOverride": "Level override (0 = computed)",
       "Mishap": "Spell mishap", "RollMishap": "Roll mishap",
       "Scope": { "Scope": "Effect scope (PM)", "Minor": "Minor / touch", "Small": "Room / few meters", "Medium": "Street / hill", "Large": "Town / city", "Extreme": "Region / realm / dimension", "World": "Other plane / planet" },

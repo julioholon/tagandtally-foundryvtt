@@ -29,7 +29,7 @@ export default class TagAndTallyItem extends Item {
   async toChat() {
     const content = await foundry.applications.handlebars.renderTemplate("systems/tagandtally/templates/chat/item-card.hbs", {
       item: this, system: this.system, config: TAGANDTALLY,
-      description: await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.system.description ?? "", { async: true, relativeTo: this })
+      description: await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.system.description ?? "", { relativeTo: this })
     });
     return ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
