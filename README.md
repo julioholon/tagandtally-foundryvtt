@@ -114,3 +114,18 @@ includes material from the SRD 5.2.1 by Wizards of the Coast LLC, licensed CC BY
 See `LICENSE.md`.
 
 This project is not affiliated with the Tag & Tally author or Foundry Gaming, LLC.
+
+### Checks
+
+```bash
+node scripts/validate.mjs .
+```
+
+```bash
+node scripts/test-sparks.mjs .
+```
+
+The first checks localization keys and template paths; the second renders every Sparks
+generator in every theme with Foundry mocked out. The two "missing" keys it reports for
+`TAGANDTALLY.Appearance.` and `TAGANDTALLY.Npc.` are prefixes built with `concat` and are
+expected.
