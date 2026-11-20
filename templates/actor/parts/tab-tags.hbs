@@ -1,0 +1,45 @@
+<section class="tab {{tab.cssClass}} tt-tags" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-toolbar">
+    <span class="hint">{{localize "TAGANDTALLY.Tag.Hint"}}</span>
+    <span class="tt-controls">
+      <a data-action="createItem" data-type="tag" data-tag-type="skill"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.TagType.Skill"}}</a>
+      <a data-action="createItem" data-type="tag" data-tag-type="background"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.TagType.Background"}}</a>
+      <a data-action="createItem" data-type="tag" data-tag-type="flaw"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.TagType.Flaw"}}</a>
+      <a data-action="createItem" data-type="tag" data-tag-type="condition"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.TagType.Condition"}}</a>
+      <a data-action="createItem" data-type="tag" data-tag-type="other"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.TagType.Other"}}</a>
+    </span>
+  </div>
+  <ol class="tt-item-list tt-tag-list">
+    {{#each items.tagGroups as |group|}}
+      <li class="tt-list-header"><span>{{localize group.label}}</span><span class="tt-col-tier">{{localize "TAGANDTALLY.Tier.Tier"}}</span><span class="tt-col-tallies">{{localize "TAGANDTALLY.Tally.Tallies"}}</span><span></span></li>
+      {{#each group.items as |item|}}
+        <li class="tt-item tag {{#if item.system.hinders}}hinders{{/if}} {{#if item.system.temporary}}temporary{{/if}}" data-item-id="{{item.id}}">
+          <img src="{{item.img}}" alt="" data-action="useItem" title="{{localize 'TAGANDTALLY.Roll.WithTag'}}" />
+          <div class="tt-item-body">
+            <span class="tt-item-name" data-action="editItem">{{item.name}}
+              {{#if item.system.mastered}}<i class="fa-solid fa-star tt-mastered" title="{{localize 'TAGANDTALLY.Tag.Mastered'}}"></i>{{/if}}
+              {{#if item.system.magical}}<i class="fa-solid fa-wand-sparkles" title="{{localize 'TAGANDTALLY.Tag.Magical'}}"></i>{{/if}}
+              {{#if item.system.temporary}}<a data-action="rollTemporary" title="{{localize 'TAGANDTALLY.Tag.RollTemporary'}}"><i class="fa-solid fa-hourglass-half"></i></a>{{/if}}
+            </span>
+            <span class="tt-item-sub">{{item.system.notation}}</span>
+          </div>
+          <span class="tt-col-tier">
+            {{#if item.system.canTier}}
+              <span class="tt-pips">{{#each (tt-array 1 2 3 4) as |t|}}<a class="tt-pip {{#unless (tt-gt t item.system.tier)}}filled{{/unless}}" data-action="setTier" data-tier="{{t}}" title="{{localize (lookup ../../../config.tiers t)}}"></a>{{/each}}</span>
+            {{else}}<small>{{localize "TAGANDTALLY.Tag.Static"}}</small>{{/if}}
+          </span>
+          <span class="tt-col-tallies">
+            {{#if item.system.canTier}}{{#unless item.system.mastered}}
+              <span class="tt-boxes small">{{#each item.system.tallyBoxes as |filled i|}}<a class="tt-box {{#if filled}}filled{{/if}}" data-action="toggleTally" data-index="{{i}}"></a>{{/each}}</span>
+            {{/unless}}{{/if}}
+          </span>
+          <span class="tt-controls">
+            <a data-action="chatItem" title="{{localize 'TAGANDTALLY.ToChat'}}"><i class="fa-solid fa-comment"></i></a>
+            <a data-action="deleteItem" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-trash"></i></a>
+          </span>
+        </li>
+      {{/each}}
+    {{/each}}
+    {{#unless items.tag.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Tag.Empty"}}</li>{{/unless}}
+  </ol>
+</section>

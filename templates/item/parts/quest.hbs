@@ -1,0 +1,27 @@
+<section class="tab {{tab.cssClass}}" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-grid two">
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Quest.Type"}}</label><input type="text" name="system.questType" value="{{system.questType}}" /></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Quest.Objective"}}</label><input type="text" name="system.objective" value="{{system.objective}}" />{{#if isGM}}<a data-action="generateSentence"><i class="fa-solid fa-wand-magic-sparkles"></i></a>{{/if}}</div>
+    <div class="form-group span2"><label>{{localize "TAGANDTALLY.Quest.Goal"}}</label><input type="text" name="system.goal" value="{{system.goal}}" /></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Quest.Reward"}}</label><input type="text" name="system.reward" value="{{system.reward}}" /></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Quest.Consequence"}}</label><input type="text" name="system.consequence" value="{{system.consequence}}" /></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Quest.Status"}}</label><select name="system.status">{{selectOptions statuses selected=system.status localize=true}}</select></div>
+    <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.isArc" {{checked system.isArc}} /> {{localize "TAGANDTALLY.Quest.Arc"}}</label></div>
+  </div>
+  <h3>{{localize "TAGANDTALLY.Tally.Tallies"}}</h3>
+  <div class="tt-grid three">
+    {{#each system.tallies as |t key|}}
+      <div class="form-group tt-tally-config">
+        <label class="tt-toggle"><input type="checkbox" name="system.tallies.{{key}}.enabled" {{checked t.enabled}} /> {{localize t.label}}</label>
+        <div class="tt-inline"><input type="number" name="system.tallies.{{key}}.value" value="{{t.value}}" min="0" /> / <input type="number" name="system.tallies.{{key}}.max" value="{{t.max}}" min="0" /></div>
+      </div>
+    {{/each}}
+  </div>
+  <p class="hint">{{localize "TAGANDTALLY.Quest.TallyHint"}} {{#if system.readyToResolve}}<strong>{{localize "TAGANDTALLY.Quest.Ready"}}</strong>{{/if}} ({{localize "TAGANDTALLY.Quest.Modifier"}}: {{tt-signed system.resolutionModifier}})</p>
+  <h3>{{localize "TAGANDTALLY.Quest.Steps"}} <a data-action="addStep"><i class="fa-solid fa-plus"></i></a></h3>
+  <ol class="tt-steps">
+    {{#each system.steps as |step i|}}
+      <li><input type="checkbox" name="system.steps.{{i}}.done" {{checked step.done}} /><input type="text" name="system.steps.{{i}}.text" value="{{step.text}}" /><a data-action="removeStep" data-index="{{i}}"><i class="fa-solid fa-trash"></i></a></li>
+    {{/each}}
+  </ol>
+</section>

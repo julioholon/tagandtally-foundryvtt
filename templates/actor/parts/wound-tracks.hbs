@@ -1,0 +1,13 @@
+<div class="tt-wound-tracks">
+  {{#each config.woundTrackOrder as |key|}}
+    {{#with (lookup ../wounds key) as |track|}}
+    <div class="tt-track">
+      <label>{{localize track.label}}</label>
+      <span class="tt-boxes">
+        {{#each track.boxes as |filled i|}}<a class="tt-box {{#if filled}}filled{{/if}}" data-action="woundBox" data-track="{{key}}" data-index="{{i}}"></a>{{/each}}
+      </span>
+      <a class="tt-add" data-action="addWound" data-track="{{key}}" title="{{localize 'TAGANDTALLY.Wound.Add'}}"><i class="fa-solid fa-plus"></i></a>
+    </div>
+    {{/with}}
+  {{/each}}
+</div>

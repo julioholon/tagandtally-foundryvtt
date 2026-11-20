@@ -1,0 +1,30 @@
+<section class="tab {{tab.cssClass}} tt-sparks-generators" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-toolbar">
+    <label>{{localize "TAGANDTALLY.Theme.Theme"}} <select name="theme">{{selectOptions themes selected=theme}}</select></label>
+    <label>{{localize "TAGANDTALLY.Sparks.Generator"}}
+      <select name="generator">{{#each groups as |g|}}<optgroup label="{{g.label}}">{{#each g.generators as |x|}}<option value="{{x.id}}" {{#if x.selected}}selected{{/if}}>{{x.label}}</option>{{/each}}</optgroup>{{/each}}</select></label>
+    {{#each optionFields as |o|}}<label>{{o.label}} <select data-option="{{o.key}}"><option value="">{{localize "TAGANDTALLY.Sparks.Random"}}</option>{{#each o.choices as |c|}}<option value="{{c}}" {{#if (tt-eq c o.value)}}selected{{/if}}>{{c}}</option>{{/each}}</select></label>{{/each}}
+    <button type="button" data-action="generate" class="tt-roll-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> {{localize "TAGANDTALLY.Sparks.Generate"}}</button>
+    {{#if results.length}}<a data-action="clear" title="{{localize 'TAGANDTALLY.Sparks.Clear'}}"><i class="fa-solid fa-broom"></i></a>{{/if}}
+  </div>
+  {{#if actor}}<p class="hint">{{localize "TAGANDTALLY.Sparks.LinkedActor"}}: <strong>{{actor.name}}</strong></p>{{/if}}
+  <div class="tt-quick">
+    {{#each groups as |g|}}{{#each g.generators as |x|}}<a class="tt-chip" data-action="generate" data-generator="{{x.id}}">{{x.label}}</a>{{/each}}{{/each}}
+  </div>
+  <ol class="tt-results">
+    {{#each results as |r|}}
+      <li class="tt-result" data-uid="{{r.uid}}">
+        <header><strong>{{r.label}}</strong>
+          <span class="tt-controls">
+            <a data-action="toChat" title="{{localize 'TAGANDTALLY.ToChat'}}"><i class="fa-solid fa-comment"></i></a>
+            <a data-action="copy" title="{{localize 'TAGANDTALLY.Sparks.Copy'}}"><i class="fa-solid fa-copy"></i></a>
+            {{#if r.generator.actorType}}{{#if ../isGM}}<a data-action="createActor" title="{{localize 'TAGANDTALLY.Sparks.CreateActor'}}"><i class="fa-solid fa-user-plus"></i></a>{{/if}}{{/if}}
+            {{#if r.generator.itemType}}<a data-action="createItem" title="{{localize 'TAGANDTALLY.Sparks.CreateItem'}}"><i class="fa-solid fa-suitcase-medical"></i></a>{{/if}}
+            {{#if r.generator.journal}}{{#if ../isGM}}<a data-action="createJournal" title="{{localize 'TAGANDTALLY.Sparks.CreateJournal'}}"><i class="fa-solid fa-book-medical"></i></a>{{/if}}{{/if}}
+          </span>
+        </header>
+        <p class="tt-sentence">{{{r.html}}}</p>
+      </li>
+    {{/each}}
+  </ol>
+</section>

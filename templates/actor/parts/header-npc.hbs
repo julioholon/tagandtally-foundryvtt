@@ -1,0 +1,23 @@
+<header class="tt-header">
+  <img class="tt-portrait" src="{{actor.img}}" data-edit="img" data-action="editImage" alt="{{actor.name}}" />
+  <div class="tt-header-main">
+    <div class="tt-name-row">
+      <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TAGANDTALLY.Name'}}" />
+      <label class="tt-toggle"><input type="checkbox" name="system.creature" {{checked system.creature}} /> {{localize "TAGANDTALLY.Npc.Creature"}}</label>
+      <button type="button" class="tt-roll-btn" data-action="rollTask"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Roll.Roll"}}</button>
+    </div>
+    <div class="tt-status-row">
+      <div class="tt-stat" title="{{localize 'TAGANDTALLY.Level.Level'}}">
+        <a data-action="levelStep" data-delta="-1"><i class="fa-solid fa-minus"></i></a>
+        <i class="fa-solid fa-signal"></i> {{localize "TAGANDTALLY.Level.Level"}} {{system.level}} <small>{{levelLabel}} (DC {{dc}})</small>
+        <a data-action="levelStep" data-delta="1"><i class="fa-solid fa-plus"></i></a>
+      </div>
+      <div class="tt-stat tt-severity sev-{{wounds.severity}}"><i class="fa-solid fa-heart-crack"></i> {{severityLabel}}
+        {{#if wounds.worst}}<span class="tt-worst">{{wounds.worst.name}}</span>{{/if}}</div>
+      <div class="tt-stat"><i class="fa-solid fa-face-smile"></i>
+        <select name="system.attitude">{{selectOptions dispositions selected=system.attitude localize=true}}</select></div>
+      {{#if isGM}}<a class="tt-stat" data-action="generateSentence" title="{{localize 'TAGANDTALLY.Sparks.Regenerate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></a>{{/if}}
+    </div>
+    <p class="tt-sentence">{{tt-tags sentenceText}}</p>
+  </div>
+</header>

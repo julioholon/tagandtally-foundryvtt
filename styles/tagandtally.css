@@ -1,0 +1,219 @@
+/* Tag & Tally system styles. Uses Foundry v13+ CSS variables so light/dark themes work. */
+.tagandtally {
+  --tt-accent: #b8860b;
+  --tt-ease: #3a8f5c;
+  --tt-hinder: #b23a3a;
+  --tt-fail-and: #7a1f1f;
+  --tt-fail-but: #b23a3a;
+  --tt-success-but: #b8860b;
+  --tt-success: #3a8f5c;
+  --tt-success-and: #1f6f8b;
+  --tt-tag-bg: rgba(184, 134, 11, 0.15);
+  --tt-border: var(--color-border-light-2, rgba(0,0,0,0.2));
+}
+
+/* ------------------------------ Tags ----------------------------------- */
+.tagandtally .tt-tag, .chat-message .tt-tag {
+  display: inline-block; padding: 0 0.35em; margin: 0 0.1em; border-radius: 4px;
+  background: var(--tt-tag-bg); border: 1px solid rgba(184,134,11,0.4); font-weight: 600; white-space: nowrap;
+}
+.tagandtally .tt-tag.ease, .chat-message .tt-tag.ease { background: rgba(58,143,92,0.15); border-color: var(--tt-ease); }
+.tagandtally .tt-tag.hinder, .chat-message .tt-tag.hinder { background: rgba(178,58,58,0.15); border-color: var(--tt-hinder); }
+.tagandtally .tt-tag.warn { background: rgba(178,58,58,0.2); border-color: var(--tt-hinder); }
+.tagandtally .tt-sentence { font-style: italic; line-height: 1.6; margin: 0.25em 0; }
+.tagandtally .tt-sentence.big { font-size: 1.1em; }
+
+/* ----------------------------- Header ---------------------------------- */
+.tagandtally .tt-header { display: flex; gap: 0.75rem; padding: 0.5rem; border-bottom: 1px solid var(--tt-border); }
+.tagandtally .tt-portrait { width: 96px; height: 96px; object-fit: cover; border: 1px solid var(--tt-border); border-radius: 6px; cursor: pointer; flex: 0 0 auto; }
+.tagandtally .tt-portrait.small { width: 64px; height: 64px; }
+.tagandtally .tt-header-main { flex: 1; display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+.tagandtally .tt-name-row { display: flex; gap: 0.5rem; align-items: center; }
+.tagandtally .tt-name-row input[name="name"] { flex: 1; font-size: 1.4em; font-weight: 700; height: 2em; }
+.tagandtally .tt-sentence-row { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; font-style: italic; }
+.tagandtally .tt-tag-input { width: 7.5em; height: 1.7em; background: var(--tt-tag-bg); border: 1px solid rgba(184,134,11,0.4); border-radius: 4px; font-weight: 600; }
+.tagandtally .tt-tag-input.wide { width: 14em; }
+.tagandtally .tt-status-row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.tagandtally .tt-stat { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0.5rem; border: 1px solid var(--tt-border); border-radius: 4px; }
+.tagandtally .tt-stat small { opacity: 0.75; }
+.tagandtally .tt-stat .tt-small-num { width: 3em; height: 1.5em; }
+.tagandtally .tt-worst { font-style: italic; opacity: 0.85; margin-left: 0.3rem; }
+.tagandtally .tt-roll-btn { display: inline-flex; gap: 0.3rem; align-items: center; white-space: nowrap; }
+.tagandtally .tt-roll-btn.big { width: 100%; font-size: 1.1em; justify-content: center; }
+.tagandtally .tt-toggle { display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap; }
+
+/* Severity colors */
+.tagandtally .sev-0, .tt-party .sev-0 { color: var(--tt-success); }
+.tagandtally .sev-1, .tt-party .sev-1 { color: var(--tt-success-but); }
+.tagandtally .sev-2, .tt-party .sev-2 { color: #c86b1f; }
+.tagandtally .sev-3, .tt-party .sev-3 { color: var(--tt-hinder); }
+.tagandtally .sev-4, .tagandtally .sev-5, .tt-party .sev-4, .tt-party .sev-5 { color: var(--tt-fail-and); font-weight: 700; }
+.tagandtally .tt-severity-banner { padding: 0.4rem 0.6rem; border: 1px solid currentColor; border-radius: 4px; margin-bottom: 0.5rem; }
+
+/* ----------------------------- Layout ---------------------------------- */
+.tagandtally .window-content { display: flex; flex-direction: column; overflow: hidden; }
+.tagandtally .tab { flex: 1; overflow-y: auto; padding: 0.5rem; }
+.tagandtally .tab:not(.active) { display: none; }
+.tagandtally .tt-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.tagandtally .tt-grid { display: grid; gap: 0.4rem 0.75rem; }
+.tagandtally .tt-grid.two { grid-template-columns: 1fr 1fr; }
+.tagandtally .tt-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+.tagandtally .tt-grid .span2 { grid-column: span 2; }
+.tagandtally .tt-grid .form-group { display: flex; flex-direction: column; gap: 0.15rem; margin: 0; }
+.tagandtally .tt-grid.compact .form-group label { font-size: 0.85em; opacity: 0.8; }
+.tagandtally h3 { border-bottom: 1px solid var(--tt-border); margin: 0.75rem 0 0.4rem; font-size: 1.05em; }
+.tagandtally h3 a { float: right; font-size: 0.9em; }
+.tagandtally .tt-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding: 0.3rem 0; border-bottom: 1px solid var(--tt-border); margin-bottom: 0.4rem; }
+.tagandtally .tt-toolbar .tt-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tagandtally .tt-controls a { cursor: pointer; opacity: 0.8; } .tagandtally .tt-controls a:hover { opacity: 1; }
+.tagandtally .tt-controls a.dim { opacity: 0.35; }
+.tagandtally .tt-actions-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.5rem 0; align-items: center; }
+.tagandtally .tt-inline { display: inline-flex; gap: 0.3rem; align-items: center; }
+.tagandtally .hint { font-size: 0.85em; opacity: 0.75; }
+.tagandtally .hint.warn { color: var(--tt-hinder); opacity: 1; }
+.tagandtally .tt-empty { opacity: 0.6; font-style: italic; padding: 0.5rem; list-style: none; }
+
+/* ----------------------------- Item lists ------------------------------- */
+.tagandtally .tt-item-list { list-style: none; margin: 0; padding: 0; }
+.tagandtally .tt-item-list .tt-list-header { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; padding: 0.3rem 0.4rem; margin-top: 0.4rem; background: rgba(0,0,0,0.06); border-radius: 4px; }
+.tagandtally .tt-item-list .tt-list-header > span:first-child { flex: 1; }
+.tagandtally .tt-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.4rem; border-bottom: 1px solid var(--tt-border); }
+.tagandtally .tt-item img { width: 28px; height: 28px; border: none; border-radius: 4px; cursor: pointer; flex: 0 0 auto; }
+.tagandtally .tt-item img:hover { filter: drop-shadow(0 0 4px var(--tt-accent)); }
+.tagandtally .tt-item-body { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.tagandtally .tt-item-name { font-weight: 600; cursor: pointer; }
+.tagandtally .tt-item-name small { font-weight: 400; opacity: 0.7; margin-left: 0.3rem; }
+.tagandtally .tt-item-sub { font-size: 0.85em; opacity: 0.8; font-style: italic; }
+.tagandtally .tt-item.hinders .tt-item-name { color: var(--tt-hinder); }
+.tagandtally .tt-item.temporary .tt-item-name { font-style: italic; }
+.tagandtally .tt-item.unequipped, .tagandtally .tt-item.healed { opacity: 0.55; }
+.tagandtally .tt-item.overpowered .tt-col-level { color: var(--tt-hinder); }
+.tagandtally .tt-item.quest.status-completed { opacity: 0.6; }
+.tagandtally .tt-col-tier { width: 5.5em; text-align: center; }
+.tagandtally .tt-col-tallies { width: 7em; text-align: center; }
+.tagandtally .tt-col-level, .tagandtally .tt-col-dc, .tagandtally .tt-col-cost { width: 3.5em; text-align: center; }
+.tagandtally .tt-col-qty { width: 5.5em; text-align: center; white-space: nowrap; }
+.tagandtally .tt-mastered { color: var(--tt-accent); }
+.tagandtally .tt-quest-tallies { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.2rem; }
+.tagandtally .tt-tally label { font-size: 0.8em; margin-right: 0.3rem; }
+
+/* Boxes, pips */
+.tagandtally .tt-boxes { display: inline-flex; gap: 3px; vertical-align: middle; }
+.tagandtally .tt-box { width: 16px; height: 16px; border: 2px solid var(--tt-accent); border-radius: 3px; cursor: pointer; display: inline-block; }
+.tagandtally .tt-box.filled { background: var(--tt-accent); }
+.tagandtally .tt-boxes.small .tt-box { width: 12px; height: 12px; border-width: 1.5px; }
+.tagandtally .tt-pips { display: inline-flex; gap: 3px; }
+.tagandtally .tt-pip { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--tt-accent); cursor: pointer; display: inline-block; }
+.tagandtally .tt-pip.filled { background: var(--tt-accent); }
+.tagandtally .tt-wound-tracks { display: flex; flex-direction: column; gap: 0.3rem; }
+.tagandtally .tt-track { display: flex; align-items: center; gap: 0.5rem; }
+.tagandtally .tt-track label { width: 10em; font-weight: 600; }
+.tagandtally .tt-track .tt-add { opacity: 0.7; cursor: pointer; }
+.tagandtally .tt-hidden-info { border: 1px dashed var(--tt-border); border-radius: 4px; margin: 0.75rem 0; padding: 0.4rem 0.6rem; }
+.tagandtally .tt-hidden-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0; }
+.tagandtally .tt-hidden-row label { width: 6em; font-weight: 600; }
+.tagandtally .tt-hidden-row input { flex: 1; }
+.tagandtally .tt-secret { flex: 1; opacity: 0.6; font-style: italic; }
+
+/* ------------------------------ Spells --------------------------------- */
+.tagandtally .tt-axis { margin: 0.5rem 0; }
+.tagandtally .tt-axis > label { font-weight: 700; display: block; margin-bottom: 0.2rem; }
+.tagandtally .tt-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.tagandtally .tt-chip { padding: 0.15rem 0.5rem; border: 1px solid var(--tt-border); border-radius: 12px; cursor: pointer; user-select: none; display: inline-flex; gap: 0.25rem; align-items: center; }
+.tagandtally .tt-chip input { display: none; }
+.tagandtally .tt-chip small { opacity: 0.6; }
+.tagandtally .tt-chip.selected { background: var(--tt-tag-bg); border-color: var(--tt-accent); font-weight: 600; }
+.tagandtally .tt-spell-summary { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.75rem; padding: 0.5rem; border: 1px solid var(--tt-border); border-radius: 4px; }
+.tagandtally .tt-spell-summary > div { display: flex; flex-direction: column; min-width: 5em; }
+.tagandtally .tt-spell-summary span { font-size: 0.8em; opacity: 0.7; }
+.tagandtally .tt-spell-summary strong { font-size: 1.3em; }
+.tagandtally .tt-spell-summary .warn strong { color: var(--tt-hinder); }
+.tagandtally .tt-steps { list-style: decimal; padding-left: 1.5em; }
+.tagandtally .tt-steps li { display: flex; gap: 0.4rem; align-items: center; margin: 0.2rem 0; }
+.tagandtally .tt-steps li input[type="text"] { flex: 1; }
+.tagandtally .tt-tally-config .tt-inline input { width: 3.5em; }
+
+/* ----------------------------- Roll dialog ------------------------------ */
+.tagandtally.task-roll .tt-roll-body { display: flex; flex-direction: column; gap: 0.5rem; max-height: 70vh; overflow-y: auto; padding: 0.25rem; }
+.tagandtally .tt-roll-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.tagandtally .tt-roll-columns h4 { margin: 0.3rem 0; border-bottom: 1px solid var(--tt-border); }
+.tagandtally .tt-roll-columns h4 small { font-weight: 400; opacity: 0.7; }
+.tagandtally .tt-pick-list { list-style: none; margin: 0; padding: 0; max-height: 240px; overflow-y: auto; }
+.tagandtally .tt-pick-list li { display: flex; align-items: center; gap: 0.35rem; padding: 0.15rem 0.2rem; border-bottom: 1px solid var(--tt-border); }
+.tagandtally .tt-pick-list li.ignored .tt-pick-name { text-decoration: line-through; opacity: 0.6; }
+.tagandtally .tt-pick-list li.ease .tt-pick-name { color: var(--tt-ease); font-weight: 600; }
+.tagandtally .tt-pick-list li.hinder .tt-pick-name { color: var(--tt-hinder); font-weight: 600; }
+.tagandtally .tt-pick-name { flex: 1; } .tagandtally .tt-pick-name small { opacity: 0.6; }
+.tagandtally .tt-mode { width: 20px; height: 20px; border: 1px solid var(--tt-border); border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75em; cursor: pointer; opacity: 0.5; }
+.tagandtally .tt-mode.on { opacity: 1; color: white; }
+.tagandtally .tt-mode.ease.on { background: var(--tt-ease); } .tagandtally .tt-mode.hinder.on { background: var(--tt-hinder); }
+.tagandtally .tt-steps { font-weight: 700; min-width: 1.2em; text-align: right; }
+.tagandtally .tt-pick-list.fixed li.ease { color: var(--tt-ease); } .tagandtally .tt-pick-list.fixed li.hinder { color: var(--tt-hinder); }
+.tagandtally .tt-roll-summary { display: flex; justify-content: space-around; padding: 0.5rem; border: 1px solid var(--tt-border); border-radius: 4px; text-align: center; }
+.tagandtally .tt-roll-summary > div { display: flex; flex-direction: column; }
+.tagandtally .tt-roll-summary span { font-size: 0.75em; opacity: 0.7; }
+.tagandtally .tt-roll-summary strong { font-size: 1.4em; }
+.tagandtally .tt-roll-summary .ease strong { color: var(--tt-ease); } .tagandtally .tt-roll-summary .hinder strong { color: var(--tt-hinder); }
+.tagandtally .tt-roll-summary .dc strong { color: var(--tt-accent); font-size: 1.8em; }
+
+/* ------------------------------ Chat cards ------------------------------ */
+.chat-message .tagandtally.chat-card { border: 1px solid var(--color-border-light-2, #999); border-radius: 6px; padding: 0.4rem 0.5rem; }
+.chat-message .tagandtally.chat-card h3 { margin: 0; font-size: 1.05em; border: none; }
+.chat-message .tagandtally .tt-card-header { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.3rem; }
+.chat-message .tagandtally .tt-card-header img { width: 36px; height: 36px; border: none; border-radius: 4px; }
+.chat-message .tagandtally .tt-card-header small { opacity: 0.7; }
+.chat-message .tagandtally .tt-card-levels { display: flex; gap: 0.5rem; font-size: 0.9em; flex-wrap: wrap; }
+.chat-message .tagandtally .tt-card-levels .ease { color: var(--tt-ease, #3a8f5c); } .chat-message .tagandtally .tt-card-levels .hinder { color: var(--tt-hinder, #b23a3a); }
+.chat-message .tagandtally .tt-card-result { display: flex; align-items: center; gap: 0.75rem; margin: 0.4rem 0; }
+.chat-message .tagandtally .tt-die { font-size: 1.6em; font-weight: 700; padding: 0.2rem 0.5rem; border: 2px solid currentColor; border-radius: 6px; }
+.chat-message .tagandtally .tt-die.natural { box-shadow: 0 0 8px currentColor; }
+.chat-message .tagandtally .tt-band { font-size: 1.2em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+.chat-message .tagandtally.roll-card.fail-and { border-color: var(--tt-fail-and, #7a1f1f); } .chat-message .tagandtally.roll-card.fail-and .tt-band, .chat-message .tagandtally.roll-card.fail-and .tt-die { color: var(--tt-fail-and, #7a1f1f); }
+.chat-message .tagandtally.roll-card.fail-but { border-color: var(--tt-fail-but, #b23a3a); } .chat-message .tagandtally.roll-card.fail-but .tt-band, .chat-message .tagandtally.roll-card.fail-but .tt-die { color: var(--tt-fail-but, #b23a3a); }
+.chat-message .tagandtally.roll-card.success-but { border-color: var(--tt-success-but, #b8860b); } .chat-message .tagandtally.roll-card.success-but .tt-band, .chat-message .tagandtally.roll-card.success-but .tt-die { color: var(--tt-success-but, #b8860b); }
+.chat-message .tagandtally.roll-card.success { border-color: var(--tt-success, #3a8f5c); } .chat-message .tagandtally.roll-card.success .tt-band, .chat-message .tagandtally.roll-card.success .tt-die { color: var(--tt-success, #3a8f5c); }
+.chat-message .tagandtally.roll-card.success-and { border-color: var(--tt-success-and, #1f6f8b); } .chat-message .tagandtally.roll-card.success-and .tt-band, .chat-message .tagandtally.roll-card.success-and .tt-die { color: var(--tt-success-and, #1f6f8b); }
+.chat-message .tagandtally .tt-card-details { font-style: italic; margin: 0.3rem 0; white-space: pre-line; }
+.chat-message .tagandtally .tt-card-tags { font-size: 0.85em; margin: 0.2rem 0; } .chat-message .tagandtally .tt-card-tags.dim { opacity: 0.6; }
+.chat-message .tagandtally .tt-card-actions { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
+.chat-message .tagandtally .tt-card-actions:empty { display: none; }
+.chat-message .tagandtally .tt-card-description { font-size: 0.9em; }
+
+/* ------------------------------ Combat flow ----------------------------- */
+.tagandtally.combat-flow .tt-flow-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.tagandtally .tt-flow-row { border: 1px solid var(--tt-border); border-radius: 6px; padding: 0.4rem 0.6rem; }
+.tagandtally .tt-flow-row.finished { background: rgba(0,0,0,0.04); }
+.tagandtally .tt-flow-row header { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.tagandtally .tt-flow-row header img { width: 32px; height: 32px; border: none; border-radius: 4px; }
+.tagandtally .tt-flow-opponent { display: inline-flex; gap: 0.3rem; align-items: center; }
+.tagandtally .tt-flow-mod { margin-left: auto; font-weight: 700; } .tagandtally .tt-flow-mod.ease { color: var(--tt-ease); } .tagandtally .tt-flow-mod.hinder { color: var(--tt-hinder); }
+.tagandtally .tt-phases { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.3rem; margin: 0.4rem 0; padding: 0; }
+.tagandtally .tt-phase { border: 1px solid var(--tt-border); border-radius: 4px; padding: 0.3rem; display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.85em; min-height: 3.5em; }
+.tagandtally .tt-phase.current { border-color: var(--tt-accent); box-shadow: 0 0 0 1px var(--tt-accent) inset; }
+.tagandtally .tt-phase.future { opacity: 0.5; }
+.tagandtally .tt-phase.done.fail-and { border-color: var(--tt-fail-and); } .tagandtally .tt-phase.done.fail-but { border-color: var(--tt-fail-but); }
+.tagandtally .tt-phase.done.success-but { border-color: var(--tt-success-but); } .tagandtally .tt-phase.done.success { border-color: var(--tt-success); } .tagandtally .tt-phase.done.success-and { border-color: var(--tt-success-and); }
+.tagandtally .tt-phase-name { font-weight: 700; }
+.tagandtally .tt-flow-outcome { display: flex; gap: 0.5rem; align-items: center; } .tagandtally .tt-flow-outcome.dim { opacity: 0.7; }
+
+/* ------------------------------ Sparks ---------------------------------- */
+.tagandtally.sparks .tt-toolbar label { display: inline-flex; gap: 0.3rem; align-items: center; }
+.tagandtally .tt-quick { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.4rem 0; }
+.tagandtally .tt-results { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.tagandtally .tt-result { border: 1px solid var(--tt-border); border-radius: 6px; padding: 0.4rem 0.6rem; }
+.tagandtally .tt-result header { display: flex; justify-content: space-between; align-items: center; }
+.tagandtally .tt-table-list h4 { margin: 0.6rem 0 0.2rem; border-bottom: 1px solid var(--tt-border); }
+.tagandtally .tt-table-list ul { list-style: none; margin: 0; padding: 0; columns: 2; }
+.tagandtally .tt-table-row { padding: 0.1rem 0; font-size: 0.9em; } .tagandtally .tt-table-row small { opacity: 0.6; }
+.tagandtally .tt-table-row.overridden a { color: var(--tt-accent); }
+
+/* ------------------------------ Party ----------------------------------- */
+.tagandtally .tt-party { width: 100%; border-collapse: collapse; }
+.tagandtally .tt-party th, .tagandtally .tt-party td { padding: 0.3rem 0.4rem; border-bottom: 1px solid var(--tt-border); vertical-align: top; text-align: left; }
+.tagandtally .tt-party img { width: 36px; height: 36px; border: none; border-radius: 4px; cursor: pointer; }
+.tagandtally .tt-sentence-cell { font-style: italic; max-width: 22em; }
+
+@media (max-width: 700px) {
+  .tagandtally .tt-columns, .tagandtally .tt-roll-columns { grid-template-columns: 1fr; }
+  .tagandtally .tt-phases { grid-template-columns: 1fr; }
+}

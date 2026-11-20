@@ -1,0 +1,52 @@
+<section class="tab {{tab.cssClass}} tt-npc-main" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-grid two">
+    {{#if system.creature}}
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Npc.Disposition"}}</label><input type="text" name="system.sentence.disposition" value="{{system.sentence.disposition}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.Descriptor"}}</label><input type="text" name="system.sentence.descriptor" value="{{system.sentence.descriptor}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Npc.CreatureType"}}</label><input type="text" name="system.sentence.type" value="{{system.sentence.type}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Npc.Motivation"}}</label><input type="text" name="system.sentence.motivation" value="{{system.sentence.motivation}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Npc.Attack"}}</label><input type="text" name="system.sentence.attack" value="{{system.sentence.attack}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Damage.Type"}}</label><input type="text" name="system.sentence.damageType" value="{{system.sentence.damageType}}" list="tt-damage-types" />
+        <datalist id="tt-damage-types">{{#each damageTypes as |label key|}}<option value="{{localize label}}"></option>{{/each}}</datalist></div>
+      <div class="form-group span2"><label>{{localize "TAGANDTALLY.Npc.SpecialAbility"}}</label><input type="text" name="system.sentence.specialAbility" value="{{system.sentence.specialAbility}}" /></div>
+    {{else}}
+      <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.Descriptor"}}</label><input type="text" name="system.sentence.descriptor" value="{{system.sentence.descriptor}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.Species"}}</label><input type="text" name="system.sentence.species" value="{{system.sentence.species}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.Type"}}</label><input type="text" name="system.sentence.type" value="{{system.sentence.type}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Npc.DoesSomething"}}</label><input type="text" name="system.sentence.doesSomething" value="{{system.sentence.doesSomething}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Npc.Motivation"}}</label><input type="text" name="system.sentence.motivation" value="{{system.sentence.motivation}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Npc.Quest"}}</label><input type="text" name="system.sentence.quest" value="{{system.sentence.quest}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Npc.Attack"}}</label><input type="text" name="system.sentence.attack" value="{{system.sentence.attack}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Damage.Type"}}</label><input type="text" name="system.sentence.damageType" value="{{system.sentence.damageType}}" /></div>
+    {{/if}}
+  </div>
+
+  <fieldset class="tt-hidden-info">
+    <legend>{{localize "TAGANDTALLY.Npc.HiddenInfo"}}</legend>
+    {{#each (tt-array "strength" "weakness" "secret") as |key|}}
+      <div class="tt-hidden-row">
+        <label>{{localize (concat "TAGANDTALLY.Npc." key)}}</label>
+        {{#if (lookup ../canSee key)}}
+          <input type="text" name="system.sentence.{{key}}" value="{{lookup ../system.sentence key}}" {{#unless ../owner}}disabled{{/unless}} />
+        {{else}}
+          <span class="tt-secret"><i class="fa-solid fa-eye-slash"></i> {{localize "TAGANDTALLY.Npc.Unknown"}}</span>
+        {{/if}}
+        {{#if ../isGM}}
+          <a data-action="reveal" data-key="{{key}}" title="{{localize 'TAGANDTALLY.Npc.ToggleReveal'}}"><i class="fa-solid {{#if (lookup ../system.revealed key)}}fa-eye{{else}}fa-eye-slash{{/if}}"></i></a>
+        {{/if}}
+        {{#if (lookup ../insightBoxes key)}}
+          <span class="tt-boxes small" title="{{localize 'TAGANDTALLY.Npc.Insights'}}">
+            {{#each (lookup ../insightBoxes key) as |filled i|}}<a class="tt-box {{#if filled}}filled{{/if}}" data-action="addInsight" data-key="{{key}}" data-index="{{i}}"></a>{{/each}}
+          </span>
+        {{/if}}
+      </div>
+    {{/each}}
+  </fieldset>
+
+  <div class="tt-actions-row">
+    <button type="button" data-action="rollInjury"><i class="fa-solid fa-heart-crack"></i> {{localize "TAGANDTALLY.Combat.RollInjury"}}</button>
+    <button type="button" data-action="openCombatFlow"><i class="fa-solid fa-swords"></i> {{localize "TAGANDTALLY.Combat.Title"}}</button>
+    <label class="tt-toggle"><input type="checkbox" name="system.merchant" {{checked system.merchant}} /> {{localize "TAGANDTALLY.Npc.Merchant"}}</label>
+    <div class="tt-stat"><i class="fa-solid fa-coins"></i> <input type="number" name="system.wealth.value" value="{{system.wealth.value}}" min="0" max="6" class="tt-small-num" /></div>
+  </div>
+</section>

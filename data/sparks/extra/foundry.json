@@ -1,0 +1,34 @@
+[
+  {
+    "name": "modern-name-patterns",
+    "formula": "1d4",
+    "table": [
+      { "min": 1, "max": 2, "value": "{modern-male-firstname} {modern-lastname}" },
+      { "min": 3, "max": 4, "value": "{modern-female-firstname} {modern-lastname}" }
+    ]
+  },
+  {
+    "name": "monster-hunter-name-patterns",
+    "formula": "1d4",
+    "table": [
+      { "min": 1, "max": 2, "value": "{modern-male-firstname} {modern-lastname}" },
+      { "min": 3, "max": 4, "value": "{modern-female-firstname} {modern-lastname}" }
+    ]
+  },
+  {
+    "name": "oracle-likelihood",
+    "formula": "1d1",
+    "table": [
+      { "min": 1, "max": 1, "value": "Certain", "level": 1 },
+      { "min": 1, "max": 1, "value": "Very Likely", "level": 2 },
+      { "min": 1, "max": 1, "value": "Likely", "level": 3 },
+      { "min": 1, "max": 1, "value": "Somewhat Likely", "level": 4 },
+      { "min": 1, "max": 1, "value": "Even Odds", "level": 5 },
+      { "min": 1, "max": 1, "value": "Somewhat Unlikely", "level": 6 },
+      { "min": 1, "max": 1, "value": "Unlikely", "level": 7 },
+      { "min": 1, "max": 1, "value": "Very Unlikely", "level": 8 },
+      { "min": 1, "max": 1, "value": "Nearly Impossible", "level": 9 },
+      { "min": 1, "max": 1, "value": "Impossible", "level": 10 }
+    ]
+  }
+]

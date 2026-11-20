@@ -1,0 +1,33 @@
+<header class="tt-header">
+  <img class="tt-portrait" src="{{actor.img}}" data-edit="img" data-action="editImage" alt="{{actor.name}}" />
+  <div class="tt-header-main">
+    <div class="tt-name-row">
+      <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TAGANDTALLY.Name'}}" />
+      <button type="button" class="tt-roll-btn" data-action="rollTask" title="{{localize 'TAGANDTALLY.Roll.Task'}}"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Roll.Roll"}}</button>
+    </div>
+    <div class="tt-sentence-row">
+      <span class="tt-sentence-word">{{localize "TAGANDTALLY.Sentence.IsA"}}</span>
+      <input type="text" name="system.sentence.descriptor" value="{{system.sentence.descriptor}}" placeholder="{{localize 'TAGANDTALLY.TagType.Descriptor'}}" class="tt-tag-input" />
+      <input type="text" name="system.sentence.species" value="{{system.sentence.species}}" placeholder="{{localize 'TAGANDTALLY.TagType.Species'}}" class="tt-tag-input" />
+      <input type="text" name="system.sentence.type" value="{{system.sentence.type}}" placeholder="{{localize 'TAGANDTALLY.TagType.Type'}}" class="tt-tag-input" />
+      <span class="tt-sentence-word">{{localize "TAGANDTALLY.Sentence.Who"}}</span>
+      <input type="text" name="system.sentence.specialty" value="{{system.sentence.specialty}}" placeholder="{{localize 'TAGANDTALLY.TagType.Specialty'}}" class="tt-tag-input wide" />
+      <a data-action="buildSentence" title="{{localize 'TAGANDTALLY.Sentence.BuildFromTags'}}"><i class="fa-solid fa-wand-magic"></i></a>
+      <a data-action="sentenceToChat" title="{{localize 'TAGANDTALLY.Sentence.ToChat'}}"><i class="fa-solid fa-comment"></i></a>
+    </div>
+    <div class="tt-status-row">
+      <div class="tt-stat tt-severity sev-{{wounds.severity}}" title="{{localize 'TAGANDTALLY.Wound.Severity'}}">
+        <i class="fa-solid fa-heart-crack"></i> {{severityLabel}}
+        {{#if wounds.worst}}<span class="tt-worst">{{wounds.worst.name}}{{#if wounds.worst.hinders}}: {{wounds.worst.hinders}}{{/if}}</span>{{/if}}
+      </div>
+      <div class="tt-stat" title="{{localize 'TAGANDTALLY.Wealth.Wealth'}}">
+        <a data-action="wealthStep" data-delta="-1"><i class="fa-solid fa-minus"></i></a>
+        <i class="fa-solid fa-coins"></i> {{system.wealth.value}} <small>{{wealthLabel}}</small>
+        <a data-action="wealthStep" data-delta="1"><i class="fa-solid fa-plus"></i></a>
+        {{#if system.wealth.inDebt}}<span class="tt-tag warn">{{localize "TAGANDTALLY.Wealth.InDebt"}}</span>{{/if}}
+      </div>
+      <div class="tt-stat" title="{{localize 'TAGANDTALLY.Spell.MaiLong'}}"><i class="fa-solid fa-wand-sparkles"></i> MAI {{mai.total}}</div>
+      <div class="tt-stat" title="{{localize 'TAGANDTALLY.Gear.Loadout'}}"><i class="fa-solid fa-suitcase"></i> {{loadout.value}}/{{loadout.max}}</div>
+    </div>
+  </div>
+</header>

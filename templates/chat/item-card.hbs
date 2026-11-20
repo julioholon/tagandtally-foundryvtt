@@ -1,0 +1,7 @@
+<div class="tagandtally chat-card item-card">
+  <header class="tt-card-header"><img src="{{item.img}}" alt="" /><div><h3>{{item.name}}</h3><small>{{#if system.gearType}}{{localize (lookup @root.config.gearTypes system.gearType)}}{{/if}}</small></div></header>
+  <p class="tt-sentence">{{tt-tags system.sentenceText}}</p>
+  {{#if system.notation}}<p><code>{{system.notation}}</code></p>{{/if}}
+  {{#if (tt-eq item.type "spell")}}<p>{{localize "TAGANDTALLY.Level.Level"}} {{system.finalLevel}} · DC {{system.dc}} · {{system.points}} pts</p>{{/if}}
+  {{#if description}}<div class="tt-card-description">{{{description}}}</div>{{/if}}
+</div>

@@ -1,0 +1,15 @@
+<section class="tab {{tab.cssClass}} tt-grid two" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.TagType"}}</label><select name="system.tagType">{{selectOptions tagTypes selected=system.tagType localize=true}}</select></div>
+  <div class="form-group"><label>{{localize "TAGANDTALLY.Tag.Category"}}</label>
+    <select name="system.category"><option value="tiered" {{#if (tt-eq system.category "tiered")}}selected{{/if}}>{{localize "TAGANDTALLY.Tag.Tiered"}}</option><option value="static" {{#if (tt-eq system.category "static")}}selected{{/if}}>{{localize "TAGANDTALLY.Tag.Static"}}</option><option value="umbrella" {{#if (tt-eq system.category "umbrella")}}selected{{/if}}>{{localize "TAGANDTALLY.Tag.Umbrella"}}</option></select></div>
+  {{#if system.canTier}}
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Tier.Tier"}}</label><select name="system.tier">{{selectOptions tiers selected=system.tier localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Tally.Tallies"}}</label><input type="number" name="system.tallies" value="{{system.tallies}}" min="0" max="5" /></div>
+    <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.mastered" {{checked system.mastered}} /> {{localize "TAGANDTALLY.Tag.Mastered"}}</label></div>
+  {{/if}}
+  <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.hinders" {{checked system.hinders}} /> {{localize "TAGANDTALLY.Tag.Hinders"}}</label></div>
+  <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.temporary" {{checked system.temporary}} /> {{localize "TAGANDTALLY.Tag.Temporary"}}</label></div>
+  <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.magical" {{checked system.magical}} /> {{localize "TAGANDTALLY.Tag.Magical"}}</label></div>
+  <div class="form-group"><label>{{localize "TAGANDTALLY.LifeStage.LifeStage"}}</label><select name="system.lifeStage">{{selectOptions lifeStages selected=system.lifeStage localize=true}}</select></div>
+  <div class="form-group span2"><label>{{localize "TAGANDTALLY.Tag.Notation"}}</label><code>{{system.notation}}</code> <small>{{localize "TAGANDTALLY.Tag.Steps"}}: {{system.steps}}</small></div>
+</section>
