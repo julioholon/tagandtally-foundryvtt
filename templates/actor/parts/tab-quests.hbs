@@ -1,0 +1,29 @@
+<section class="tab {{tab.cssClass}} tt-quests" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-toolbar">
+    <span class="hint">{{localize "TAGANDTALLY.Quest.Hint"}}</span>
+    <span class="tt-controls"><a data-action="createItem" data-type="quest"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Quest.Quest"}}</a></span>
+  </div>
+  <ol class="tt-item-list tt-quest-list">
+    {{#each items.quest as |item|}}
+      <li class="tt-item quest status-{{item.system.status}}" data-item-id="{{item.id}}">
+        <img src="{{item.img}}" alt="" data-action="useItem" title="{{localize 'TAGANDTALLY.Quest.Resolve'}}" />
+        <div class="tt-item-body">
+          <span class="tt-item-name" data-action="editItem">{{item.name}} {{#if item.system.isArc}}<i class="fa-solid fa-route" title="{{localize 'TAGANDTALLY.Quest.Arc'}}"></i>{{/if}}<small>{{localize (lookup ../config.questStatus item.system.status)}}</small></span>
+          <span class="tt-item-sub">{{#if item.system.goal}}{{item.system.goal}}{{else}}{{tt-tags item.system.sentenceText}}{{/if}}</span>
+          <div class="tt-quest-tallies">
+            {{#each item.system.tallies as |t key|}}{{#if t.enabled}}
+              <span class="tt-tally"><label>{{localize t.label}}</label>
+                <span class="tt-boxes small">{{#each t.boxes as |filled i|}}<a class="tt-box {{#if filled}}filled{{/if}}" data-action="questTally" data-key="{{key}}" data-index="{{i}}"></a>{{/each}}</span></span>
+            {{/if}}{{/each}}
+          </div>
+        </div>
+        <span class="tt-controls">
+          <a data-action="useItem" title="{{localize 'TAGANDTALLY.Quest.Resolve'}}" class="{{#unless item.system.readyToResolve}}dim{{/unless}}"><i class="fa-solid fa-dice-d20"></i></a>
+          <a data-action="chatItem"><i class="fa-solid fa-comment"></i></a>
+          <a data-action="deleteItem"><i class="fa-solid fa-trash"></i></a>
+        </span>
+      </li>
+    {{/each}}
+    {{#unless items.quest.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Quest.Empty"}}</li>{{/unless}}
+  </ol>
+</section>

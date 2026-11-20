@@ -1,0 +1,143 @@
+{
+  "TYPES": {
+    "Actor": { "character": "Character", "npc": "NPC / Creature" },
+    "Item": { "tag": "Tag", "gear": "Gear", "spell": "Spell", "quest": "Quest", "wound": "Wound" }
+  },
+  "TAGANDTALLY": {
+    "Name": "Name",
+    "Create": "Create",
+    "Delete": "Delete",
+    "ToChat": "Post to chat",
+    "NewItem": "New {type}",
+    "DeleteItem": "Delete item",
+    "DeleteItemConfirm": "Delete {name}? Hold Shift to skip this confirmation.",
+    "Biography": "Biography",
+    "Notes": "Notes",
+    "Sheet": { "Character": "Tag & Tally Character Sheet", "Npc": "Tag & Tally NPC Sheet", "Item": "Tag & Tally Item Sheet" },
+    "Tabs": {
+      "main": "Main", "tags": "Tags", "inventory": "Inventory", "spells": "Spells", "quests": "Quests",
+      "wounds": "Wounds", "biography": "Biography", "details": "Details", "description": "Description"
+    },
+    "Sentence": {
+      "Title": "Sentence", "IsA": "is a", "Who": "who", "BuildFromTags": "Fill the sentence from the sheet's descriptor, species, type and specialty tags", "ToChat": "Post sentence to chat"
+    },
+    "Character": { "Details": "Details", "Age": "Age", "Pronoun": "Pronoun", "Appearance": "Appearance", "Arc": "Character arc" },
+    "Appearance": { "height": "Height", "build": "Build", "hair": "Hair", "eyes": "Eyes", "skin": "Skin", "clothing": "Clothing", "voice": "Voice", "distinguishing": "Distinguishing" },
+    "Lore": { "Title": "Known world", "Residence": "Residence", "Workplace": "Workplace", "Faction": "Faction", "FactionDisposition": "Faction disposition", "KnownNpcs": "Known NPCs" },
+    "LifeStage": { "LifeStage": "Life stage", "Childhood": "Childhood (0-10)", "Adolescence": "Adolescence (11-18)", "YoungAdult": "Young Adult (19-25)", "Adult": "Adult (26-50)", "Elder": "Elder (51+)" },
+    "Level": {
+      "Level": "Level", "TaskLevel": "Task level",
+      "Simple": "Simple", "Standard": "Standard", "Demanding": "Demanding", "Difficult": "Difficult", "Challenging": "Challenging",
+      "Intimidating": "Intimidating", "Formidable": "Formidable", "Heroic": "Heroic", "Immortal": "Immortal", "Impossible": "Impossible"
+    },
+    "Band": { "FailAnd": "Fail, and…", "FailBut": "Fail, but…", "SuccessBut": "Success, but…", "Success": "Success", "SuccessAnd": "Success, and…" },
+    "Tier": { "Tier": "Tier", "Novice": "Novice (T1)", "Skilled": "Skilled (T2)", "Expert": "Expert (T3)", "Master": "Master (T4)" },
+    "Tally": { "Tallies": "Tallies" },
+    "TagType": {
+      "TagType": "Tag type", "Descriptor": "Descriptor", "Species": "Species", "Type": "Type", "Specialty": "Specialty", "Skill": "Skill / Ability",
+      "Background": "Background", "Trait": "Trait", "Occupation": "Occupation", "Experience": "Experience", "Flaw": "Flaw / Weakness",
+      "Reputation": "Reputation", "Condition": "Condition", "Scene": "Scene", "Other": "Other"
+    },
+    "Tag": {
+      "Tags": "Tags", "Category": "Category", "Tiered": "Tiered", "Static": "Static", "Umbrella": "Umbrella", "Mastered": "Mastered",
+      "Hinders": "Hinders (reverse tag)", "Temporary": "Temporary", "Magical": "Magical (counts toward MAI)", "Notation": "Notation", "Steps": "Steps",
+      "Hint": "Click the icon to roll with a tag. Click tier pips to set the tier, tally boxes to mark tallies. Natural 1 or 20 on a roll adds tallies automatically.",
+      "Empty": "No tags yet. Add skills, backgrounds, flaws and conditions.",
+      "RollTemporary": "Scene check: roll a die, even clears the tag", "TemporaryCleared": "{name} fades away.", "TemporaryStays": "{name} lingers for another scene."
+    },
+    "Roll": {
+      "Task": "Task roll", "Roll": "Roll", "Title": "Title", "TitlePlaceholder": "What are you trying to do?", "Type": "Roll type",
+      "Ease": "Eases", "Hinder": "Hinders", "Eased": "Eased", "Hindered": "Hindered", "Effective": "Effective level", "Ignored": "Not counted",
+      "ThresholdLabel": "threshold", "GearCap": "max 2 assets", "Automatic": "Automatic modifiers",
+      "ManualEase": "Extra easing steps", "ManualHinder": "Extra hindering steps",
+      "WithTag": "Roll with this tag", "WithGear": "Roll with this item as an asset",
+      "Oracle": "Oracle", "Yes": "Yes", "No": "No", "YesNo": "Yes / No (d6)", "Question": "Question", "QuestionPlaceholder": "Is the door trapped?",
+      "Likelihood": "Likelihood", "OracleHint": "Oracle rolls use the likelihood as the task level. A Yes/No roll is a plain d6: even is yes, odd is no."
+    },
+    "Chat": {
+      "ApplyTallies": "Apply tallies", "TalliesApplied": "Tallies applied to {count} tags.", "ApplyWound": "Apply wound", "NoTarget": "Select a token or assign a character first.",
+      "WoundApplied": "{name} takes a {track}.", "Dying": "{name} has three Lasting Scars: retire or die."
+    },
+    "Wound": {
+      "Wound": "Wound", "Strain": "Strain", "LingeringTrauma": "Lingering Trauma", "DebilitatingInjury": "Debilitating Injury", "LastingScar": "Lasting Scar",
+      "Vitality": "Vitality", "Severity": "Wound severity", "Add": "Add a wound to this track (overflows when full; Shift skips the wound sentence)",
+      "Hint": "Click boxes to mark or clear wounds. A full track overflows into the next. Three Lasting Scars end the character's career.",
+      "Sentences": "Wound sentences", "Healed": "Healed", "MarkHealed": "Mark as healed", "Track": "Track", "Mark": "Mark", "BodyPart": "Body part", "Hinders": "Hinders",
+      "RestStrain": "Rest: clear strain", "RestStrainHint": "Safe-zone rest heals all strain", "RestTrauma": "Rest: heal 1 trauma", "RestInjury": "Rest: downgrade 1 injury"
+    },
+    "Severity": { "Unscathed": "Unscathed", "Strained": "Strained", "Traumatized": "Traumatized", "Injured": "Injured", "Scarred": "Scarred", "Broken": "Broken" },
+    "Damage": { "Type": "Damage type", "Physical": "Physical", "Psychic": "Psychic", "Elemental": "Elemental", "Necrotic": "Necrotic", "Radiant": "Radiant", "Shadow": "Shadow", "Chaos": "Chaos", "Toxic": "Toxic" },
+    "Combat": {
+      "Title": "Combat flow", "Opening": "Opening", "Maneuver": "Tactical Maneuver", "Attack": "Attack", "Counter": "Counter", "Resolution": "Resolution",
+      "Hint": "Each participant rolls the five phases in order. Each outcome feeds a modifier into the next phase; Resolution decides the wound.",
+      "AddSelected": "Add selected tokens", "AddCombatants": "Add combatants", "Versus": "vs level", "SetOpponent": "Use the selected token as the opponent",
+      "SelectOpponent": "Select an opponent token first.", "PhaseModifier": "Modifier from the previous phase", "Reset": "Reset this participant", "Skip": "Skip phase",
+      "WoundApplied": "Wound applied", "Empty": "No participants. Select tokens and add them.", "RollInjury": "Roll injury", "InjuryTitle": "Injury: {name}"
+    },
+    "Gear": {
+      "Gear": "Gear", "Weapon": "Weapon", "Armor": "Armor", "Item": "Item", "Consumable": "Consumable", "Container": "Container", "Resource": "Resource", "Trap": "Trap", "Kit": "Kit",
+      "Type": "Gear type", "Material": "Material", "Subtype": "Kind", "Special": "Special", "Qty": "Qty", "Equipped": "Equipped / carried", "Capacity": "Capacity", "Loadout": "Loadout",
+      "Empty": "No gear yet."
+    },
+    "GearKind": { "Kind": "Gear kind", "Functional": "Functional (no slot)", "Extraordinary": "Extraordinary (takes a slot)", "Ephemeral": "Ephemeral (tattoo, app, cybernetic)" },
+    "GearLevel": { "1": "1 Junk / Makeshift", "2": "2 Budget / Surplus", "3": "3 Standard", "4": "4 Professional", "5": "5 Superior", "6": "6 Elite / Tactical", "7": "7 Experimental", "8": "8 Masterwork", "9": "9 Legendary", "10": "10 Apex" },
+    "Armor": { "Class": "Armor class", "None": "None", "Light": "Light", "Medium": "Medium", "Heavy": "Heavy", "Defense": "Defense", "Stealth": "Stealth" },
+    "Consumable": { "Mode": "Use", "SingleUse": "Single use", "Depletion": "Depletion (1 on a d20 depletes)" },
+    "Wealth": {
+      "Wealth": "Wealth", "InDebt": "In debt", "QoL": "Quality of life",
+      "0": "In debt / student", "1": "Barely making ends meet", "2": "Getting by", "3": "Comfortable", "4": "Well-off", "5": "Wealthy", "6": "Stupid rich"
+    },
+    "Cost": { "Cost": "Cost", "0": "0 Free", "1": "1 Inexpensive", "2": "2 Moderate", "3": "3 Expensive", "4": "4 Very expensive", "5": "5 Exorbitant", "6": "6 Priceless" },
+    "QoL": { "Above": "Above means (-1)", "At": "At means (0)", "Below": "Below means (+1)" },
+    "Spell": {
+      "Spell": "Spell", "Cast": "Cast", "CastTitle": "Cast {name}", "Empty": "No spells yet.", "Effect": "Does something", "Base": "Base", "Aspects": "Aspects", "Types": "Types",
+      "MaiLong": "Magical Aptitude Index (MAI)", "MaiBase": "Base MAI", "MaiHint": "base from species or type, +1 per magical sentence tag, max +3",
+      "MaiHindrance": "MAI check (MAI {mai} vs level {level})", "MaiCheckRequired": "MAI check required", "NoCheck": "No MAI check needed",
+      "Overpowered": "Overpowered", "BloodMagic": "Blood magic (eases by 2)", "Mastered": "Mastered (eases by 1)", "MasteryTallies": "Mastery tallies",
+      "RequiresChaos": "More than one aspect or type requires the Chaos base.", "MaxAxes": "A spell can have at most three aspects, three types, and five axes in total.",
+      "Points": "Points", "AxisCost": "axis cost", "BaseLevel": "Spell level", "FinalLevel": "Final level", "LevelOverride": "Level override (0 = computed)",
+      "Mishap": "Spell mishap", "RollMishap": "Roll mishap",
+      "Scope": { "Scope": "Effect scope (PM)", "Minor": "Minor / touch", "Small": "Room / few meters", "Medium": "Street / hill", "Large": "Town / city", "Extreme": "Region / realm / dimension", "World": "Other plane / planet" },
+      "Artifact": { "Artifact": "Artifact", "Ritual": "Ritual (eases 2)", "Encoded": "Encoded (eases 1)", "Channeled": "Channeled", "Manifestation": "Manifestation (hinders 1)" },
+      "Trigger": { "Trigger": "Trigger (TM)", "None": "None", "Minor": "Minor / occasional (-1)", "Frequent": "Frequent / semi-automatic (-2)", "Always": "Always / fully automatic (-3)" }
+    },
+    "Quest": {
+      "Quest": "Quest", "Quests": "Quests", "Type": "Quest type", "Objective": "Objective", "Goal": "Goal", "Reward": "Reward", "Consequence": "Consequence", "Status": "Status",
+      "Active": "Active", "Completed": "Completed", "Failed": "Failed", "Abandoned": "Abandoned", "Arc": "Character arc",
+      "Plan": "Plan", "Location": "Location", "Countdown": "Countdown", "Steps": "Steps",
+      "Hint": "Click tally boxes to track Plan, Location and Countdown. Completing Plan or Location reduces the Countdown by one.",
+      "TallyHint": "A full Plan eases the resolution roll by 1; each missing mark hinders it by 1.", "Ready": "Ready to resolve.", "Modifier": "Resolution modifier",
+      "Resolve": "Resolution roll", "ResolveTitle": "Quest: {name}", "PlanComplete": "Plan complete", "PlanMissing": "Plan incomplete", "Empty": "No quests yet."
+    },
+    "Npc": {
+      "Creature": "Creature", "Disposition": "Disposition", "CreatureType": "Creature type", "Motivation": "Motivation", "Attack": "Attack of choice", "SpecialAbility": "Special ability",
+      "DoesSomething": "Does something", "Quest": "Wants to", "HiddenInfo": "Hidden from players", "strength": "Strength", "weakness": "Weakness", "secret": "Secret",
+      "Unknown": "Unknown", "ToggleReveal": "Reveal / hide for players", "Insights": "Insights learned (5 reveal it)", "Merchant": "Merchant (Item Piles)"
+    },
+    "Disposition": { "Hostile": "Hostile", "Unfriendly": "Unfriendly", "Indifferent": "Indifferent", "Friendly": "Friendly", "Allied": "Allied" },
+    "Scene": { "Level": "Tag & Tally scene level", "LevelDefault": "Use the world default", "LevelHint": "Default task level for rolls in this scene, and the level of creatures found here." },
+    "Theme": { "Theme": "Theme", "Fantasy": "Fantasy", "Modern": "Modern", "MonsterHunter": "Monster Hunter" },
+    "Sparks": {
+      "Title": "Sparks", "Tabs": { "generators": "Generators", "tables": "Tables", "oracle": "Oracle" },
+      "Generator": "Generator", "Generate": "Generate", "Random": "Random", "Clear": "Clear results", "Copy": "Copy text", "Copied": "Copied to clipboard.",
+      "CreateActor": "Create actor", "CreateItem": "Create item", "CreateJournal": "Create journal entry", "ItemAdded": "{name} added to {actor}.",
+      "LinkedActor": "Items will be added to", "Regenerate": "Regenerate with Sparks", "Tags": "Tags",
+      "Filter": "Filter tables", "ImportAll": "Import as RollTables", "ImportGroup": "Import this group as RollTables", "ImportHint": "Creates world RollTables you can edit; edited tables override the bundled ones.",
+      "Imported": "{count} RollTables created in the Sparks folder.", "Overridden": "Overridden by a world RollTable", "NoTable": "No table named {name}.",
+      "OverrideHint": "To customize a table, import it and edit the RollTable. Any world RollTable with the same name replaces the bundled one.",
+      "Scene": "Scene", "Location": "Location", "Dungeon": "Dungeon", "Lair": "Lair", "Room": "Room", "Faction": "Faction", "Quest": "Quest", "Insight": "Insight"
+    },
+    "Party": { "Title": "Party overview", "Empty": "No player-owned characters." },
+    "Settings": {
+      "DefaultLevel": { "Name": "Default task level", "Hint": "Used when the scene has no level set." },
+      "AutoTallies": { "Name": "Automatic tallies", "Hint": "On a natural 1 or 20, add a tally to each tag used. When off, the chat card offers a button instead." },
+      "SparkTheme": { "Name": "Sparks theme", "Hint": "Default table set for generators: fantasy, modern or monster hunter." },
+      "HideSecrets": { "Name": "Hide creature strengths and weaknesses", "Hint": "Players see them only once revealed by the GM or learned through five insights." },
+      "BarBrawl": { "Name": "Bar Brawl default bars", "Hint": "New tokens get a vitality bar and a strain bar when Bar Brawl is active." }
+    },
+    "Welcome": {
+      "Title": "Welcome to Tag & Tally",
+      "Body": "<p>Create a <strong>Character</strong>, add tags on the Tags tab, and press <em>Roll</em>. Set a scene level in the Scene configuration so rolls default to it.</p><p>The <strong>Sparks</strong>, <strong>Combat flow</strong> and <strong>Party overview</strong> buttons live in the token controls. Macros are available under <code>game.tagandtally.macros</code>.</p><p>Tag &amp; Tally is © its author and licensed CC BY-SA 4.0; see the system README for attribution.</p>"
+    }
+  }
+}

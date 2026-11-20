@@ -1,0 +1,36 @@
+<section class="tab {{tab.cssClass}} tt-spell-builder" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-grid two">
+    <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.Descriptor"}}</label><input type="text" name="system.descriptor" value="{{system.descriptor}}" /></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Spell.Effect"}}</label><input type="text" name="system.effect" value="{{system.effect}}" /></div>
+  </div>
+  <div class="tt-axis">
+    <label>{{localize "TAGANDTALLY.Spell.Base"}}</label>
+    <div class="tt-chips">{{#each spell.bases as |b|}}<label class="tt-chip {{#if b.selected}}selected{{/if}}"><input type="radio" name="system.base" value="{{b.key}}" {{checked b.selected}} /> {{b.key}} <small>{{b.points}}</small></label>{{/each}}</div>
+    {{#if system.requiresChaos}}<p class="hint warn">{{localize "TAGANDTALLY.Spell.RequiresChaos"}}</p>{{/if}}
+  </div>
+  <div class="tt-axis">
+    <label>{{localize "TAGANDTALLY.Spell.Aspects"}} <small>({{system.aspects.length}}/3)</small></label>
+    <div class="tt-chips">{{#each spell.aspects as |a|}}<a class="tt-chip {{#if a.selected}}selected{{/if}}" data-action="toggleAxis" data-axis="aspects" data-key="{{a.key}}">{{a.key}} <small>{{a.points}}</small></a>{{/each}}</div>
+  </div>
+  <div class="tt-axis">
+    <label>{{localize "TAGANDTALLY.Spell.Types"}} <small>({{system.types.length}}/3)</small></label>
+    <div class="tt-chips">{{#each spell.types as |t|}}<a class="tt-chip {{#if t.selected}}selected{{/if}}" data-action="toggleAxis" data-axis="types" data-key="{{t.key}}">{{t.key}} <small>{{t.points}}</small></a>{{/each}}</div>
+  </div>
+  <div class="tt-grid two">
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Spell.Scope.Scope"}}</label><select name="system.scope">{{selectOptions spell.scopes selected=system.scope}}</select></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Spell.Artifact.Artifact"}}</label><select name="system.artifact">{{selectOptions spell.artifacts selected=system.artifact}}</select></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Spell.Trigger.Trigger"}}</label><select name="system.trigger">{{selectOptions spell.triggers selected=system.trigger}}</select></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Spell.LevelOverride"}}</label><input type="number" name="system.levelOverride" value="{{system.levelOverride}}" min="0" max="10" /></div>
+    <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.mastered" {{checked system.mastered}} /> {{localize "TAGANDTALLY.Spell.Mastered"}}</label></div>
+    <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.bloodMagic" {{checked system.bloodMagic}} /> {{localize "TAGANDTALLY.Spell.BloodMagic"}}</label></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Spell.MasteryTallies"}}</label><input type="number" name="system.masteryTallies" value="{{system.masteryTallies}}" min="0" max="5" /></div>
+  </div>
+  <div class="tt-spell-summary">
+    <div><span>{{localize "TAGANDTALLY.Spell.Points"}}</span><strong>{{system.points}}</strong><small>{{system.basePoints}} + {{system.aspectPoints}} + {{system.typePoints}}{{#if system.axisCost}} + {{system.axisCost}} {{localize "TAGANDTALLY.Spell.AxisCost"}}{{/if}}</small></div>
+    <div><span>{{localize "TAGANDTALLY.Spell.BaseLevel"}}</span><strong>{{system.level}}</strong></div>
+    <div><span>PM</span><strong>+{{system.pm}}</strong></div>
+    {{#if system.triggered}}<div><span>TM</span><strong>-{{system.tm}}</strong></div>{{/if}}
+    <div class="{{#if system.overpowered}}warn{{/if}}"><span>{{localize "TAGANDTALLY.Spell.FinalLevel"}}</span><strong>{{system.finalLevel}}</strong><small>{{localize system.levelLabel}} · DC {{system.dc}}{{#if system.overpowered}} · {{localize "TAGANDTALLY.Spell.Overpowered"}} ({{system.effectiveLevel}}){{/if}}</small></div>
+    {{#if spell.mai}}<div><span>MAI</span><strong>{{spell.mai}}</strong><small>{{#if (tt-gt system.finalLevel spell.mai)}}{{localize "TAGANDTALLY.Spell.MaiCheckRequired"}}{{else}}{{#if (tt-eq system.finalLevel spell.mai)}}{{localize "TAGANDTALLY.Spell.MaiCheckRequired"}}{{else}}{{localize "TAGANDTALLY.Spell.NoCheck"}}{{/if}}{{/if}}</small></div>{{/if}}
+  </div>
+</section>

@@ -1,0 +1,67 @@
+<div class="tt-roll-part">
+<div class="tt-roll-body">
+  <div class="tt-grid two">
+    <div class="form-group span2"><label>{{localize "TAGANDTALLY.Roll.Title"}}</label><input type="text" name="title" value="{{state.title}}" placeholder="{{localize 'TAGANDTALLY.Roll.TitlePlaceholder'}}" /></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Roll.Type"}}</label>
+      <select name="rollType" {{#if lockRollType}}disabled{{/if}}>{{#each rollTypes as |t|}}<option value="{{t.id}}" {{#if t.selected}}selected{{/if}} title="{{t.description}}">{{t.label}}</option>{{/each}}</select></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Level.TaskLevel"}}</label>
+      <div class="tt-inline">
+        <a data-action="stepLevel" data-delta="-1"><i class="fa-solid fa-minus"></i></a>
+        <select name="level">{{#each levels as |l|}}<option value="{{l.value}}" {{#if l.selected}}selected{{/if}}>{{l.label}}</option>{{/each}}</select>
+        <a data-action="stepLevel" data-delta="1"><i class="fa-solid fa-plus"></i></a>
+      </div></div>
+  </div>
+
+  {{#if hasActor}}
+  <div class="tt-roll-columns">
+    <div>
+      <h4>{{localize "TAGANDTALLY.Tag.Tags"}} <small>{{localize "TAGANDTALLY.Roll.ThresholdLabel"}} {{calc.threshold}}</small></h4>
+      <ul class="tt-pick-list">
+        {{#each tags as |t|}}
+          <li class="{{t.mode}} {{#if t.ignored}}ignored{{/if}}" title="{{t.typeLabel}}">
+            <a class="tt-mode ease {{#if (tt-eq t.mode 'ease')}}on{{/if}}" data-action="toggle" data-item-id="{{t.id}}" data-mode="ease" title="{{localize 'TAGANDTALLY.Roll.Ease'}}"><i class="fa-solid fa-arrow-down"></i></a>
+            <a class="tt-mode hinder {{#if (tt-eq t.mode 'hinder')}}on{{/if}}" data-action="toggle" data-item-id="{{t.id}}" data-mode="hinder" title="{{localize 'TAGANDTALLY.Roll.Hinder'}}"><i class="fa-solid fa-arrow-up"></i></a>
+            <span class="tt-pick-name">{{t.name}} <small>{{t.notation}}</small></span>
+            <span class="tt-steps">{{t.steps}}</span>
+          </li>
+        {{/each}}
+        {{#unless tags.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Tag.Empty"}}</li>{{/unless}}
+      </ul>
+    </div>
+    <div>
+      <h4>{{localize "TAGANDTALLY.Gear.Gear"}} <small>{{localize "TAGANDTALLY.Roll.GearCap"}}</small></h4>
+      <ul class="tt-pick-list">
+        {{#each gear as |g|}}
+          <li class="{{g.mode}} {{#if g.ignored}}ignored{{/if}}" title="{{g.typeLabel}}">
+            <a class="tt-mode ease {{#if (tt-eq g.mode 'ease')}}on{{/if}}" data-action="toggle" data-item-id="{{g.id}}" data-mode="ease"><i class="fa-solid fa-arrow-down"></i></a>
+            <a class="tt-mode hinder {{#if (tt-eq g.mode 'hinder')}}on{{/if}}" data-action="toggle" data-item-id="{{g.id}}" data-mode="hinder"><i class="fa-solid fa-arrow-up"></i></a>
+            <span class="tt-pick-name">{{g.name}} <small>{{g.typeLabel}}</small></span>
+            <span class="tt-steps">{{g.steps}}</span>
+          </li>
+        {{/each}}
+        {{#unless gear.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Gear.Empty"}}</li>{{/unless}}
+      </ul>
+      {{#if fixedEases.length}}<h4>{{localize "TAGANDTALLY.Roll.Automatic"}}</h4><ul class="tt-pick-list fixed">{{#each fixedEases}}<li class="ease"><i class="fa-solid fa-arrow-down"></i> {{name}} <span class="tt-steps">{{steps}}</span></li>{{/each}}{{#each fixedHinders}}<li class="hinder"><i class="fa-solid fa-arrow-up"></i> {{name}} <span class="tt-steps">{{steps}}</span></li>{{/each}}</ul>
+      {{else if fixedHinders.length}}<h4>{{localize "TAGANDTALLY.Roll.Automatic"}}</h4><ul class="tt-pick-list fixed">{{#each fixedHinders}}<li class="hinder"><i class="fa-solid fa-arrow-up"></i> {{name}} <span class="tt-steps">{{steps}}</span></li>{{/each}}</ul>{{/if}}
+    </div>
+  </div>
+  {{/if}}
+
+  <div class="tt-grid two">
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Roll.ManualEase"}}</label><input type="number" name="manualEase" value="{{state.manualEase}}" min="0" max="9" /></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Roll.ManualHinder"}}</label><input type="number" name="manualHinder" value="{{state.manualHinder}}" min="0" max="9" /></div>
+  </div>
+
+  <div class="tt-roll-summary">
+    <div><span>{{localize "TAGANDTALLY.Level.Level"}}</span><strong>{{calc.level}}</strong></div>
+    <div class="ease"><span>{{localize "TAGANDTALLY.Roll.Eased"}}</span><strong>-{{calc.easeSteps}}</strong></div>
+    <div class="hinder"><span>{{localize "TAGANDTALLY.Roll.Hindered"}}</span><strong>+{{calc.hinderSteps}}</strong></div>
+    <div class="effective"><span>{{localize "TAGANDTALLY.Roll.Effective"}}</span><strong>{{calc.effective}}</strong><small>{{effectiveLabel}}</small></div>
+    <div class="dc"><span>DC</span><strong>{{calc.dc}}</strong></div>
+  </div>
+  {{#if calc.ignored.length}}<p class="hint warn">{{localize "TAGANDTALLY.Roll.Ignored"}}: {{#each calc.ignored}}{{name}}{{#unless @last}}, {{/unless}}{{/each}}</p>{{/if}}
+</div>
+<footer class="form-footer">
+  <button type="button" data-action="roll" class="tt-roll-btn big"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Roll.Roll"}} (DC {{calc.dc}})</button>
+</footer>
+</div>

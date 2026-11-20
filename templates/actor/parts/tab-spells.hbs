@@ -1,0 +1,29 @@
+<section class="tab {{tab.cssClass}} tt-spells" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-toolbar">
+    <span>{{localize "TAGANDTALLY.Spell.MaiLong"}}: <strong>{{system.mai.total}}</strong> <small>({{localize "TAGANDTALLY.Spell.MaiHint"}})</small></span>
+    <span class="tt-controls"><a data-action="createItem" data-type="spell"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Spell.Spell"}}</a></span>
+  </div>
+  <ol class="tt-item-list tt-spell-list">
+    <li class="tt-list-header"><span>{{localize "TAGANDTALLY.Spell.Spell"}}</span><span class="tt-col-level">{{localize "TAGANDTALLY.Level.Level"}}</span><span class="tt-col-dc">DC</span><span></span></li>
+    {{#each items.spell as |item|}}
+      <li class="tt-item spell {{#if item.system.overpowered}}overpowered{{/if}}" data-item-id="{{item.id}}">
+        <img src="{{item.img}}" alt="" data-action="useItem" title="{{localize 'TAGANDTALLY.Spell.Cast'}}" />
+        <div class="tt-item-body">
+          <span class="tt-item-name" data-action="editItem">{{item.name}}
+            {{#if item.system.mastered}}<i class="fa-solid fa-star tt-mastered"></i>{{/if}}
+            {{#if item.system.bloodMagic}}<i class="fa-solid fa-droplet" title="{{localize 'TAGANDTALLY.Spell.BloodMagic'}}"></i>{{/if}}
+            <small>{{item.system.base}} · {{#each item.system.aspects}}{{this}} {{/each}}· {{#each item.system.types}}{{this}} {{/each}}</small></span>
+          <span class="tt-item-sub">{{tt-tags item.system.sentenceText}} <em>{{item.system.points}} pts, PM +{{item.system.pm}}{{#if item.system.triggered}}, TM -{{item.system.tm}}{{/if}}</em></span>
+        </div>
+        <span class="tt-col-level" title="{{localize item.system.levelLabel}}">{{item.system.finalLevel}}{{#if item.system.overpowered}}<i class="fa-solid fa-triangle-exclamation" title="{{localize 'TAGANDTALLY.Spell.Overpowered'}}"></i>{{/if}}</span>
+        <span class="tt-col-dc">{{item.system.dc}}</span>
+        <span class="tt-controls">
+          <a data-action="useItem" title="{{localize 'TAGANDTALLY.Spell.Cast'}}"><i class="fa-solid fa-dice-d20"></i></a>
+          <a data-action="chatItem"><i class="fa-solid fa-comment"></i></a>
+          <a data-action="deleteItem"><i class="fa-solid fa-trash"></i></a>
+        </span>
+      </li>
+    {{/each}}
+    {{#unless items.spell.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Spell.Empty"}}</li>{{/unless}}
+  </ol>
+</section>

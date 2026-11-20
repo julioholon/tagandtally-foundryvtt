@@ -1,0 +1,9 @@
+<section class="tab {{tab.cssClass}} tt-sparks-oracle" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="form-group"><label>{{localize "TAGANDTALLY.Roll.Question"}}</label><input type="text" name="question" placeholder="{{localize 'TAGANDTALLY.Roll.QuestionPlaceholder'}}" /></div>
+  <div class="form-group"><label>{{localize "TAGANDTALLY.Roll.Likelihood"}}</label><select name="likelihood">{{#each likelihoods as |l|}}<option value="{{l.value}}" {{#if (tt-eq l.value 5)}}selected{{/if}}>{{l.label}}</option>{{/each}}</select></div>
+  <div class="tt-actions-row">
+    <button type="button" data-action="oracle" class="tt-roll-btn"><i class="fa-solid fa-eye"></i> {{localize "TAGANDTALLY.Roll.Oracle"}}</button>
+    <button type="button" data-action="yesNo"><i class="fa-solid fa-dice-six"></i> {{localize "TAGANDTALLY.Roll.YesNo"}}</button>
+  </div>
+  <p class="hint">{{localize "TAGANDTALLY.Roll.OracleHint"}}</p>
+</section>

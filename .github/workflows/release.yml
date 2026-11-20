@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Derive version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Stamp system.json
+        run: |
+          python3 - "${{ steps.version.outputs.version }}" <<'PY'
+          import json, sys
+          version = sys.argv[1]
+          with open("system.json") as f:
+              data = json.load(f)
+          repo = "https://github.com/${{ github.repository }}"
+          data["version"] = version
+          data["manifest"] = f"{repo}/releases/latest/download/system.json"
+          data["download"] = f"{repo}/releases/download/v{version}/tagandtally.zip"
+          with open("system.json", "w") as f:
+              json.dump(data, f, indent=2)
+              f.write("\n")
+          PY
+
+      - name: Build zip
+        run: |
+          zip -r tagandtally.zip \
+            system.json tagandtally.mjs module templates styles lang data \
+            README.md LICENSE.md CHANGELOG.md \
+            -x "*.DS_Store"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          files: |
+            system.json
+            tagandtally.zip

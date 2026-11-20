@@ -1,0 +1,20 @@
+<table class="tt-party">
+  <thead><tr><th></th><th>{{localize "TAGANDTALLY.Name"}}</th><th>{{localize "TAGANDTALLY.Sentence.Title"}}</th><th>{{localize "TAGANDTALLY.Tabs.wounds"}}</th><th>{{localize "TAGANDTALLY.Wealth.Wealth"}}</th><th>MAI</th><th>{{localize "TAGANDTALLY.Gear.Loadout"}}</th><th>{{localize "TAGANDTALLY.Tag.Tags"}}</th><th>{{localize "TAGANDTALLY.Quest.Quests"}}</th><th></th></tr></thead>
+  <tbody>
+    {{#each rows as |r|}}
+      <tr>
+        <td><img src="{{r.img}}" alt="" data-action="openActor" data-actor-id="{{r.id}}" /></td>
+        <td><a data-action="openActor" data-actor-id="{{r.id}}">{{r.name}}</a><br><small>{{r.owners}}</small></td>
+        <td class="tt-sentence-cell">{{tt-tags r.sentence}}</td>
+        <td class="sev-{{r.severity}}"><strong>{{r.severityLabel}}</strong><br><small>{{#each r.tracks}}{{label}} {{value}}/{{max}}{{#unless @last}} · {{/unless}}{{/each}}</small>{{#if r.worst}}<br><em>{{r.worst.name}}</em>{{/if}}</td>
+        <td>{{r.wealth}} <small>{{r.wealthLabel}}</small>{{#if r.inDebt}}<br><span class="tt-tag warn">{{localize "TAGANDTALLY.Wealth.InDebt"}}</span>{{/if}}</td>
+        <td>{{r.mai}}</td>
+        <td>{{r.loadout.value}}/{{r.loadout.max}}</td>
+        <td>{{r.tags}}</td>
+        <td>{{r.quests}}</td>
+        <td><a data-action="rollTask" data-actor-id="{{r.id}}" title="{{localize 'TAGANDTALLY.Roll.Task'}}"><i class="fa-solid fa-dice-d20"></i></a></td>
+      </tr>
+    {{/each}}
+    {{#unless rows.length}}<tr><td colspan="10" class="tt-empty">{{localize "TAGANDTALLY.Party.Empty"}}</td></tr>{{/unless}}
+  </tbody>
+</table>

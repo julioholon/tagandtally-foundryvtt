@@ -1,0 +1,47 @@
+<section class="tab {{tab.cssClass}} tt-wounds" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-severity-banner sev-{{wounds.severity}}">
+    <strong>{{severityLabel}}</strong> · {{localize "TAGANDTALLY.Wound.Vitality"}} {{wounds.vitality.value}}/{{wounds.vitality.max}}
+    {{#if wounds.worst}}· <em>{{wounds.worst.name}}{{#if wounds.worst.hinders}} ({{wounds.worst.hinders}}){{/if}}</em>{{/if}}
+  </div>
+  {{> "systems/tagandtally/templates/actor/parts/wound-tracks.hbs"}}
+  <p class="hint">{{localize "TAGANDTALLY.Wound.Hint"}}</p>
+  <div class="tt-actions-row">
+    <button type="button" data-action="rollInjury"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Combat.RollInjury"}}</button>
+    <button type="button" data-action="openCombatFlow"><i class="fa-solid fa-swords"></i> {{localize "TAGANDTALLY.Combat.Title"}}</button>
+    <button type="button" data-action="rest" data-mode="strain" title="{{localize 'TAGANDTALLY.Wound.RestStrainHint'}}"><i class="fa-solid fa-bed"></i> {{localize "TAGANDTALLY.Wound.RestStrain"}}</button>
+    <button type="button" data-action="rest" data-mode="trauma"><i class="fa-solid fa-bed"></i> {{localize "TAGANDTALLY.Wound.RestTrauma"}}</button>
+    <button type="button" data-action="rest" data-mode="injury"><i class="fa-solid fa-bed"></i> {{localize "TAGANDTALLY.Wound.RestInjury"}}</button>
+  </div>
+
+  <ol class="tt-item-list">
+    <li class="tt-list-header">
+      <span>{{localize "TAGANDTALLY.Wound.Sentences"}}</span>
+      <span class="tt-controls">
+        <a data-action="createItem" data-type="wound" title="{{localize 'TAGANDTALLY.Create'}}"><i class="fa-solid fa-plus"></i></a>
+      </span>
+    </li>
+    {{#each items.activeWounds as |item|}}
+      <li class="tt-item" data-item-id="{{item.id}}">
+        <img src="{{item.img}}" alt="" data-action="chatItem" />
+        <div class="tt-item-body">
+          <span class="tt-item-name" data-action="editItem">{{item.name}} <small>{{localize item.system.trackLabel}}</small></span>
+          <span class="tt-item-sub">{{tt-tags item.system.sentenceText}}</span>
+        </div>
+        <span class="tt-controls">
+          <a data-action="toggleHealed" title="{{localize 'TAGANDTALLY.Wound.MarkHealed'}}"><i class="fa-solid fa-bandage"></i></a>
+          <a data-action="deleteItem" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-trash"></i></a>
+        </span>
+      </li>
+    {{/each}}
+    {{#if items.healedWounds.length}}
+      <li class="tt-list-header"><span>{{localize "TAGANDTALLY.Wound.Healed"}}</span></li>
+      {{#each items.healedWounds as |item|}}
+        <li class="tt-item healed" data-item-id="{{item.id}}">
+          <img src="{{item.img}}" alt="" />
+          <div class="tt-item-body"><span class="tt-item-name" data-action="editItem">{{item.name}}</span><span class="tt-item-sub">{{tt-tags item.system.sentenceText}}</span></div>
+          <span class="tt-controls"><a data-action="toggleHealed"><i class="fa-solid fa-rotate-left"></i></a><a data-action="deleteItem"><i class="fa-solid fa-trash"></i></a></span>
+        </li>
+      {{/each}}
+    {{/if}}
+  </ol>
+</section>

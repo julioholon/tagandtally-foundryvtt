@@ -1,0 +1,52 @@
+<div class="tt-flow">
+  <div class="tt-toolbar">
+    <span class="hint">{{localize "TAGANDTALLY.Combat.Hint"}}</span>
+    <span class="tt-controls">
+      <button type="button" data-action="addSelected"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Combat.AddSelected"}}</button>
+      {{#if hasCombat}}<button type="button" data-action="addCombatants"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Combat.AddCombatants"}}</button>{{/if}}
+      {{#if isGM}}<button type="button" data-action="resetAll"><i class="fa-solid fa-trash"></i></button>{{/if}}
+    </span>
+  </div>
+  <ol class="tt-flow-list">
+    {{#each participants as |p|}}
+      <li class="tt-flow-row {{#if p.finished}}finished{{/if}}" data-uuid="{{p.uuid}}">
+        <header>
+          <img src="{{p.img}}" alt="" />
+          <strong>{{p.name}}</strong>
+          <span class="tt-flow-opponent">
+            {{localize "TAGANDTALLY.Combat.Versus"}}
+            <select data-opponent-level="{{p.uuid}}">{{#each ../levels as |l k|}}<option value="{{k}}" {{#if (tt-eq k p.opponentLevel)}}selected{{/if}}>{{k}}: {{localize l}}</option>{{/each}}</select>
+            {{#if p.opponentName}}<em>{{p.opponentName}}</em>{{/if}}
+            <a data-action="setOpponent" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Combat.SetOpponent'}}"><i class="fa-solid fa-crosshairs"></i></a>
+          </span>
+          <span class="tt-flow-mod {{#if (tt-gt p.modifier 0)}}ease{{else if (tt-gt 0 p.modifier)}}hinder{{/if}}" title="{{localize 'TAGANDTALLY.Combat.PhaseModifier'}}">{{p.modifierLabel}} · DC {{p.dc}}</span>
+          <span class="tt-controls">
+            <a data-action="reset" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Combat.Reset'}}"><i class="fa-solid fa-rotate-left"></i></a>
+            <a data-action="remove" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-xmark"></i></a>
+          </span>
+        </header>
+        <ol class="tt-phases">
+          {{#each p.phases as |ph|}}
+            <li class="tt-phase {{#if ph.current}}current{{/if}} {{#if ph.done}}done {{ph.bandCss}}{{/if}} {{#if ph.future}}future{{/if}}">
+              <span class="tt-phase-name">{{ph.index}}. {{ph.label}}</span>
+              {{#if ph.done}}<span class="tt-phase-result"><i class="fa-solid fa-dice-d20"></i> {{ph.total}} · {{ph.band}}</span>
+              {{else if ph.current}}
+                {{#if p.canRoll}}<button type="button" data-action="rollPhase" data-uuid="{{p.uuid}}"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Roll.Roll"}}</button>{{/if}}
+                {{#if ../isGM}}<a data-action="skipPhase" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Combat.Skip'}}"><i class="fa-solid fa-forward"></i></a>{{/if}}
+              {{/if}}
+            </li>
+          {{/each}}
+        </ol>
+        {{#if p.finished}}
+          <footer class="tt-flow-outcome">
+            <strong>{{p.woundLabel}}</strong>
+            {{#if p.wound}}{{#unless p.woundApplied}}<button type="button" data-action="applyWound" data-uuid="{{p.uuid}}"><i class="fa-solid fa-heart-crack"></i> {{localize "TAGANDTALLY.Chat.ApplyWound"}}</button>{{else}}<em>{{localize "TAGANDTALLY.Combat.WoundApplied"}}</em>{{/unless}}{{/if}}
+          </footer>
+        {{else}}
+          <footer class="tt-flow-outcome dim"><a data-action="rollInjury" data-uuid="{{p.uuid}}"><i class="fa-solid fa-heart-crack"></i> {{localize "TAGANDTALLY.Combat.RollInjury"}}</a></footer>
+        {{/if}}
+      </li>
+    {{/each}}
+    {{#unless participants.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Combat.Empty"}}</li>{{/unless}}
+  </ol>
+</div>

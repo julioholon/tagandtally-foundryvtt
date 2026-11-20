@@ -1,0 +1,110 @@
+{
+  "_comment": "Sentence generators ported from the Tag & Tally Obsidian vault (game/generators/*.md). Syntax: {table} rolls a table; {table|tag} wraps the result as a [tag]; {=table} reuses the first roll of that table; {=table.field} reads a column of that row; {a-[b]} rolls table a-<slug of b's result>; {x ?? y} falls back to y when x is missing; |lower and |title change case. Tables are looked up as <theme>-<name> first, then <name>.",
+  "groups": [
+    {
+      "id": "characters",
+      "label": "Characters",
+      "generators": [
+        {
+          "id": "npc",
+          "label": "NPC",
+          "actorType": "npc",
+          "options": [{ "key": "type-option", "label": "Type table", "choices": ["class", "profession", "criminal"] }],
+          "template": "**{name-patterns|title}** is a {descriptor|tag} {species|tag} {type-[type-option]|tag} who {does-something|tag}. They are motivated by [{character-motivation-verb|lower} {character-motivation-noun|lower}] and want to [{=quest-type|lower} {quest-objective-[quest-type]|lower}]. In combat, they deal {wound-damage|tag} damage with {character-attack-choice|tag}, but they {character-secret|tag}."
+        },
+        {
+          "id": "species",
+          "label": "Species",
+          "template": "This species is a {character-species-aged|tag} {character-species-descriptor|tag} people who {character-species-cultural-trait|tag} and {character-species-feature|tag}."
+        },
+        {
+          "id": "type",
+          "label": "Type",
+          "options": [{ "key": "type-option", "label": "Type table", "choices": ["class", "profession", "criminal"] }],
+          "template": "This type is a {descriptor|tag} {type-[type-option]|tag} who {does-something|tag}."
+        },
+        {
+          "id": "appearance",
+          "label": "Appearance",
+          "multiline": true,
+          "template": "Pronoun: {character-pronoun}\nAge: {character-age}\nHeight: {=character-build-height.height}\nBuild: {=character-build-height}\nHair: {character-hair-texture}, {character-hair-style}, {character-hair-color}\nEyes: {character-eye-color}\nSkin: {character-skin-tone}, {character-skin-complexion}\nClothing: {character-clothing}\nVoice: {character-voice}\nDistinguishing: {character-distinguishing-feature}"
+        }
+      ]
+    },
+    {
+      "id": "creatures",
+      "label": "Creatures",
+      "generators": [
+        {
+          "id": "creature",
+          "label": "Creature",
+          "actorType": "npc",
+          "creature": true,
+          "options": [{ "key": "creature-type", "label": "Creature type", "table": "creature-type" }],
+          "template": "**{creature-name-prefix} {creature-name-[creature-type] ?? creature-name-prefix}** ({creature-disposition|tag} {creature-descriptor|tag} {=creature-type|tag}): This creature {creature-motivation|tag} and attacks with {creature-attack-choice-[damage-type]|tag} for {=damage-type|tag} damage. It features a unique ability to {creature-special-ability-[creature-type]|tag}. It {creature-strength-[creature-type]|tag} and {creature-weakness-[creature-type]|tag}."
+        }
+      ]
+    },
+    {
+      "id": "gear",
+      "label": "Gear",
+      "generators": [
+        { "id": "armor", "label": "Armor", "itemType": "gear", "gearType": "armor",
+          "template": "This armor is a {armor-descriptor|tag} {material-armor|tag} {armor-type|tag} that {armor-special|tag}." },
+        { "id": "item", "label": "Item", "itemType": "gear", "gearType": "item",
+          "options": [{ "key": "item-type", "label": "Item type", "table": "item-type" }],
+          "template": "This item is a {item-descriptor|tag} {=item-type|tag} that {item-special|tag}." },
+        { "id": "weapon", "label": "Weapon", "itemType": "gear", "gearType": "weapon",
+          "template": "This weapon is a {weapon-descriptor|tag} {material-weapon|tag} {weapon-type|tag} that does {damage-type|tag} damage and {weapon-special|tag}." },
+        { "id": "trap", "label": "Trap", "itemType": "gear", "gearType": "trap",
+          "template": "This trap is a {trap-descriptor|tag} {trap-type|tag} that {trigger-type|tag} and {trap-effect|tag}." },
+        { "id": "consumable", "label": "Consumable", "itemType": "gear", "gearType": "consumable",
+          "template": "This consumable is a {consumable-descriptor|tag} {consumable-type|tag} that {consumable-effect|tag} and {consumable-special|tag}." },
+        { "id": "resource", "label": "Resource", "itemType": "gear", "gearType": "resource",
+          "template": "**{=resource}** is a {=resource.rarity|tag} {=resource.descriptor|tag} {=resource.resource-type|tag} that {=resource.special|tag}." }
+      ]
+    },
+    {
+      "id": "places",
+      "label": "Places",
+      "generators": [
+        { "id": "scene", "label": "Scene", "journal": true,
+          "template": "This scene is a {scene-descriptor|tag} {=scene-type|tag} that {scene-[scene-type]|tag}." },
+        { "id": "location", "label": "Location", "journal": true,
+          "template": "This location is a {location-descriptive|tag} {location-type|tag} that {location-distinctive-feature|tag}." },
+        { "id": "dungeon", "label": "Dungeon", "journal": true,
+          "template": "**{dungeon-name-pattern}** is a {dungeon-descriptive|tag} {dungeon-type|tag} that {dungeon-distinctive-feature|tag}." },
+        { "id": "lair", "label": "Lair", "journal": true,
+          "template": "**{lair-name-pattern}** is a {lair-descriptive|tag} {lair-type|tag} that {lair-distinctive-feature|tag}." },
+        { "id": "room", "label": "Room", "journal": true,
+          "template": "This room is a {room-descriptive|tag} {room-type|tag} that {room-distinctive-feature|tag}." }
+      ]
+    },
+    {
+      "id": "story",
+      "label": "Story",
+      "generators": [
+        { "id": "quest", "label": "Quest", "itemType": "quest",
+          "template": "{=quest-type|tag} {quest-objective-[quest-type]|tag}" },
+        { "id": "faction", "label": "Faction", "journal": true,
+          "template": "**{faction-name-pattern}** is a {faction-descriptor|tag} {faction-organization-type|tag} that {faction-core-function|tag} and [{faction-goal-verb|lower} {faction-goal-noun|lower}]. Despite their outward reputation, they [{faction-secret-verb|lower} {faction-secret-noun|lower}]." },
+        { "id": "insight", "label": "Insight",
+          "template": "This insight reveals information about a [{insight-status}] [{=insight-subject}] regarding its [{insight-modifier-[insight-subject]}]." }
+      ]
+    },
+    {
+      "id": "wounds",
+      "label": "Wounds",
+      "generators": [
+        { "id": "wound", "label": "Wound", "itemType": "wound",
+          "options": [
+            { "key": "wound-damage", "label": "Damage type", "table": "wound-damage" },
+            { "key": "wound-injury-type", "label": "Injury type", "table": "wound-injury-type" }
+          ],
+          "template": "This {=wound-damage|tag} {=wound-injury-type|tag} is a {wound-descriptor|tag} {wound-type-of-mark|tag} located on {wound-body-part|tag} that {wound-detriment-[wound-damage]-[wound-injury-type]|tag}." },
+        { "id": "blood-magic-trauma", "label": "Blood Magic Trauma", "itemType": "wound",
+          "template": "This wound is a {wound-blood-magic-descriptor|tag} {wound-blood-magic-mark|tag} located on {wound-blood-magic-body-part|tag} that {wound-blood-magic-detriment|tag}." }
+      ]
+    }
+  ]
+}

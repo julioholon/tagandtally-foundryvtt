@@ -1,0 +1,13 @@
+<section class="tab {{tab.cssClass}} tt-sparks-tables" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-toolbar">
+    <input type="search" name="tableFilter" value="{{filter}}" placeholder="{{localize 'TAGANDTALLY.Sparks.Filter'}} ({{tableCount}})" />
+    {{#if isGM}}<button type="button" data-action="importTables" title="{{localize 'TAGANDTALLY.Sparks.ImportHint'}}"><i class="fa-solid fa-file-import"></i> {{localize "TAGANDTALLY.Sparks.ImportAll"}}</button>{{/if}}
+  </div>
+  <p class="hint">{{localize "TAGANDTALLY.Sparks.OverrideHint"}}</p>
+  <div class="tt-table-list">
+    {{#each tableGroups as |g|}}
+      <h4>{{g.group}} {{#if ../isGM}}<a data-action="importTables" data-group="{{g.group}}" title="{{localize 'TAGANDTALLY.Sparks.ImportGroup'}}"><i class="fa-solid fa-file-import"></i></a>{{/if}}</h4>
+      <ul>{{#each g.tables as |t|}}<li class="tt-table-row {{#if t.overridden}}overridden{{/if}}" data-name="{{t.name}}"><a data-action="rollTable" data-table="{{t.name}}"><i class="fa-solid fa-dice"></i> {{t.name}}</a> <small>{{t.formula}} · {{t.rows}}</small>{{#if t.overridden}}<i class="fa-solid fa-table" title="{{localize 'TAGANDTALLY.Sparks.Overridden'}}"></i>{{/if}}</li>{{/each}}</ul>
+    {{/each}}
+  </div>
+</section>

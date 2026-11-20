@@ -1,0 +1,43 @@
+<section class="tab {{tab.cssClass}} tt-main" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-columns">
+    <div class="tt-col">
+      <h3>{{localize "TAGANDTALLY.Sentence.Title"}}</h3>
+      <p class="tt-sentence big">{{tt-tags sentenceText}}</p>
+
+      <h3>{{localize "TAGANDTALLY.Tabs.wounds"}}</h3>
+      {{> "systems/tagandtally/templates/actor/parts/wound-tracks.hbs"}}
+
+      <h3>{{localize "TAGANDTALLY.Character.Details"}}</h3>
+      <div class="tt-grid two">
+        <div class="form-group"><label>{{localize "TAGANDTALLY.LifeStage.LifeStage"}}</label><select name="system.lifeStage">{{selectOptions lifeStages selected=system.lifeStage localize=true}}</select></div>
+        <div class="form-group"><label>{{localize "TAGANDTALLY.Character.Age"}}</label><input type="number" name="system.age" value="{{system.age}}" min="0" /></div>
+        <div class="form-group"><label>{{localize "TAGANDTALLY.Character.Pronoun"}}</label><input type="text" name="system.pronoun" value="{{system.pronoun}}" /></div>
+        <div class="form-group"><label>{{localize "TAGANDTALLY.Spell.MaiBase"}}</label><input type="number" name="system.mai.base" value="{{system.mai.base}}" min="0" max="10" /> <small>+{{mai.bonus}} = {{mai.total}}</small></div>
+        <div class="form-group"><label>{{localize "TAGANDTALLY.Wealth.QoL"}}</label><select name="system.wealth.qualityOfLife">{{selectOptions qualityOfLife selected=system.wealth.qualityOfLife localize=true}}</select></div>
+        <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.wealth.inDebt" {{checked system.wealth.inDebt}} /> {{localize "TAGANDTALLY.Wealth.InDebt"}}</label></div>
+      </div>
+    </div>
+    <div class="tt-col">
+      <h3>{{localize "TAGANDTALLY.Character.Appearance"}} <a data-action="generateAppearance" title="{{localize 'TAGANDTALLY.Sparks.Generate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></a></h3>
+      <div class="tt-grid two compact">
+        {{#each (tt-array "height" "build" "hair" "eyes" "skin" "clothing" "voice" "distinguishing") as |key|}}
+          <div class="form-group"><label>{{localize (concat "TAGANDTALLY.Appearance." key)}}</label><input type="text" name="system.appearance.{{key}}" value="{{lookup ../system.appearance key}}" /></div>
+        {{/each}}
+      </div>
+
+      <h3>{{localize "TAGANDTALLY.Lore.Title"}}</h3>
+      <div class="tt-grid two compact">
+        <div class="form-group"><label>{{localize "TAGANDTALLY.Lore.Residence"}}</label><input type="text" name="system.lore.residence" value="{{system.lore.residence}}" /></div>
+        <div class="form-group"><label>{{localize "TAGANDTALLY.Lore.Workplace"}}</label><input type="text" name="system.lore.workplace" value="{{system.lore.workplace}}" /></div>
+        <div class="form-group"><label>{{localize "TAGANDTALLY.Lore.Faction"}}</label><input type="text" name="system.lore.faction" value="{{system.lore.faction}}" /></div>
+        <div class="form-group"><label>{{localize "TAGANDTALLY.Lore.FactionDisposition"}}</label><select name="system.lore.factionDisposition">{{selectOptions dispositions selected=system.lore.factionDisposition localize=true}}</select></div>
+        <div class="form-group span2"><label>{{localize "TAGANDTALLY.Lore.KnownNpcs"}}</label><input type="text" name="system.lore.knownNpcs" value="{{system.lore.knownNpcs}}" /></div>
+        <div class="form-group span2"><label>{{localize "TAGANDTALLY.Character.Arc"}}</label><input type="text" name="system.arc" value="{{system.arc}}" /></div>
+      </div>
+      <div class="tt-actions-row">
+        <button type="button" data-action="openSparks"><i class="fa-solid fa-wand-magic-sparkles"></i> {{localize "TAGANDTALLY.Sparks.Title"}}</button>
+        <button type="button" data-action="openParty"><i class="fa-solid fa-people-group"></i> {{localize "TAGANDTALLY.Party.Title"}}</button>
+      </div>
+    </div>
+  </div>
+</section>

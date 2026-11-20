@@ -1,0 +1,10 @@
+<section class="tab {{tab.cssClass}} tt-grid two" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="form-group"><label>{{localize "TAGANDTALLY.Wound.Track"}}</label><select name="system.injuryType">{{selectOptions tracks selected=system.injuryType localize=true}}</select></div>
+  <div class="form-group"><label>{{localize "TAGANDTALLY.Damage.Type"}}</label><input type="text" name="system.damageType" value="{{system.damageType}}" list="tt-dmg" /><datalist id="tt-dmg">{{#each damageTypes as |l k|}}<option value="{{localize l}}"></option>{{/each}}</datalist></div>
+  <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.Descriptor"}}</label><input type="text" name="system.descriptor" value="{{system.descriptor}}" /></div>
+  <div class="form-group"><label>{{localize "TAGANDTALLY.Wound.Mark"}}</label><input type="text" name="system.mark" value="{{system.mark}}" /></div>
+  <div class="form-group"><label>{{localize "TAGANDTALLY.Wound.BodyPart"}}</label><input type="text" name="system.bodyPart" value="{{system.bodyPart}}" /></div>
+  <div class="form-group"><label>{{localize "TAGANDTALLY.Wound.Hinders"}}</label><input type="text" name="system.hinders" value="{{system.hinders}}" /></div>
+  <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.healed" {{checked system.healed}} /> {{localize "TAGANDTALLY.Wound.Healed"}}</label></div>
+  <div class="form-group">{{#if isGM}}<a data-action="generateSentence"><i class="fa-solid fa-wand-magic-sparkles"></i> {{localize "TAGANDTALLY.Sparks.Regenerate"}}</a>{{/if}}</div>
+</section>

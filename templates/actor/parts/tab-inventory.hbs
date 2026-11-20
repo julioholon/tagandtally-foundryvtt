@@ -1,0 +1,29 @@
+<section class="tab {{tab.cssClass}} tt-inventory" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <div class="tt-toolbar">
+    <span>{{#if loadout}}{{localize "TAGANDTALLY.Gear.Loadout"}} {{loadout.value}}/{{loadout.max}} · {{localize "TAGANDTALLY.GearKind.Ephemeral"}} {{loadout.ephemeral}}/{{loadout.ephemeralMax}} · {{/if}}<i class="fa-solid fa-coins"></i> {{localize "TAGANDTALLY.Wealth.Wealth"}} {{system.wealth.value}}</span>
+    <span class="tt-controls">
+      {{#each config.gearTypes as |label key|}}<a data-action="createItem" data-type="gear" data-gear-type="{{key}}"><i class="fa-solid fa-plus"></i> {{localize label}}</a>{{/each}}
+    </span>
+  </div>
+  <ol class="tt-item-list tt-gear-list">
+    <li class="tt-list-header"><span>{{localize "TAGANDTALLY.Gear.Gear"}}</span><span class="tt-col-level">{{localize "TAGANDTALLY.Level.Level"}}</span><span class="tt-col-qty">{{localize "TAGANDTALLY.Gear.Qty"}}</span><span class="tt-col-cost">{{localize "TAGANDTALLY.Cost.Cost"}}</span><span></span></li>
+    {{#each items.gear as |item|}}
+      <li class="tt-item gear {{#unless item.system.equipped}}unequipped{{/unless}}" data-item-id="{{item.id}}">
+        <img src="{{item.img}}" alt="" data-action="useItem" title="{{localize 'TAGANDTALLY.Roll.WithGear'}}" />
+        <div class="tt-item-body">
+          <span class="tt-item-name" data-action="editItem">{{item.name}} <small>{{localize (lookup ../config.gearTypes item.system.gearType)}}{{#if item.system.isArmor}} · {{localize item.system.armor.label}}{{/if}}{{#if item.system.damageType}} · {{item.system.damageType}}{{/if}}</small></span>
+          <span class="tt-item-sub">{{tt-tags item.system.sentenceText}}</span>
+        </div>
+        <span class="tt-col-level" title="{{localize item.system.levelLabel}}">{{item.system.level}}</span>
+        <span class="tt-col-qty"><a data-action="changeQuantity" data-delta="-1"><i class="fa-solid fa-minus"></i></a> {{item.system.quantity}} <a data-action="changeQuantity" data-delta="1"><i class="fa-solid fa-plus"></i></a></span>
+        <span class="tt-col-cost" title="{{localize item.system.costLabel}}">{{item.system.cost}}</span>
+        <span class="tt-controls">
+          <a data-action="toggleEquipped" title="{{localize 'TAGANDTALLY.Gear.Equipped'}}"><i class="fa-solid {{#if item.system.equipped}}fa-shield-halved{{else}}fa-shield{{/if}}"></i></a>
+          <a data-action="chatItem"><i class="fa-solid fa-comment"></i></a>
+          <a data-action="deleteItem"><i class="fa-solid fa-trash"></i></a>
+        </span>
+      </li>
+    {{/each}}
+    {{#unless items.gear.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Gear.Empty"}}</li>{{/unless}}
+  </ol>
+</section>

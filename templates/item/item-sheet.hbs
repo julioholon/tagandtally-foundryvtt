@@ -1,0 +1,11 @@
+<header class="tt-header item">
+  <img class="tt-portrait small" src="{{item.img}}" data-edit="img" data-action="editImage" alt="{{item.name}}" />
+  <div class="tt-header-main">
+    <div class="tt-name-row">
+      <input type="text" name="name" value="{{item.name}}" placeholder="{{localize 'TAGANDTALLY.Name'}}" />
+      {{#if hasActor}}<button type="button" class="tt-roll-btn" data-action="use"><i class="fa-solid fa-dice-d20"></i></button>{{/if}}
+      <button type="button" class="tt-roll-btn" data-action="toChat" title="{{localize 'TAGANDTALLY.ToChat'}}"><i class="fa-solid fa-comment"></i></button>
+    </div>
+    <p class="tt-sentence">{{tt-tags sentenceText}}</p>
+  </div>
+</header>

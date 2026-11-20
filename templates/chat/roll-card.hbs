@@ -1,0 +1,28 @@
+<div class="tagandtally chat-card roll-card {{band.css}}">
+  <header class="tt-card-header">
+    {{#if actor}}<img src="{{actor.img}}" alt="" />{{/if}}
+    <div><h3>{{title}}</h3><small>{{rollTypeLabel}}{{#if item}} · {{item.name}}{{/if}}</small></div>
+  </header>
+  <div class="tt-card-levels">
+    <span title="{{levelLabel}}">{{localize "TAGANDTALLY.Level.Level"}} {{calc.level}}</span>
+    {{#if calc.easeSteps}}<span class="ease">-{{calc.easeSteps}}</span>{{/if}}
+    {{#if calc.hinderSteps}}<span class="hinder">+{{calc.hinderSteps}}</span>{{/if}}
+    <span class="effective" title="{{effectiveLabel}}">→ {{calc.effective}} · DC {{calc.dc}}</span>
+  </div>
+  <div class="tt-card-result">
+    <div class="tt-die {{#if natural}}natural{{/if}}"><i class="fa-solid fa-dice-d20"></i> {{total}}</div>
+    <div class="tt-band">{{bandLabel}}</div>
+  </div>
+  {{#if details}}<p class="tt-card-details">{{details}}</p>{{/if}}
+  {{#if calc.counted.length}}<p class="tt-card-tags"><em>{{localize "TAGANDTALLY.Roll.Eased"}}:</em> {{#each calc.counted}}<span class="tt-tag ease">{{name}} ({{steps}})</span>{{/each}}</p>{{/if}}
+  {{#if calc.hinders.length}}<p class="tt-card-tags"><em>{{localize "TAGANDTALLY.Roll.Hindered"}}:</em> {{#each calc.hinders}}<span class="tt-tag hinder">{{name}} ({{steps}})</span>{{/each}}</p>{{/if}}
+  {{#if calc.ignored.length}}<p class="tt-card-tags dim"><em>{{localize "TAGANDTALLY.Roll.Ignored"}}:</em> {{#each calc.ignored}}{{name}}{{#unless @last}}, {{/unless}}{{/each}}</p>{{/if}}
+  {{#if tallies.length}}
+    <p class="tt-card-tallies"><i class="fa-solid fa-tally"></i> {{#each tallies}}<span class="tt-tag">{{name}}{{#if (tt-eq event "tierUp")}} ↑ T{{tier}}{{else if (tt-eq event "mastered")}} ★{{else}} +1{{/if}}</span>{{/each}}</p>
+  {{/if}}
+  <footer class="tt-card-actions">
+    {{#if pendingTallies.length}}<button type="button" data-action="applyTallies"><i class="fa-solid fa-tally"></i> {{localize "TAGANDTALLY.Chat.ApplyTallies"}}</button>{{/if}}
+    {{#if wound}}<button type="button" data-action="applyWound" data-track="{{wound}}" data-sentence="true"><i class="fa-solid fa-heart-crack"></i> {{localize "TAGANDTALLY.Chat.ApplyWound"}}: {{woundLabel}}</button>{{/if}}
+    {{#if mishap}}<button type="button" data-action="rollMishap"><i class="fa-solid fa-burst"></i> {{localize "TAGANDTALLY.Spell.RollMishap"}}</button>{{/if}}
+  </footer>
+</div>

@@ -1,0 +1,174 @@
+import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
+import { TaskRollDialog } from "../rolls/task-roll-dialog.mjs";
+
+export default class TagAndTallyActor extends Actor {
+  /** @override */
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user);
+    if (allowed === false) return false;
+    const prototypeToken = {
+      displayBars: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+      bar1: { attribute: "wounds.vitality" },
+      bar2: { attribute: null }
+    };
+    if (this.type === "character") {
+      Object.assign(prototypeToken, {
+        actorLink: true,
+        disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+        displayName: CONST.TOKEN_DISPLAY_MODES.HOVER,
+        sight: { enabled: true }
+      });
+    } else {
+      prototypeToken.disposition = CONST.TOKEN_DISPOSITIONS.HOSTILE;
+    }
+    this.updateSource({ prototypeToken: foundry.utils.mergeObject(prototypeToken, data.prototypeToken ?? {}, { inplace: false }) });
+  }
+
+  /* ------------------------------- Accessors ------------------------------ */
+
+  get isCharacter() { return this.type === "character"; }
+  get isCreature() { return this.type === "npc" && this.system.creature; }
+
+  /** Tags usable in a roll (non-temporary filtering is up to the dialog). */
+  get tags() { return this.items.filter((i) => i.type === "tag"); }
+  get gear() { return this.items.filter((i) => i.type === "gear"); }
+  get spells() { return this.items.filter((i) => i.type === "spell"); }
+  get quests() { return this.items.filter((i) => i.type === "quest"); }
+  get woundItems() { return this.items.filter((i) => i.type === "wound"); }
+
+  /** The sentence as text, for chat and party overview. */
+  get sentenceText() { return this.system.sentenceText ?? this.name; }
+
+  /* --------------------------------- Rolls -------------------------------- */
+
+  /** Open the task roll dialog for this actor. */
+  async rollTask(options = {}) {
+    return TaskRollDialog.prompt({ actor: this, ...options });
+  }
+
+  /* -------------------------------- Tallies ------------------------------- */
+
+  /**
+   * Add tallies to a set of tags (after a natural 1 or 20).
+   * Handles tier-ups and mastery. Returns a summary per tag.
+   */
+  async addTallies(tagIds, amount = 1) {
+    const updates = [];
+    const summary = [];
+    for (const id of tagIds) {
+      const tag = this.items.get(id);
+      if (!tag || tag.type !== "tag" || !tag.system.canTier || tag.system.mastered) continue;
+      let { tier, tallies, mastered } = tag.system;
+      tallies += amount;
+      let event = "tally";
+      while (tallies >= TAGANDTALLY.talliesPerTier) {
+        tallies -= TAGANDTALLY.talliesPerTier;
+        if (tier >= TAGANDTALLY.maxTier) { mastered = true; tallies = 0; event = "mastered"; break; }
+        tier += 1;
+        event = "tierUp";
+      }
+      updates.push({ _id: id, "system.tier": tier, "system.tallies": tallies, "system.mastered": mastered });
+      summary.push({ id, name: tag.name, tier, tallies, mastered, event });
+    }
+    if (updates.length) await this.updateEmbeddedDocuments("Item", updates);
+    return summary;
+  }
+
+  /* -------------------------------- Wounds -------------------------------- */
+
+  /**
+   * Mark one box on a wound track. When a track is full the mark overflows
+   * to the next, more serious track. Returns the track that actually filled.
+   * @param {string} track  strain | lingeringTrauma | debilitatingInjury | lastingScar
+   */
+  async applyWound(track, { amount = 1 } = {}) {
+    const order = TAGANDTALLY.woundTrackOrder;
+    const wounds = foundry.utils.deepClone(this.system._source.wounds);
+    const filled = [];
+    for (let n = 0; n < amount; n++) {
+      let idx = order.indexOf(track);
+      if (idx < 0) idx = 0;
+      let placed = null;
+      while (idx < order.length) {
+        const key = order[idx];
+        const max = TAGANDTALLY.woundTracks[key].max;
+        if (wounds[key].value < max) { wounds[key].value += 1; placed = key; break; }
+        idx += 1;
+      }
+      filled.push(placed);
+    }
+    await this.update({ "system.wounds": wounds });
+    const dying = wounds.lastingScar.value >= TAGANDTALLY.woundTracks.lastingScar.max;
+    return { filled, dying, wounds };
+  }
+
+  /**
+   * Token bar edits on the derived vitality bar: a decrease marks strain
+   * (overflowing upward), an increase heals from the mildest track first.
+   */
+  async modifyTokenAttribute(attribute, value, isDelta = false, isBar = true) {
+    if (attribute !== "wounds.vitality") return super.modifyTokenAttribute(attribute, value, isDelta, isBar);
+    const current = this.system.wounds.vitality.value;
+    const target = isDelta ? current + value : value;
+    let delta = Math.round(target - current);
+    if (delta < 0) return this.applyWound("strain", { amount: -delta });
+    const order = [...TAGANDTALLY.woundTrackOrder];
+    const wounds = foundry.utils.deepClone(this.system._source.wounds);
+    while (delta > 0) {
+      const key = order.find((k) => wounds[k].value > 0);
+      if (!key) break;
+      wounds[key].value -= 1;
+      delta -= 1;
+    }
+    return this.update({ "system.wounds": wounds });
+  }
+
+  /** Clear one box from a wound track. */
+  async healWound(track, amount = 1) {
+    const value = Math.max(0, this.system.wounds[track].value - amount);
+    return this.update({ [`system.wounds.${track}.value`]: value });
+  }
+
+  /** Safe-zone rest: heal all strain, or 1 lingering trauma, or downgrade 1 debilitating injury. */
+  async rest(mode = "strain") {
+    const w = this.system.wounds;
+    switch (mode) {
+      case "strain": return this.update({ "system.wounds.strain.value": 0 });
+      case "trauma": return this.healWound("lingeringTrauma");
+      case "injury":
+        if (w.debilitatingInjury.value > 0) {
+          await this.healWound("debilitatingInjury");
+          return this.applyWound("lingeringTrauma");
+        }
+        return this;
+      default: return this;
+    }
+  }
+
+  /* --------------------------------- NPCs --------------------------------- */
+
+  /** Reveal (or hide) a hidden creature trait for players. */
+  async reveal(key, value = true) {
+    if (this.type !== "npc") return this;
+    return this.update({ [`system.revealed.${key}`]: value });
+  }
+
+  /** Add an insight toward learning a creature's strength or weakness. */
+  async addInsight(key, amount = 1) {
+    if (this.type !== "npc") return this;
+    const value = Math.clamp(this.system.insights[key] + amount, 0, TAGANDTALLY.insightsPerTally);
+    const update = { [`system.insights.${key}`]: value };
+    if (value >= TAGANDTALLY.insightsPerTally) update[`system.revealed.${key}`] = true;
+    return this.update(update);
+  }
+
+  /** Whether the current user may see a hidden trait. */
+  canSeeHidden(key) {
+    if (game.user.isGM || this.isOwner) return true;
+    return Boolean(this.system.revealed?.[key]);
+  }
+
+  /** Flags namespace helper. */
+  getSystemFlag(key) { return this.getFlag(SYSTEM_ID, key); }
+  setSystemFlag(key, value) { return this.setFlag(SYSTEM_ID, key, value); }
+}
