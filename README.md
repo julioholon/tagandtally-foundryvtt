@@ -5,7 +5,7 @@ An unofficial [Foundry Virtual Tabletop](https://foundryvtt.com) game system for
 thing is "a sentence and a level", damage is a wound track, and characters grow through
 tallies instead of XP.
 
-Built for Foundry **v14** (v13 declared as minimum, untested). Status: early, playable,
+Built for Foundry **v14** (v13 declared as minimum, untested). English and Brazilian Portuguese. Status: early, playable,
 smoke-tested by hand. Issues and pull requests welcome.
 
 ## Install
@@ -25,12 +25,14 @@ Or download the latest `tagandtally.zip` from the releases page and unzip it int
 | --- | --- |
 | Characters | Sentence header (descriptor, species, type, specialty), life stage, wealth 0-6 with debt, MAI, appearance, known world, arc, biography |
 | Tags | Items with type, tier 1-4, tallies, mastery, temporary and reverse (hindering) tags; click pips and boxes on the sheet |
+| Character builder | One click builds a complete random character (sentence, life-stage tags, gear, personal quest, appearance); reroll any piece individually. Life stages tab shows what each stage granted |
 | Rolls | Dialog with task level (defaults to the scene level), tags and gear as easing or hindering, Task Threshold and two-asset cap enforced, 20+ roll types with Sparks outcome text, natural 1/20 auto-tallies |
 | Wounds | Strain 5 / Lingering Trauma 3 / Debilitating Injury 2 / Lasting Scar 3 with overflow, severity label, worst-wound text, generated wound sentences, rest actions |
-| Combat | Five-phase tracked flow (Opening, Maneuver, Attack, Counter, Resolution) per participant, with phase modifiers and wound application; one-click injury roll |
+| Combat | Five-phase flow (Opening, Maneuver, Attack, Counter, Resolution) per participant, any phase in any order, modifiers chained per the SRD, wound application; one-click injury roll |
 | Spells | Builder for base / aspects / types / scope / artifact / trigger, points to level, PM and TM, overpowered states, MAI check hindrances, blood magic, mishap roll |
 | Quests | Plan / Location / Countdown tallies, steps, status, resolution roll with plan modifier |
 | Gear | Weapons, armor, items, consumables, containers, resources, traps, kits; level 1-10, kind, cost, equipped, quantities; loadout counter |
+| Barter | Buy from and sell to NPC merchants with Wealth checks per the SRD, no extra module needed |
 | NPCs / creatures | Creature or NPC sentence, level and DC, strength / weakness / secret hidden from players until revealed or learned via insights |
 | Sparks | 530+ random tables from the official Obsidian vault, 22 sentence generators (NPC, creature, species, gear, places, factions, quests, wounds, appearance), oracle, table browser, create actors / items / journals from results |
 | Party | Built-in party overview: sentence, wounds, wealth, MAI, loadout, tags, quests |

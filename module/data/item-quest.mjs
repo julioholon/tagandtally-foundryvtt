@@ -22,6 +22,8 @@ export default class QuestData extends foundry.abstract.TypeDataModel {
       consequence: str(),
       status: new fields.StringField({ required: true, initial: "active", choices: Object.keys(TAGANDTALLY.questStatus) }),
       isArc: new fields.BooleanField({ initial: false }),
+      /** Spark table this item was generated from (enables reroll). */
+      source: new fields.StringField({ required: true, blank: true, initial: "" }),
       tallies: new fields.SchemaField({
         plan: tally(TAGANDTALLY.questTallies.plan.max),
         location: tally(TAGANDTALLY.questTallies.location.max),

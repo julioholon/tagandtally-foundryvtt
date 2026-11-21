@@ -19,7 +19,7 @@
             {{#if p.opponentName}}<em>{{p.opponentName}}</em>{{/if}}
             <a data-action="setOpponent" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Combat.SetOpponent'}}"><i class="fa-solid fa-crosshairs"></i></a>
           </span>
-          <span class="tt-flow-mod {{#if (tt-gt p.modifier 0)}}ease{{else if (tt-gt 0 p.modifier)}}hinder{{/if}}" title="{{localize 'TAGANDTALLY.Combat.PhaseModifier'}}">{{p.modifierLabel}} · DC {{p.dc}}</span>
+          <span class="tt-flow-mod" title="{{localize 'TAGANDTALLY.Combat.BaseDc'}}">DC {{p.dc}}</span>
           <span class="tt-controls">
             <a data-action="reset" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Combat.Reset'}}"><i class="fa-solid fa-rotate-left"></i></a>
             <a data-action="remove" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-xmark"></i></a>
@@ -27,13 +27,10 @@
         </header>
         <ol class="tt-phases">
           {{#each p.phases as |ph|}}
-            <li class="tt-phase {{#if ph.current}}current{{/if}} {{#if ph.done}}done {{ph.bandCss}}{{/if}} {{#if ph.future}}future{{/if}}">
-              <span class="tt-phase-name">{{tt-add ph.index 1}}. {{ph.label}}</span>
-              {{#if ph.done}}<span class="tt-phase-result"><i class="fa-solid fa-dice-d20"></i> {{ph.total}} · {{ph.band}}</span>
-              {{else if ph.current}}
-                {{#if p.canRoll}}<button type="button" data-action="rollPhase" data-uuid="{{p.uuid}}"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Roll.Roll"}}</button>{{/if}}
-                {{#if ../isGM}}<a data-action="skipPhase" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Combat.Skip'}}"><i class="fa-solid fa-forward"></i></a>{{/if}}
-              {{/if}}
+            <li class="tt-phase {{#if ph.current}}current{{/if}} {{#if ph.done}}done {{ph.bandCss}}{{/if}}">
+              <span class="tt-phase-name">{{tt-add ph.index 1}}. {{ph.label}} <small class="{{#if (tt-gt ph.modifier 0)}}ease{{else if (tt-gt 0 ph.modifier)}}hinder{{/if}}">{{ph.modifierLabel}} DC {{ph.dc}}</small></span>
+              {{#if ph.done}}<span class="tt-phase-result"><i class="fa-solid fa-dice-d20"></i> {{ph.total}} · {{ph.band}}</span>{{/if}}
+              {{#if ph.canRoll}}<a class="tt-phase-roll" data-action="rollPhase" data-uuid="{{p.uuid}}" data-phase="{{ph.id}}" title="{{localize (tt-ternary ph.done 'TAGANDTALLY.Combat.Reroll' 'TAGANDTALLY.Roll.Roll')}}"><i class="fa-solid {{#if ph.done}}fa-rotate{{else}}fa-dice-d20{{/if}}"></i> {{#unless ph.done}}{{localize "TAGANDTALLY.Roll.Roll"}}{{/unless}}</a>{{/if}}
             </li>
           {{/each}}
         </ol>
@@ -43,7 +40,7 @@
             {{#if p.wound}}{{#unless p.woundApplied}}<button type="button" data-action="applyWound" data-uuid="{{p.uuid}}"><i class="fa-solid fa-heart-crack"></i> {{localize "TAGANDTALLY.Chat.ApplyWound"}}</button>{{else}}<em>{{localize "TAGANDTALLY.Combat.WoundApplied"}}</em>{{/unless}}{{/if}}
           </footer>
         {{else}}
-          <footer class="tt-flow-outcome dim"><a data-action="rollInjury" data-uuid="{{p.uuid}}"><i class="fa-solid fa-heart-crack"></i> {{localize "TAGANDTALLY.Combat.RollInjury"}}</a></footer>
+          <footer class="tt-flow-outcome dim"><a data-action="rollInjury" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Combat.RollInjuryHint'}}"><i class="fa-solid fa-heart-crack"></i> {{localize "TAGANDTALLY.Combat.RollInjury"}}</a></footer>
         {{/if}}
       </li>
     {{/each}}

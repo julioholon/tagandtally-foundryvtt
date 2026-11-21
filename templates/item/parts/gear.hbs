@@ -14,6 +14,6 @@
     <small>{{localize "TAGANDTALLY.Armor.Defense"}} +{{system.armor.defense}} · {{localize "TAGANDTALLY.Armor.Stealth"}} -{{system.armor.stealth}}</small></div>{{/if}}
   {{#if system.isConsumable}}<div class="form-group"><label>{{localize "TAGANDTALLY.Consumable.Mode"}}</label><select name="system.consumableMode">{{selectOptions config.consumableModes selected=system.consumableMode localize=true}}</select></div>{{/if}}
   {{#if system.isContainer}}<div class="form-group"><label>{{localize "TAGANDTALLY.Gear.Capacity"}}</label><input type="number" name="system.capacity" value="{{system.capacity}}" min="0" /></div>{{/if}}
-  <div class="form-group span2"><label>{{localize "TAGANDTALLY.Sentence.Title"}}</label><input type="text" name="system.sentence" value="{{system.sentence}}" placeholder="{{system.sentenceText}}" />
+  <div class="form-group span2"><label>{{localize "TAGANDTALLY.Gear.CustomSentence"}}</label><input type="text" name="system.sentence" value="{{system.sentence}}" placeholder="{{system.sentenceText}}" />
     {{#if isGM}}<a data-action="generateSentence" title="{{localize 'TAGANDTALLY.Sparks.Regenerate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></a>{{/if}}</div>
 </section>

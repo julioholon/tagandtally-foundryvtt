@@ -24,6 +24,8 @@ export default class TagData extends foundry.abstract.TypeDataModel {
       /** Umbrella parent tag id (for sub-tags under species/type/specialty). */
       parent: new fields.StringField({ required: true, blank: true, initial: "" }),
       lifeStage: new fields.StringField({ required: true, blank: true, initial: "" }),
+      /** Spark table this item was generated from (enables reroll). */
+      source: new fields.StringField({ required: true, blank: true, initial: "" }),
       description: htmlField()
     };
   }

@@ -14,6 +14,7 @@ export function registerHandlebarsHelpers() {
     return new Handlebars.SafeString(escaped.replace(/\[([^\]]+)\]/g, '<span class="tt-tag">$1</span>'));
   });
   Handlebars.registerHelper("tt-array", (...args) => args.slice(0, -1));
+  Handlebars.registerHelper("tt-ternary", (c, a, b) => (c ? a : b));
   Handlebars.registerHelper("tt-signed", (n) => (Number(n) > 0 ? `+${n}` : `${n}`));
 }
 
@@ -22,6 +23,7 @@ export const TEMPLATES = [
   "templates/actor/parts/header-npc.hbs",
   "templates/actor/parts/tab-main.hbs",
   "templates/actor/parts/tab-tags.hbs",
+  "templates/actor/parts/tab-lifestages.hbs",
   "templates/actor/parts/tab-inventory.hbs",
   "templates/actor/parts/tab-spells.hbs",
   "templates/actor/parts/tab-quests.hbs",
@@ -42,6 +44,7 @@ export const TEMPLATES = [
   "templates/apps/sparks-tables.hbs",
   "templates/apps/sparks-oracle.hbs",
   "templates/apps/party.hbs",
+  "templates/apps/barter.hbs",
   "templates/chat/roll-card.hbs",
   "templates/chat/item-card.hbs",
   "templates/chat/spark-card.hbs"

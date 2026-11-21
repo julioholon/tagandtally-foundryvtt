@@ -18,6 +18,7 @@
         <span class="tt-col-qty"><a data-action="changeQuantity" data-delta="-1"><i class="fa-solid fa-minus"></i></a> {{item.system.quantity}} <a data-action="changeQuantity" data-delta="1"><i class="fa-solid fa-plus"></i></a></span>
         <span class="tt-col-cost" title="{{localize item.system.costLabel}}">{{item.system.cost}}</span>
         <span class="tt-controls">
+          {{#if item.system.source}}<a data-action="rerollItem" title="{{localize 'TAGANDTALLY.Builder.Reroll'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}
           <a data-action="toggleEquipped" title="{{localize 'TAGANDTALLY.Gear.Equipped'}}"><i class="fa-solid {{#if item.system.equipped}}fa-shield-halved{{else}}fa-shield{{/if}}"></i></a>
           <a data-action="chatItem"><i class="fa-solid fa-comment"></i></a>
           <a data-action="deleteItem"><i class="fa-solid fa-trash"></i></a>

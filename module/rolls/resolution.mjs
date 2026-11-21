@@ -63,7 +63,8 @@ export function computeEffectiveLevel(level, eases = [], hinders = []) {
  * @param {Item}   [o.item]
  * @param {object} [o.context]        extra data stored on the message flags (combat flow etc.)
  */
-export async function resolveRoll({ actor, level, eases = [], hinders = [], rollType = "task", title, item, context = {}, speaker } = {}) {
+export async function resolveRoll({ actor, tallyActor, level, eases = [], hinders = [], rollType = "task", title, item, context = {}, speaker } = {}) {
+  tallyActor ??= actor;
   const calc = computeEffectiveLevel(level, eases, hinders);
   const roll = await new Roll("1d20").evaluate();
   const total = roll.total;
@@ -74,8 +75,8 @@ export async function resolveRoll({ actor, level, eases = [], hinders = [], roll
   const usedTagIds = [...calc.counted, ...hinders].filter((e) => e.source === "tag" && e.itemId).map((e) => e.itemId);
   let tallies = [];
   const autoTallies = game.settings.get(SYSTEM_ID, "autoTallies");
-  if (natural && actor && usedTagIds.length && autoTallies) {
-    tallies = await actor.addTallies(usedTagIds);
+  if (natural && tallyActor && usedTagIds.length && autoTallies) {
+    tallies = await tallyActor.addTallies(usedTagIds);
   }
 
   const details = sparkTables.resolutionDetail(rollType, band.id);

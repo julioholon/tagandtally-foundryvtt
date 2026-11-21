@@ -18,6 +18,7 @@
           </div>
         </div>
         <span class="tt-controls">
+          {{#if item.system.source}}<a data-action="rerollItem" title="{{localize 'TAGANDTALLY.Builder.Reroll'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}
           <a data-action="useItem" title="{{localize 'TAGANDTALLY.Quest.Resolve'}}" class="{{#unless item.system.readyToResolve}}dim{{/unless}}"><i class="fa-solid fa-dice-d20"></i></a>
           <a data-action="chatItem"><i class="fa-solid fa-comment"></i></a>
           <a data-action="deleteItem"><i class="fa-solid fa-trash"></i></a>

@@ -156,7 +156,6 @@ export function itemDataFromGeneration(r, generator) {
       damageType: plain(v["damage-type"] ?? ""),
       armorClass: gearType === "armor" ? (/heavy/i.test(subtype) ? "heavy" : /medium/i.test(subtype) ? "medium" : "light") : "none",
       level: Math.ceil(Math.random() * 6),
-      sentence: r.text.replace(/\*\*/g, ""),
       description: `<p>${r.html}</p>`
     }
   };

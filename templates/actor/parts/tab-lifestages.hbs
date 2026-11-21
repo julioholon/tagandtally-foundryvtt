@@ -1,0 +1,39 @@
+<section class="tab {{tab.cssClass}} tt-lifestages" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <p class="hint">{{localize "TAGANDTALLY.LifeStage.Hint"}}</p>
+  {{#each stages as |stage|}}
+    <div class="tt-stage {{#unless stage.reached}}future{{/unless}} {{#if stage.current}}current{{/if}}">
+      <header>
+        <strong>{{localize stage.label}}</strong>
+        <small>{{stage.plan}}</small>
+        {{#if ../owner}}<span class="tt-controls">
+          <a data-action="addStageTag" data-life-stage="{{stage.key}}" data-tag-type="background" title="{{localize 'TAGANDTALLY.LifeStage.AddRandom'}}"><i class="fa-solid fa-dice"></i> {{localize "TAGANDTALLY.TagType.Background"}}</a>
+          <a data-action="addStageTag" data-life-stage="{{stage.key}}" data-tag-type="skill"><i class="fa-solid fa-dice"></i> {{localize "TAGANDTALLY.TagType.Skill"}}</a>
+          <a data-action="addStageTag" data-life-stage="{{stage.key}}" data-tag-type="flaw"><i class="fa-solid fa-dice"></i> {{localize "TAGANDTALLY.TagType.Flaw"}}</a>
+          <a data-action="addStageTag" data-life-stage="{{stage.key}}" data-tag-type="occupation"><i class="fa-solid fa-dice"></i> {{localize "TAGANDTALLY.TagType.Occupation"}}</a>
+          <a data-action="createItem" data-type="tag" data-tag-type="skill" data-life-stage="{{stage.key}}" title="{{localize 'TAGANDTALLY.Create'}}"><i class="fa-solid fa-plus"></i></a>
+        </span>{{/if}}
+      </header>
+      <ol class="tt-item-list">
+        {{#each stage.items as |item|}}
+          <li class="tt-item tag {{#if item.system.hinders}}hinders{{/if}}" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt="" data-action="useItem" />
+            <div class="tt-item-body">
+              <span class="tt-item-name" data-action="editItem">{{item.name}} <small>{{localize (lookup ../../config.tagTypes item.system.tagType)}}</small></span>
+              <span class="tt-item-sub">{{item.system.notation}}</span>
+            </div>
+            <span class="tt-controls">
+              {{#if item.system.source}}<a data-action="rerollItem" title="{{localize 'TAGANDTALLY.Builder.Reroll'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}
+              <a data-action="deleteItem" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-trash"></i></a>
+            </span>
+          </li>
+        {{/each}}
+        {{#unless stage.items.length}}<li class="tt-empty">{{localize "TAGANDTALLY.LifeStage.Empty"}}</li>{{/unless}}
+      </ol>
+    </div>
+  {{/each}}
+  {{#if unassignedTags.length}}
+    <div class="tt-stage"><header><strong>{{localize "TAGANDTALLY.LifeStage.Unassigned"}}</strong></header>
+      <ol class="tt-item-list">{{#each unassignedTags as |item|}}<li class="tt-item tag" data-item-id="{{item.id}}"><img src="{{item.img}}" alt="" /><div class="tt-item-body"><span class="tt-item-name" data-action="editItem">{{item.name}} <small>{{localize (lookup ../config.tagTypes item.system.tagType)}}</small></span></div></li>{{/each}}</ol>
+    </div>
+  {{/if}}
+</section>

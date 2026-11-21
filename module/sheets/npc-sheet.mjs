@@ -9,7 +9,8 @@ export default class NpcSheet extends BaseActorSheet {
       reveal: NpcSheet.#onReveal,
       addInsight: NpcSheet.#onAddInsight,
       generateSentence: NpcSheet.#onGenerateSentence,
-      levelStep: NpcSheet.#onLevelStep
+      levelStep: NpcSheet.#onLevelStep,
+      openBarter: NpcSheet.#onOpenBarter
     }
   };
 
@@ -76,6 +77,11 @@ export default class NpcSheet extends BaseActorSheet {
   static async #onGenerateSentence() {
     const { generateInto } = await import("../sparks/create.mjs");
     return generateInto(this.actor, this.actor.system.creature ? "creature" : "npc");
+  }
+
+  static async #onOpenBarter() {
+    const { BarterApp } = await import("../integrations/barter.mjs");
+    return BarterApp.open({ merchant: this.actor });
   }
 
   static async #onLevelStep(event, target) {

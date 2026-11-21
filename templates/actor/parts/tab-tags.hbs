@@ -34,6 +34,7 @@
             {{/unless}}{{/if}}
           </span>
           <span class="tt-controls">
+            {{#if item.system.source}}<a data-action="rerollItem" title="{{localize 'TAGANDTALLY.Builder.Reroll'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}
             <a data-action="chatItem" title="{{localize 'TAGANDTALLY.ToChat'}}"><i class="fa-solid fa-comment"></i></a>
             <a data-action="deleteItem" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-trash"></i></a>
           </span>
