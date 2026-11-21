@@ -186,6 +186,18 @@ export async function loadGeneratorDefs() {
   return generatorDefs;
 }
 
+/** Template for the current language (template_<lang>), falling back to English. */
+export function localizedTemplate(generator) {
+  const lang = globalThis.game?.i18n?.lang ?? "en";
+  return generator[`template_${lang}`] ?? generator.template;
+}
+
+/** Label for the current language. */
+export function localizedLabel(obj) {
+  const lang = globalThis.game?.i18n?.lang ?? "en";
+  return obj?.[`label_${lang}`] ?? obj?.label ?? "";
+}
+
 export function findGenerator(id) {
   for (const group of generatorDefs?.groups ?? []) {
     const g = group.generators.find((x) => x.id === id);
@@ -203,7 +215,7 @@ export async function generate(id, { theme = "fantasy", values = {} } = {}) {
   const generator = findGenerator(id);
   if (!generator) throw new Error(`Unknown generator ${id}`);
   const engine = new SparkGenerator({ theme, values });
-  const text = await engine.render(generator.template);
+  const text = await engine.render(localizedTemplate(generator));
   return {
     text, html: SparkGenerator.toHTML(text), tags: SparkGenerator.extractTags(text),
     name: SparkGenerator.extractName(text), generator, used: engine.used, values: Object.fromEntries(engine.cache)

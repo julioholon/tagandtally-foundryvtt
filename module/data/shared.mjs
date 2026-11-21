@@ -60,6 +60,18 @@ export function wealthSchema() {
   });
 }
 
+/** Localize a sentence connective, falling back to the English default before i18n is ready. */
+export function word(key, fallback) {
+  const k = `TAGANDTALLY.Words.${key}`;
+  const v = globalThis.game?.i18n?.localize?.(k);
+  return v && v !== k ? v : fallback;
+}
+
+/** Collapse double spaces and spaces before punctuation left by empty connectives. */
+export function tidy(text) {
+  return String(text ?? "").replace(/\s+([.,;:])/g, "$1").replace(/\s{2,}/g, " ").trim();
+}
+
 export function htmlField() {
   return new fields.HTMLField({ required: true, blank: true, initial: "" });
 }

@@ -2,6 +2,9 @@
 
 ## 0.2.1 (unreleased)
 
+- Generated sentences follow the interface language: connectives in sheets and chat and the Sparks generator templates have pt-BR variants (table content stays English).
+- English GM manual (docs/gm-manual.md).
+
 - Fix: Item Piles piles and merchants no longer start with Wealth 3 (existing piles are
   migrated to 0). Item Piles now trades in coins, priced at 10^cost per item.
 - Optional **coins mode** (world setting): coins are tallies toward the next Wealth level

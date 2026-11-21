@@ -1,5 +1,5 @@
 import { TAGANDTALLY } from "../config.mjs";
-import { woundsSchema, prepareWounds, wealthSchema, htmlField, levelField } from "./shared.mjs";
+import { woundsSchema, prepareWounds, wealthSchema, htmlField, levelField, word, tidy } from "./shared.mjs";
 
 const fields = foundry.data.fields;
 
@@ -70,19 +70,19 @@ export default class NpcData extends foundry.abstract.TypeDataModel {
     if (this.creature) {
       const head = [s.disposition, s.descriptor, s.type].map(tag).filter(Boolean).join(" ");
       let text = `${name || "?"}${head ? ` (${head})` : ""}:`;
-      if (s.motivation) text += ` This creature ${tag(s.motivation)}`;
-      if (s.attack) text += ` and attacks with ${tag(s.attack)}${s.damageType ? ` for ${tag(s.damageType)} damage` : ""}`;
+      if (s.motivation) text += ` ${word("ThisCreature", "This creature")} ${tag(s.motivation)}`;
+      if (s.attack) text += ` ${word("AndAttacksWith", "and attacks with")} ${tag(s.attack)}${s.damageType ? ` ${word("For", "for")} ${tag(s.damageType)} ${word("Damage", "damage")}` : ""}`;
       text += ".";
-      if (s.specialAbility) text += ` It features a unique ability to ${tag(s.specialAbility)}.`;
-      return text;
+      if (s.specialAbility) text += ` ${word("ItFeatures", "It features a unique ability to")} ${tag(s.specialAbility)}.`;
+      return tidy(text);
     }
     const head = [s.descriptor, s.species, s.type].map(tag).filter(Boolean).join(" ");
-    let text = `${name || "?"} is a ${head || "..."}`;
-    if (s.doesSomething) text += ` who ${tag(s.doesSomething)}`;
+    let text = `${name || "?"} ${word("IsA", "is a")} ${head || "..."}`;
+    if (s.doesSomething) text += ` ${word("Who", "who")} ${tag(s.doesSomething)}`;
     text += ".";
-    if (s.motivation) text += ` They are motivated by ${tag(s.motivation)}`;
-    if (s.quest) text += `${s.motivation ? " and" : " They"} want to ${tag(s.quest)}`;
+    if (s.motivation) text += ` ${word("MotivatedBy", "They are motivated by")} ${tag(s.motivation)}`;
+    if (s.quest) text += `${s.motivation ? ` ${word("And", "and")}` : ` ${word("They", "They")}`} ${word("WantTo", "want to")} ${tag(s.quest)}`;
     if (s.motivation || s.quest) text += ".";
-    return text;
+    return tidy(text);
   }
 }

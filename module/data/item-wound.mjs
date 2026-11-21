@@ -1,5 +1,5 @@
 import { TAGANDTALLY } from "../config.mjs";
-import { htmlField } from "./shared.mjs";
+import { htmlField, word, tidy } from "./shared.mjs";
 
 const fields = foundry.data.fields;
 
@@ -24,6 +24,7 @@ export default class WoundData extends foundry.abstract.TypeDataModel {
     this.trackLabel = TAGANDTALLY.woundTracks[this.injuryType]?.label;
     this.severity = TAGANDTALLY.woundTracks[this.injuryType]?.severity ?? 0;
     const t = (v) => (v ? `[${v}]` : "");
-    this.sentenceText = `This ${t(this.damageType)} ${t(TAGANDTALLY.woundTrackSparkNames[this.injuryType])} is a ${t(this.descriptor)} ${t(this.mark)} located on ${t(this.bodyPart)} that ${t(this.hinders)}.`.replace(/\s+/g, " ");
+    const trackName = game?.i18n?.localize?.(TAGANDTALLY.woundTracks[this.injuryType]?.label ?? "") || TAGANDTALLY.woundTrackSparkNames[this.injuryType];
+    this.sentenceText = tidy(`${word("This", "This")} ${t(this.damageType)} ${t(trackName)} ${word("IsA", "is a")} ${t(this.descriptor)} ${t(this.mark)} ${word("LocatedOn", "located on")} ${t(this.bodyPart)} ${word("That", "that")} ${t(this.hinders)}.`);
   }
 }

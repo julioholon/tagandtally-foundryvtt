@@ -587,6 +587,24 @@
       "GenerateCreature": "Gerar criatura",
       "RandomCharacter": "Personagem aleatório",
       "ImportAugur": "Importar do Augur"
+    },
+    "Words": {
+      "IsA": "é um(a)",
+      "Who": "que",
+      "That": "que",
+      "ThatDoes": "que causa dano",
+      "Damage": "",
+      "And": "e",
+      "They": "",
+      "WantTo": "quer",
+      "MotivatedBy": "É movido(a) por",
+      "ThisCreature": "Esta criatura",
+      "AndAttacksWith": "e ataca com",
+      "For": "causando dano",
+      "ItFeatures": "Tem a habilidade única de",
+      "Spell": "magia",
+      "This": "Este(a)",
+      "LocatedOn": "em"
     }
   }
 }

@@ -15,7 +15,9 @@ tag é usada). O sistema automatiza tudo isso; o Mestre decide o nível e narra.
 
 ## 2. Preparando o mundo
 
-- **Idioma**: Configurações do Foundry → Idioma → Português (Brasil).
+- **Idioma**: Configurações do Foundry → Idioma → Português (Brasil). Os conectivos das
+  frases geradas seguem o idioma; o conteúdo das tabelas do Sparks (o que fica entre
+  colchetes) permanece em inglês.
 - **Nível padrão das tarefas** (Configurações do sistema): use 3 em mundos novos.
 - **Nível da cena**: em cada cena, Configurar → aba Básico → "Nível da cena (Tag & Tally)".
   Todas as rolagens naquela cena começam nesse nível e as criaturas geradas nascem com ele.

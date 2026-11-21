@@ -1,5 +1,5 @@
 import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
-import { generate, SparkGenerator } from "./engine.mjs";
+import { generate, SparkGenerator, localizedLabel } from "./engine.mjs";
 import { sparkTables } from "./tables.mjs";
 
 function theme() { return game.settings.get(SYSTEM_ID, "sparkTheme") ?? "fantasy"; }
@@ -206,7 +206,7 @@ export async function createJournalFromSpark(generatorId, options = {}) {
 /** Post a generation result to chat with create buttons. */
 export async function postSparkToChat(r, { theme: t } = {}) {
   const content = await foundry.applications.handlebars.renderTemplate("systems/tagandtally/templates/chat/spark-card.hbs", {
-    r, label: r.generator.label, html: r.html, generator: r.generator, isGM: game.user.isGM
+    r, label: localizedLabel(r.generator), html: r.html, generator: r.generator, isGM: game.user.isGM
   });
   return ChatMessage.create({
     content,

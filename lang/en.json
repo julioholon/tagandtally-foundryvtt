@@ -587,6 +587,24 @@
       "GenerateCreature": "Generate creature",
       "RandomCharacter": "Random character",
       "ImportAugur": "Import from Augur"
+    },
+    "Words": {
+      "IsA": "is a",
+      "Who": "who",
+      "That": "that",
+      "ThatDoes": "that does",
+      "Damage": "damage",
+      "And": "and",
+      "They": "They",
+      "WantTo": "want to",
+      "MotivatedBy": "They are motivated by",
+      "ThisCreature": "This creature",
+      "AndAttacksWith": "and attacks with",
+      "For": "for",
+      "ItFeatures": "It features a unique ability to",
+      "Spell": "spell",
+      "This": "This",
+      "LocatedOn": "located on"
     }
   }
 }

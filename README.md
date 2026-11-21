@@ -38,10 +38,10 @@ Or download the latest `tagandtally.zip` from the releases page and unzip it int
 | Party | Built-in party overview: sentence, wounds, wealth, MAI, loadout, tags, quests |
 | GM tools | Scene level in Scene Config, world RollTable overrides for any Spark table, bulk import to RollTables |
 
-## Guia do Mestre (pt-BR)
+## GM manual
 
-Um manual rápido para mesas com vários Mestres está em
-[docs/manual-mestre.pt-BR.md](docs/manual-mestre.pt-BR.md).
+A quick manual for tables with several Gamemasters: [docs/gm-manual.md](docs/gm-manual.md)
+(English) and [docs/manual-mestre.pt-BR.md](docs/manual-mestre.pt-BR.md) (Portuguese).
 
 ## Using Sparks
 

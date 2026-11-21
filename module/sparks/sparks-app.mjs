@@ -1,6 +1,6 @@
 import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
 import { sparkTables } from "./tables.mjs";
-import { generate, loadGeneratorDefs, SparkGenerator } from "./engine.mjs";
+import { generate, loadGeneratorDefs, SparkGenerator, localizedLabel } from "./engine.mjs";
 import { createActorFromSpark, createItemFromSpark, createJournalFromSpark, postSparkToChat, postTableRoll, npcDataFromGeneration, itemDataFromGeneration } from "./create.mjs";
 import { rollOracle, rollYesNo } from "../rolls/resolution.mjs";
 
@@ -65,15 +65,15 @@ export class SparksApp extends HandlebarsApplicationMixin(ApplicationV2) {
   async _prepareContext() {
     const defs = await loadGeneratorDefs();
     const groups = defs.groups.map((g) => ({
-      ...g,
-      generators: g.generators.map((x) => ({ ...x, selected: x.id === this.selectedGenerator }))
+      ...g, label: localizedLabel(g),
+      generators: g.generators.map((x) => ({ ...x, label: localizedLabel(x), selected: x.id === this.selectedGenerator }))
     }));
     const generator = defs.groups.flatMap((g) => g.generators).find((g) => g.id === this.selectedGenerator);
     const optionFields = [];
     for (const opt of generator?.options ?? []) {
       let choices = opt.choices;
       if (!choices && opt.table) choices = (sparkTables.get(opt.table)?.table ?? []).map((r) => r.value);
-      optionFields.push({ key: opt.key, label: opt.label, choices: choices ?? [], value: this.generatorOptions[opt.key] ?? "" });
+      optionFields.push({ key: opt.key, label: localizedLabel(opt), choices: choices ?? [], value: this.generatorOptions[opt.key] ?? "" });
     }
     const grouped = sparkTables.grouped();
     const filter = this.filter.toLowerCase();
@@ -115,7 +115,7 @@ export class SparksApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const id = target.dataset.generator ?? this.selectedGenerator;
     this.selectedGenerator = id;
     const r = await generate(id, { theme: this.theme, values: this.generatorOptions });
-    this.results.unshift({ uid: foundry.utils.randomID(), id, label: r.generator.label, text: r.text, html: r.html, generator: r.generator, values: r.values, name: r.name, tags: r.tags });
+    this.results.unshift({ uid: foundry.utils.randomID(), id, label: localizedLabel(r.generator), text: r.text, html: r.html, generator: r.generator, values: r.values, name: r.name, tags: r.tags });
     this.results = this.results.slice(0, 20);
     this.render();
   }
