@@ -2,6 +2,8 @@
 
 ## 0.1.2
 
+- Fix: sentence fields created duplicate umbrella tags when the same user had two windows open.
+- Fix: generators reading extra columns (spell scope, height, resource rarity) failed when the table had been imported as a world RollTable.
 - Migration: tags created before 0.1.1 get their broken icon replaced on world load.
 
 ## 0.1.1

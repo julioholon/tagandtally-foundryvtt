@@ -24,10 +24,15 @@ export default class TagAndTallyActor extends Actor {
     this.updateSource({ prototypeToken: foundry.utils.mergeObject(prototypeToken, data.prototypeToken ?? {}, { inplace: false }) });
   }
 
-  /** @override Keep umbrella tag items in sync with the sentence fields. */
-  async _onUpdate(changed, options, userId) {
-    super._onUpdate(changed, options, userId);
-    if (userId !== game.user.id || this.type !== "character") return;
+  /**
+   * @override Keep umbrella tag items in sync with the sentence fields.
+   * Done in _preUpdate because it runs only on the client that made the
+   * change; _onUpdate runs on every window of the same user and duplicates.
+   */
+  async _preUpdate(changed, options, user) {
+    const allowed = await super._preUpdate(changed, options, user);
+    if (allowed === false) return false;
+    if (this.type !== "character" || options.ttSentenceSync === false) return;
     const sentence = changed.system?.sentence;
     if (!sentence) return;
     const creates = [];

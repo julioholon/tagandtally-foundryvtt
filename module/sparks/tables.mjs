@@ -103,7 +103,9 @@ class SparkTableStore {
         const draw = await override.draw({ displayChat: false });
         const result = draw.results[0];
         const text = result?.description ?? result?.text ?? result?.name ?? "";
-        return { value: text, row: { value: text }, total: draw.roll?.total, table: { name }, source: "world" };
+        // Recover the bundled row (extra columns such as height, rarity, label, pm) when the text matches.
+        const bundled = this.tables.get(name)?.table?.find((r) => String(r.value ?? r.label ?? "") === text || String(r.label ?? "") === text);
+        return { value: text, row: bundled ? { ...bundled, value: text } : { value: text }, total: draw.roll?.total, table: { name }, source: "world" };
       }
     }
     const table = this.tables.get(name);
