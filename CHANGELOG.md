@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- Migration: tags created before 0.1.1 get their broken icon replaced on world load.
+
 ## 0.1.1
 
 - Fix: every roll (task, injury, spell, quest, combat phase) failed because the roll

@@ -11,6 +11,7 @@ import CharacterSheet from "./module/sheets/character-sheet.mjs";
 import NpcSheet from "./module/sheets/npc-sheet.mjs";
 import TagAndTallyItemSheet from "./module/sheets/item-sheet.mjs";
 import { registerSettings } from "./module/settings.mjs";
+import { registerMigrationSetting, migrateWorld } from "./module/migration.mjs";
 import { registerHandlebarsHelpers, preloadTemplates } from "./module/handlebars.mjs";
 import { registerChatHooks } from "./module/rolls/chat.mjs";
 import { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel } from "./module/rolls/resolution.mjs";
@@ -52,6 +53,7 @@ Hooks.once("init", () => {
   Items.registerSheet(SYSTEM_ID, TagAndTallyItemSheet, { makeDefault: true, label: "TAGANDTALLY.Sheet.Item" });
 
   registerSettings();
+  registerMigrationSetting();
   CombatFlow.registerSetting();
   registerHandlebarsHelpers();
   registerChatHooks();
@@ -103,6 +105,7 @@ Hooks.once("setup", () => {
 Hooks.once("ready", async () => {
   await sparksLoading;
   registerCombatFlowSocket();
+  await migrateWorld();
   // Scene controls: Sparks and Combat Flow buttons on the token layer.
   if (!game.settings.get(SYSTEM_ID, "welcomeShown") && game.user.isGM) {
     await ChatMessage.create({
