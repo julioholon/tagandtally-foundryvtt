@@ -1,7 +1,14 @@
 # Changelog
 
+## 0.1.3
+
+- Fix: combat flow level dropdown showed level 1 regardless of the stored level; phases now numbered 1-5.
+- `system.json` version is now bumped in git so migrations also run on git-clone installs. New `scripts/release.sh`.
+
 ## 0.1.2
 
+- Fix: sentence fields created duplicate umbrella tags when the same user had two windows open.
+- Fix: generators reading extra columns (spell scope, height, resource rarity) failed when the table had been imported as a world RollTable.
 - Migration: tags created before 0.1.1 get their broken icon replaced on world load.
 
 ## 0.1.1

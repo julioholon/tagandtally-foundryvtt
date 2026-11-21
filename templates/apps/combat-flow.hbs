@@ -15,7 +15,7 @@
           <strong>{{p.name}}</strong>
           <span class="tt-flow-opponent">
             {{localize "TAGANDTALLY.Combat.Versus"}}
-            <select data-opponent-level="{{p.uuid}}">{{#each ../levels as |l k|}}<option value="{{k}}" {{#if (tt-eq k p.opponentLevel)}}selected{{/if}}>{{k}}: {{localize l}}</option>{{/each}}</select>
+            <select data-opponent-level="{{p.uuid}}">{{#each ../levels as |l k|}}<option value="{{k}}" {{#if (tt-eq (tt-add k 0) p.opponentLevel)}}selected{{/if}}>{{k}}: {{localize l}}</option>{{/each}}</select>
             {{#if p.opponentName}}<em>{{p.opponentName}}</em>{{/if}}
             <a data-action="setOpponent" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Combat.SetOpponent'}}"><i class="fa-solid fa-crosshairs"></i></a>
           </span>
@@ -28,7 +28,7 @@
         <ol class="tt-phases">
           {{#each p.phases as |ph|}}
             <li class="tt-phase {{#if ph.current}}current{{/if}} {{#if ph.done}}done {{ph.bandCss}}{{/if}} {{#if ph.future}}future{{/if}}">
-              <span class="tt-phase-name">{{ph.index}}. {{ph.label}}</span>
+              <span class="tt-phase-name">{{tt-add ph.index 1}}. {{ph.label}}</span>
               {{#if ph.done}}<span class="tt-phase-result"><i class="fa-solid fa-dice-d20"></i> {{ph.total}} · {{ph.band}}</span>
               {{else if ph.current}}
                 {{#if p.canRoll}}<button type="button" data-action="rollPhase" data-uuid="{{p.uuid}}"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Roll.Roll"}}</button>{{/if}}

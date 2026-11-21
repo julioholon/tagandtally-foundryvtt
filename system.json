@@ -2,9 +2,12 @@
   "id": "tagandtally",
   "title": "Tag & Tally",
   "description": "An unofficial Foundry VTT game system for the Tag & Tally tabletop RPG (https://tagandtally.quest). Tags, tallies, wounds, spells, quests, and the full Sparks procedural generators.",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "authors": [
-    { "name": "Julio Monteiro", "url": "https://github.com/julioholon" }
+    {
+      "name": "Julio Monteiro",
+      "url": "https://github.com/julioholon"
+    }
   ],
   "url": "https://github.com/julioholon/tagandtally-foundryvtt",
   "manifest": "https://github.com/julioholon/tagandtally-foundryvtt/releases/latest/download/system.json",
@@ -13,30 +16,85 @@
   "readme": "README.md",
   "changelog": "https://github.com/julioholon/tagandtally-foundryvtt/blob/main/CHANGELOG.md",
   "bugs": "https://github.com/julioholon/tagandtally-foundryvtt/issues",
-  "compatibility": { "minimum": "13", "verified": "14" },
-  "esmodules": ["tagandtally.mjs"],
-  "styles": ["styles/tagandtally.css"],
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14"
+  },
+  "esmodules": [
+    "tagandtally.mjs"
+  ],
+  "styles": [
+    "styles/tagandtally.css"
+  ],
   "languages": [
-    { "lang": "en", "name": "English", "path": "lang/en.json" }
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
   ],
   "documentTypes": {
     "Actor": {
-      "character": { "htmlFields": ["biography", "notes"] },
-      "npc": { "htmlFields": ["biography", "notes"] }
+      "character": {
+        "htmlFields": [
+          "biography",
+          "notes"
+        ]
+      },
+      "npc": {
+        "htmlFields": [
+          "biography",
+          "notes"
+        ]
+      }
     },
     "Item": {
-      "tag": { "htmlFields": ["description"] },
-      "gear": { "htmlFields": ["description"] },
-      "spell": { "htmlFields": ["description"] },
-      "quest": { "htmlFields": ["description"] },
-      "wound": { "htmlFields": ["description"] }
+      "tag": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "gear": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "spell": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "quest": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "wound": {
+        "htmlFields": [
+          "description"
+        ]
+      }
     }
   },
   "primaryTokenAttribute": "wounds.vitality",
   "secondaryTokenAttribute": "wealth.value",
-  "grid": { "distance": 5, "units": "ft" },
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  },
   "socket": true,
   "flags": {
-    "hotReload": { "extensions": ["css", "hbs", "json"], "paths": ["styles", "templates", "lang"] }
+    "hotReload": {
+      "extensions": [
+        "css",
+        "hbs",
+        "json"
+      ],
+      "paths": [
+        "styles",
+        "templates",
+        "lang"
+      ]
+    }
   }
 }
