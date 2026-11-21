@@ -3,6 +3,7 @@
   <div class="tt-header-main">
     <div class="tt-name-row">
       <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TAGANDTALLY.Name'}}" />
+      {{#if augurLinked}}<button type="button" class="tt-icon-btn" data-action="importAugur" title="{{localize 'TAGANDTALLY.Augur.Import'}}"><i class="fa-solid fa-file-import"></i></button>{{/if}}
       <label class="tt-toggle"><input type="checkbox" name="system.creature" {{checked system.creature}} /> {{localize "TAGANDTALLY.Npc.Creature"}}</label>
       <button type="button" class="tt-roll-btn" data-action="rollTask"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Roll.Roll"}}</button>
     </div>

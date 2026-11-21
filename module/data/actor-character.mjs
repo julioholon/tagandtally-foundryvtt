@@ -1,5 +1,5 @@
 import { TAGANDTALLY } from "../config.mjs";
-import { woundsSchema, prepareWounds, wealthSchema, htmlField } from "./shared.mjs";
+import { woundsSchema, prepareWounds, wealthSchema, htmlField, word, tidy } from "./shared.mjs";
 
 const fields = foundry.data.fields;
 
@@ -60,6 +60,9 @@ export default class CharacterData extends foundry.abstract.TypeDataModel {
       ephemeralMax: TAGANDTALLY.ephemeralCap
     };
     this.wealth.label = TAGANDTALLY.wealthLevels[this.wealth.value];
+    this.wealth.climbCost = TAGANDTALLY.coins.climbCost(this.wealth.value);
+    this.wealth.cashOut = TAGANDTALLY.coins.cashOut(this.wealth.value);
+    this.wealth.canClimb = this.wealth.value < 6 && this.wealth.coins >= this.wealth.climbCost;
     this.wealth.dc = TAGANDTALLY.dcForLevel(this.wealth.value) || 0;
     this.sentenceText = this.buildSentence(actor?.name);
   }
@@ -67,8 +70,8 @@ export default class CharacterData extends foundry.abstract.TypeDataModel {
   buildSentence(name = "") {
     const s = this.sentence;
     const parts = [s.descriptor, s.species, s.type].filter(Boolean).map((p) => `[${p}]`);
-    let text = `${name || "?"} is a ${parts.join(" ") || "..."}`;
-    if (s.specialty) text += ` who ${s.specialty.startsWith("[") ? s.specialty : `[${s.specialty}]`}`;
-    return `${text}.`;
+    let text = `${name || "?"} ${word("IsA", "is a")} ${parts.join(" ") || "..."}`;
+    if (s.specialty) text += ` ${word("Who", "who")} ${s.specialty.startsWith("[") ? s.specialty : `[${s.specialty}]`}`;
+    return tidy(`${text}.`);
   }
 }

@@ -22,7 +22,7 @@ globalThis.Roll = class {
     this.total = t + (m[3] ? +m[3] : 0); return this;
   }
 };
-globalThis.game = { tables: [], settings: { get: () => 3 }, i18n: { localize: (s) => s, format: (s) => s } };
+globalThis.game = { tables: [], settings: { get: () => 3 }, i18n: { lang: process.env.TT_LANG ?? "en", localize: (s) => s, format: (s) => s } };
 globalThis.CONST = { TABLE_RESULT_TYPES: { TEXT: 0 } };
 globalThis.Hooks = { on() {} };
 const { sparkTables } = await import(path.join(root, "module/sparks/tables.mjs"));

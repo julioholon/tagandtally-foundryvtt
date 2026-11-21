@@ -1,10 +1,10 @@
 import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
 
 /**
- * Item Piles: gear items are tradeable, Wealth is the currency (attribute
- * currency 0-6), and NPCs flagged as merchants sell at their items' cost level.
- * Note: Item Piles subtracts the cost level from Wealth on purchase, which is a
- * simplification of the Tag & Tally Wealth check; GMs can adjust Wealth afterwards.
+ * Item Piles: gear items are tradeable, coins (system.wealth.coins) are the
+ * currency, and items are priced in coins from their cost level (10^cost).
+ * Enable the system's coins mode so coins climb Wealth levels; otherwise
+ * use the built-in Barter window, which applies the SRD Wealth checks.
  */
 export function registerItemPiles() {
   Hooks.once("item-piles-ready", async () => {
@@ -15,7 +15,7 @@ export function registerItemPiles() {
         VERSION: "1.0.0",
         ACTOR_CLASS_TYPE: "npc",
         ITEM_QUANTITY_ATTRIBUTE: "system.quantity",
-        ITEM_PRICE_ATTRIBUTE: "system.cost",
+        ITEM_PRICE_ATTRIBUTE: "system.coinPrice",
         QUANTITY_FOR_PRICE_ATTRIBUTE: "flags.item-piles.system.quantityForPrice",
         ITEM_FILTERS: [
           { path: "type", filters: "tag,spell,quest,wound" }
@@ -28,10 +28,10 @@ export function registerItemPiles() {
         CURRENCIES: [
           {
             type: "attribute",
-            name: game.i18n.localize("TAGANDTALLY.Wealth.Wealth"),
+            name: game.i18n.localize("TAGANDTALLY.Coins.Coins"),
             img: "icons/commodities/currency/coins-plain-pouch-gold.webp",
-            abbreviation: "{#}W",
-            data: { path: "system.wealth.value" },
+            abbreviation: "{#}c",
+            data: { path: "system.wealth.coins" },
             primary: true,
             exchangeRate: 1
           }

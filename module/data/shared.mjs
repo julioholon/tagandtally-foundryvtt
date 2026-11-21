@@ -55,8 +55,21 @@ export function wealthSchema() {
   return new fields.SchemaField({
     value: new fields.NumberField({ required: true, integer: true, min: 0, max: 6, initial: 3 }),
     qualityOfLife: new fields.NumberField({ required: true, integer: true, min: -1, max: 1, initial: 0 }),
-    inDebt: new fields.BooleanField({ initial: false })
+    inDebt: new fields.BooleanField({ initial: false }),
+    coins: new fields.NumberField({ required: true, integer: true, min: 0, initial: 0 })
   });
+}
+
+/** Localize a sentence connective, falling back to the English default before i18n is ready. */
+export function word(key, fallback) {
+  const k = `TAGANDTALLY.Words.${key}`;
+  const v = globalThis.game?.i18n?.localize?.(k);
+  return v && v !== k ? v : fallback;
+}
+
+/** Collapse double spaces and spaces before punctuation left by empty connectives. */
+export function tidy(text) {
+  return String(text ?? "").replace(/\s+([.,;:])/g, "$1").replace(/\s{2,}/g, " ").trim();
 }
 
 export function htmlField() {

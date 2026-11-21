@@ -37,6 +37,7 @@
 .tagandtally .tt-stat { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0.5rem; border: 1px solid var(--tt-border); border-radius: 4px; }
 .tagandtally .tt-stat small { opacity: 0.75; }
 .tagandtally .tt-stat .tt-small-num { width: 3em; height: 1.5em; }
+.tagandtally .tt-stat .tt-small-num.wide { width: 5em; }
 .tagandtally .tt-worst { font-style: italic; opacity: 0.85; margin-left: 0.3rem; }
 .tagandtally .tt-roll-btn { display: inline-flex; gap: 0.3rem; align-items: center; white-space: nowrap; }
 .tagandtally .tt-roll-btn.big { width: 100%; font-size: 1.1em; justify-content: center; }

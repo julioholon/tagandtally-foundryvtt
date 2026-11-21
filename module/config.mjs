@@ -209,6 +209,17 @@ TAGANDTALLY.costLevels = {
   3: "TAGANDTALLY.Cost.3", 4: "TAGANDTALLY.Cost.4", 5: "TAGANDTALLY.Cost.5",
   6: "TAGANDTALLY.Cost.6"
 };
+/**
+ * Optional coins mode (not in the SRD): coins are a tally toward the next Wealth level.
+ * Climbing from Wealth w to w+1 costs 10^(w+1) coins; cashing out from w gives 10^w coins.
+ * Item prices in coins follow the SRD cost table (each cost level is 10x the previous).
+ */
+TAGANDTALLY.coins = {
+  climbCost: (wealth) => 10 ** (Math.clamp(wealth, 0, 5) + 1),
+  cashOut: (wealth) => 10 ** Math.clamp(wealth, 1, 6),
+  priceForCost: (cost) => (cost > 0 ? 10 ** cost : 0)
+};
+
 TAGANDTALLY.qualityOfLife = {
   "-1": "TAGANDTALLY.QoL.Above",
   "0": "TAGANDTALLY.QoL.At",

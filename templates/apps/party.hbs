@@ -7,7 +7,7 @@
         <td><a data-action="openActor" data-actor-id="{{r.id}}">{{r.name}}</a><br><small>{{r.owners}}</small></td>
         <td class="tt-sentence-cell">{{tt-tags r.sentence}}</td>
         <td class="sev-{{r.severity}}"><strong>{{r.severityLabel}}</strong><br><small>{{#each r.tracks}}{{label}} {{value}}/{{max}}{{#unless @last}} · {{/unless}}{{/each}}</small>{{#if r.worst}}<br><em>{{r.worst.name}}</em>{{/if}}</td>
-        <td>{{r.wealth}} <small>{{r.wealthLabel}}</small>{{#if r.inDebt}}<br><span class="tt-tag warn">{{localize "TAGANDTALLY.Wealth.InDebt"}}</span>{{/if}}</td>
+        <td>{{r.wealth}} <small>{{r.wealthLabel}}</small>{{#if ../coinsMode}}<br><small><i class="fa-solid fa-coins"></i> {{r.coins}}</small>{{/if}}{{#if r.inDebt}}<br><span class="tt-tag warn">{{localize "TAGANDTALLY.Wealth.InDebt"}}</span>{{/if}}</td>
         <td>{{r.mai}}</td>
         <td>{{r.loadout.value}}/{{r.loadout.max}}</td>
         <td>{{r.tags}}</td>

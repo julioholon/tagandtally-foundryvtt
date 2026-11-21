@@ -1,6 +1,7 @@
 import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
 import { rollTemporaryTag } from "../rolls/resolution.mjs";
 import { createWoundItemFromSpark, generateAppearanceFor } from "../sparks/create.mjs";
+import { hasAugurPerson, importAugurPerson } from "../integrations/augur.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -35,6 +36,9 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
       openSparks: BaseActorSheet.#onOpenSparks,
       sentenceToChat: BaseActorSheet.#onSentenceToChat,
       rerollItem: BaseActorSheet.#onRerollItem,
+      cashOut: BaseActorSheet.#onCashOut,
+      climbWealth: BaseActorSheet.#onClimbWealth,
+      importAugur: BaseActorSheet.#onImportAugur,
       addStageTag: BaseActorSheet.#onAddStageTag
     }
   };
@@ -56,7 +60,9 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
       items: this._prepareItems(),
       wounds: system.wounds,
       severityLabel: game.i18n.localize(system.wounds.severityLabel ?? ""),
-      sentenceText: system.sentenceText
+      sentenceText: system.sentenceText,
+      coinsMode: game.settings.get(SYSTEM_ID, "coinsMode"),
+      augurLinked: hasAugurPerson(actor)
     });
     return context;
   }
@@ -248,6 +254,10 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
     const { SparksApp } = await import("../sparks/sparks-app.mjs");
     return SparksApp.open({ actor: this.actor });
   }
+
+  static async #onCashOut() { return this.actor.cashOut(); }
+  static async #onClimbWealth() { return this.actor.climbWealth(); }
+  static async #onImportAugur() { return importAugurPerson(this.actor); }
 
   static async #onRerollItem(event, target) {
     const item = this._getItem(target);

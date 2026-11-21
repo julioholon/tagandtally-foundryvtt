@@ -1,5 +1,5 @@
 import { TAGANDTALLY } from "../config.mjs";
-import { htmlField } from "./shared.mjs";
+import { htmlField, word, tidy } from "./shared.mjs";
 import { computeSpell } from "../spells/spell-calc.mjs";
 
 const fields = foundry.data.fields;
@@ -34,6 +34,6 @@ export default class SpellData extends foundry.abstract.TypeDataModel {
   buildSentence() {
     const name = this.parent?.name ?? "This spell";
     const t = (v) => (v ? `[${v}]` : "");
-    return `${name} is a ${t(this.descriptor)} ${t(this.base)} spell${this.effect ? ` that ${t(this.effect)}` : ""}.`;
+    return tidy(`${name} ${word("IsA", "is a")} ${t(this.descriptor)} ${t(this.base)} ${word("Spell", "spell")}${this.effect ? ` ${word("That", "that")} ${t(this.effect)}` : ""}.`);
   }
 }

@@ -1,5 +1,5 @@
 import { TAGANDTALLY } from "../config.mjs";
-import { htmlField, levelField } from "./shared.mjs";
+import { htmlField, levelField, word, tidy } from "./shared.mjs";
 
 const fields = foundry.data.fields;
 
@@ -34,6 +34,8 @@ export default class GearData extends foundry.abstract.TypeDataModel {
   prepareDerivedData() {
     this.levelLabel = TAGANDTALLY.gearLevels[this.level];
     this.costLabel = TAGANDTALLY.costLevels[this.cost];
+    /** Price in coins for the optional coins mode and Item Piles. */
+    this.coinPrice = TAGANDTALLY.coins.priceForCost(this.cost);
     this.armor = TAGANDTALLY.armorClasses[this.armorClass];
     this.isWeapon = this.gearType === "weapon";
     this.isArmor = this.gearType === "armor";
@@ -49,11 +51,15 @@ export default class GearData extends foundry.abstract.TypeDataModel {
     const name = this.parent?.name ?? "This item";
     const t = (v) => (v ? `[${v}]` : "");
     const head = [this.descriptor, this.material, this.subtype].map(t).filter(Boolean).join(" ");
+    return tidy(this.#sentence(name, t, head));
+  }
+
+  #sentence(name, t, head) {
     switch (this.gearType) {
       case "weapon":
-        return `${name} is a ${head} that does ${t(this.damageType)} damage${this.special ? ` and ${t(this.special)}` : ""}.`;
+        return `${name} ${word("IsA", "is a")} ${head} ${word("ThatDoes", "that does")} ${t(this.damageType)} ${word("Damage", "damage")}${this.special ? ` ${word("And", "and")} ${t(this.special)}` : ""}.`;
       default:
-        return `${name} is a ${head || `[${TAGANDTALLY.gearTypes[this.gearType] ?? this.gearType}]`}${this.special ? ` that ${t(this.special)}` : ""}.`;
+        return `${name} ${word("IsA", "is a")} ${head || `[${game?.i18n?.localize?.(TAGANDTALLY.gearTypes[this.gearType]) ?? this.gearType}]`}${this.special ? ` ${word("That", "that")} ${t(this.special)}` : ""}.`;
     }
   }
 }
