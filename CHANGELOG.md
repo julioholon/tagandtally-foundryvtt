@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2 (unreleased)
+
+- Fix: a connective translated as empty (pt-BR "damage") no longer falls back to English.
+- API: `game.tagandtally.augur` also exposes `findAugurPerson` and `mapAugurPerson`.
+
 ## 0.2.1 (unreleased)
 
 - Generated sentences follow the interface language: connectives in sheets and chat and the Sparks generator templates have pt-BR variants (table content stays English).

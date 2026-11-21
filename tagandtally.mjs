@@ -27,7 +27,7 @@ import { registerItemPiles } from "./module/integrations/item-piles.mjs";
 import { registerSceneLevel } from "./module/integrations/scene-level.mjs";
 import { PartyOverview, registerPartyOverview } from "./module/integrations/party.mjs";
 import { BarterApp } from "./module/integrations/barter.mjs";
-import { importAugurPerson, hasAugurPerson } from "./module/integrations/augur.mjs";
+import { importAugurPerson, hasAugurPerson, findAugurPerson, mapAugurPerson } from "./module/integrations/augur.mjs";
 import { createDefaultMacros } from "./module/macros.mjs";
 
 Hooks.once("init", () => {
@@ -74,7 +74,7 @@ Hooks.once("init", () => {
     rolls: { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel },
     sparks: { tables: sparkTables, generate, SparkGenerator, loadGeneratorDefs, ...create },
     spells: { computeSpell, maiCheck },
-    augur: { importAugurPerson, hasAugurPerson },
+    augur: { importAugurPerson, hasAugurPerson, findAugurPerson, mapAugurPerson },
     macros: {
       /** Open the task roll dialog for the selected token's actor (or the user's character). */
       rollTask: (options = {}) => {

@@ -64,7 +64,8 @@ export function wealthSchema() {
 export function word(key, fallback) {
   const k = `TAGANDTALLY.Words.${key}`;
   const v = globalThis.game?.i18n?.localize?.(k);
-  return v && v !== k ? v : fallback;
+  // An empty string is a valid translation (the word is dropped in that language).
+  return typeof v === "string" && v !== k ? v : fallback;
 }
 
 /** Collapse double spaces and spaces before punctuation left by empty connectives. */
