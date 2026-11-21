@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0 (unreleased)
+## 0.2.0 (2026-11-21)
 
 - **Random character builder.** The wand button in the character header generates a complete
   character: sentence (descriptor, species, type, specialty), life-stage tags from childhood
@@ -16,6 +16,7 @@
 - **Fix**: rolls for unlinked NPC tokens whose copy has no tags fall back to the world actor's
   tags (tallies go to the world actor).
 - **pt-BR translation.**
+- Fix: rerolling a tag always picks a different value when the table has alternatives.
 - New extra tables: life-stage backgrounds, occupations, flaws, skills, traits, experiences.
 
 ## 0.1.3
