@@ -23,9 +23,14 @@ export function registerSceneLevel() {
       </div>
       <p class="hint">${game.i18n.localize("TAGANDTALLY.Scene.LevelHint")}</p>`;
     // Put it after the scene name field in the basics tab.
-    const anchor = root.querySelector('[name="name"]')?.closest(".form-group") ?? root.querySelector(".tab[data-tab='basics']") ?? root.querySelector("fieldset, .form-group");
-    if (anchor?.parentElement) anchor.insertAdjacentElement("afterend", group);
-    else root.querySelector("form, .window-content")?.prepend(group);
+    const nameGroup = root.querySelector('input[name="name"]')?.closest(".form-group");
+    const basics = root.querySelector('.tab[data-tab="basics"], [data-tab="basics"]');
+    if (nameGroup) nameGroup.insertAdjacentElement("afterend", group);
+    else if (basics) basics.prepend(group);
+    else {
+      const form = root.querySelector("form") ?? root;
+      (form.querySelector("fieldset") ?? form).prepend(group);
+    }
   });
 
   // Blank select values would be stored as "" so coerce them to a number or unset.

@@ -3,32 +3,884 @@
     "name": "modern-name-patterns",
     "formula": "1d4",
     "table": [
-      { "min": 1, "max": 2, "value": "{modern-male-firstname} {modern-lastname}" },
-      { "min": 3, "max": 4, "value": "{modern-female-firstname} {modern-lastname}" }
+      {
+        "min": 1,
+        "max": 2,
+        "value": "{modern-male-firstname} {modern-lastname}"
+      },
+      {
+        "min": 3,
+        "max": 4,
+        "value": "{modern-female-firstname} {modern-lastname}"
+      }
     ]
   },
   {
     "name": "monster-hunter-name-patterns",
     "formula": "1d4",
     "table": [
-      { "min": 1, "max": 2, "value": "{modern-male-firstname} {modern-lastname}" },
-      { "min": 3, "max": 4, "value": "{modern-female-firstname} {modern-lastname}" }
+      {
+        "min": 1,
+        "max": 2,
+        "value": "{modern-male-firstname} {modern-lastname}"
+      },
+      {
+        "min": 3,
+        "max": 4,
+        "value": "{modern-female-firstname} {modern-lastname}"
+      }
     ]
   },
   {
     "name": "oracle-likelihood",
     "formula": "1d1",
     "table": [
-      { "min": 1, "max": 1, "value": "Certain", "level": 1 },
-      { "min": 1, "max": 1, "value": "Very Likely", "level": 2 },
-      { "min": 1, "max": 1, "value": "Likely", "level": 3 },
-      { "min": 1, "max": 1, "value": "Somewhat Likely", "level": 4 },
-      { "min": 1, "max": 1, "value": "Even Odds", "level": 5 },
-      { "min": 1, "max": 1, "value": "Somewhat Unlikely", "level": 6 },
-      { "min": 1, "max": 1, "value": "Unlikely", "level": 7 },
-      { "min": 1, "max": 1, "value": "Very Unlikely", "level": 8 },
-      { "min": 1, "max": 1, "value": "Nearly Impossible", "level": 9 },
-      { "min": 1, "max": 1, "value": "Impossible", "level": 10 }
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Certain",
+        "level": 1
+      },
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Very Likely",
+        "level": 2
+      },
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Likely",
+        "level": 3
+      },
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Somewhat Likely",
+        "level": 4
+      },
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Even Odds",
+        "level": 5
+      },
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Somewhat Unlikely",
+        "level": 6
+      },
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Unlikely",
+        "level": 7
+      },
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Very Unlikely",
+        "level": 8
+      },
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Nearly Impossible",
+        "level": 9
+      },
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Impossible",
+        "level": 10
+      }
+    ]
+  },
+  {
+    "name": "spell-name-pattern",
+    "formula": "1d4",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "{spell-name-adjective} {spell-name-noun}"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "{spell-name-noun} of {spell-name-source}"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "{spell-name-adjective} {spell-name-noun} of {spell-name-source}"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "{spell-name-source}'s {spell-name-noun}"
+      }
+    ]
+  },
+  {
+    "name": "spell-name-adjective",
+    "formula": "1d20",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Whispering"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "Searing"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Hollow"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "Radiant"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Creeping"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "Silent"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Shattered"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "Binding"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "Wandering"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "Frozen"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Howling"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "Gilded"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Crimson"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "Veiled"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Thundering"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "Fading"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Iron"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "Blooming"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Drowning"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "Starlit"
+      }
+    ]
+  },
+  {
+    "name": "spell-name-noun",
+    "formula": "1d20",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Lance"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "Veil"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Chorus"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "Ward"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Grasp"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "Step"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Eye"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "Tide"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "Crown"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "Thread"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Pulse"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "Mirror"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Bloom"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "Shard"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Tongue"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "Gate"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Cage"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "Brand"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Echo"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "Breath"
+      }
+    ]
+  },
+  {
+    "name": "spell-name-source",
+    "formula": "1d20",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "the Deep"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "the Last Dawn"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Ash"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "the Hollow King"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Many Hands"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "the Quiet Court"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Thorns"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "the Drowned Moon"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "Glass"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "the First Word"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Embers"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "the Hidden Star"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Dust"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "the Grey Road"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Salt"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "the Sleeping Flame"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Mist"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "the Broken Bell"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Ink"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "the Far Shore"
+      }
+    ]
+  },
+  {
+    "name": "spell-descriptor",
+    "formula": "1d20",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "flickering"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "ancient"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "unstable"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "elegant"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "brutal"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "subtle"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "forbidden"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "humming"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "jagged"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "gentle"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "ravenous"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "patient"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "luminous"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "hungry"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "crystalline"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "smoldering"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "spiraling"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "weeping"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "thunderous"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "delicate"
+      }
+    ]
+  },
+  {
+    "name": "spell-manifestation",
+    "formula": "1d20",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "sparks"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "threads"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "shards"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "mist"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "runes"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "whispers"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "chains"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "petals"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "ripples"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "embers"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "shadows"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "motes"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "sigils"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "vines"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "echoes"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "needles"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "waves"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "dust"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "halos"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "roots"
+      }
+    ]
+  },
+  {
+    "name": "spell-verb-damage",
+    "formula": "1d8",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "lashes out"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "tears through"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "burns away"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "strikes down"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "rends"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "batters"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "pierces"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "scorches"
+      }
+    ]
+  },
+  {
+    "name": "spell-verb-control",
+    "formula": "1d8",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "binds"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "compels"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "bends"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "holds fast"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "twists"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "commands"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "shackles"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "steers"
+      }
+    ]
+  },
+  {
+    "name": "spell-verb-summon",
+    "formula": "1d8",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "calls forth"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "conjures"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "awakens"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "draws out"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "manifests"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "beckons"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "shapes"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "breathes life into"
+      }
+    ]
+  },
+  {
+    "name": "spell-verb-ward",
+    "formula": "1d8",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "shields"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "wards off"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "seals away"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "shelters"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "deflects"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "cloaks"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "anchors"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "guards"
+      }
+    ]
+  },
+  {
+    "name": "spell-verb-counter",
+    "formula": "1d8",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "unravels"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "dispels"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "silences"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "severs"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "nullifies"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "reflects"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "smothers"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "breaks"
+      }
     ]
   }
 ]

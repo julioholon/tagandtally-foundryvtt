@@ -141,12 +141,23 @@ class SparkTableStore {
 
   /** Create world RollTables from the bundled tables (optionally one group). */
   async importToWorld({ group = null, folderName = "Sparks" } = {}) {
-    let folder = game.folders.find((f) => f.type === "RollTable" && f.name === folderName);
-    folder ??= await Folder.create({ name: folderName, type: "RollTable" });
+    let root = game.folders.find((f) => f.type === "RollTable" && f.name === folderName && !f.folder);
+    root ??= await Folder.create({ name: folderName, type: "RollTable" });
+    const subfolders = new Map();
+    const folderFor = async (groupName) => {
+      // "settings/fantasy/npc" -> "Fantasy: Npc"; "creature" -> "Creature"
+      const label = groupName.replace(/^settings\//, "").split("/").map((s) => s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())).join(": ");
+      if (subfolders.has(label)) return subfolders.get(label);
+      let f = game.folders.find((x) => x.type === "RollTable" && x.name === label && x.folder?.id === root.id);
+      f ??= await Folder.create({ name: label, type: "RollTable", folder: root.id });
+      subfolders.set(label, f);
+      return f;
+    };
     const created = [];
     for (const table of this.tables.values()) {
       if (group && table.group !== group) continue;
       if (game.tables.find((t) => t.name === table.name)) continue;
+      const folder = await folderFor(table.group);
       const rows = table.table ?? [];
       const numeric = rows.every((r) => Number.isFinite(Number(r.min)) && Number.isFinite(Number(r.max)));
       const results = rows.map((r, i) => ({

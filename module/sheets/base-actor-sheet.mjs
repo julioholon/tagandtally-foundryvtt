@@ -67,21 +67,21 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
   }
 
   /**
-   * Foundry v14's ActorSheetV2 handles item drag/drop natively (keyed on data-item-id).
-   * v13 does not, so install a DragDrop handler there.
+   * Drag items off the sheet (to the hotbar or other sheets). Dropping onto the
+   * sheet is handled natively by ActorSheetV2 on v14; v13 gets a fallback.
    */
   async _onRender(context, options) {
     await super._onRender(context, options);
-    if (typeof this._onDropItem === "function" || typeof this._onDrop === "function") return;
+    const nativeDrop = typeof this._onDropItem === "function" || typeof this._onDrop === "function";
     new foundry.applications.ux.DragDrop.implementation({
-      dragSelector: "[data-item-id]",
-      dropSelector: null,
-      permissions: { dragstart: () => this.isEditable, drop: () => this.isEditable },
-      callbacks: { dragstart: this.#onDragStartV13.bind(this), drop: this.#onDropV13.bind(this) }
+      dragSelector: ".tt-item[data-item-id]",
+      dropSelector: nativeDrop ? ".tt-never" : null,
+      permissions: { dragstart: () => this.isEditable, drop: () => this.isEditable && !nativeDrop },
+      callbacks: { dragstart: this.#onDragStartItem.bind(this), drop: this.#onDropV13.bind(this) }
     }).bind(this.element);
   }
 
-  #onDragStartV13(event) {
+  #onDragStartItem(event) {
     const item = this._getItem(event.currentTarget);
     if (!item) return;
     event.dataTransfer.setData("text/plain", JSON.stringify(item.toDragData()));

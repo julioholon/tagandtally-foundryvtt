@@ -24,6 +24,26 @@ export default class TagAndTallyActor extends Actor {
     this.updateSource({ prototypeToken: foundry.utils.mergeObject(prototypeToken, data.prototypeToken ?? {}, { inplace: false }) });
   }
 
+  /** @override Keep umbrella tag items in sync with the sentence fields. */
+  async _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+    if (userId !== game.user.id || this.type !== "character") return;
+    const sentence = changed.system?.sentence;
+    if (!sentence) return;
+    const creates = [];
+    const updates = [];
+    for (const slot of TAGANDTALLY.umbrellaTagTypes) {
+      if (!(slot in sentence)) continue;
+      const value = String(sentence[slot] ?? "").trim();
+      const existing = this.items.find((i) => i.type === "tag" && i.system.tagType === slot);
+      if (!value) continue;
+      if (existing) { if (existing.name !== value) updates.push({ _id: existing.id, name: value }); }
+      else creates.push({ name: value, type: "tag", system: { tagType: slot, category: "umbrella", magical: /\b(mag|arcan|wizard|sorcer|witch|warlock|druid|cleric|priest|mystic|shaman|spell)/i.test(value) } });
+    }
+    if (updates.length) await this.updateEmbeddedDocuments("Item", updates);
+    if (creates.length) await this.createEmbeddedDocuments("Item", creates);
+  }
+
   /* ------------------------------- Accessors ------------------------------ */
 
   get isCharacter() { return this.type === "character"; }

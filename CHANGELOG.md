@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.1
+
+- Fix: every roll (task, injury, spell, quest, combat phase) failed because the roll
+  dialog overwrote ApplicationV2's reserved `state` property.
+- Fix: tag items used a non-existent core icon.
+- Fix: dragging tags, gear, spells and quests from a sheet to the hotbar now works.
+- Sentence fields on the character header create or rename the matching umbrella tag
+  items, so a "Mage" type can be marked Magical for MAI without re-typing it.
+- Sparks: new random Spell generator that creates ready-to-use spell items.
+- Sparks: importing tables creates one RollTable subfolder per table group.
+- Scene level field inserts more robustly into Scene Config.
+
 ## 0.1.0 (unreleased)
 
 First playable version.
