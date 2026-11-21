@@ -93,6 +93,23 @@
       ]
     },
     {
+      "id": "magic",
+      "label": "Magic",
+      "generators": [
+        {
+          "id": "spell",
+          "label": "Spell",
+          "itemType": "spell",
+          "options": [
+            { "key": "spell-base", "label": "Base", "table": "spell-base" },
+            { "key": "spell-aspect", "label": "Aspect", "table": "spell-aspect" },
+            { "key": "spell-type", "label": "Type", "table": "spell-type" }
+          ],
+          "template": "**{spell-name-pattern|title}** is a {spell-descriptor|tag} {=spell-base|tag} spell that {spell-verb-[spell-type]|lower} with {=spell-aspect|lower} {spell-manifestation|lower}, reaching {=spell-effect-scope.label|lower}. It is cast as a {spell-artifact|tag}."
+        }
+      ]
+    },
+    {
       "id": "wounds",
       "label": "Wounds",
       "generators": [

@@ -124,6 +124,19 @@ export function itemDataFromGeneration(r, generator) {
     return { name: plain(`${v["quest-type"]} ${Object.entries(v).find(([k]) => k.startsWith("quest-objective"))?.[1] ?? ""}`), type: "quest",
       system: { questType: plain(v["quest-type"]), objective: plain(Object.entries(v).find(([k]) => k.startsWith("quest-objective"))?.[1]), description: `<p>${r.html}</p>` } };
   }
+  if (g.itemType === "spell") {
+    const S = TAGANDTALLY.spell;
+    const scopeKey = Object.keys(S.scopes).find((k) => k === plain(v["spell-effect-scope"])) ?? "small";
+    const artifactLabel = plain(v["spell-artifact"]).toLowerCase();
+    const artifact = /ritual/.test(artifactLabel) ? "ritual" : /rune|incantation|science/.test(artifactLabel) ? "encoded" : /manifest/.test(artifactLabel) ? "manifestation" : "channeled";
+    const base = Object.keys(S.bases).find((k) => k === plain(v["spell-base"])) ?? "Order";
+    const aspect = Object.keys(S.aspects).find((k) => k === plain(v["spell-aspect"])) ?? "Earth";
+    const type = Object.keys(S.types).find((k) => k === plain(v["spell-type"])) ?? "Damage";
+    return { name: r.name ?? "Spell", type: "spell",
+      system: { descriptor: plain(v["spell-descriptor"]), base, aspects: [aspect], types: [type], scope: scopeKey, artifact,
+        effect: r.text.replace(/\*\*.+?\*\*/, "").replace(/^\s*is a \[[^\]]+\] \[[^\]]+\] spell that /, "").replace(/\. It is cast as.*$/, "").replace(/[\[\]]/g, ""),
+        description: `<p>${r.html}</p>` } };
+  }
   if (g.itemType === "wound") {
     return { name: `${plain(v["wound-descriptor"] ?? v["wound-blood-magic-descriptor"])} ${plain(v["wound-type-of-mark"] ?? v["wound-blood-magic-mark"])}`.trim(), type: "wound",
       system: { description: `<p>${r.html}</p>`, hinders: plain(Object.entries(v).find(([k]) => k.includes("detriment"))?.[1]) } };
@@ -163,7 +176,7 @@ export async function createItemFromSpark(generatorId, { actor, ...options } = {
 
 /** Regenerate an existing item's sentence from the matching generator. */
 export async function generateIntoItem(item) {
-  const generatorId = item.type === "gear" ? item.system.gearType : item.type === "quest" ? "quest" : item.type === "wound" ? "wound" : null;
+  const generatorId = item.type === "gear" ? item.system.gearType : item.type === "quest" ? "quest" : item.type === "wound" ? "wound" : item.type === "spell" ? "spell" : null;
   if (!generatorId) return item;
   const values = item.type === "wound" ? { "wound-injury-type": TAGANDTALLY.woundTrackSparkNames[item.system.injuryType] } : {};
   const r = await generate(generatorId, { theme: theme(), values });

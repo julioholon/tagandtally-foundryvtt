@@ -13,12 +13,12 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     super({ window: { title: title ?? game.i18n.localize("TAGANDTALLY.Roll.Task") } });
     this.actor = actor;
     this.item = item;
-    this.context = context;
+    this.rollContext = context;
     this.resolvePromise = resolve;
     this.fixedEases = fixedEases;
     this.fixedHinders = fixedHinders;
     this.lockRollType = rollType !== "task";
-    this.state = {
+    this.rollState = {
       title: title ?? "",
       rollType,
       level: level ?? sceneLevel(),
@@ -29,7 +29,7 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     };
     for (const id of preselected) {
       const it = actor?.items.get(id);
-      if (it) this.state.selection[id] = it.system.hinders ? "hinder" : "ease";
+      if (it) this.rollState.selection[id] = it.system.hinders ? "hinder" : "ease";
     }
   }
 
@@ -63,37 +63,37 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   collect() {
     const eases = [...this.fixedEases];
     const hinders = [...this.fixedHinders];
-    for (const [id, mode] of Object.entries(this.state.selection)) {
+    for (const [id, mode] of Object.entries(this.rollState.selection)) {
       if (!mode) continue;
       const it = this.actor?.items.get(id);
       if (!it) continue;
       const entry = { name: it.name, steps: it.system.steps ?? 1, source: it.type === "gear" ? "gear" : it.system.tagType === "scene" ? "scene" : "tag", itemId: id };
       (mode === "hinder" ? hinders : eases).push(entry);
     }
-    if (this.state.manualEase > 0) eases.push({ name: game.i18n.localize("TAGANDTALLY.Roll.ManualEase"), steps: this.state.manualEase, source: "manual" });
-    if (this.state.manualHinder > 0) hinders.push({ name: game.i18n.localize("TAGANDTALLY.Roll.ManualHinder"), steps: this.state.manualHinder, source: "manual" });
+    if (this.rollState.manualEase > 0) eases.push({ name: game.i18n.localize("TAGANDTALLY.Roll.ManualEase"), steps: this.rollState.manualEase, source: "manual" });
+    if (this.rollState.manualHinder > 0) hinders.push({ name: game.i18n.localize("TAGANDTALLY.Roll.ManualHinder"), steps: this.rollState.manualHinder, source: "manual" });
     return { eases, hinders };
   }
 
   async _prepareContext() {
     await sparkTables.load();
     const { eases, hinders } = this.collect();
-    const calc = computeEffectiveLevel(this.state.level, eases, hinders);
+    const calc = computeEffectiveLevel(this.rollState.level, eases, hinders);
     const ignoredIds = new Set(calc.ignored.map((e) => e.itemId).filter(Boolean));
     const tags = (this.actor?.items.filter((i) => i.type === "tag") ?? []).map((i) => ({
       id: i.id, name: i.name, notation: i.system.notation, steps: i.system.steps, img: i.img,
       typeLabel: game.i18n.localize(TAGANDTALLY.tagTypes[i.system.tagType] ?? ""),
-      mode: this.state.selection[i.id] ?? "", ignored: ignoredIds.has(i.id), hindersByDefault: i.system.hinders
+      mode: this.rollState.selection[i.id] ?? "", ignored: ignoredIds.has(i.id), hindersByDefault: i.system.hinders
     })).sort((a, b) => a.name.localeCompare(b.name));
     const gear = (this.actor?.items.filter((i) => i.type === "gear" && i.system.equipped) ?? []).map((i) => ({
       id: i.id, name: i.name, steps: i.system.steps, img: i.img,
       typeLabel: game.i18n.localize(TAGANDTALLY.gearTypes[i.system.gearType] ?? ""),
-      mode: this.state.selection[i.id] ?? "", ignored: ignoredIds.has(i.id)
+      mode: this.rollState.selection[i.id] ?? "", ignored: ignoredIds.has(i.id)
     }));
-    const levels = Object.entries(TAGANDTALLY.levels).map(([v, label]) => ({ value: Number(v), label: `${v}: ${game.i18n.localize(label)} (DC ${3 * v})`, selected: Number(v) === Number(this.state.level) }));
-    const rollTypes = sparkTables.resolutionTypes.filter((t) => !["yes no"].includes(t.id)).map((t) => ({ ...t, selected: t.id === this.state.rollType }));
+    const levels = Object.entries(TAGANDTALLY.levels).map(([v, label]) => ({ value: Number(v), label: `${v}: ${game.i18n.localize(label)} (DC ${3 * v})`, selected: Number(v) === Number(this.rollState.level) }));
+    const rollTypes = sparkTables.resolutionTypes.filter((t) => !["yes no"].includes(t.id)).map((t) => ({ ...t, selected: t.id === this.rollState.rollType }));
     return {
-      actor: this.actor, state: this.state, tags, gear, levels, rollTypes, calc,
+      actor: this.actor, state: this.rollState, tags, gear, levels, rollTypes, calc,
       fixedEases: this.fixedEases, fixedHinders: this.fixedHinders,
       effectiveLabel: game.i18n.localize(TAGANDTALLY.levels[calc.effective]),
       hasActor: Boolean(this.actor),
@@ -114,11 +114,11 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   #readForm() {
     const fd = new foundry.applications.ux.FormDataExtended(this.element);
     const data = fd.object;
-    this.state.title = data.title ?? this.state.title;
-    if (!this.lockRollType && data.rollType) this.state.rollType = data.rollType;
-    this.state.level = Math.clamp(Number(data.level) || 1, 1, 10);
-    this.state.manualEase = Math.max(0, Number(data.manualEase) || 0);
-    this.state.manualHinder = Math.max(0, Number(data.manualHinder) || 0);
+    this.rollState.title = data.title ?? this.rollState.title;
+    if (!this.lockRollType && data.rollType) this.rollState.rollType = data.rollType;
+    this.rollState.level = Math.clamp(Number(data.level) || 1, 1, 10);
+    this.rollState.manualEase = Math.max(0, Number(data.manualEase) || 0);
+    this.rollState.manualHinder = Math.max(0, Number(data.manualHinder) || 0);
   }
 
   static async #onSubmit(event, form, formData) {
@@ -130,13 +130,13 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     this.#readForm();
     const id = target.dataset.itemId;
     const mode = target.dataset.mode;
-    this.state.selection[id] = this.state.selection[id] === mode ? "" : mode;
+    this.rollState.selection[id] = this.rollState.selection[id] === mode ? "" : mode;
     this.render();
   }
 
   static #onStepLevel(event, target) {
     this.#readForm();
-    this.state.level = Math.clamp(this.state.level + Number(target.dataset.delta), 1, 10);
+    this.rollState.level = Math.clamp(this.rollState.level + Number(target.dataset.delta), 1, 10);
     this.render();
   }
 
@@ -145,8 +145,8 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     this.#readForm();
     const { eases, hinders } = this.collect();
     const result = await resolveRoll({
-      actor: this.actor, level: this.state.level, eases, hinders,
-      rollType: this.state.rollType, title: this.state.title || undefined, item: this.item, context: this.context
+      actor: this.actor, level: this.rollState.level, eases, hinders,
+      rollType: this.rollState.rollType, title: this.rollState.title || undefined, item: this.item, context: this.rollContext
     });
     this.resolvePromise?.(result);
     this.resolvePromise = null;

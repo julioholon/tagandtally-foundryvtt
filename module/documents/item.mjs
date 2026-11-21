@@ -9,7 +9,7 @@ export default class TagAndTallyItem extends Item {
     const allowed = await super._preCreate(data, options, user);
     if (allowed === false) return false;
     const defaults = {
-      tag: "icons/svg/tag.svg",
+      tag: "icons/svg/upgrade.svg",
       gear: "icons/svg/item-bag.svg",
       spell: "icons/svg/book.svg",
       quest: "icons/svg/target.svg",

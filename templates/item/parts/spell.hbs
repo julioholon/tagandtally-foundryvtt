@@ -1,7 +1,7 @@
 <section class="tab {{tab.cssClass}} tt-spell-builder" data-tab="{{tab.id}}" data-group="{{tab.group}}">
   <div class="tt-grid two">
     <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.Descriptor"}}</label><input type="text" name="system.descriptor" value="{{system.descriptor}}" /></div>
-    <div class="form-group"><label>{{localize "TAGANDTALLY.Spell.Effect"}}</label><input type="text" name="system.effect" value="{{system.effect}}" /></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Spell.Effect"}}</label><input type="text" name="system.effect" value="{{system.effect}}" />{{#if isGM}}<a data-action="generateSentence" title="{{localize 'TAGANDTALLY.Sparks.Regenerate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></a>{{/if}}</div>
   </div>
   <div class="tt-axis">
     <label>{{localize "TAGANDTALLY.Spell.Base"}}</label>

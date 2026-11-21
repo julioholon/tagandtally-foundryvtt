@@ -133,7 +133,7 @@ export class SparkGenerator {
         case "tag": value = `[${value}]`; break;
         case "lower": value = value.toLowerCase(); break;
         case "upper": value = value.toUpperCase(); break;
-        case "title": value = value.replace(/\b\w/g, (c) => c.toUpperCase()); break;
+        case "title": value = value.replace(/(^|[\s-])(\w)/g, (m, sep, c) => sep + c.toUpperCase()); break;
         default: break;
       }
     }
