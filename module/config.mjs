@@ -143,8 +143,17 @@ TAGANDTALLY.combatPhases = [
   { id: "counter", label: "TAGANDTALLY.Combat.Counter", spark: "combat counter" },
   { id: "resolution", label: "TAGANDTALLY.Combat.Resolution", spark: "combat outcome" }
 ];
+/** Which earlier phases feed their modifier into each phase. */
+TAGANDTALLY.combatPhaseFeeds = {
+  opening: [],
+  maneuver: ["opening"],
+  attack: ["maneuver"],
+  counter: ["maneuver"],
+  resolution: ["attack", "counter"]
+};
+
 /**
- * Modifier each phase's band passes to the next phase (positive = ease).
+ * Modifier each phase's band passes to the phases it feeds (positive = ease).
  * Opening: Fail-and -2, Fail-but -1, Success-but +1 (and take a strain), Success +1, Success-and +2.
  * Maneuver: -1, 0, -1, 0, +1. Attack and Counter: -2, 0, -1, +1, +2.
  */

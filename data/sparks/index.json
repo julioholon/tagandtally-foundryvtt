@@ -1,4 +1,5 @@
 [
+  "extra/character-builder.json",
   "extra/foundry.json",
   "tables/character.json",
   "tables/constants/keywords.json",

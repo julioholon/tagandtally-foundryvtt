@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.2.0 (unreleased)
+
+- **Random character builder.** The wand button in the character header generates a complete
+  character: sentence (descriptor, species, type, specialty), life-stage tags from childhood
+  up to the chosen stage, four gear items, a personal quest arc, appearance, name. Every
+  generated tag, item and quest has a reroll die; sentence slots reroll individually.
+- **Life stages tab** showing what each stage granted, with random-tag buttons per stage.
+- **Barter** window on NPC sheets: buy and sell with Wealth checks per the SRD, no Item
+  Piles required. `game.tagandtally.macros.openBarter()`.
+- **Combat flow**: phases can be rolled in any order or skipped; modifiers flow along the
+  SRD chain (Opening to Maneuver, Maneuver to Attack and Counter, both to Resolution).
+- **Fix**: gear sentence now follows the structured fields; the free-text sentence is only
+  used when the fields are empty.
+- **Fix**: rolls for unlinked NPC tokens whose copy has no tags fall back to the world actor's
+  tags (tallies go to the world actor).
+- **pt-BR translation.**
+- New extra tables: life-stage backgrounds, occupations, flaws, skills, traits, experiences.
+
 ## 0.1.3
 
 - Fix: combat flow level dropdown showed level 1 regardless of the stored level; phases now numbered 1-5.

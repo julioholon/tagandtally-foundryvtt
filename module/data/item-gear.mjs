@@ -25,6 +25,8 @@ export default class GearData extends foundry.abstract.TypeDataModel {
       cost: new fields.NumberField({ required: true, integer: true, min: 0, max: 6, initial: 2 }),
       /** Container capacity (items) when gearType is container. */
       capacity: new fields.NumberField({ required: true, integer: true, min: 0, initial: 0 }),
+      /** Spark table this item was generated from (enables reroll). */
+      source: new fields.StringField({ required: true, blank: true, initial: "" }),
       description: htmlField()
     };
   }
@@ -39,7 +41,8 @@ export default class GearData extends foundry.abstract.TypeDataModel {
     this.isContainer = this.gearType === "container";
     /** Gear eases a task by 1 as an asset; armor eases defense by its class. */
     this.steps = this.isArmor ? (this.armor?.defense ?? 1) : 1;
-    this.sentenceText = this.sentence || this.buildSentence();
+    const hasFields = Boolean(this.descriptor || this.material || this.subtype || this.special || this.damageType);
+    this.sentenceText = hasFields || !this.sentence ? this.buildSentence() : this.sentence;
   }
 
   buildSentence() {

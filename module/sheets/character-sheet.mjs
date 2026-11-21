@@ -7,7 +7,9 @@ export default class CharacterSheet extends BaseActorSheet {
     actions: {
       buildSentence: CharacterSheet.#onBuildSentence,
       wealthStep: CharacterSheet.#onWealthStep,
-      openParty: CharacterSheet.#onOpenParty
+      openParty: CharacterSheet.#onOpenParty,
+      randomize: CharacterSheet.#onRandomize,
+      rerollSlot: CharacterSheet.#onRerollSlot
     }
   };
 
@@ -16,6 +18,7 @@ export default class CharacterSheet extends BaseActorSheet {
     tabs: { template: "templates/generic/tab-navigation.hbs" },
     main: { template: "systems/tagandtally/templates/actor/parts/tab-main.hbs", scrollable: [""] },
     tags: { template: "systems/tagandtally/templates/actor/parts/tab-tags.hbs", scrollable: [""] },
+    lifestages: { template: "systems/tagandtally/templates/actor/parts/tab-lifestages.hbs", scrollable: [""] },
     inventory: { template: "systems/tagandtally/templates/actor/parts/tab-inventory.hbs", scrollable: [""] },
     spells: { template: "systems/tagandtally/templates/actor/parts/tab-spells.hbs", scrollable: [""] },
     quests: { template: "systems/tagandtally/templates/actor/parts/tab-quests.hbs", scrollable: [""] },
@@ -28,6 +31,7 @@ export default class CharacterSheet extends BaseActorSheet {
       tabs: [
         { id: "main", icon: "fa-solid fa-user" },
         { id: "tags", icon: "fa-solid fa-tags" },
+        { id: "lifestages", icon: "fa-solid fa-timeline" },
         { id: "inventory", icon: "fa-solid fa-suitcase" },
         { id: "spells", icon: "fa-solid fa-wand-sparkles" },
         { id: "quests", icon: "fa-solid fa-scroll" },
@@ -48,6 +52,15 @@ export default class CharacterSheet extends BaseActorSheet {
     context.wealthLabel = game.i18n.localize(s.wealth.label ?? "");
     context.loadout = s.loadout;
     context.mai = s.mai;
+    const { LIFE_STAGE_ORDER, LIFE_STAGE_PLAN } = await import("../sparks/character-builder.mjs");
+    const reached = LIFE_STAGE_ORDER.indexOf(s.lifeStage);
+    const tags = this.actor.items.filter((i) => i.type === "tag" && !TAGANDTALLY.umbrellaTagTypes.includes(i.system.tagType));
+    context.stages = LIFE_STAGE_ORDER.map((key, i) => ({
+      key, label: TAGANDTALLY.lifeStages[key], reached: i <= reached, current: key === s.lifeStage,
+      items: tags.filter((t) => t.system.lifeStage === key),
+      plan: LIFE_STAGE_PLAN[key].map((p) => game.i18n.localize(TAGANDTALLY.tagTypes[p.tagType])).join(", ")
+    }));
+    context.unassignedTags = tags.filter((t) => !t.system.lifeStage);
     return context;
   }
 
@@ -64,6 +77,24 @@ export default class CharacterSheet extends BaseActorSheet {
   static async #onWealthStep(event, target) {
     const value = Math.clamp(this.actor.system.wealth.value + Number(target.dataset.delta), 0, 6);
     return this.actor.update({ "system.wealth.value": value });
+  }
+
+  static async #onRandomize() {
+    const hasContent = this.actor.items.size > 0;
+    if (hasContent) {
+      const ok = await foundry.applications.api.DialogV2.confirm({
+        window: { title: game.i18n.localize("TAGANDTALLY.Builder.Title") },
+        content: `<p>${game.i18n.localize("TAGANDTALLY.Builder.Confirm")}</p>`
+      });
+      if (!ok) return;
+    }
+    const { buildRandomCharacter } = await import("../sparks/character-builder.mjs");
+    return buildRandomCharacter(this.actor, { lifeStage: this.actor.system.lifeStage ?? "adult", keepName: !/^(New |Character)/.test(this.actor.name) && hasContent });
+  }
+
+  static async #onRerollSlot(event, target) {
+    const { rerollSlot } = await import("../sparks/character-builder.mjs");
+    return rerollSlot(this.actor, target.dataset.slot);
   }
 
   static async #onOpenParty() {

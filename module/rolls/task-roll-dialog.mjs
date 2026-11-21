@@ -12,6 +12,9 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   constructor({ actor, level, rollType = "task", title, preselected = [], fixedEases = [], fixedHinders = [], item, context = {}, resolve } = {}) {
     super({ window: { title: title ?? game.i18n.localize("TAGANDTALLY.Roll.Task") } });
     this.actor = actor;
+    // Unlinked tokens get a copy of the actor at placement time; if that copy has no tags, read them from the world actor.
+    const base = actor?.isToken ? game.actors.get(actor.id) : null;
+    this.itemActor = base && !actor.items.some((i) => i.type === "tag") ? base : actor;
     this.item = item;
     this.rollContext = context;
     this.resolvePromise = resolve;
@@ -28,7 +31,7 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
       selection: {}
     };
     for (const id of preselected) {
-      const it = actor?.items.get(id);
+      const it = this.itemActor?.items.get(id);
       if (it) this.rollState.selection[id] = it.system.hinders ? "hinder" : "ease";
     }
   }
@@ -65,7 +68,7 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     const hinders = [...this.fixedHinders];
     for (const [id, mode] of Object.entries(this.rollState.selection)) {
       if (!mode) continue;
-      const it = this.actor?.items.get(id);
+      const it = this.itemActor?.items.get(id);
       if (!it) continue;
       const entry = { name: it.name, steps: it.system.steps ?? 1, source: it.type === "gear" ? "gear" : it.system.tagType === "scene" ? "scene" : "tag", itemId: id };
       (mode === "hinder" ? hinders : eases).push(entry);
@@ -80,12 +83,12 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     const { eases, hinders } = this.collect();
     const calc = computeEffectiveLevel(this.rollState.level, eases, hinders);
     const ignoredIds = new Set(calc.ignored.map((e) => e.itemId).filter(Boolean));
-    const tags = (this.actor?.items.filter((i) => i.type === "tag") ?? []).map((i) => ({
+    const tags = (this.itemActor?.items.filter((i) => i.type === "tag") ?? []).map((i) => ({
       id: i.id, name: i.name, notation: i.system.notation, steps: i.system.steps, img: i.img,
       typeLabel: game.i18n.localize(TAGANDTALLY.tagTypes[i.system.tagType] ?? ""),
       mode: this.rollState.selection[i.id] ?? "", ignored: ignoredIds.has(i.id), hindersByDefault: i.system.hinders
     })).sort((a, b) => a.name.localeCompare(b.name));
-    const gear = (this.actor?.items.filter((i) => i.type === "gear" && i.system.equipped) ?? []).map((i) => ({
+    const gear = (this.itemActor?.items.filter((i) => i.type === "gear" && i.system.equipped) ?? []).map((i) => ({
       id: i.id, name: i.name, steps: i.system.steps, img: i.img,
       typeLabel: game.i18n.localize(TAGANDTALLY.gearTypes[i.system.gearType] ?? ""),
       mode: this.rollState.selection[i.id] ?? "", ignored: ignoredIds.has(i.id)
@@ -145,7 +148,7 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     this.#readForm();
     const { eases, hinders } = this.collect();
     const result = await resolveRoll({
-      actor: this.actor, level: this.rollState.level, eases, hinders,
+      actor: this.actor, tallyActor: this.itemActor, level: this.rollState.level, eases, hinders,
       rollType: this.rollState.rollType, title: this.rollState.title || undefined, item: this.item, context: this.rollContext
     });
     this.resolvePromise?.(result);

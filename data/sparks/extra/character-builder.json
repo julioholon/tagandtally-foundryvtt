@@ -1,0 +1,1050 @@
+[
+  {
+    "name": "life-background-childhood",
+    "formula": "1d20",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Raised in a temple"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "Orphaned young"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Grew up on a farm"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "Child of a soldier"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Street urchin"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "Noble upbringing"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Raised by a single parent"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "Apprenticed early"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "Travelled with caravans"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "Grew up near the wilds"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Sickly childhood"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "Family of fisherfolk"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Raised in a library"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "Child of a tavern keeper"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Survived a village fire"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "Grew up in a mining town"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Foster child of a guild"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "Raised among smugglers"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Childhood in exile"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "Only child of a healer"
+      }
+    ]
+  },
+  {
+    "name": "life-background-adolescence",
+    "formula": "1d20",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Ran with a gang"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "Served as a page"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Lost a sibling"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "Won a local contest"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Apprenticed to a craftsman"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "Caught in a war"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Studied under a hermit"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "First love ended badly"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "Fled home"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "Joined a travelling troupe"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Worked the docks"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "Survived a plague year"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Trained at a fighting school"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "Served in a kitchen"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Mentored by a priest"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "Took the fall for a friend"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Mapped the nearby wilds"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "Lived through a famine"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Sang for coin"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "Became a temple acolyte"
+      }
+    ]
+  },
+  {
+    "name": "life-background-young-adult",
+    "formula": "1d20",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Served a term in the militia"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "Travelled far and returned"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Lost everything to a flood"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "Opened a small shop"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Joined a secret society"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "Married and separated"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Studied at an academy"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "Worked a trade route"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "Crossed a dangerous border"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "Nursed a dying mentor"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Swore an oath to a lord"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "Spent a year in prison"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Won a duel of honor"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "Apprenticed to a mage"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Survived a shipwreck"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "Built a house with own hands"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Ran a courier route"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "Hunted a notorious beast"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Buried a close friend"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "Discovered a hidden ruin"
+      }
+    ]
+  },
+  {
+    "name": "life-occupation",
+    "formula": "1d30",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Blacksmith"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "Scribe"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Hunter"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "Merchant"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Guard"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "Healer"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Sailor"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "Scholar"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "Farmer"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "Thief"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Minstrel"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "Courier"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Carpenter"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "Cook"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Soldier"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "Priest"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Alchemist"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "Stablehand"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Fisher"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "Tailor"
+      },
+      {
+        "min": 21,
+        "max": 21,
+        "value": "Miner"
+      },
+      {
+        "min": 22,
+        "max": 22,
+        "value": "Innkeeper"
+      },
+      {
+        "min": 23,
+        "max": 23,
+        "value": "Cartographer"
+      },
+      {
+        "min": 24,
+        "max": 24,
+        "value": "Mercenary"
+      },
+      {
+        "min": 25,
+        "max": 25,
+        "value": "Midwife"
+      },
+      {
+        "min": 26,
+        "max": 26,
+        "value": "Beekeeper"
+      },
+      {
+        "min": 27,
+        "max": 27,
+        "value": "Brewer"
+      },
+      {
+        "min": 28,
+        "max": 28,
+        "value": "Falconer"
+      },
+      {
+        "min": 29,
+        "max": 29,
+        "value": "Grave digger"
+      },
+      {
+        "min": 30,
+        "max": 30,
+        "value": "Lamplighter"
+      }
+    ]
+  },
+  {
+    "name": "life-flaw",
+    "formula": "1d30",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Stubborn"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "Reckless"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Greedy"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "Cowardly"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Hot-tempered"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "Vain"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Naive"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "Secretive"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "Gullible"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "Arrogant"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Jealous"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "Lazy"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Paranoid"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "Impulsive"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Grudge-holding"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "Superstitious"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Forgetful"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "Clumsy"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Overconfident"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "Bitter"
+      },
+      {
+        "min": 21,
+        "max": 21,
+        "value": "Addicted to drink"
+      },
+      {
+        "min": 22,
+        "max": 22,
+        "value": "Fear of water"
+      },
+      {
+        "min": 23,
+        "max": 23,
+        "value": "Cannot keep a secret"
+      },
+      {
+        "min": 24,
+        "max": 24,
+        "value": "Bad with money"
+      },
+      {
+        "min": 25,
+        "max": 25,
+        "value": "Afraid of the dark"
+      },
+      {
+        "min": 26,
+        "max": 26,
+        "value": "Easily distracted"
+      },
+      {
+        "min": 27,
+        "max": 27,
+        "value": "Compulsive liar"
+      },
+      {
+        "min": 28,
+        "max": 28,
+        "value": "Prideful"
+      },
+      {
+        "min": 29,
+        "max": 29,
+        "value": "Soft-hearted"
+      },
+      {
+        "min": 30,
+        "max": 30,
+        "value": "Haunted by the past"
+      }
+    ]
+  },
+  {
+    "name": "life-skill",
+    "formula": "1d40",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Swordplay"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "Archery"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Stealth"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "Lockpicking"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Persuasion"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "Intimidation"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Tracking"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "Herbalism"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "First aid"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "Climbing"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Swimming"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "Riding"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Haggling"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "Cooking"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Brewing"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "Carpentry"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Smithing"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "Navigation"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Sailing"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "Animal handling"
+      },
+      {
+        "min": 21,
+        "max": 21,
+        "value": "Ancient lore"
+      },
+      {
+        "min": 22,
+        "max": 22,
+        "value": "Arcane theory"
+      },
+      {
+        "min": 23,
+        "max": 23,
+        "value": "Religious rites"
+      },
+      {
+        "min": 24,
+        "max": 24,
+        "value": "Streetwise"
+      },
+      {
+        "min": 25,
+        "max": 25,
+        "value": "Disguise"
+      },
+      {
+        "min": 26,
+        "max": 26,
+        "value": "Sleight of hand"
+      },
+      {
+        "min": 27,
+        "max": 27,
+        "value": "Acrobatics"
+      },
+      {
+        "min": 28,
+        "max": 28,
+        "value": "Wrestling"
+      },
+      {
+        "min": 29,
+        "max": 29,
+        "value": "Shield work"
+      },
+      {
+        "min": 30,
+        "max": 30,
+        "value": "Throwing"
+      },
+      {
+        "min": 31,
+        "max": 31,
+        "value": "Trap-setting"
+      },
+      {
+        "min": 32,
+        "max": 32,
+        "value": "Foraging"
+      },
+      {
+        "min": 33,
+        "max": 33,
+        "value": "Fishing"
+      },
+      {
+        "min": 34,
+        "max": 34,
+        "value": "Map-making"
+      },
+      {
+        "min": 35,
+        "max": 35,
+        "value": "Singing"
+      },
+      {
+        "min": 36,
+        "max": 36,
+        "value": "Storytelling"
+      },
+      {
+        "min": 37,
+        "max": 37,
+        "value": "Etiquette"
+      },
+      {
+        "min": 38,
+        "max": 38,
+        "value": "Appraisal"
+      },
+      {
+        "min": 39,
+        "max": 39,
+        "value": "Forgery"
+      },
+      {
+        "min": 40,
+        "max": 40,
+        "value": "Gambling"
+      }
+    ]
+  },
+  {
+    "name": "life-trait",
+    "formula": "1d20",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Keen eyes"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "Iron stomach"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Steady hands"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "Quick wit"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Booming voice"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "Light sleeper"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Strong back"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "Good memory"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "Calm under pressure"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "Natural charm"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Sharp hearing"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "Fast runner"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Thick skin"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "Patient"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Curious"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "Loyal"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Observant"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "Brave"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Methodical"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "Cheerful"
+      }
+    ]
+  },
+  {
+    "name": "life-experience",
+    "formula": "1d20",
+    "table": [
+      {
+        "min": 1,
+        "max": 1,
+        "value": "Veteran of a war"
+      },
+      {
+        "min": 2,
+        "max": 2,
+        "value": "Survived a great plague"
+      },
+      {
+        "min": 3,
+        "max": 3,
+        "value": "Raised a family"
+      },
+      {
+        "min": 4,
+        "max": 4,
+        "value": "Served on a council"
+      },
+      {
+        "min": 5,
+        "max": 5,
+        "value": "Outlived two rulers"
+      },
+      {
+        "min": 6,
+        "max": 6,
+        "value": "Walked the pilgrim roads"
+      },
+      {
+        "min": 7,
+        "max": 7,
+        "value": "Witnessed a miracle"
+      },
+      {
+        "min": 8,
+        "max": 8,
+        "value": "Buried a generation"
+      },
+      {
+        "min": 9,
+        "max": 9,
+        "value": "Taught a hundred students"
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "value": "Kept a lighthouse"
+      },
+      {
+        "min": 11,
+        "max": 11,
+        "value": "Saw a city fall"
+      },
+      {
+        "min": 12,
+        "max": 12,
+        "value": "Negotiated a peace"
+      },
+      {
+        "min": 13,
+        "max": 13,
+        "value": "Rebuilt after a fire"
+      },
+      {
+        "min": 14,
+        "max": 14,
+        "value": "Kept a long vigil"
+      },
+      {
+        "min": 15,
+        "max": 15,
+        "value": "Crossed the sea twice"
+      },
+      {
+        "min": 16,
+        "max": 16,
+        "value": "Lost a fortune and made another"
+      },
+      {
+        "min": 17,
+        "max": 17,
+        "value": "Guarded a secret for decades"
+      },
+      {
+        "min": 18,
+        "max": 18,
+        "value": "Tended a sacred grove"
+      },
+      {
+        "min": 19,
+        "max": 19,
+        "value": "Served a dragon"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "value": "Wrote a chronicle"
+      }
+    ]
+  }
+]

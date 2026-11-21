@@ -3,15 +3,16 @@
   <div class="tt-header-main">
     <div class="tt-name-row">
       <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TAGANDTALLY.Name'}}" />
+      {{#if owner}}<button type="button" class="tt-icon-btn" data-action="randomize" title="{{localize 'TAGANDTALLY.Builder.Title'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></button>{{/if}}
       <button type="button" class="tt-roll-btn" data-action="rollTask" title="{{localize 'TAGANDTALLY.Roll.Task'}}"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Roll.Roll"}}</button>
     </div>
     <div class="tt-sentence-row">
       <span class="tt-sentence-word">{{localize "TAGANDTALLY.Sentence.IsA"}}</span>
-      <input type="text" name="system.sentence.descriptor" value="{{system.sentence.descriptor}}" placeholder="{{localize 'TAGANDTALLY.TagType.Descriptor'}}" class="tt-tag-input" />
-      <input type="text" name="system.sentence.species" value="{{system.sentence.species}}" placeholder="{{localize 'TAGANDTALLY.TagType.Species'}}" class="tt-tag-input" />
-      <input type="text" name="system.sentence.type" value="{{system.sentence.type}}" placeholder="{{localize 'TAGANDTALLY.TagType.Type'}}" class="tt-tag-input" />
+      <span class="tt-slot"><input type="text" name="system.sentence.descriptor" value="{{system.sentence.descriptor}}" placeholder="{{localize 'TAGANDTALLY.TagType.Descriptor'}}" class="tt-tag-input" /><a data-action="rerollSlot" data-slot="descriptor" title="{{localize 'TAGANDTALLY.Builder.Reroll'}}"><i class="fa-solid fa-dice"></i></a></span>
+      <span class="tt-slot"><input type="text" name="system.sentence.species" value="{{system.sentence.species}}" placeholder="{{localize 'TAGANDTALLY.TagType.Species'}}" class="tt-tag-input" /><a data-action="rerollSlot" data-slot="species" title="{{localize 'TAGANDTALLY.Builder.Reroll'}}"><i class="fa-solid fa-dice"></i></a></span>
+      <span class="tt-slot"><input type="text" name="system.sentence.type" value="{{system.sentence.type}}" placeholder="{{localize 'TAGANDTALLY.TagType.Type'}}" class="tt-tag-input" /><a data-action="rerollSlot" data-slot="type" title="{{localize 'TAGANDTALLY.Builder.Reroll'}}"><i class="fa-solid fa-dice"></i></a></span>
       <span class="tt-sentence-word">{{localize "TAGANDTALLY.Sentence.Who"}}</span>
-      <input type="text" name="system.sentence.specialty" value="{{system.sentence.specialty}}" placeholder="{{localize 'TAGANDTALLY.TagType.Specialty'}}" class="tt-tag-input wide" />
+      <span class="tt-slot"><input type="text" name="system.sentence.specialty" value="{{system.sentence.specialty}}" placeholder="{{localize 'TAGANDTALLY.TagType.Specialty'}}" class="tt-tag-input wide" /><a data-action="rerollSlot" data-slot="specialty" title="{{localize 'TAGANDTALLY.Builder.Reroll'}}"><i class="fa-solid fa-dice"></i></a></span>
       <a data-action="buildSentence" title="{{localize 'TAGANDTALLY.Sentence.BuildFromTags'}}"><i class="fa-solid fa-wand-magic"></i></a>
       <a data-action="sentenceToChat" title="{{localize 'TAGANDTALLY.Sentence.ToChat'}}"><i class="fa-solid fa-comment"></i></a>
     </div>

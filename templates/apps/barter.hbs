@@ -1,0 +1,38 @@
+<div class="tt-barter">
+  <div class="tt-toolbar">
+    <label>{{localize "TAGANDTALLY.Barter.Buyer"}}
+      <select name="buyer">{{#each candidates as |c|}}<option value="{{c.id}}" {{#if c.selected}}selected{{/if}}>{{c.name}}</option>{{/each}}</select>
+    </label>
+    {{#if buyer}}<span class="tt-stat"><i class="fa-solid fa-coins"></i> {{buyerWealth.value}} <small>{{buyerWealthLabel}}</small>{{#if buyerWealth.inDebt}} <span class="tt-tag warn">{{localize "TAGANDTALLY.Wealth.InDebt"}}</span>{{/if}}</span>{{/if}}
+    <span class="tt-stat"><i class="fa-solid fa-store"></i> {{merchant.name}}</span>
+  </div>
+  <p class="hint">{{localize "TAGANDTALLY.Barter.Hint"}}</p>
+  <div class="tt-barter-columns">
+    <div>
+      <h4>{{localize "TAGANDTALLY.Barter.Stock"}}</h4>
+      <ol class="tt-item-list tt-barter-list">
+        {{#each stock as |i|}}
+          <li class="tt-item">
+            <img src="{{i.img}}" alt="" />
+            <div class="tt-item-body"><span class="tt-item-name">{{i.name}} <small>L{{i.level}} · {{i.costLabel}}{{#if (tt-gt i.quantity 1)}} · ×{{i.quantity}}{{/if}}</small></span><span class="tt-item-sub">{{tt-tags i.sentence}}</span></div>
+            {{#if ../canTrade}}<button type="button" data-action="buy" data-item-id="{{i.id}}" title="{{#if i.free}}{{localize 'TAGANDTALLY.Barter.NoRoll'}}{{else}}{{localize 'TAGANDTALLY.Barter.NeedsRoll'}}{{/if}}"><i class="fa-solid {{#if i.free}}fa-cart-shopping{{else}}fa-dice-d20{{/if}}"></i> {{localize "TAGANDTALLY.Barter.Buy"}}</button>{{/if}}
+          </li>
+        {{/each}}
+        {{#unless stock.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Barter.NoStock"}}</li>{{/unless}}
+      </ol>
+    </div>
+    <div>
+      <h4>{{localize "TAGANDTALLY.Barter.Owned"}}</h4>
+      <ol class="tt-item-list tt-barter-list">
+        {{#each owned as |i|}}
+          <li class="tt-item">
+            <img src="{{i.img}}" alt="" />
+            <div class="tt-item-body"><span class="tt-item-name">{{i.name}} <small>L{{i.level}} · {{i.costLabel}}{{#if (tt-gt i.quantity 1)}} · ×{{i.quantity}}{{/if}}</small></span><span class="tt-item-sub">{{tt-tags i.sentence}}</span></div>
+            {{#if ../canTrade}}<button type="button" data-action="sell" data-item-id="{{i.id}}"><i class="fa-solid fa-hand-holding-dollar"></i> {{localize "TAGANDTALLY.Barter.Sell"}}</button>{{/if}}
+          </li>
+        {{/each}}
+        {{#unless owned.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Gear.Empty"}}</li>{{/unless}}
+      </ol>
+    </div>
+  </div>
+</div>

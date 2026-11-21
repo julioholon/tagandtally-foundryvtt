@@ -15,7 +15,7 @@
     "Notes": "Notes",
     "Sheet": { "Character": "Tag & Tally Character Sheet", "Npc": "Tag & Tally NPC Sheet", "Item": "Tag & Tally Item Sheet" },
     "Tabs": {
-      "main": "Main", "tags": "Tags", "inventory": "Inventory", "spells": "Spells", "quests": "Quests",
+      "main": "Main", "tags": "Tags", "lifestages": "Life stages", "inventory": "Inventory", "spells": "Spells", "quests": "Quests",
       "wounds": "Wounds", "biography": "Biography", "details": "Details", "description": "Description"
     },
     "Sentence": {
@@ -24,7 +24,9 @@
     "Character": { "Details": "Details", "Age": "Age", "Pronoun": "Pronoun", "Appearance": "Appearance", "Arc": "Character arc" },
     "Appearance": { "height": "Height", "build": "Build", "hair": "Hair", "eyes": "Eyes", "skin": "Skin", "clothing": "Clothing", "voice": "Voice", "distinguishing": "Distinguishing" },
     "Lore": { "Title": "Known world", "Residence": "Residence", "Workplace": "Workplace", "Faction": "Faction", "FactionDisposition": "Faction disposition", "KnownNpcs": "Known NPCs" },
-    "LifeStage": { "LifeStage": "Life stage", "Childhood": "Childhood (0-10)", "Adolescence": "Adolescence (11-18)", "YoungAdult": "Young Adult (19-25)", "Adult": "Adult (26-50)", "Elder": "Elder (51+)" },
+    "LifeStage": { "LifeStage": "Life stage", "Childhood": "Childhood (0-10)", "Adolescence": "Adolescence (11-18)", "YoungAdult": "Young Adult (19-25)", "Adult": "Adult (26-50)", "Elder": "Elder (51+)",
+      "Hint": "What each life stage gave the character. Dice icons roll a random tag of that kind into the stage; the plus adds a blank one.", "AddRandom": "Add a random tag to this stage", "Empty": "Nothing recorded for this stage.", "Unassigned": "Not tied to a life stage" },
+    "Builder": { "Title": "Randomize character", "Confirm": "This replaces every tag, item, spell and quest on this sheet with a freshly generated character. Continue?", "Reroll": "Reroll this with Sparks" },
     "Level": {
       "Level": "Level", "TaskLevel": "Task level",
       "Simple": "Simple", "Standard": "Standard", "Demanding": "Demanding", "Difficult": "Difficult", "Challenging": "Challenging",
@@ -69,14 +71,15 @@
     "Damage": { "Type": "Damage type", "Physical": "Physical", "Psychic": "Psychic", "Elemental": "Elemental", "Necrotic": "Necrotic", "Radiant": "Radiant", "Shadow": "Shadow", "Chaos": "Chaos", "Toxic": "Toxic" },
     "Combat": {
       "Title": "Combat flow", "Opening": "Opening", "Maneuver": "Tactical Maneuver", "Attack": "Attack", "Counter": "Counter", "Resolution": "Resolution",
-      "Hint": "Each participant rolls the five phases in order. Each outcome feeds a modifier into the next phase; Resolution decides the wound.",
+      "Hint": "Roll any phase in any order, or skip straight to Resolution. Opening feeds Maneuver; Maneuver feeds Attack and Counter; Attack and Counter feed Resolution, which decides the wound.",
+      "Reroll": "Roll again", "BaseDc": "Opponent DC", "RollInjuryHint": "Skip the phases and roll the wound directly",
       "AddSelected": "Add selected tokens", "AddCombatants": "Add combatants", "Versus": "vs level", "SetOpponent": "Use the selected token as the opponent",
       "SelectOpponent": "Select an opponent token first.", "PhaseModifier": "Modifier from the previous phase", "Reset": "Reset this participant", "Skip": "Skip phase",
       "WoundApplied": "Wound applied", "Empty": "No participants. Select tokens and add them.", "RollInjury": "Roll injury", "InjuryTitle": "Injury: {name}"
     },
     "Gear": {
       "Gear": "Gear", "Weapon": "Weapon", "Armor": "Armor", "Item": "Item", "Consumable": "Consumable", "Container": "Container", "Resource": "Resource", "Trap": "Trap", "Kit": "Kit",
-      "Type": "Gear type", "Material": "Material", "Subtype": "Kind", "Special": "Special", "Qty": "Qty", "Equipped": "Equipped / carried", "Capacity": "Capacity", "Loadout": "Loadout",
+      "Type": "Gear type", "Material": "Material", "Subtype": "Kind", "Special": "Special", "Qty": "Qty", "Equipped": "Equipped / carried", "Capacity": "Capacity", "Loadout": "Loadout", "CustomSentence": "Custom sentence (used only when the fields above are empty)",
       "Empty": "No gear yet."
     },
     "GearKind": { "Kind": "Gear kind", "Functional": "Functional (no slot)", "Extraordinary": "Extraordinary (takes a slot)", "Ephemeral": "Ephemeral (tattoo, app, cybernetic)" },
@@ -128,6 +131,17 @@
       "Scene": "Scene", "Location": "Location", "Dungeon": "Dungeon", "Lair": "Lair", "Room": "Room", "Faction": "Faction", "Quest": "Quest", "Insight": "Insight"
     },
     "Party": { "Title": "Party overview", "Empty": "No player-owned characters." },
+    "Barter": {
+      "Title": "Barter", "Buyer": "Buyer", "Stock": "Merchant's stock", "Owned": "Your gear", "Buy": "Buy", "Sell": "Sell",
+      "NoMerchant": "Select an NPC token to barter with.", "NoStock": "The merchant has nothing to sell.",
+      "Hint": "Buying below your Wealth is free. At or above it you roll a Wealth check at level 3 plus the difference; success costs 1 Wealth or puts you in debt. Selling at or below your Wealth needs a hindered check; above it gains 1 Wealth outright.",
+      "NoRoll": "Below your Wealth: no roll needed", "NeedsRoll": "At or above your Wealth: Wealth check",
+      "BuyTitle": "Wealth check: buy {item} (cost {cost})", "BuyFailed": "The deal for {item} falls through.",
+      "PayHow": "How do you pay?", "PayHowHint": "You secured {item}. Reduce your Wealth by 1, or take it on credit and gain the In debt status.",
+      "PayWealth": "Lose 1 Wealth", "PayDebt": "Go into debt",
+      "BoughtFree": "buys {item} from {merchant} without trouble.", "Bought": "buys {item} from {merchant}.",
+      "SellTitle": "Wealth check: sell {item}", "Sold": "sells {item} to {merchant} and gains 1 Wealth.", "SoldCheap": "sells {item} to {merchant} for a pittance."
+    },
     "Settings": {
       "DefaultLevel": { "Name": "Default task level", "Hint": "Used when the scene has no level set." },
       "AutoTallies": { "Name": "Automatic tallies", "Hint": "On a natural 1 or 20, add a tally to each tag used. When off, the chat card offers a button instead." },

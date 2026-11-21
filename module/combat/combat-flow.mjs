@@ -27,7 +27,6 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
       addCombatants: CombatFlow.#onAddCombatants,
       remove: CombatFlow.#onRemove,
       rollPhase: CombatFlow.#onRollPhase,
-      skipPhase: CombatFlow.#onSkipPhase,
       applyWound: CombatFlow.#onApplyWound,
       reset: CombatFlow.#onReset,
       resetAll: CombatFlow.#onResetAll,
@@ -95,27 +94,30 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
     const participants = [];
     for (const p of Object.values(state.participants)) {
       const actor = await fromUuid(p.uuid);
+      const nextId = TAGANDTALLY.combatPhases.find((ph) => !p.results[ph.id])?.id;
       const phases = TAGANDTALLY.combatPhases.map((ph, i) => {
         const res = p.results[ph.id];
+        const modifier = CombatFlow.modifierFor(p, ph.id);
         return {
           ...ph, index: i, label: game.i18n.localize(ph.label),
-          current: i === p.phase, done: Boolean(res), future: i > p.phase,
+          current: ph.id === nextId, done: Boolean(res),
           band: res ? game.i18n.localize(TAGANDTALLY.bands[res.band].label) : null,
           bandCss: res ? TAGANDTALLY.bands[res.band].css : "",
-          total: res?.total, modifier: res?.modifier
+          total: res?.total, modifier, modifierLabel: modifier > 0 ? `+${modifier}` : modifier < 0 ? `${modifier}` : "",
+          dc: TAGANDTALLY.dcForLevel(Math.clamp(p.opponentLevel - modifier, 1, 10)),
+          canRoll: actor?.isOwner
         };
       });
-      const finished = p.phase >= TAGANDTALLY.combatPhases.length;
+      const finished = Boolean(p.results.resolution);
       const finalBand = p.results.resolution?.band;
       participants.push({
         ...p, actor, phases, finished,
-        canRoll: actor?.isOwner && !finished,
+        canRoll: actor?.isOwner,
         wound: finalBand ? TAGANDTALLY.combatWound[finalBand] : null,
         woundLabel: finalBand && TAGANDTALLY.combatWound[finalBand] ? game.i18n.localize(TAGANDTALLY.woundTracks[TAGANDTALLY.combatWound[finalBand]].label) : finalBand ? game.i18n.localize("TAGANDTALLY.Severity.Unscathed") : null,
         woundApplied: p.woundApplied,
-        modifierLabel: p.modifier > 0 ? `+${p.modifier}` : `${p.modifier}`,
         opponentLevelLabel: game.i18n.localize(TAGANDTALLY.levels[p.opponentLevel] ?? ""),
-        dc: TAGANDTALLY.dcForLevel(Math.clamp(p.opponentLevel - p.modifier, 1, 10))
+        dc: TAGANDTALLY.dcForLevel(p.opponentLevel)
       });
     }
     return { participants, isGM: game.user.isGM, levels: TAGANDTALLY.levels, hasCombat: Boolean(game.combat) };
@@ -133,6 +135,11 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!state.participants[uuid]) return;
     state.participants[uuid].opponentLevel = Math.clamp(level, 1, 10);
     return CombatFlow.setState(state);
+  }
+
+  /** Sum of the modifiers passed in by the phases that feed this one. */
+  static modifierFor(participant, phaseId) {
+    return (TAGANDTALLY.combatPhaseFeeds[phaseId] ?? []).reduce((n, f) => n + (participant.results[f]?.modifier ?? 0), 0);
   }
 
   static async #onAddSelected() {
@@ -153,7 +160,7 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
     const state = CombatFlow.state;
     const p = state.participants[target.dataset.uuid];
     if (!p) return;
-    Object.assign(p, { phase: 0, results: {}, modifier: 0, woundApplied: false });
+    Object.assign(p, { results: {}, woundApplied: false });
     return CombatFlow.setState(state);
   }
 
@@ -173,18 +180,19 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
     return CombatFlow.setState(state);
   }
 
-  /** Roll the current phase through the task dialog; store result and the modifier for the next phase. */
+  /** Roll a phase (any order) through the task dialog; store its band and the modifier it passes on. */
   static async #onRollPhase(event, target) {
     const uuid = target.dataset.uuid;
     const state = CombatFlow.state;
     const p = state.participants[uuid];
     if (!p) return;
     const actor = await fromUuid(uuid);
-    const phase = TAGANDTALLY.combatPhases[p.phase];
+    const phase = TAGANDTALLY.combatPhases.find((ph) => ph.id === target.dataset.phase) ?? TAGANDTALLY.combatPhases.find((ph) => !p.results[ph.id]);
     if (!phase) return;
+    const modifier = CombatFlow.modifierFor(p, phase.id);
     const fixed = { fixedEases: [], fixedHinders: [] };
-    if (p.modifier > 0) fixed.fixedEases.push({ name: game.i18n.localize("TAGANDTALLY.Combat.PhaseModifier"), steps: p.modifier, source: "phase" });
-    if (p.modifier < 0) fixed.fixedHinders.push({ name: game.i18n.localize("TAGANDTALLY.Combat.PhaseModifier"), steps: -p.modifier, source: "phase" });
+    if (modifier > 0) fixed.fixedEases.push({ name: game.i18n.localize("TAGANDTALLY.Combat.PhaseModifier"), steps: modifier, source: "phase" });
+    if (modifier < 0) fixed.fixedHinders.push({ name: game.i18n.localize("TAGANDTALLY.Combat.PhaseModifier"), steps: -modifier, source: "phase" });
     // Armor eases the Counter (defense) phase.
     if (phase.id === "counter") {
       const armor = actor?.items.find((i) => i.type === "gear" && i.system.isArmor && i.system.equipped && i.system.armor.defense > 0);
@@ -197,25 +205,15 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
       ...fixed
     });
     if (!result) return;
-    const modifier = TAGANDTALLY.combatPhaseModifiers[phase.id]?.[result.band.id] ?? 0;
+    const passes = TAGANDTALLY.combatPhaseModifiers[phase.id]?.[result.band.id] ?? 0;
     const fresh = CombatFlow.state;
     const fp = fresh.participants[uuid];
     if (!fp) return;
-    fp.results[phase.id] = { band: result.band.id, total: result.total, modifier };
-    fp.modifier = modifier;
-    fp.phase += 1;
+    fp.results[phase.id] = { band: result.band.id, total: result.total, modifier: passes };
+    if (phase.id === "resolution") fp.woundApplied = false;
     // Opening "Success, but": ease by 1 but take a strain.
     if (phase.id === "opening" && result.band.id === "successBut" && actor?.isOwner) await actor.applyWound("strain");
     await CombatFlow.setState(fresh);
-  }
-
-  static async #onSkipPhase(event, target) {
-    const state = CombatFlow.state;
-    const p = state.participants[target.dataset.uuid];
-    if (!p) return;
-    p.phase = Math.min(p.phase + 1, TAGANDTALLY.combatPhases.length);
-    p.modifier = 0;
-    return CombatFlow.setState(state);
   }
 
   static async #onApplyWound(event, target) {

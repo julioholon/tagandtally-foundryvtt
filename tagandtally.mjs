@@ -26,6 +26,7 @@ import { registerBarBrawl, resetBarBrawlDefaults } from "./module/integrations/b
 import { registerItemPiles } from "./module/integrations/item-piles.mjs";
 import { registerSceneLevel } from "./module/integrations/scene-level.mjs";
 import { PartyOverview, registerPartyOverview } from "./module/integrations/party.mjs";
+import { BarterApp } from "./module/integrations/barter.mjs";
 
 Hooks.once("init", () => {
   console.log(`${SYSTEM_ID} | Initializing Tag & Tally`);
@@ -67,7 +68,7 @@ Hooks.once("init", () => {
     config: TAGANDTALLY,
     documents: { TagAndTallyActor, TagAndTallyItem },
     sheets: { CharacterSheet, NpcSheet, TagAndTallyItemSheet },
-    apps: { TaskRollDialog, CombatFlow, SparksApp, PartyOverview },
+    apps: { TaskRollDialog, CombatFlow, SparksApp, PartyOverview, BarterApp },
     rolls: { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel },
     sparks: { tables: sparkTables, generate, SparkGenerator, loadGeneratorDefs, ...create },
     spells: { computeSpell, maiCheck },
@@ -84,6 +85,10 @@ Hooks.once("init", () => {
       openSparks: () => SparksApp.open({ actor: canvas.tokens?.controlled[0]?.actor ?? game.user.character }),
       openCombatFlow: () => CombatFlow.open({ actors: canvas.tokens?.controlled.map((t) => t.actor).filter(Boolean) ?? [] }),
       openParty: () => PartyOverview.open(),
+      /** Barter with the selected NPC token (buyer = your character or another selected character token). */
+      openBarter: () => BarterApp.open({ merchant: canvas.tokens?.controlled.map((t) => t.actor).find((a) => a?.type === "npc") }),
+      /** Build a complete random character on the selected token's actor or your character. */
+      randomCharacter: (options) => import("./module/sparks/character-builder.mjs").then((m) => m.buildRandomCharacter(canvas.tokens?.controlled[0]?.actor ?? game.user.character, options)),
       rollInjury: (level) => CombatFlow.rollInjury(canvas.tokens?.controlled[0]?.actor ?? game.user.character, { level }),
       resetBarBrawlDefaults,
       importSparkTables: (group) => sparkTables.importToWorld({ group }),

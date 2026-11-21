@@ -42,6 +42,16 @@
 .tagandtally .tt-roll-btn.big { width: 100%; font-size: 1.1em; justify-content: center; }
 .tagandtally .tt-toggle { display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap; }
 
+.tagandtally .tt-slot { display: inline-flex; align-items: center; gap: 2px; }
+.tagandtally .tt-slot a { font-size: 0.8em; opacity: 0.6; cursor: pointer; } .tagandtally .tt-slot a:hover { opacity: 1; }
+.tagandtally .tt-icon-btn { width: 2.2em; display: inline-flex; justify-content: center; }
+.tagandtally .tt-stage { border: 1px solid var(--tt-border); border-radius: 6px; margin: 0.4rem 0; padding: 0.3rem 0.5rem; }
+.tagandtally .tt-stage.future { opacity: 0.55; }
+.tagandtally .tt-stage.current { border-color: var(--tt-accent); }
+.tagandtally .tt-stage header { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.tagandtally .tt-stage header small { opacity: 0.7; flex: 1; }
+.tagandtally .tt-stage header .tt-controls { display: flex; gap: 0.5rem; font-size: 0.85em; }
+
 /* Severity colors */
 .tagandtally .sev-0, .tt-party .sev-0 { color: var(--tt-success); }
 .tagandtally .sev-1, .tt-party .sev-1 { color: var(--tt-success-but); }
@@ -194,6 +204,9 @@
 .tagandtally .tt-phase.done.fail-and { border-color: var(--tt-fail-and); } .tagandtally .tt-phase.done.fail-but { border-color: var(--tt-fail-but); }
 .tagandtally .tt-phase.done.success-but { border-color: var(--tt-success-but); } .tagandtally .tt-phase.done.success { border-color: var(--tt-success); } .tagandtally .tt-phase.done.success-and { border-color: var(--tt-success-and); }
 .tagandtally .tt-phase-name { font-weight: 700; }
+.tagandtally .tt-phase-name small { font-weight: 400; opacity: 0.7; display: block; }
+.tagandtally .tt-phase-name small.ease { color: var(--tt-ease); } .tagandtally .tt-phase-name small.hinder { color: var(--tt-hinder); }
+.tagandtally .tt-phase-roll { cursor: pointer; font-size: 0.95em; }
 .tagandtally .tt-flow-outcome { display: flex; gap: 0.5rem; align-items: center; } .tagandtally .tt-flow-outcome.dim { opacity: 0.7; }
 
 /* ------------------------------ Sparks ---------------------------------- */
@@ -206,6 +219,10 @@
 .tagandtally .tt-table-list ul { list-style: none; margin: 0; padding: 0; columns: 2; }
 .tagandtally .tt-table-row { padding: 0.1rem 0; font-size: 0.9em; } .tagandtally .tt-table-row small { opacity: 0.6; }
 .tagandtally .tt-table-row.overridden a { color: var(--tt-accent); }
+
+.tagandtally .tt-barter-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.tagandtally .tt-barter-columns h4 { margin: 0.3rem 0; border-bottom: 1px solid var(--tt-border); }
+.tagandtally .tt-barter-list button { white-space: nowrap; }
 
 /* ------------------------------ Party ----------------------------------- */
 .tagandtally .tt-party { width: 100%; border-collapse: collapse; }

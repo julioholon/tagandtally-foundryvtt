@@ -33,7 +33,9 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
       rollTemporary: BaseActorSheet.#onRollTemporary,
       generateAppearance: BaseActorSheet.#onGenerateAppearance,
       openSparks: BaseActorSheet.#onOpenSparks,
-      sentenceToChat: BaseActorSheet.#onSentenceToChat
+      sentenceToChat: BaseActorSheet.#onSentenceToChat,
+      rerollItem: BaseActorSheet.#onRerollItem,
+      addStageTag: BaseActorSheet.#onAddStageTag
     }
   };
 
@@ -146,6 +148,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
     if (target.dataset.tagType) system.tagType = target.dataset.tagType;
     if (target.dataset.gearType) system.gearType = target.dataset.gearType;
     if (target.dataset.injuryType) system.injuryType = target.dataset.injuryType;
+    if (target.dataset.lifeStage) system.lifeStage = target.dataset.lifeStage;
     const name = game.i18n.format("TAGANDTALLY.NewItem", { type: game.i18n.localize(CONFIG.Item.typeLabels[type] ?? type) });
     const [item] = await this.actor.createEmbeddedDocuments("Item", [{ name, type, system }]);
     return item?.sheet.render({ force: true });
@@ -244,6 +247,18 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
   static async #onOpenSparks() {
     const { SparksApp } = await import("../sparks/sparks-app.mjs");
     return SparksApp.open({ actor: this.actor });
+  }
+
+  static async #onRerollItem(event, target) {
+    const item = this._getItem(target);
+    if (!item) return;
+    const { rerollItem } = await import("../sparks/character-builder.mjs");
+    return rerollItem(item);
+  }
+
+  static async #onAddStageTag(event, target) {
+    const { addRandomStageTag } = await import("../sparks/character-builder.mjs");
+    return addRandomStageTag(this.actor, target.dataset.lifeStage, target.dataset.tagType);
   }
 
   static async #onSentenceToChat() {
