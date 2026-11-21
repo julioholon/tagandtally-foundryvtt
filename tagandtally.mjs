@@ -27,6 +27,8 @@ import { registerItemPiles } from "./module/integrations/item-piles.mjs";
 import { registerSceneLevel } from "./module/integrations/scene-level.mjs";
 import { PartyOverview, registerPartyOverview } from "./module/integrations/party.mjs";
 import { BarterApp } from "./module/integrations/barter.mjs";
+import { importAugurPerson, hasAugurPerson } from "./module/integrations/augur.mjs";
+import { createDefaultMacros } from "./module/macros.mjs";
 
 Hooks.once("init", () => {
   console.log(`${SYSTEM_ID} | Initializing Tag & Tally`);
@@ -72,6 +74,7 @@ Hooks.once("init", () => {
     rolls: { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel },
     sparks: { tables: sparkTables, generate, SparkGenerator, loadGeneratorDefs, ...create },
     spells: { computeSpell, maiCheck },
+    augur: { importAugurPerson, hasAugurPerson },
     macros: {
       /** Open the task roll dialog for the selected token's actor (or the user's character). */
       rollTask: (options = {}) => {
@@ -88,6 +91,8 @@ Hooks.once("init", () => {
       /** Barter with the selected NPC token (buyer = your character or another selected character token). */
       openBarter: () => BarterApp.open({ merchant: canvas.tokens?.controlled.map((t) => t.actor).find((a) => a?.type === "npc") }),
       /** Build a complete random character on the selected token's actor or your character. */
+      importAugur: () => importAugurPerson(canvas.tokens?.controlled[0]?.actor ?? game.user.character),
+      createDefaultMacros: () => createDefaultMacros({ force: true }),
       randomCharacter: (options) => import("./module/sparks/character-builder.mjs").then((m) => m.buildRandomCharacter(canvas.tokens?.controlled[0]?.actor ?? game.user.character, options)),
       rollInjury: (level) => CombatFlow.rollInjury(canvas.tokens?.controlled[0]?.actor ?? game.user.character, { level }),
       resetBarBrawlDefaults,
@@ -111,6 +116,8 @@ Hooks.once("ready", async () => {
   await sparksLoading;
   registerCombatFlowSocket();
   await migrateWorld();
+  const created = await createDefaultMacros();
+  if (created) ui.notifications.info(game.i18n.format("TAGANDTALLY.Macros.Created", { count: created }));
   // Scene controls: Sparks and Combat Flow buttons on the token layer.
   if (!game.settings.get(SYSTEM_ID, "welcomeShown") && game.user.isGM) {
     await ChatMessage.create({

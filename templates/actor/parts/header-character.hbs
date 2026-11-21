@@ -3,6 +3,7 @@
   <div class="tt-header-main">
     <div class="tt-name-row">
       <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TAGANDTALLY.Name'}}" />
+      {{#if augurLinked}}<button type="button" class="tt-icon-btn" data-action="importAugur" title="{{localize 'TAGANDTALLY.Augur.Import'}}"><i class="fa-solid fa-file-import"></i></button>{{/if}}
       {{#if owner}}<button type="button" class="tt-icon-btn" data-action="randomize" title="{{localize 'TAGANDTALLY.Builder.Title'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></button>{{/if}}
       <button type="button" class="tt-roll-btn" data-action="rollTask" title="{{localize 'TAGANDTALLY.Roll.Task'}}"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Roll.Roll"}}</button>
     </div>
@@ -27,6 +28,11 @@
         <a data-action="wealthStep" data-delta="1"><i class="fa-solid fa-plus"></i></a>
         {{#if system.wealth.inDebt}}<span class="tt-tag warn">{{localize "TAGANDTALLY.Wealth.InDebt"}}</span>{{/if}}
       </div>
+      {{#if coinsMode}}<div class="tt-stat" title="{{localize 'TAGANDTALLY.Coins.Hint'}}">
+        <i class="fa-solid fa-coins"></i> <input type="number" name="system.wealth.coins" value="{{system.wealth.coins}}" min="0" class="tt-small-num" /> <small>/ {{system.wealth.climbCost}}</small>
+        {{#if system.wealth.canClimb}}<a data-action="climbWealth" title="{{localize 'TAGANDTALLY.Coins.Climb'}}"><i class="fa-solid fa-arrow-up"></i></a>{{/if}}
+        {{#if (tt-gt system.wealth.value 0)}}<a data-action="cashOut" title="{{localize 'TAGANDTALLY.Coins.CashOut'}}"><i class="fa-solid fa-arrow-down"></i></a>{{/if}}
+      </div>{{/if}}
       <div class="tt-stat" title="{{localize 'TAGANDTALLY.Spell.MaiLong'}}"><i class="fa-solid fa-wand-sparkles"></i> MAI {{mai.total}}</div>
       <div class="tt-stat" title="{{localize 'TAGANDTALLY.Gear.Loadout'}}"><i class="fa-solid fa-suitcase"></i> {{loadout.value}}/{{loadout.max}}</div>
     </div>

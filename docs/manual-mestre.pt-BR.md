@@ -132,6 +132,11 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
   riqueza é livre, no nível ou acima exige teste de Riqueza (nível 3 + diferença) e, em
   sucesso, o jogador escolhe perder 1 de Riqueza ou ficar **Endividado**. Vender funciona ao
   contrário. Não precisa do Item Piles; se usar Item Piles, marque "Mercador".
+- **Moedas** (opcional, configuração do sistema "Modo moedas"): moedas são marcas rumo ao
+  próximo nível de Riqueza. 10 moedas levam de 0 a 1, 100 de 1 a 2, 1000 de 2 a 3. Ao
+  juntar o suficiente o nível sobe sozinho; a seta para baixo no cabeçalho **saca** um nível
+  em moedas para gastar. Itens custam 10^custo moedas (custo 2 = 100). O Item Piles usa as
+  moedas como dinheiro das pilhas e lojas.
 - Tokens de PdM não são vinculados por padrão: tags adicionadas ao ator do mundo depois de
   colocar o token são lidas automaticamente pelo diálogo de rolagem.
 
@@ -169,6 +174,9 @@ Fluxo sugerido para construir o mundo em conjunto:
    no Nexus.
 4. Para cada PdM relevante, gere pelo Sparks, crie o ator e arraste para o Nexus como
    Pessoa. Os segredos ficam ocultos até serem descobertos.
+5. No caminho inverso, uma **Pessoa criada pelo Augur** e vinculada a um ator mostra um
+   botão de importar no cabeçalho da ficha: a frase vem do descritor, ancestralidade,
+   papel e impulso; traços e crenças viram tags; retrato e pronome são copiados.
 
 ## 12. Jogando com vários Mestres
 
@@ -196,9 +204,11 @@ funciona bem na prática:
 
 ## 13. Atalhos e macros
 
+- Na primeira abertura o sistema cria a pasta de macros **Tag & Tally** com um macro para
+  cada ferramenta: arraste-os para a barra de atalhos.
 - Arraste uma tag, item, magia ou missão da ficha para a **barra de atalhos**: o macro abre
   a rolagem certa.
-- No console ou em macros de script: `game.tagandtally.macros.rollTask()`,
+- Para escrever os seus, o prefixo é sempre `game.tagandtally.macros.`: `rollTask()`,
   `quickRoll(5)`, `oracle(7, "Tem guardas?")`, `openSparks()`, `openCombatFlow()`,
   `openParty()`, `openBarter()`, `generateNPC()`, `generateCreature()`,
   `generateJournal("dungeon")`, `randomCharacter()`, `importSparkTables("creature")`.

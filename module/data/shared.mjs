@@ -55,7 +55,8 @@ export function wealthSchema() {
   return new fields.SchemaField({
     value: new fields.NumberField({ required: true, integer: true, min: 0, max: 6, initial: 3 }),
     qualityOfLife: new fields.NumberField({ required: true, integer: true, min: -1, max: 1, initial: 0 }),
-    inDebt: new fields.BooleanField({ initial: false })
+    inDebt: new fields.BooleanField({ initial: false }),
+    coins: new fields.NumberField({ required: true, integer: true, min: 0, initial: 0 })
   });
 }
 

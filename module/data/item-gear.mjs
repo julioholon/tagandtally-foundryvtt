@@ -34,6 +34,8 @@ export default class GearData extends foundry.abstract.TypeDataModel {
   prepareDerivedData() {
     this.levelLabel = TAGANDTALLY.gearLevels[this.level];
     this.costLabel = TAGANDTALLY.costLevels[this.cost];
+    /** Price in coins for the optional coins mode and Item Piles. */
+    this.coinPrice = TAGANDTALLY.coins.priceForCost(this.cost);
     this.armor = TAGANDTALLY.armorClasses[this.armorClass];
     this.isWeapon = this.gearType === "weapon";
     this.isArmor = this.gearType === "armor";

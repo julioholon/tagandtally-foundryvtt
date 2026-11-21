@@ -16,6 +16,13 @@ export async function migrateWorld() {
   // 0.1.1: tag items were created with a non-existent core icon.
   await replaceItemImage("icons/svg/tag.svg", "icons/svg/upgrade.svg");
 
+  // 0.2.1: Item Piles actors created before the fix carry the NPC default Wealth 3.
+  for (const actor of game.actors) {
+    if (actor.flags["item-piles"] && actor.type === "npc" && actor.system.wealth.value === 3 && !actor.system.merchant) {
+      await actor.update({ "system.wealth.value": 0 }, { ttNoClimb: true });
+    }
+  }
+
   await game.settings.set(SYSTEM_ID, "migrationVersion", current);
 }
 

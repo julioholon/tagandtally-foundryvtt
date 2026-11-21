@@ -55,6 +55,9 @@ export default class NpcData extends foundry.abstract.TypeDataModel {
     this.dc = TAGANDTALLY.dcForLevel(this.level);
     this.levelLabel = TAGANDTALLY.levels[this.level];
     this.wealth.label = TAGANDTALLY.wealthLevels[this.wealth.value];
+    this.wealth.climbCost = TAGANDTALLY.coins.climbCost(this.wealth.value);
+    this.wealth.cashOut = TAGANDTALLY.coins.cashOut(this.wealth.value);
+    this.wealth.canClimb = this.wealth.value < 6 && this.wealth.coins >= this.wealth.climbCost;
     for (const key of ["strength", "weakness"]) {
       if (this.insights[key] >= TAGANDTALLY.insightsPerTally) this.revealed[key] = true;
     }

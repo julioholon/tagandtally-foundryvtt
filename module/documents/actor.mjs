@@ -6,6 +6,10 @@ export default class TagAndTallyActor extends Actor {
   async _preCreate(data, options, user) {
     const allowed = await super._preCreate(data, options, user);
     if (allowed === false) return false;
+    // Item Piles creates piles and merchants as NPC actors: they must not carry the NPC default Wealth.
+    if (data.flags?.["item-piles"] && foundry.utils.getProperty(data, "system.wealth.value") === undefined) {
+      this.updateSource({ "system.wealth.value": 0, "system.wealth.coins": 0 });
+    }
     const prototypeToken = {
       displayBars: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
       bar1: { attribute: "wounds.vitality" },
@@ -32,6 +36,19 @@ export default class TagAndTallyActor extends Actor {
   async _preUpdate(changed, options, user) {
     const allowed = await super._preUpdate(changed, options, user);
     if (allowed === false) return false;
+    // Coins mode: enough coins climb a Wealth level (10^(w+1) coins per step).
+    const coins = foundry.utils.getProperty(changed, "system.wealth.coins");
+    if (coins !== undefined && !options.ttNoClimb && game.settings.get(SYSTEM_ID, "coinsMode")) {
+      let w = foundry.utils.getProperty(changed, "system.wealth.value") ?? this.system.wealth.value;
+      let c = Number(coins) || 0;
+      let climbed = 0;
+      while (w < 6 && c >= TAGANDTALLY.coins.climbCost(w)) { c -= TAGANDTALLY.coins.climbCost(w); w += 1; climbed += 1; }
+      if (climbed) {
+        foundry.utils.setProperty(changed, "system.wealth.coins", c);
+        foundry.utils.setProperty(changed, "system.wealth.value", w);
+        ui.notifications.info(game.i18n.format("TAGANDTALLY.Coins.Climbed", { name: this.name, wealth: game.i18n.localize(TAGANDTALLY.wealthLevels[w]) }));
+      }
+    }
     if (this.type !== "character" || options.ttSentenceSync === false) return;
     const sentence = changed.system?.sentence;
     if (!sentence) return;
@@ -47,6 +64,22 @@ export default class TagAndTallyActor extends Actor {
     }
     if (updates.length) await this.updateEmbeddedDocuments("Item", updates);
     if (creates.length) await this.createEmbeddedDocuments("Item", creates);
+  }
+
+  /** Coins mode: trade one Wealth level for its coins. */
+  async cashOut() {
+    const w = this.system.wealth.value;
+    if (w <= 0) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Coins.NothingToCashOut"));
+    const coins = this.system.wealth.coins + TAGANDTALLY.coins.cashOut(w);
+    await this.update({ "system.wealth.value": w - 1, "system.wealth.coins": coins }, { ttNoClimb: true });
+    return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tagandtally chat-card"><p><i class="fa-solid fa-coins"></i> ${game.i18n.format("TAGANDTALLY.Coins.CashedOut", { name: this.name, coins: TAGANDTALLY.coins.cashOut(w) })}</p></div>` });
+  }
+
+  /** Coins mode: spend coins to climb one Wealth level (normally automatic). */
+  async climbWealth() {
+    const w = this.system.wealth;
+    if (!w.canClimb) return ui.notifications.warn(game.i18n.format("TAGANDTALLY.Coins.NotEnough", { needed: w.climbCost }));
+    return this.update({ "system.wealth.coins": w.coins });
   }
 
   /* ------------------------------- Accessors ------------------------------ */

@@ -25,7 +25,7 @@ export class BarterApp extends HandlebarsApplicationMixin(ApplicationV2) {
     classes: ["tagandtally", "barter"],
     position: { width: 760, height: 560 },
     window: { title: "TAGANDTALLY.Barter.Title", icon: "fa-solid fa-scale-balanced", resizable: true },
-    actions: { buy: BarterApp.#onBuy, sell: BarterApp.#onSell, pickBuyer: BarterApp.#onPickBuyer }
+    actions: { buy: BarterApp.#onBuy, sell: BarterApp.#onSell, pickBuyer: BarterApp.#onPickBuyer, buyCoins: BarterApp.#onBuyCoins, sellCoins: BarterApp.#onSellCoins }
   };
 
   static PARTS = { body: { template: "systems/tagandtally/templates/apps/barter.hbs", scrollable: [".tt-barter-list"] } };
@@ -40,7 +40,9 @@ export class BarterApp extends HandlebarsApplicationMixin(ApplicationV2) {
   async _prepareContext() {
     const gearRows = (actor) => (actor?.items.filter((i) => i.type === "gear" && i.system.quantity > 0) ?? []).map((i) => ({
       id: i.id, name: i.name, img: i.img, level: i.system.level, cost: i.system.cost, costLabel: game.i18n.localize(i.system.costLabel), quantity: i.system.quantity,
-      sentence: i.system.sentenceText, free: this.buyer ? i.system.cost < this.buyer.system.wealth.value : false
+      sentence: i.system.sentenceText, free: this.buyer ? i.system.cost < this.buyer.system.wealth.value : false,
+      price: i.system.coinPrice, affordable: this.buyer ? this.buyer.system.wealth.coins >= i.system.coinPrice : false,
+      merchantCanPay: this.merchant ? this.merchant.system.wealth.coins >= i.system.coinPrice : false
     }));
     return {
       buyer: this.buyer, merchant: this.merchant,
@@ -48,7 +50,9 @@ export class BarterApp extends HandlebarsApplicationMixin(ApplicationV2) {
       merchantWealth: this.merchant?.system.wealth,
       stock: gearRows(this.merchant), owned: gearRows(this.buyer),
       candidates: game.actors.filter((a) => a.type === "character" && a.isOwner).map((a) => ({ id: a.id, name: a.name, selected: a === this.buyer })),
-      canTrade: Boolean(this.buyer && this.merchant && this.buyer.isOwner)
+      canTrade: Boolean(this.buyer && this.merchant && this.buyer.isOwner),
+      coinsMode: game.settings.get(SYSTEM_ID, "coinsMode"),
+      buyerCoins: this.buyer?.system.wealth.coins ?? 0, merchantCoins: this.merchant?.system.wealth.coins ?? 0
     };
   }
 
@@ -115,6 +119,31 @@ export class BarterApp extends HandlebarsApplicationMixin(ApplicationV2) {
     await BarterApp.transfer(item, this.buyer, this.merchant);
     if (success) await this.buyer.update({ "system.wealth.value": Math.min(6, wealth + 1) });
     await BarterApp.post(this.buyer, game.i18n.format(success ? "TAGANDTALLY.Barter.Sold" : "TAGANDTALLY.Barter.SoldCheap", { item: item.name, merchant: this.merchant.name }));
+    this.render();
+  }
+
+  /** Coins mode: pay the coin price outright. */
+  static async #onBuyCoins(event, target) {
+    const item = this.merchant.items.get(target.dataset.itemId);
+    if (!item || !this.buyer) return;
+    const price = item.system.coinPrice;
+    if (this.buyer.system.wealth.coins < price) return ui.notifications.warn(game.i18n.format("TAGANDTALLY.Coins.NotEnough", { needed: price }));
+    await this.buyer.update({ "system.wealth.coins": this.buyer.system.wealth.coins - price });
+    await this.merchant.update({ "system.wealth.coins": this.merchant.system.wealth.coins + price }, { ttNoClimb: true });
+    await BarterApp.transfer(item, this.merchant, this.buyer);
+    await BarterApp.post(this.buyer, game.i18n.format("TAGANDTALLY.Coins.BoughtFor", { item: item.name, merchant: this.merchant.name, coins: price }));
+    this.render();
+  }
+
+  static async #onSellCoins(event, target) {
+    const item = this.buyer?.items.get(target.dataset.itemId);
+    if (!item) return;
+    const price = item.system.coinPrice;
+    if (this.merchant.system.wealth.coins < price) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Coins.MerchantBroke"));
+    await this.merchant.update({ "system.wealth.coins": this.merchant.system.wealth.coins - price }, { ttNoClimb: true });
+    await this.buyer.update({ "system.wealth.coins": this.buyer.system.wealth.coins + price });
+    await BarterApp.transfer(item, this.buyer, this.merchant);
+    await BarterApp.post(this.buyer, game.i18n.format("TAGANDTALLY.Coins.SoldFor", { item: item.name, merchant: this.merchant.name, coins: price }));
     this.render();
   }
 

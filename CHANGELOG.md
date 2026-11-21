@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.1 (unreleased)
+
+- Fix: Item Piles piles and merchants no longer start with Wealth 3 (existing piles are
+  migrated to 0). Item Piles now trades in coins, priced at 10^cost per item.
+- Optional **coins mode** (world setting): coins are tallies toward the next Wealth level
+  (10, 100, 1000…), climbing automatically; cash out one level for its coins from the
+  sheet header. Barter gets pay-in-coins buttons beside the SRD Wealth checks.
+- Ready-made macros ("Tag & Tally" Macro folder) created on first load;
+  `game.tagandtally.macros.createDefaultMacros()` recreates them.
+- Import an **Augur Nexus person** into a character or NPC: sentence from descriptor,
+  ancestry, role and drive; traits and beliefs as tags; portrait and pronoun.
+
 ## 0.2.0 (2026-11-21)
 
 - **Random character builder.** The wand button in the character header generates a complete

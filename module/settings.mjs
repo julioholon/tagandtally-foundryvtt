@@ -28,6 +28,12 @@ export function registerSettings() {
     hint: "TAGANDTALLY.Settings.BarBrawl.Hint",
     scope: "world", config: true, type: Boolean, default: true
   });
+  game.settings.register(SYSTEM_ID, "coinsMode", {
+    name: "TAGANDTALLY.Settings.Coins.Name",
+    hint: "TAGANDTALLY.Settings.Coins.Hint",
+    scope: "world", config: true, type: Boolean, default: false
+  });
+  game.settings.register(SYSTEM_ID, "macrosCreated", { scope: "world", config: false, type: Boolean, default: false });
   game.settings.register(SYSTEM_ID, "welcomeShown", {
     scope: "world", config: false, type: Boolean, default: false
   });

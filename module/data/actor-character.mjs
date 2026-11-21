@@ -60,6 +60,9 @@ export default class CharacterData extends foundry.abstract.TypeDataModel {
       ephemeralMax: TAGANDTALLY.ephemeralCap
     };
     this.wealth.label = TAGANDTALLY.wealthLevels[this.wealth.value];
+    this.wealth.climbCost = TAGANDTALLY.coins.climbCost(this.wealth.value);
+    this.wealth.cashOut = TAGANDTALLY.coins.cashOut(this.wealth.value);
+    this.wealth.canClimb = this.wealth.value < 6 && this.wealth.coins >= this.wealth.climbCost;
     this.wealth.dc = TAGANDTALLY.dcForLevel(this.wealth.value) || 0;
     this.sentenceText = this.buildSentence(actor?.name);
   }
