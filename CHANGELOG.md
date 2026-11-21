@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.3
+
+- Fix: combat flow level dropdown showed level 1 regardless of the stored level; phases now numbered 1-5.
+- `system.json` version is now bumped in git so migrations also run on git-clone installs. New `scripts/release.sh`.
+
 ## 0.1.2
 
 - Fix: sentence fields created duplicate umbrella tags when the same user had two windows open.
