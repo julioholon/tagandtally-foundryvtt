@@ -136,6 +136,7 @@ export async function rerollSlot(actor, slot) {
   const table = SLOT_TABLES[slot];
   if (!table) return;
   const used = new Set(Object.values(actor.system.sentence).map((v) => String(v).toLowerCase()));
+  // The current value is in the set, so the reroll always changes it when the table has alternatives.
   const value = await rollUnique(table, used, theme());
   return actor.update({ [`system.sentence.${slot}`]: value });
 }
@@ -146,7 +147,7 @@ export async function rerollItem(item) {
   if (!source) return item;
   const actor = item.actor;
   if (item.type === "tag") {
-    const used = new Set(actor?.items.filter((i) => i.type === "tag" && i.id !== item.id).map((i) => i.name.toLowerCase()) ?? []);
+    const used = new Set(actor?.items.filter((i) => i.type === "tag").map((i) => i.name.toLowerCase()) ?? [item.name.toLowerCase()]);
     const name = await rollUnique(source, used, theme());
     await item.update({ name });
     // Umbrella tags also live in the sentence.
