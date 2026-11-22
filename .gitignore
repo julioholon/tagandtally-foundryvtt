@@ -1,3 +1,6 @@
 .DS_Store
 node_modules/
 *.zip
+# Claude Code worktrees and local settings
+.claude/worktrees/
+.claude/settings.local.json

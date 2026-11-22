@@ -9,7 +9,7 @@ WATCH=1; [ "${2:-}" = "--no-watch" ] && WATCH=0
 [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "version must look like 1.2.3"; exit 1; }
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
-[ -z "$(git status --porcelain)" ] || { echo "working tree not clean"; exit 1; }
+[ -z "$(git status --porcelain --untracked-files=no)" ] || { echo "working tree not clean (uncommitted changes to tracked files)"; exit 1; }
 git rev-parse -q --verify "refs/tags/v$VERSION" >/dev/null && { echo "tag v$VERSION already exists"; exit 1; }
 
 git switch -q main
