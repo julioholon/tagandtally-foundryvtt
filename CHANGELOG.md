@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.0 (unreleased)
+## 0.6.0 (2026-11-22)
 
 - **Crafting** (SRD optional module): a per-character Workshop opened from the Inventory tab, the
   token controls, a macro or the Downtime crafting / repair hours. Harvest rolls against a source
