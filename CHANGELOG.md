@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.1 (unreleased)
+
+- Travel and new-day chat cards now speak as "Travel" / "Downtime" instead of the GM's selected token.
+- The Travel window refreshes when the scene level changes, so "Set as scene level" hides right after use.
+
 ## 0.5.0 (2026-11-22)
 
 - **Downtime** (SRD optional module): shared tracker opened from the token controls, a macro or the

@@ -283,7 +283,11 @@ export class TravelApp extends HandlebarsApplicationMixin(ApplicationV2) {
   /** A travel chat card: a title and icon / label / value lines. */
   static async postCard(title, lines, { gmOnly = false } = {}) {
     const content = await foundry.applications.handlebars.renderTemplate("systems/tagandtally/templates/chat/travel-card.hbs", { title, lines });
-    return ChatMessage.create({ content, whisper: gmOnly ? game.users.filter((u) => u.isGM).map((u) => u.id) : [] });
+    return ChatMessage.create({
+      content,
+      speaker: { alias: game.i18n.localize("TAGANDTALLY.Travel.Title") },
+      whisper: gmOnly ? game.users.filter((u) => u.isGM).map((u) => u.id) : []
+    });
   }
 
   /** New day (from Downtime): refill travel points. */
@@ -298,4 +302,6 @@ export class TravelApp extends HandlebarsApplicationMixin(ApplicationV2) {
 export function registerTravel() {
   Hooks.on(`${SYSTEM_ID}.newDay`, () => TravelApp.onNewDay());
   Hooks.on("canvasReady", () => TravelApp.state.onChange());
+  // The "Set as scene level" link hides once the scene matches the hex.
+  Hooks.on("updateScene", (scene, changes) => { if (scene.id === canvas?.scene?.id && foundry.utils.hasProperty(changes, `flags.${SYSTEM_ID}`)) TravelApp.state.onChange(); });
 }
