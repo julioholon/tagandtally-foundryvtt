@@ -10,7 +10,7 @@ const { ActorSheetV2 } = foundry.applications.sheets;
 export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
     classes: ["tagandtally", "sheet", "actor"],
-    position: { width: 760, height: 780 },
+    position: { width: 880, height: 800 },
     window: { resizable: true, icon: "fa-solid fa-tags" },
     form: { submitOnChange: true },
     actions: {

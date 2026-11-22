@@ -1,5 +1,6 @@
 import { TAGANDTALLY } from "../config.mjs";
 import { woundsSchema, prepareWounds, wealthSchema, htmlField, word, tidy } from "./shared.mjs";
+import { currentSceneId, sceneAttitude } from "../relations.mjs";
 
 const fields = foundry.data.fields;
 
@@ -15,6 +16,8 @@ function relationRow({ disposition = false, tally = false, place = false } = {})
     schema.disposition = new fields.NumberField({ required: true, integer: true, min: 0, max: TAGANDTALLY.relationSteps.length - 1, initial: TAGANDTALLY.relationDefault });
     /** Temporary attitude for the current scene (null = same as disposition). Set by the Drift roll. */
     schema.attitude = new fields.NumberField({ required: false, nullable: true, integer: true, min: 0, max: TAGANDTALLY.relationSteps.length - 1, initial: null });
+    /** Scene the attitude was rolled in; elsewhere the disposition stands. */
+    schema.attitudeScene = new fields.StringField({ required: true, blank: true, initial: "" });
   }
   if (tally) schema.tally = new fields.NumberField({ required: true, integer: true, min: 0, max: TAGANDTALLY.relationTallyMax, initial: 0 });
   if (place) {
@@ -116,7 +119,9 @@ export default class CharacterData extends foundry.abstract.TypeDataModel {
           const step = TAGANDTALLY.relationSteps[row.disposition] ?? TAGANDTALLY.relationSteps[TAGANDTALLY.relationDefault];
           row.stepLabel = step.label;
           row.modifier = step.modifier;
-          row.attitudeLabel = row.attitude === null ? null : TAGANDTALLY.relationSteps[row.attitude]?.label;
+          row.attitudeActive = row.attitude !== null && row.attitude !== undefined && (!row.attitudeScene || row.attitudeScene === currentSceneId());
+          row.attitudeValue = sceneAttitude(row);
+          row.attitudeLabel = row.attitudeActive ? TAGANDTALLY.relationSteps[row.attitude]?.label : null;
         }
         if ("tally" in row) row.tallyBoxes = Array.from({ length: TAGANDTALLY.relationTallyMax }, (_, i) => i < row.tally);
       }

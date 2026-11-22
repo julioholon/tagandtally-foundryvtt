@@ -8,6 +8,18 @@ const AUGUR = "augur-nexus";
  * any journal entry). Rows are added by dropping documents on the sheet.
  */
 
+/** Scene the client is looking at; attitudes drifted in another scene no longer apply. */
+export function currentSceneId() {
+  return canvas?.scene?.id ?? game.scenes?.active?.id ?? null;
+}
+
+/** Attitude of a people/faction row for the current scene: the drifted value, else the disposition. */
+export function sceneAttitude(row, sceneId = currentSceneId()) {
+  if (row.attitude === null || row.attitude === undefined) return row.disposition;
+  if (row.attitudeScene && sceneId && row.attitudeScene !== sceneId) return row.disposition;
+  return row.attitude;
+}
+
 /** Augur Nexus campaign entity record on a journal, if any. */
 export function augurEntity(doc) {
   return doc?.flags?.["augur-nexus"]?.campaignEntity ?? null;

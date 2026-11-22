@@ -250,3 +250,19 @@
 .tagandtally .tt-party-add { margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 .chat-message .tt-log-journal { margin-right: 0.3rem; cursor: pointer; opacity: 0.7; }
 .chat-message .tt-log-journal:hover { opacity: 1; text-shadow: 0 0 6px var(--tt-accent, #c9a227); }
+
+/* ------------------------------ Interactions ----------------------------- */
+.tagandtally.interact .tt-interact-body { padding: 0.3rem 0.5rem; }
+.tagandtally.interact .tt-attitude.dim { opacity: 0.6; }
+.tagandtally.interact .tt-approach { display: flex; gap: 1rem; align-items: center; margin: 0.4rem 0; }
+.tagandtally.interact .tt-approach .tt-random { margin-left: auto; cursor: pointer; }
+.tagandtally.interact .tt-pathways { list-style: none; margin: 0 0 0.5rem; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem; }
+.tagandtally.interact .tt-pathway { display: grid; grid-template-columns: 1.4em 1fr; grid-template-rows: auto auto; column-gap: 0.3rem; padding: 0.25rem 0.4rem; border: 1px solid var(--tt-border, #999); border-radius: 4px; cursor: pointer; }
+.tagandtally.interact .tt-pathway .tt-n { grid-row: span 2; opacity: 0.6; font-weight: bold; align-self: center; }
+.tagandtally.interact .tt-pathway small { opacity: 0.75; }
+.tagandtally.interact .tt-pathway.on { border-color: var(--tt-accent, #c9a227); background: rgba(201, 162, 39, 0.12); }
+.tagandtally.interact .ease { color: var(--tt-success); }
+.tagandtally.interact .hinder { color: var(--tt-hinder); }
+.chat-message .tt-interaction { border-top: 1px dashed var(--color-border-light-2, #999); margin-top: 0.3rem; padding-top: 0.3rem; }
+.chat-message .tt-interaction p { margin: 0.15rem 0; }
+.chat-message .tt-interaction .dim { opacity: 0.7; font-size: 0.9em; }

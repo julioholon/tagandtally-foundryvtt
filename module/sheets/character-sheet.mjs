@@ -15,7 +15,8 @@ export default class CharacterSheet extends BaseActorSheet {
       removeRelation: CharacterSheet.#onRemoveRelation,
       addRelationRow: CharacterSheet.#onAddRelationRow,
       relationTally: CharacterSheet.#onRelationTally,
-      syncQuest: CharacterSheet.#onSyncQuest
+      syncQuest: CharacterSheet.#onSyncQuest,
+      interact: CharacterSheet.#onInteract
     }
   };
 
@@ -122,6 +123,12 @@ export default class CharacterSheet extends BaseActorSheet {
     const index = Number(target.dataset.index);
     row.tally = index < row.tally ? index : index + 1;
     return this.actor.update({ [`system.relations.${li.dataset.kind}`]: rows });
+  }
+
+  static async #onInteract(event, target) {
+    const li = target.closest(".tt-relation");
+    const { InteractDialog } = await import("../interactions.mjs");
+    return InteractDialog.open({ actor: this.actor, kind: li.dataset.kind, index: Number(li.dataset.index) });
   }
 
   static async #onSyncQuest(event, target) {

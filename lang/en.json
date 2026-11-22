@@ -659,6 +659,120 @@
       "AskGM": "A GM must be online to log to that journal.",
       "Logged": "Logged to {name}.",
       "GroupHere": "Current location"
+    },
+    "Interaction": {
+      "Title": "NPC interaction",
+      "WindowTitle": "Talk to {name}",
+      "Interact": "Interact",
+      "Conversation": "Conversation",
+      "DispositionHint": "Permanent. Eases (+) or hinders (-) the task:",
+      "AttitudeHint": "Mood for this scene, set by the 2d6 Drift roll. It colours the scene; modifiers come from the disposition.",
+      "Drift": "Drift (2d6)",
+      "DriftHint": "Roll at the start of a scene: 2-3 down 2, 4-5 down 1, 6-8 no change, 9-10 up 1, 11-12 up 2.",
+      "DriftResult": "Drift for {name}: {drift}. Attitude this scene: {attitude}.",
+      "NoChange": "no change",
+      "Steps": "{n} step(s)",
+      "IApproach": "I approach them",
+      "TheyApproach": "They approach me",
+      "RollPathway": "Roll a pathway",
+      "PathwayRolled": "Pathway: {label}",
+      "Question": "What do you say or ask?",
+      "QuestionPlaceholder": "Pick a pathway or write your own question",
+      "LevelHint": "NPC level by default; raise it for sensitive requests.",
+      "Roll": "Roll the interaction",
+      "DispositionSource": "Disposition: {label}",
+      "PickCharacter": "Which character is talking?",
+      "NoCharacter": "No character to interact with. Select a character token or assign one to your user.",
+      "NotOwner": "You do not own that character.",
+      "InsightStrength": "Insight: strength",
+      "InsightWeakness": "Insight: weakness",
+      "InsightApplied": "{name}: insight on {key} noted.",
+      "Applied": {
+        "Disposition": "Disposition {from} → {to}.",
+        "Attitude": "Attitude {from} → {to} for the next interaction."
+      },
+      "Pathway": {
+        "offeringAid": {
+          "Label": "Offering aid",
+          "Prompt": "Can I help you with something?"
+        },
+        "trade": {
+          "Label": "Trade",
+          "Prompt": "Do you have wares or goods to sell?"
+        },
+        "streetwise": {
+          "Label": "Streetwise",
+          "Prompt": "Have you heard any rumors?"
+        },
+        "interrogation": {
+          "Label": "Interrogation",
+          "Prompt": "Do you know anything about...?"
+        },
+        "eavesdropping": {
+          "Label": "Eavesdropping",
+          "Prompt": "Listen in on a conversation."
+        },
+        "networking": {
+          "Label": "Networking",
+          "Prompt": "Can you introduce me to...?"
+        },
+        "intimidation": {
+          "Label": "Intimidation",
+          "Prompt": "Try to force them to do something."
+        },
+        "contracting": {
+          "Label": "Contracting",
+          "Prompt": "I want to hire or consult you."
+        },
+        "restoration": {
+          "Label": "Restoration",
+          "Prompt": "Trying to get back into their good graces."
+        },
+        "advisor": {
+          "Label": "Advisor",
+          "Prompt": "What would you do in...?"
+        },
+        "coldCall": {
+          "Label": "Cold call",
+          "Prompt": "Can you help me?"
+        },
+        "ambush": {
+          "Label": "Ambush",
+          "Prompt": "I'm going to hurt you!"
+        },
+        "debtCollector": {
+          "Label": "Debt collector",
+          "Prompt": "You owe me!"
+        },
+        "fan": {
+          "Label": "Fan",
+          "Prompt": "Oh, hey, I know you!"
+        },
+        "warning": {
+          "Label": "Warning",
+          "Prompt": "There's trouble ahead."
+        },
+        "mistakenIdentity": {
+          "Label": "Mistaken identity",
+          "Prompt": "I thought you were someone else."
+        }
+      },
+      "Outcome": {
+        "Approach": {
+          "FailAnd": "You fail in your attempt and the NPC is insulted. Permanent disposition drops 1 step.",
+          "FailBut": "You don't get what you want, but you learn why. Gain an insight.",
+          "SuccessBut": "You succeed, but the NPC's attitude drops 1 step for the next interaction.",
+          "Success": "You achieve your intent.",
+          "SuccessAnd": "You succeed and leave a lasting impression. Permanent disposition rises 1 step."
+        },
+        "Approached": {
+          "FailAnd": "Caught off guard: you lose all leverage immediately.",
+          "FailBut": "Damage control: you are on the defensive, but you spot a weakness or a hidden detail. Gain an insight.",
+          "SuccessBut": "Tense standoff: you hold your ground, but it is draining. Attitude drops 1 step as they grow frustrated.",
+          "Success": "Poise: you handle the approach perfectly.",
+          "SuccessAnd": "Total control: you flip the script. Permanent disposition rises 1 step."
+        }
+      }
     }
   }
 }

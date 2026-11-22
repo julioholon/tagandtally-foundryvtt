@@ -1,0 +1,12 @@
+<div class="tagandtally tt-interaction">
+  <p class="tt-interaction-ask"><i class="fa-solid fa-comments"></i> <strong>{{pathwayLabel}}</strong>{{#if question}} · <em>{{question}}</em>{{/if}}</p>
+  <p class="tt-interaction-outcome"><strong>{{outcomeLabel}}.</strong> {{outcomeText}}</p>
+  {{#if applied}}<p class="tt-interaction-applied"><i class="fa-solid fa-arrow-right-arrow-left"></i> {{applied}}</p>{{/if}}
+  <p class="tt-interaction-mood dim"><i class="fa-solid fa-face-meh"></i> {{targetName}}: {{attitudeLabel}}</p>
+  {{#if insight}}{{#if npcTarget}}
+    <footer class="tt-card-actions tt-gm-only">
+      <button type="button" data-action="interactionInsight" data-key="strength"><i class="fa-solid fa-lightbulb"></i> {{localize "TAGANDTALLY.Interaction.InsightStrength"}}</button>
+      <button type="button" data-action="interactionInsight" data-key="weakness"><i class="fa-solid fa-lightbulb"></i> {{localize "TAGANDTALLY.Interaction.InsightWeakness"}}</button>
+    </footer>
+  {{/if}}{{/if}}
+</div>

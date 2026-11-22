@@ -331,3 +331,34 @@ TAGANDTALLY.sparkThemes = {
 };
 
 TAGANDTALLY.insightsPerTally = 5;
+
+/** SRD NPC interactions: Drift roll, pathways and outcome bands (text keys under TAGANDTALLY.Interaction). */
+TAGANDTALLY.interaction = {
+  drift: [
+    { min: 2, max: 3, steps: -2 },
+    { min: 4, max: 5, steps: -1 },
+    { min: 6, max: 8, steps: 0 },
+    { min: 9, max: 10, steps: 1 },
+    { min: 11, max: 12, steps: 2 }
+  ],
+  pathways: {
+    approach: ["offeringAid", "trade", "streetwise", "interrogation", "eavesdropping", "networking", "intimidation", "contracting", "restoration", "advisor"],
+    approached: ["coldCall", "ambush", "debtCollector", "fan", "warning", "mistakenIdentity"]
+  },
+  outcomes: {
+    approach: {
+      failAnd: { label: "TAGANDTALLY.Band.FailAnd", text: "TAGANDTALLY.Interaction.Outcome.Approach.FailAnd", effect: "dispositionDown" },
+      failBut: { label: "TAGANDTALLY.Band.FailBut", text: "TAGANDTALLY.Interaction.Outcome.Approach.FailBut", effect: "insight" },
+      successBut: { label: "TAGANDTALLY.Band.SuccessBut", text: "TAGANDTALLY.Interaction.Outcome.Approach.SuccessBut", effect: "attitudeDown" },
+      success: { label: "TAGANDTALLY.Band.Success", text: "TAGANDTALLY.Interaction.Outcome.Approach.Success", effect: null },
+      successAnd: { label: "TAGANDTALLY.Band.SuccessAnd", text: "TAGANDTALLY.Interaction.Outcome.Approach.SuccessAnd", effect: "dispositionUp" }
+    },
+    approached: {
+      failAnd: { label: "TAGANDTALLY.Band.FailAnd", text: "TAGANDTALLY.Interaction.Outcome.Approached.FailAnd", effect: null },
+      failBut: { label: "TAGANDTALLY.Band.FailBut", text: "TAGANDTALLY.Interaction.Outcome.Approached.FailBut", effect: "insight" },
+      successBut: { label: "TAGANDTALLY.Band.SuccessBut", text: "TAGANDTALLY.Interaction.Outcome.Approached.SuccessBut", effect: "attitudeDown" },
+      success: { label: "TAGANDTALLY.Band.Success", text: "TAGANDTALLY.Interaction.Outcome.Approached.Success", effect: null },
+      successAnd: { label: "TAGANDTALLY.Band.SuccessAnd", text: "TAGANDTALLY.Interaction.Outcome.Approached.SuccessAnd", effect: "dispositionUp" }
+    }
+  }
+};
