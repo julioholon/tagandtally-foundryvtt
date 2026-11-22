@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.1 (unreleased)
+## 0.4.1 (2026-11-22)
 
 - Fix: the Interact dialog failed to open (property name clashed with ApplicationV2).
 
