@@ -108,9 +108,11 @@ Where the SRD contradicts itself the formula wins over the cheat sheet; see `PLA
 
 ## Development
 
-No build step. To cut a release run `scripts/release.sh 0.2.0` on `main`: it stamps the
-version into `system.json` and `CHANGELOG.md`, commits, tags `v0.2.0` and pushes; the GitHub
-Action then publishes the release assets. Edit, reload Foundry. `node --check` the modules and run
+No build step. To cut a release, merge the PR and run `scripts/release.sh 0.3.0` from any
+branch with a clean tree: it switches to `main`, pulls, stamps the version into `system.json`
+and `CHANGELOG.md`, commits, tags `v0.3.0`, pushes branch and tag, and watches the GitHub
+Action until the release is published (`--no-watch` to skip). Then update the system from
+Foundry's setup screen. Edit, reload Foundry. `node --check` the modules and run
 `scripts/sync-sparks.sh [vault-path]` to refresh table data. Releases are built by the
 GitHub Action on a `v*` tag.
 
