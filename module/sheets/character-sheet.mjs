@@ -95,7 +95,7 @@ export default class CharacterSheet extends BaseActorSheet {
   /** Dropped journals and actors become relation rows; Augur quests become linked quest items. */
   async _onDrop(event) {
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
-    if (this.isEditable && await handleRelationDrop(this.actor, data)) return;
+    if (this.isEditable && await handleRelationDrop(this.actor, data, event)) return;
     return super._onDrop?.(event);
   }
 

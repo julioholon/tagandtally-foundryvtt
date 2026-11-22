@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2 (unreleased)
+
+- Relations tab and quests accept drags from Augur Nexus itself (NPC, faction, location rows, place tree sites, quest cards), not only from the Journal sidebar.
+- Log to journal: the current scene's Augur location(s) are listed first and preselected; portraits in logged cards are shrunk to 40px and use token art.
+- Fix: Party Overview portrait no longer squashed.
+
 ## 0.3.1 (2026-11-22)
 
 - Fix: Party Overview failed to open for the GM (template rendered two root elements after the add-member toolbar was added).

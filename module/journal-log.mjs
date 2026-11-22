@@ -1,5 +1,5 @@
 import { SYSTEM_ID } from "./config.mjs";
-import { augurEntity } from "./relations.mjs";
+import { augurEntity, augurLocationsForScene } from "./relations.mjs";
 import { findAugurPerson } from "./integrations/augur.mjs";
 
 /**
@@ -73,6 +73,12 @@ export function messageToHtml(message) {
   const div = document.createElement("div");
   div.innerHTML = message.content ?? "";
   div.querySelectorAll("button, form, [data-action], .tt-gm-only, .dice-tooltip, .tt-log-journal").forEach((el) => el.remove());
+  // Portraits on roll cards are full-size actor images: shrink them (token art when it is the speaker's).
+  const token = message.speaker?.actor ? game.actors.get(message.speaker.actor)?.prototypeToken?.texture?.src : null;
+  div.querySelectorAll("img").forEach((img) => {
+    if (token) img.setAttribute("src", token);
+    img.setAttribute("width", "40"); img.setAttribute("height", "40");
+  });
   const flavor = message.flavor ? `<em>${foundry.utils.escapeHTML(message.flavor)}</em> ` : "";
   const body = div.innerHTML.trim() || foundry.utils.escapeHTML(message.content?.replace(/<[^>]+>/g, " ") ?? "");
   const who = message.alias || message.speaker?.alias || message.author?.name || "";
@@ -91,6 +97,7 @@ export function journalCandidates(message) {
   const seen = new Set();
   const out = [];
   const push = (doc, group) => { if (doc && !seen.has(doc.uuid)) { seen.add(doc.uuid); out.push({ uuid: doc.uuid, name: doc.name, group }); } };
+  for (const here of augurLocationsForScene(message.speaker?.scene ? game.scenes.get(message.speaker.scene) : canvas?.scene)) push(here, "TAGANDTALLY.Journal.GroupHere");
   if (actor) {
     const person = findAugurPerson(actor);
     if (person) push(person, "TAGANDTALLY.Journal.GroupActor");
@@ -114,7 +121,8 @@ export function journalCandidates(message) {
 export async function logMessageToJournal(message) {
   const candidates = journalCandidates(message);
   if (!candidates.length) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Journal.NoTarget"));
-  const preselect = message.getFlag(SYSTEM_ID, "journalTarget") ?? lastTarget ?? candidates[0].uuid;
+  const here = candidates.find((c) => c.group === "TAGANDTALLY.Journal.GroupHere")?.uuid;
+  const preselect = message.getFlag(SYSTEM_ID, "journalTarget") ?? here ?? lastTarget ?? candidates[0].uuid;
   let group = null;
   let options = "";
   for (const c of candidates) {

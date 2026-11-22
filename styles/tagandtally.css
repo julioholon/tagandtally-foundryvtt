@@ -228,7 +228,7 @@
 /* ------------------------------ Party ----------------------------------- */
 .tagandtally .tt-party { width: 100%; border-collapse: collapse; }
 .tagandtally .tt-party th, .tagandtally .tt-party td { padding: 0.3rem 0.4rem; border-bottom: 1px solid var(--tt-border); vertical-align: top; text-align: left; }
-.tagandtally .tt-party img { width: 36px; height: 36px; border: none; border-radius: 4px; cursor: pointer; }
+.tagandtally .tt-party img { width: 36px; min-width: 36px; height: 36px; object-fit: cover; border: none; border-radius: 4px; cursor: pointer; }
 .tagandtally .tt-sentence-cell { font-style: italic; max-width: 22em; }
 
 @media (max-width: 700px) {

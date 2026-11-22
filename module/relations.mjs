@@ -1,5 +1,7 @@
 import { TAGANDTALLY } from "./config.mjs";
 
+const AUGUR = "augur-nexus";
+
 /**
  * Relations: factions, people and places a character knows, each row
  * optionally linked to a document (an Augur Nexus journal, a T&T actor, or
@@ -11,10 +13,79 @@ export function augurEntity(doc) {
   return doc?.flags?.["augur-nexus"]?.campaignEntity ?? null;
 }
 
+/** Journal entry behind an Augur entity id (Nexus browser drags carry the entity id, not a uuid). */
+export function augurJournalForEntity(entityId) {
+  if (!entityId) return null;
+  return game.journal.get(entityId) ?? game.journal.find((j) => augurEntity(j)?.id === entityId) ?? null;
+}
+
+function augurLocations() {
+  return game.journal.filter((j) => augurEntity(j)?.type === "location");
+}
+
+/** Augur locations placed as site markers with this site id (a region site can hold several). */
+export function augurLocationsForSite(siteId) {
+  if (!siteId) return [];
+  return augurLocations().filter((j) => { const p = augurEntity(j).hierarchy?.parent; return p?.kind === "site" && p.siteId === siteId; });
+}
+
+/**
+ * Augur location journals for a scene: one that owns the scene outright
+ * (scenes.primarySceneId), those placed on the site the scene was generated
+ * for, or failing that the same for the nearest ancestor scene.
+ */
+export function augurLocationsForScene(scene) {
+  const seen = new Set();
+  for (let s = scene; s && !seen.has(s.id); ) {
+    seen.add(s.id);
+    const flags = s.flags?.[AUGUR] ?? {};
+    const owner = augurLocations().find((j) => augurEntity(j).scenes?.primarySceneId === s.id);
+    if (owner) return [owner];
+    const placed = augurLocationsForSite(flags.site?.siteId);
+    if (placed.length) return placed;
+    const viaParent = augurLocationsForSite(flags.lineage?.parentSiteId);
+    if (viaParent.length) return viaParent;
+    const parentId = flags.lineage?.parentSceneId;
+    s = parentId ? game.scenes.get(parentId) : null;
+  }
+  return [];
+}
+
+/** The journal page Augur keeps for a site placed on a scene. */
+function augurSitePage(parentSceneId, siteId) {
+  const journalId = game.scenes.get(parentSceneId)?.getFlag(AUGUR, "siteJournalId");
+  const journal = journalId ? game.journal.get(journalId) : null;
+  return journal?.pages.find((p) => p.flags?.[AUGUR]?.siteId === siteId) ?? null;
+}
+
+/**
+ * Resolve a drag started inside Augur Nexus (browser rows, place tree, quest
+ * cards) to a document. Those drags do not use Foundry's {type, uuid} payload.
+ */
+export async function resolveAugurDrag(event, data) {
+  const questId = event?.dataTransfer?.getData?.("application/x-augur-quest");
+  if (questId) return game.journal.get(questId) ?? null;
+  if (!data) return null;
+  if (data.type === "AugurNexusEntity" || data.kind === "nexus-entity") {
+    return (data.uuid ? await fromUuid(data.uuid) : null) ?? augurJournalForEntity(data.entityId);
+  }
+  if (data.type === "AugurNexusNode") {
+    if (data.siteId) {
+      const placed = augurLocationsForSite(data.siteId);
+      const hit = (placed.length === 1 ? placed[0] : null) ?? (data.parentSceneId ? augurSitePage(data.parentSceneId, data.siteId) : null) ?? placed[0];
+      if (hit) return hit;
+    }
+    const scene = game.scenes.get(data.sceneId ?? data.parentSceneId);
+    return (scene && augurLocationsForScene(scene)[0]) ?? scene ?? null;
+  }
+  return null;
+}
+
 /** Which relation list a dropped document belongs to, or null when it is not a relation. */
 export function relationKindFor(doc) {
   if (!doc) return null;
   if (doc.documentName === "Actor") return "people";
+  if (doc.documentName === "Scene" || doc.documentName === "JournalEntryPage") return "places";
   const entity = augurEntity(doc);
   if (entity) {
     for (const [kind, def] of Object.entries(TAGANDTALLY.relationKinds)) {
@@ -28,6 +99,8 @@ export function relationKindFor(doc) {
 /** Thumbnail for a relation row. */
 export function relationImage(doc) {
   const entity = augurEntity(doc);
+  if (doc.documentName === "Scene") return doc.thumb || doc.background?.src || "icons/svg/direction.svg";
+  if (doc.documentName === "JournalEntryPage") return doc.flags?.[AUGUR]?.siteIconSrc || doc.src || "icons/svg/direction.svg";
   return entity?.display?.imageSrc || doc.img || doc.pages?.find((p) => p.type === "image")?.src || "icons/svg/book.svg";
 }
 
@@ -58,17 +131,18 @@ export async function askRelationKind(doc) {
 export async function openRelation(uuid) {
   const doc = uuid ? await fromUuid(uuid) : null;
   if (!doc) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Relations.Missing"));
+  if (doc.documentName === "JournalEntryPage") return doc.parent.sheet.render({ force: true, pageId: doc.id });
   return doc.sheet.render({ force: true });
 }
 
 /**
  * Handle a drop on a character sheet. Returns true when the drop was consumed
  * (a relation row or a linked quest was created), false to let the sheet
- * handle it (items, folders...).
+ * handle it (items, folders...). Accepts Foundry {type, uuid} payloads and
+ * Augur Nexus's own drag payloads (pass the drop event for the latter).
  */
-export async function handleRelationDrop(actor, data) {
-  if (!data?.type || !["Actor", "JournalEntry"].includes(data.type)) return false;
-  const doc = await fromUuid(data.uuid);
+export async function handleRelationDrop(actor, data, event = null) {
+  const doc = ["Actor", "JournalEntry"].includes(data?.type) ? await fromUuid(data.uuid) : await resolveAugurDrag(event, data);
   if (!doc || doc === actor) return false;
   const entity = augurEntity(doc);
   if (entity?.type === "quest") { await createQuestFromAugur(actor, doc); return true; }

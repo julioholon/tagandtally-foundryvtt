@@ -657,7 +657,8 @@
       "GroupAll": "Todos os diários",
       "NoTarget": "Nenhum diário disponível para registrar.",
       "AskGM": "Um Mestre precisa estar online para registrar nesse diário.",
-      "Logged": "Registrado em {name}."
+      "Logged": "Registrado em {name}.",
+      "GroupHere": "Local atual"
     }
   }
 }
