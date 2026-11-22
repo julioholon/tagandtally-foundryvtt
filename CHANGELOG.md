@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 (unreleased)
+## 0.3.0 (2026-11-22)
 
 - **Relations tab** replaces the "Known world" fields: Factions, People and Places lists.
   Drop Augur Nexus journals (factions, people, locations, ships), NPC actors or any journal
