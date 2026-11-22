@@ -14,6 +14,7 @@ import { registerSettings } from "./module/settings.mjs";
 import { registerMigrationSetting, migrateWorld } from "./module/migration.mjs";
 import { registerHandlebarsHelpers, preloadTemplates } from "./module/handlebars.mjs";
 import { registerChatHooks } from "./module/rolls/chat.mjs";
+import { InteractDialog, rollDrift, rollInteraction, registerInteractions } from "./module/interactions.mjs";
 import { registerJournalLog, logMessageToJournal } from "./module/journal-log.mjs";
 import * as relations from "./module/relations.mjs";
 import { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel } from "./module/rolls/resolution.mjs";
@@ -63,6 +64,7 @@ Hooks.once("init", () => {
   registerHandlebarsHelpers();
   registerChatHooks();
   registerJournalLog();
+  registerInteractions();
   registerBarBrawl();
   registerItemPiles();
   registerSceneLevel();
@@ -73,7 +75,7 @@ Hooks.once("init", () => {
     config: TAGANDTALLY,
     documents: { TagAndTallyActor, TagAndTallyItem },
     sheets: { CharacterSheet, NpcSheet, TagAndTallyItemSheet },
-    apps: { TaskRollDialog, CombatFlow, SparksApp, PartyOverview, BarterApp },
+    apps: { TaskRollDialog, CombatFlow, SparksApp, PartyOverview, BarterApp, InteractDialog },
     rolls: { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel },
     sparks: { tables: sparkTables, generate, SparkGenerator, loadGeneratorDefs, ...create },
     spells: { computeSpell, maiCheck },
@@ -103,8 +105,15 @@ Hooks.once("init", () => {
       generateNPC: (options) => create.createActorFromSpark("npc", options),
       generateCreature: (options) => create.createActorFromSpark("creature", options),
       generateJournal: (generatorId, options) => create.createJournalFromSpark(generatorId, options),
-      logToJournal: (message) => logMessageToJournal(message ?? game.messages.contents.at(-1))
+      logToJournal: (message) => logMessageToJournal(message ?? game.messages.contents.at(-1)),
+      /** Interact with the selected NPC token as your character (or a selected character token). */
+      interact: () => {
+        const target = canvas.tokens?.controlled.map((t) => t.actor).find((a) => a?.type === "npc");
+        if (!target) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Chat.NoTarget"));
+        return InteractDialog.open({ target });
+      }
     },
+    interactions: { InteractDialog, rollDrift, rollInteraction },
     relations,
     journal: { logMessageToJournal }
   };

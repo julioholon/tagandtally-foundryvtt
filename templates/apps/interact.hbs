@@ -1,0 +1,49 @@
+<div class="tt-interact-part">
+<div class="tt-interact-body">
+  <header class="tt-card-header">
+    <img src="{{img}}" alt="" {{#if target}}data-action="openTarget"{{/if}} />
+    <div><h3>{{row.name}}</h3><small>{{actor.name}}</small></div>
+  </header>
+
+  <div class="tt-grid two">
+    <div class="form-group">
+      <label>{{localize "TAGANDTALLY.Relations.Disposition"}}</label>
+      <select name="disposition">{{#each steps as |s|}}<option value="{{s.value}}" {{#if s.selected}}selected{{/if}}>{{s.label}} ({{s.modifier}})</option>{{/each}}</select>
+      <p class="hint">{{localize "TAGANDTALLY.Interaction.DispositionHint"}} <strong class="{{modifierClass}}">{{modifier}}</strong></p>
+    </div>
+    <div class="form-group">
+      <label>{{localize "TAGANDTALLY.Relations.Attitude"}}</label>
+      <div class="tt-inline">
+        <strong class="tt-attitude {{#unless attitudeDrifted}}dim{{/unless}}"><i class="fa-solid fa-face-meh"></i> {{attitudeLabel}}</strong>
+        <button type="button" data-action="rollDrift" title="{{localize 'TAGANDTALLY.Interaction.DriftHint'}}"><i class="fa-solid fa-dice"></i> {{localize "TAGANDTALLY.Interaction.Drift"}}</button>
+      </div>
+      <p class="hint">{{localize "TAGANDTALLY.Interaction.AttitudeHint"}}</p>
+    </div>
+  </div>
+
+  <div class="tt-approach">
+    <label class="tt-toggle"><input type="radio" name="approach" value="approach" {{#if isApproach}}checked{{/if}} /> {{localize "TAGANDTALLY.Interaction.IApproach"}}</label>
+    <label class="tt-toggle"><input type="radio" name="approach" value="approached" {{#unless isApproach}}checked{{/unless}} /> {{localize "TAGANDTALLY.Interaction.TheyApproach"}}</label>
+    <a class="tt-random" data-action="randomPathway"><i class="fa-solid fa-dice"></i> {{localize "TAGANDTALLY.Interaction.RollPathway"}} ({{die}})</a>
+  </div>
+
+  <ul class="tt-pathways">
+    {{#each pathways as |p|}}
+      <li><a class="tt-pathway {{#if p.selected}}on{{/if}}" data-action="pickPathway" data-id="{{p.id}}"><span class="tt-n">{{p.n}}</span><strong>{{p.label}}</strong><small>{{p.prompt}}</small></a></li>
+    {{/each}}
+  </ul>
+
+  <div class="form-group">
+    <label>{{localize "TAGANDTALLY.Interaction.Question"}}</label>
+    <input type="text" name="question" value="{{state.question}}" placeholder="{{localize 'TAGANDTALLY.Interaction.QuestionPlaceholder'}}" />
+  </div>
+  <div class="form-group">
+    <label>{{localize "TAGANDTALLY.Level.TaskLevel"}}</label>
+    <select name="level">{{#each levels as |l|}}<option value="{{l.value}}" {{#if l.selected}}selected{{/if}}>{{l.label}}</option>{{/each}}</select>
+    <p class="hint">{{localize "TAGANDTALLY.Interaction.LevelHint"}}</p>
+  </div>
+</div>
+<footer class="form-footer">
+  <button type="button" data-action="roll" class="tt-roll-btn big"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Interaction.Roll"}}</button>
+</footer>
+</div>

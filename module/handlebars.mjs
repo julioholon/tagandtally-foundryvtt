@@ -46,6 +46,8 @@ export const TEMPLATES = [
   "templates/apps/sparks-oracle.hbs",
   "templates/apps/party.hbs",
   "templates/apps/barter.hbs",
+  "templates/apps/interact.hbs",
+  "templates/chat/interaction-outcome.hbs",
   "templates/chat/roll-card.hbs",
   "templates/chat/item-card.hbs",
   "templates/chat/spark-card.hbs"

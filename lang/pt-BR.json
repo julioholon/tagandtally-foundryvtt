@@ -659,6 +659,120 @@
       "AskGM": "Um Mestre precisa estar online para registrar nesse diário.",
       "Logged": "Registrado em {name}.",
       "GroupHere": "Local atual"
+    },
+    "Interaction": {
+      "Title": "Interação com PNJ",
+      "WindowTitle": "Falar com {name}",
+      "Interact": "Interagir",
+      "Conversation": "Conversa",
+      "DispositionHint": "Permanente. Facilita (+) ou dificulta (-) a tarefa:",
+      "AttitudeHint": "Humor nesta cena, definido pela rolagem de Deriva (2d6). Dá o tom da cena; os modificadores vêm da disposição.",
+      "Drift": "Deriva (2d6)",
+      "DriftHint": "Role no início da cena: 2-3 desce 2, 4-5 desce 1, 6-8 sem mudança, 9-10 sobe 1, 11-12 sobe 2.",
+      "DriftResult": "Deriva de {name}: {drift}. Atitude nesta cena: {attitude}.",
+      "NoChange": "sem mudança",
+      "Steps": "{n} passo(s)",
+      "IApproach": "Eu abordo",
+      "TheyApproach": "Eles me abordam",
+      "RollPathway": "Sortear abordagem",
+      "PathwayRolled": "Abordagem: {label}",
+      "Question": "O que você diz ou pergunta?",
+      "QuestionPlaceholder": "Escolha uma abordagem ou escreva sua pergunta",
+      "LevelHint": "Nível do PNJ por padrão; aumente para pedidos delicados.",
+      "Roll": "Rolar a interação",
+      "DispositionSource": "Disposição: {label}",
+      "PickCharacter": "Qual personagem está falando?",
+      "NoCharacter": "Nenhum personagem para interagir. Selecione um token de personagem ou atribua um ao seu usuário.",
+      "NotOwner": "Você não é dono desse personagem.",
+      "InsightStrength": "Percepção: força",
+      "InsightWeakness": "Percepção: fraqueza",
+      "InsightApplied": "{name}: percepção sobre {key} anotada.",
+      "Applied": {
+        "Disposition": "Disposição {from} → {to}.",
+        "Attitude": "Atitude {from} → {to} para a próxima interação."
+      },
+      "Pathway": {
+        "offeringAid": {
+          "Label": "Oferecer ajuda",
+          "Prompt": "Posso ajudar com alguma coisa?"
+        },
+        "trade": {
+          "Label": "Comércio",
+          "Prompt": "Você tem mercadorias para vender?"
+        },
+        "streetwise": {
+          "Label": "Malandragem",
+          "Prompt": "Ouviu algum boato?"
+        },
+        "interrogation": {
+          "Label": "Interrogatório",
+          "Prompt": "Sabe alguma coisa sobre...?"
+        },
+        "eavesdropping": {
+          "Label": "Escutar escondido",
+          "Prompt": "Ouvir uma conversa alheia."
+        },
+        "networking": {
+          "Label": "Contatos",
+          "Prompt": "Pode me apresentar a...?"
+        },
+        "intimidation": {
+          "Label": "Intimidação",
+          "Prompt": "Forçar alguém a fazer algo."
+        },
+        "contracting": {
+          "Label": "Contratação",
+          "Prompt": "Quero contratar ou consultar você."
+        },
+        "restoration": {
+          "Label": "Reconciliação",
+          "Prompt": "Tentar voltar às boas graças."
+        },
+        "advisor": {
+          "Label": "Conselho",
+          "Prompt": "O que você faria em...?"
+        },
+        "coldCall": {
+          "Label": "Pedido inesperado",
+          "Prompt": "Pode me ajudar?"
+        },
+        "ambush": {
+          "Label": "Emboscada",
+          "Prompt": "Vou te machucar!"
+        },
+        "debtCollector": {
+          "Label": "Cobrador",
+          "Prompt": "Você me deve!"
+        },
+        "fan": {
+          "Label": "Fã",
+          "Prompt": "Ei, eu conheço você!"
+        },
+        "warning": {
+          "Label": "Aviso",
+          "Prompt": "Tem problema à frente."
+        },
+        "mistakenIdentity": {
+          "Label": "Engano",
+          "Prompt": "Achei que fosse outra pessoa."
+        }
+      },
+      "Outcome": {
+        "Approach": {
+          "FailAnd": "Você falha e o PNJ se ofende. A disposição permanente cai 1 passo.",
+          "FailBut": "Você não consegue o que quer, mas descobre o porquê. Ganhe uma percepção.",
+          "SuccessBut": "Você consegue, mas a atitude do PNJ cai 1 passo para a próxima interação.",
+          "Success": "Você alcança sua intenção.",
+          "SuccessAnd": "Você consegue e deixa uma impressão duradoura. A disposição permanente sobe 1 passo."
+        },
+        "Approached": {
+          "FailAnd": "Pego de surpresa: você perde toda a vantagem imediatamente.",
+          "FailBut": "Controle de danos: você fica na defensiva, mas nota uma fraqueza ou um detalhe oculto. Ganhe uma percepção.",
+          "SuccessBut": "Impasse tenso: você se mantém firme, mas é desgastante. A atitude cai 1 passo com a frustração deles.",
+          "Success": "Compostura: você lida com a abordagem perfeitamente.",
+          "SuccessAnd": "Controle total: você vira o jogo. A disposição permanente sobe 1 passo."
+        }
+      }
     }
   }
 }

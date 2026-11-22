@@ -46,6 +46,7 @@
   <div class="tt-actions-row">
     <button type="button" data-action="rollInjury"><i class="fa-solid fa-heart-crack"></i> {{localize "TAGANDTALLY.Combat.RollInjury"}}</button>
     <button type="button" data-action="openCombatFlow"><i class="fa-solid fa-swords"></i> {{localize "TAGANDTALLY.Combat.Title"}}</button>
+    {{#unless system.creature}}<button type="button" data-action="interact"><i class="fa-solid fa-comments"></i> {{localize "TAGANDTALLY.Interaction.Interact"}}</button>{{/unless}}
     <button type="button" data-action="openBarter"><i class="fa-solid fa-scale-balanced"></i> {{localize "TAGANDTALLY.Barter.Title"}}</button>
     <label class="tt-toggle"><input type="checkbox" name="system.merchant" {{checked system.merchant}} /> {{localize "TAGANDTALLY.Npc.Merchant"}}</label>
     <div class="tt-stat" title="{{localize 'TAGANDTALLY.Wealth.Wealth'}}"><i class="fa-solid fa-coins"></i> <input type="number" name="system.wealth.value" value="{{system.wealth.value}}" min="0" max="6" class="tt-small-num" />{{#if coinsMode}} <small>{{localize "TAGANDTALLY.Coins.Coins"}}</small> <input type="number" name="system.wealth.coins" value="{{system.wealth.coins}}" min="0" class="tt-small-num wide" />{{/if}}</div>

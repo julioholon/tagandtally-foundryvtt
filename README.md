@@ -35,7 +35,9 @@ Or download the latest `tagandtally.zip` from the releases page and unzip it int
 | Barter | Buy from and sell to NPC merchants with Wealth checks per the SRD, no extra module needed |
 | NPCs / creatures | Creature or NPC sentence, level and DC, strength / weakness / secret hidden from players until revealed or learned via insights |
 | Sparks | 530+ random tables from the official Obsidian vault, 22 sentence generators (NPC, creature, species, gear, places, factions, quests, wounds, appearance), oracle, table browser, create actors / items / journals from results |
-| Party | Built-in party overview: sentence, wounds, wealth, MAI, loadout, tags, quests |
+| Relations | Factions, people and places the character knows, dropped from Augur Nexus journals, NPC actors or any journal; SRD disposition ladder and relationship tallies; Augur quests link to quest items; any chat card can be logged to a journal |
+| NPC interactions | Interact from a relation row or an NPC sheet: 2d6 Drift attitude per scene, approach pathways (1d10 / 1d6) with prompts, typed question, disposition modifier applied, SRD outcome consequences applied to the relation |
+| Party | Built-in party overview: sentence, wounds, wealth, MAI, loadout, tags, quests; GM adds or removes members |
 | GM tools | Scene level in Scene Config, world RollTable overrides for any Spark table, bulk import to RollTables |
 
 ## GM manual

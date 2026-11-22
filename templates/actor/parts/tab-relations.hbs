@@ -26,7 +26,7 @@
               <label class="tt-toggle" title="{{localize 'TAGANDTALLY.Relations.Visited'}}"><input type="checkbox" name="system.relations.{{list.kind}}.{{i}}.visited" {{checked row.visited}} /> <i class="fa-solid fa-shoe-prints"></i></label>
               <label class="tt-toggle" title="{{localize 'TAGANDTALLY.Relations.SafeZone'}}"><input type="checkbox" name="system.relations.{{list.kind}}.{{i}}.safeZone" {{checked row.safeZone}} /> <i class="fa-solid fa-shield-halved"></i></label>
             {{/if}}
-            <span class="tt-controls"><a data-action="removeRelation" title="{{localize 'TAGANDTALLY.Relations.Remove'}}"><i class="fa-solid fa-trash"></i></a></span>
+            <span class="tt-controls">{{#if list.hasDisposition}}<a data-action="interact" title="{{localize 'TAGANDTALLY.Interaction.Interact'}}"><i class="fa-solid fa-comments"></i></a> {{/if}}<a data-action="removeRelation" title="{{localize 'TAGANDTALLY.Relations.Remove'}}"><i class="fa-solid fa-trash"></i></a></span>
           </li>
         {{/each}}
         {{#unless list.rows.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Relations.Empty"}}</li>{{/unless}}

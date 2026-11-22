@@ -10,7 +10,8 @@ export default class NpcSheet extends BaseActorSheet {
       addInsight: NpcSheet.#onAddInsight,
       generateSentence: NpcSheet.#onGenerateSentence,
       levelStep: NpcSheet.#onLevelStep,
-      openBarter: NpcSheet.#onOpenBarter
+      openBarter: NpcSheet.#onOpenBarter,
+      interact: NpcSheet.#onInteract
     }
   };
 
@@ -82,6 +83,11 @@ export default class NpcSheet extends BaseActorSheet {
   static async #onOpenBarter() {
     const { BarterApp } = await import("../integrations/barter.mjs");
     return BarterApp.open({ merchant: this.actor });
+  }
+
+  static async #onInteract() {
+    const { InteractDialog } = await import("../interactions.mjs");
+    return InteractDialog.open({ target: this.actor });
   }
 
   static async #onLevelStep(event, target) {
