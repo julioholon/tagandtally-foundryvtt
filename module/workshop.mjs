@@ -83,7 +83,7 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     this.actor = actor;
     this.tab = tab;
     /** Form choices per tab (kept across renders). */
-    this.form = {
+    this.choices = {
       harvest: { level: sceneLevel(), type: "ore", rarity: 1 },
       craft: { baseId: "", componentId: "", gearType: "item", rarity: 1 },
       augment: { itemId: "", materialId: "", mode: "augment", rarity: 1 },
@@ -100,7 +100,7 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     window: { title: "TAGANDTALLY.Workshop.Title", icon: "fa-solid fa-hammer", resizable: true },
     form: { handler: WorkshopApp.#onChange, submitOnChange: true, closeOnSubmit: false },
     actions: {
-      tab: WorkshopApp.#onTab,
+      showTab: WorkshopApp.#onTab,
       rollType: WorkshopApp.#onRollType,
       rollRarity: WorkshopApp.#onRollRarity,
       resetAttempts: WorkshopApp.#onResetAttempts,
@@ -143,7 +143,7 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
   attemptsFor(key) { return this.attempts.get(key) ?? 0; }
 
   async _prepareContext() {
-    const f = this.form;
+    const f = this.choices;
     const opt = (items, selected) => items.map((i) => ({ id: i.id, name: `${i.name} (L${i.system.level}${i.system.rarity ? `, ${game.i18n.localize(i.system.rarityLabel)}` : ""}${i.system.quantity > 1 ? ` ×${i.system.quantity}` : ""})`, selected: i.id === selected }));
     const rarities = (selected) => Object.entries(C.rarities).filter(([k]) => Number(k) > 0).map(([k, r]) => ({ value: Number(k), label: game.i18n.localize(r.label), selected: Number(k) === Number(selected) }));
 
@@ -192,10 +192,10 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static async #onChange(event, form, formData) {
     const data = foundry.utils.expandObject(formData.object);
-    for (const tab of Object.keys(this.form)) if (data[tab]) Object.assign(this.form[tab], data[tab]);
+    for (const tab of Object.keys(this.choices)) if (data[tab]) Object.assign(this.choices[tab], data[tab]);
     // Changing mode clears a material that no longer fits the list.
-    const mat = this.actor.items.get(this.form.augment.materialId);
-    if (mat && (this.form.augment.mode === "salvaged") !== Boolean(mat.system.salvaged)) this.form.augment.materialId = "";
+    const mat = this.actor.items.get(this.choices.augment.materialId);
+    if (mat && (this.choices.augment.mode === "salvaged") !== Boolean(mat.system.salvaged)) this.choices.augment.materialId = "";
     this.render();
   }
 
@@ -204,14 +204,14 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
   static async #onRollType() {
     let r = await new Roll("1d8").evaluate();
     while (r.total === 8) r = await new Roll("1d8").evaluate();
-    this.form.harvest.type = Object.keys(C.resourceTypes)[r.total - 1];
-    ui.notifications.info(W("Rolled", { formula: "1d8", total: r.total, value: game.i18n.localize(C.resourceTypes[this.form.harvest.type].label) }));
+    this.choices.harvest.type = Object.keys(C.resourceTypes)[r.total - 1];
+    ui.notifications.info(W("Rolled", { formula: "1d8", total: r.total, value: game.i18n.localize(C.resourceTypes[this.choices.harvest.type].label) }));
     this.render();
   }
 
   static async #onRollRarity(event, target) {
     const r = await new Roll("1d4").evaluate();
-    this.form[target.dataset.tab].rarity = r.total;
+    this.choices[target.dataset.tab].rarity = r.total;
     ui.notifications.info(W("Rolled", { formula: "1d4", total: r.total, value: game.i18n.localize(C.rarities[r.total].label) }));
     this.render();
   }
@@ -240,7 +240,7 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static async #onHarvest() {
-    const f = this.form.harvest;
+    const f = this.choices.harvest;
     const level = Math.clamp(Number(f.level) || 1, 1, 10);
     const key = `harvest:${f.level}:${f.type}`;
     const typeLabel = game.i18n.localize(C.resourceTypes[f.type]?.label ?? "");
@@ -274,7 +274,7 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static async #onCraft() {
-    const f = this.form.craft;
+    const f = this.choices.craft;
     const base = this.actor.items.get(f.baseId);
     if (!base) return;
     const component = this.actor.items.get(f.componentId);
@@ -289,12 +289,13 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     if (band === "failAnd") {
       await consume(base); await consume(component);
       lines.push(esc(W("MaterialsLost", { names: [base.name, component?.name].filter(Boolean).join(", ") })));
-      this.form.craft.baseId = ""; this.form.craft.componentId = "";
+      this.choices.craft.baseId = ""; this.choices.craft.componentId = "";
       return this.finish(result, key, "craft", lines, { success: false });
     }
     if (band === "failBut") return this.finish(result, key, "craft", lines, { success: false });
     const prefill = await sparkGearFields(f.gearType);
-    if (!prefill.material) prefill.material = base.system.subtype || base.name;
+    // The base material names the item's material (an Iron ore makes an [Iron] blade); the table value is only a fallback.
+    if (["weapon", "armor"].includes(f.gearType)) prefill.material = base.name || prefill.material;
     const fields = await promptItemSentence(f.gearType, prefill, { title: `${W("NewItem")}: ${typeLabel}` });
     if (!fields) return this.finish(result, key, "craft", [esc(W("Cancelled"))], { success: false });
     const itemLevel = Math.clamp(C.craftedLevel + (rarity >= 3 ? 1 : 0), 1, 10);
@@ -304,13 +305,13 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       system: { gearType: f.gearType, level: itemLevel, cost: C.craftedCost, descriptor: fields.descriptor ?? "", material: fields.material ?? "", subtype: fields.subtype ?? "", special: fields.special ?? "", damageType: fields.damageType ?? "", rarity, armorClass: f.gearType === "armor" ? "light" : "none", description: `<p>${esc(W("CraftedFrom", { base: base.name, component: component?.name ?? "" }))}</p>` }
     }]);
     await consume(base); await consume(component);
-    this.form.craft.baseId = ""; this.form.craft.componentId = "";
+    this.choices.craft.baseId = ""; this.choices.craft.componentId = "";
     lines.push(`<i class="fa-solid fa-hammer"></i> ${esc(W("Crafted", { name: item.name, level: itemLevel }))} <em>${esc(item.system.sentenceText)}</em>`);
     return this.finish(result, key, "craft", lines, { success: true });
   }
 
   static async #onAugment() {
-    const f = this.form.augment;
+    const f = this.choices.augment;
     const target = this.actor.items.get(f.itemId);
     if (!target) return;
     const mode = f.mode;
@@ -324,7 +325,7 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const band = result.band.id;
     const lines = [];
     if (band === "failAnd") {
-      if (material) { await consume(material); lines.push(esc(W("MaterialsLost", { names: material.name }))); this.form.augment.materialId = ""; }
+      if (material) { await consume(material); lines.push(esc(W("MaterialsLost", { names: material.name }))); this.choices.augment.materialId = ""; }
       return this.finish(result, key, "augment", lines, { success: false });
     }
     if (band === "failBut") return this.finish(result, key, "augment", lines, { success: false });
@@ -340,13 +341,13 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const augmentations = [...target.system.augmentations, text];
     await target.update({ "system.augmentations": augmentations, "system.level": Math.clamp(target.system.level + bump, 1, 10) });
     await consume(material);
-    this.form.augment.materialId = "";
+    this.choices.augment.materialId = "";
     lines.push(`<i class="fa-solid fa-wand-magic-sparkles"></i> ${esc(W("Augmented", { name: target.name, tag: text, level: target.system.level }))}`);
     return this.finish(result, key, "augment", lines, { success: true });
   }
 
   static async #onSalvage() {
-    const f = this.form.salvage;
+    const f = this.choices.salvage;
     const item = this.actor.items.get(f.itemId);
     if (!item) return;
     const key = `salvage:${item.id}`;
@@ -356,14 +357,15 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const lines = [];
     if (band === "failAnd") {
       await item.delete();
-      this.form.salvage.itemId = "";
+      this.choices.salvage.itemId = "";
       return this.finish(result, key, "salvage", [esc(W("Destroyed", { name: item.name }))], { success: false });
     }
     if (band === "failBut") return this.finish(result, key, "salvage", lines, { success: false });
     const count = band === "successAnd" ? 2 : 1;
     const props = [];
+    const candidates = [item.system.special, ...[...item.system.augmentations].reverse()].filter(Boolean);
     for (let i = 0; i < count; i++) {
-      const prefill = i === 0 ? (item.system.special || item.system.augmentations.at(-1) || "") : (item.system.augmentations.at(-1 - i) || "");
+      const prefill = candidates[i] ?? "";
       const text = await promptText(`${W("Tab.salvage")}: ${item.name}`, W("SalvageProperty", { n: i + 1, count }), prefill);
       if (!text) break;
       props.push(text);
@@ -375,7 +377,7 @@ export class WorkshopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       system: { gearType: "resource", kind: "functional", level, rarity: item.system.rarity, cost: item.system.cost, salvaged: true, special: p, subtype: game.i18n.localize("TAGANDTALLY.ResourceType.Essence").toLowerCase(), description: `<p>${esc(W("SalvagedFrom", { name: item.name }))}</p>` }
     })));
     await item.delete();
-    this.form.salvage.itemId = "";
+    this.choices.salvage.itemId = "";
     lines.push(`<i class="fa-solid fa-recycle"></i> ${esc(W("Salvaged", { name: item.name, properties: created.map((c) => c.system.special).join(", ") }))}`);
     return this.finish(result, key, "salvage", lines, { success: true });
   }

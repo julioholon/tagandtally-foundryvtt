@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.1 (unreleased)
+
+- Fix: the Workshop failed to open (it assigned a property ApplicationV2 reserves) and its tabs did
+  not switch (the action name `tab` is handled by core).
+- Augur Nexus faction import now reads the real record: profile type, drive, action and focus and
+  the ideology tenets fill organization type, descriptor, goal and secret.
+- Crafting a weapon or armor names the material after the base material; salvaging two properties
+  prefills the second one from the item's augmentations.
+
 ## 0.6.0 (2026-11-22)
 
 - **Crafting** (SRD optional module): a per-character Workshop opened from the Inventory tab, the

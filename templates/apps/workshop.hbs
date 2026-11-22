@@ -1,6 +1,6 @@
 <div class="tt-workshop-part">
   <nav class="tt-segments tt-workshop-tabs">
-    {{#each tabs as |t|}}<a class="tt-segment {{#if t.active}}on{{/if}}" data-action="tab" data-tab="{{t.id}}"><i class="fa-solid {{t.icon}}"></i> {{t.label}}</a>{{/each}}
+    {{#each tabs as |t|}}<a class="tt-segment {{#if t.active}}on{{/if}}" data-action="showTab" data-tab="{{t.id}}"><i class="fa-solid {{t.icon}}"></i> {{t.label}}</a>{{/each}}
   </nav>
   <div class="tt-workshop-body">
   {{#unless canAct}}<p class="hint">{{localize "TAGANDTALLY.Workshop.NotOwner"}}</p>{{/unless}}
