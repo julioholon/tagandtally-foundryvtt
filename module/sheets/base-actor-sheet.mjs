@@ -62,6 +62,8 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
       severityLabel: game.i18n.localize(system.wounds.severityLabel ?? ""),
       sentenceText: system.sentenceText,
       coinsMode: game.settings.get(SYSTEM_ID, "coinsMode"),
+      coinsWidth: Math.max(4, String(this.actor.system.wealth.coins ?? 0).length + 3),
+      climbCostLabel: Number(this.actor.system.wealth.climbCost ?? 0).toLocaleString(game.i18n.lang),
       augurLinked: hasAugurPerson(actor)
     });
     return context;

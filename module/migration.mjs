@@ -23,6 +23,14 @@ export async function migrateWorld() {
     }
   }
 
+  // 0.2.3: unlinked pile tokens kept their own copy of that Wealth 3.
+  for (const scene of game.scenes) {
+    const updates = scene.tokens
+      .filter((t) => t.flags["item-piles"] && !t.actorLink && foundry.utils.getProperty(t.delta ?? {}, "system.wealth.value") > 0 && !t.actor?.system.merchant)
+      .map((t) => ({ _id: t.id, "delta.system.wealth.value": 0 }));
+    if (updates.length) await scene.updateEmbeddedDocuments("Token", updates);
+  }
+
   await game.settings.set(SYSTEM_ID, "migrationVersion", current);
 }
 

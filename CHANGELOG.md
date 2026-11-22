@@ -4,6 +4,15 @@
 
 - Fix: a connective translated as empty (pt-BR "damage") no longer falls back to English.
 - API: `game.tagandtally.augur` also exposes `findAugurPerson` and `mapAugurPerson`.
+- Fix: Item Piles kept the old "Wealth" currency (picking up a pile gave +3 Wealth) because
+  it only re-reads the system integration on a version bump. Now bumped; piles trade in coins.
+  Unlinked pile tokens still holding Wealth 3 are migrated to 0.
+- Coins mode barter reworked: buying cashes out Wealth levels when the purse is short; selling
+  keeps the SRD check and pays the full coin price on success, half on failure; the merchant
+  cashes out their own Wealth to pay and goes broke when it runs out. The Wealth-only buttons
+  are hidden in coins mode.
+- The coins field in the character header widens with the amount and the climb cost is
+  formatted with thousands separators.
 
 ## 0.2.1 (unreleased)
 

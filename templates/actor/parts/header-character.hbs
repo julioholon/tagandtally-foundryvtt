@@ -29,7 +29,7 @@
         {{#if system.wealth.inDebt}}<span class="tt-tag warn">{{localize "TAGANDTALLY.Wealth.InDebt"}}</span>{{/if}}
       </div>
       {{#if coinsMode}}<div class="tt-stat" title="{{localize 'TAGANDTALLY.Coins.Hint'}}">
-        <i class="fa-solid fa-coins"></i> <input type="number" name="system.wealth.coins" value="{{system.wealth.coins}}" min="0" class="tt-small-num" /> <small>/ {{system.wealth.climbCost}}</small>
+        <i class="fa-solid fa-coins"></i> <input type="number" name="system.wealth.coins" value="{{system.wealth.coins}}" min="0" class="tt-small-num tt-coins" style="width: {{coinsWidth}}ch" /> <small>/ {{climbCostLabel}}</small>
         {{#if system.wealth.canClimb}}<a data-action="climbWealth" title="{{localize 'TAGANDTALLY.Coins.Climb'}}"><i class="fa-solid fa-arrow-up"></i></a>{{/if}}
         {{#if (tt-gt system.wealth.value 0)}}<a data-action="cashOut" title="{{localize 'TAGANDTALLY.Coins.CashOut'}}"><i class="fa-solid fa-arrow-down"></i></a>{{/if}}
       </div>{{/if}}

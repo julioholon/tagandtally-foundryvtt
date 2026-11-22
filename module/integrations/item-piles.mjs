@@ -5,6 +5,8 @@ import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
  * currency, and items are priced in coins from their cost level (10^cost).
  * Enable the system's coins mode so coins climb Wealth levels; otherwise
  * use the built-in Barter window, which applies the SRD Wealth checks.
+ * Bump VERSION whenever this config changes: Item Piles stores a copy in
+ * world settings and only re-applies it on a newer version.
  */
 export function registerItemPiles() {
   Hooks.once("item-piles-ready", async () => {
@@ -12,7 +14,7 @@ export function registerItemPiles() {
     if (!api) return;
     try {
       await api.addSystemIntegration({
-        VERSION: "1.0.0",
+        VERSION: "1.1.0",
         ACTOR_CLASS_TYPE: "npc",
         ITEM_QUANTITY_ATTRIBUTE: "system.quantity",
         ITEM_PRICE_ATTRIBUTE: "system.coinPrice",

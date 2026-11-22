@@ -11,6 +11,9 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
  *   "In debt" status.
  * - Selling at or below your Wealth: hindered Wealth check, success = +1 Wealth.
  *   Above your Wealth: +1 Wealth without a roll.
+ * Coins mode replaces the Wealth bookkeeping with coins: buying pays the coin
+ * price (cashing out Wealth levels as needed); selling keeps the SRD check and
+ * pays the full price on success, half on failure.
  * Works without Item Piles; the GM or the owning player can run it.
  */
 export class BarterApp extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -41,8 +44,9 @@ export class BarterApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const gearRows = (actor) => (actor?.items.filter((i) => i.type === "gear" && i.system.quantity > 0) ?? []).map((i) => ({
       id: i.id, name: i.name, img: i.img, level: i.system.level, cost: i.system.cost, costLabel: game.i18n.localize(i.system.costLabel), quantity: i.system.quantity,
       sentence: i.system.sentenceText, free: this.buyer ? i.system.cost < this.buyer.system.wealth.value : false,
-      price: i.system.coinPrice, affordable: this.buyer ? this.buyer.system.wealth.coins >= i.system.coinPrice : false,
-      merchantCanPay: this.merchant ? this.merchant.system.wealth.coins >= i.system.coinPrice : false
+      price: i.system.coinPrice, halfPrice: Math.floor(i.system.coinPrice / 2),
+      affordable: BarterApp.liquid(this.buyer) >= i.system.coinPrice,
+      merchantCanPay: BarterApp.liquid(this.merchant) > 0
     }));
     return {
       buyer: this.buyer, merchant: this.merchant,
@@ -122,28 +126,67 @@ export class BarterApp extends HandlebarsApplicationMixin(ApplicationV2) {
     this.render();
   }
 
-  /** Coins mode: pay the coin price outright. */
+  /** Coins an actor can raise by cashing out every Wealth level on top of the coins in hand. */
+  static liquid(actor) {
+    if (!actor) return 0;
+    let total = actor.system.wealth.coins;
+    for (let w = actor.system.wealth.value; w > 0; w -= 1) total += TAGANDTALLY.coins.cashOut(w);
+    return total;
+  }
+
+  /**
+   * Take `amount` coins from an actor, cashing out Wealth levels as needed.
+   * Pays whatever can be raised when the actor cannot cover it all.
+   * Returns { paid, broke, cashedOut } where cashedOut is the number of levels dropped.
+   */
+  static async pay(actor, amount) {
+    let { value: w, coins } = actor.system.wealth;
+    let cashedOut = 0;
+    while (coins < amount && w > 0) { coins += TAGANDTALLY.coins.cashOut(w); w -= 1; cashedOut += 1; }
+    const paid = Math.min(amount, coins);
+    coins -= paid;
+    await actor.update({ "system.wealth.value": w, "system.wealth.coins": coins }, { ttNoClimb: true });
+    return { paid, broke: paid < amount, cashedOut };
+  }
+
+  /** Coins mode: pay the coin price, cashing out Wealth levels when the purse is short. */
   static async #onBuyCoins(event, target) {
     const item = this.merchant.items.get(target.dataset.itemId);
     if (!item || !this.buyer) return;
     const price = item.system.coinPrice;
-    if (this.buyer.system.wealth.coins < price) return ui.notifications.warn(game.i18n.format("TAGANDTALLY.Coins.NotEnough", { needed: price }));
-    await this.buyer.update({ "system.wealth.coins": this.buyer.system.wealth.coins - price });
+    if (BarterApp.liquid(this.buyer) < price) return ui.notifications.warn(game.i18n.format("TAGANDTALLY.Coins.NotEnough", { needed: price }));
+    const { cashedOut } = await BarterApp.pay(this.buyer, price);
     await this.merchant.update({ "system.wealth.coins": this.merchant.system.wealth.coins + price }, { ttNoClimb: true });
     await BarterApp.transfer(item, this.merchant, this.buyer);
-    await BarterApp.post(this.buyer, game.i18n.format("TAGANDTALLY.Coins.BoughtFor", { item: item.name, merchant: this.merchant.name, coins: price }));
+    let text = game.i18n.format("TAGANDTALLY.Coins.BoughtFor", { item: item.name, merchant: this.merchant.name, coins: price });
+    if (cashedOut) text += " " + game.i18n.format("TAGANDTALLY.Coins.CashedOutLevels", { name: this.buyer.name, levels: cashedOut });
+    await BarterApp.post(this.buyer, text);
     this.render();
   }
 
+  /**
+   * Coins mode: the SRD sell check decides the price. Success pays the full
+   * coin price, failure half of it. The merchant cashes out Wealth to pay and
+   * ends up broke if that is not enough, paying what they can.
+   */
   static async #onSellCoins(event, target) {
     const item = this.buyer?.items.get(target.dataset.itemId);
     if (!item) return;
-    const price = item.system.coinPrice;
-    if (this.merchant.system.wealth.coins < price) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Coins.MerchantBroke"));
-    await this.merchant.update({ "system.wealth.coins": this.merchant.system.wealth.coins - price }, { ttNoClimb: true });
-    await this.buyer.update({ "system.wealth.coins": this.buyer.system.wealth.coins + price });
+    if (BarterApp.liquid(this.merchant) <= 0) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Coins.MerchantBroke"));
+    const wealth = this.buyer.system.wealth.value;
+    const cost = item.system.cost;
+    let success = true;
+    if (cost <= wealth) {
+      const result = await resolveRoll({ actor: this.buyer, level: Math.clamp(Math.max(1, wealth) + 1, 1, 10), rollType: "task", title: game.i18n.format("TAGANDTALLY.Barter.SellTitle", { item: item.name }) });
+      success = result.band.success;
+    }
+    const price = success ? item.system.coinPrice : Math.floor(item.system.coinPrice / 2);
+    const { paid, broke } = await BarterApp.pay(this.merchant, price);
+    await this.buyer.update({ "system.wealth.coins": this.buyer.system.wealth.coins + paid });
     await BarterApp.transfer(item, this.buyer, this.merchant);
-    await BarterApp.post(this.buyer, game.i18n.format("TAGANDTALLY.Coins.SoldFor", { item: item.name, merchant: this.merchant.name, coins: price }));
+    let text = game.i18n.format(success ? "TAGANDTALLY.Coins.SoldFor" : "TAGANDTALLY.Coins.SoldForHalf", { item: item.name, merchant: this.merchant.name, coins: paid });
+    if (broke) text += " " + game.i18n.format("TAGANDTALLY.Coins.MerchantNowBroke", { merchant: this.merchant.name, short: price - paid });
+    await BarterApp.post(this.buyer, text);
     this.render();
   }
 

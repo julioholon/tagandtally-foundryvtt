@@ -6,7 +6,7 @@
     {{#if buyer}}<span class="tt-stat"><i class="fa-solid fa-coins"></i> {{buyerWealth.value}} <small>{{buyerWealthLabel}}</small>{{#if coinsMode}} · {{buyerCoins}} {{localize "TAGANDTALLY.Coins.Coins"}}{{/if}}{{#if buyerWealth.inDebt}} <span class="tt-tag warn">{{localize "TAGANDTALLY.Wealth.InDebt"}}</span>{{/if}}</span>{{/if}}
     <span class="tt-stat"><i class="fa-solid fa-store"></i> {{merchant.name}}{{#if coinsMode}} · {{merchantCoins}} {{localize "TAGANDTALLY.Coins.Coins"}}{{/if}}</span>
   </div>
-  <p class="hint">{{localize "TAGANDTALLY.Barter.Hint"}}</p>
+  <p class="hint">{{#if coinsMode}}{{localize "TAGANDTALLY.Coins.BarterHint"}}{{else}}{{localize "TAGANDTALLY.Barter.Hint"}}{{/if}}</p>
   <div class="tt-barter-columns">
     <div>
       <h4>{{localize "TAGANDTALLY.Barter.Stock"}}</h4>
@@ -16,8 +16,11 @@
             <img src="{{i.img}}" alt="" />
             <div class="tt-item-body"><span class="tt-item-name">{{i.name}} <small>L{{i.level}} · {{i.costLabel}}{{#if (tt-gt i.quantity 1)}} · ×{{i.quantity}}{{/if}}</small></span><span class="tt-item-sub">{{tt-tags i.sentence}}</span></div>
             {{#if ../canTrade}}
-              {{#if ../coinsMode}}<button type="button" data-action="buyCoins" data-item-id="{{i.id}}" {{#unless i.affordable}}disabled{{/unless}} title="{{localize 'TAGANDTALLY.Coins.PayCoins'}}"><i class="fa-solid fa-coins"></i> {{i.price}}</button>{{/if}}
-              <button type="button" data-action="buy" data-item-id="{{i.id}}" title="{{#if i.free}}{{localize 'TAGANDTALLY.Barter.NoRoll'}}{{else}}{{localize 'TAGANDTALLY.Barter.NeedsRoll'}}{{/if}}"><i class="fa-solid {{#if i.free}}fa-cart-shopping{{else}}fa-dice-d20{{/if}}"></i> {{localize "TAGANDTALLY.Barter.Buy"}}</button>
+              {{#if ../coinsMode}}
+                <button type="button" data-action="buyCoins" data-item-id="{{i.id}}" {{#unless i.affordable}}disabled{{/unless}} title="{{localize 'TAGANDTALLY.Coins.PayCoins'}}"><i class="fa-solid fa-cart-shopping"></i> {{localize "TAGANDTALLY.Barter.Buy"}} <small>{{i.price}}</small></button>
+              {{else}}
+                <button type="button" data-action="buy" data-item-id="{{i.id}}" title="{{#if i.free}}{{localize 'TAGANDTALLY.Barter.NoRoll'}}{{else}}{{localize 'TAGANDTALLY.Barter.NeedsRoll'}}{{/if}}"><i class="fa-solid {{#if i.free}}fa-cart-shopping{{else}}fa-dice-d20{{/if}}"></i> {{localize "TAGANDTALLY.Barter.Buy"}}</button>
+              {{/if}}
             {{/if}}
           </li>
         {{/each}}
@@ -32,8 +35,11 @@
             <img src="{{i.img}}" alt="" />
             <div class="tt-item-body"><span class="tt-item-name">{{i.name}} <small>L{{i.level}} · {{i.costLabel}}{{#if (tt-gt i.quantity 1)}} · ×{{i.quantity}}{{/if}}</small></span><span class="tt-item-sub">{{tt-tags i.sentence}}</span></div>
             {{#if ../canTrade}}
-              {{#if ../coinsMode}}<button type="button" data-action="sellCoins" data-item-id="{{i.id}}" {{#unless i.merchantCanPay}}disabled{{/unless}} title="{{localize 'TAGANDTALLY.Coins.ReceiveCoins'}}"><i class="fa-solid fa-coins"></i> {{i.price}}</button>{{/if}}
-              <button type="button" data-action="sell" data-item-id="{{i.id}}"><i class="fa-solid fa-hand-holding-dollar"></i> {{localize "TAGANDTALLY.Barter.Sell"}}</button>
+              {{#if ../coinsMode}}
+                <button type="button" data-action="sellCoins" data-item-id="{{i.id}}" {{#unless i.merchantCanPay}}disabled{{/unless}} title="{{localize 'TAGANDTALLY.Coins.ReceiveCoins'}}"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Barter.Sell"}} <small>{{i.price}} / {{i.halfPrice}}</small></button>
+              {{else}}
+                <button type="button" data-action="sell" data-item-id="{{i.id}}"><i class="fa-solid fa-hand-holding-dollar"></i> {{localize "TAGANDTALLY.Barter.Sell"}}</button>
+              {{/if}}
             {{/if}}
           </li>
         {{/each}}
