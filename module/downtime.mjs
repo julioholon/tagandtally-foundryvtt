@@ -328,6 +328,11 @@ export class DowntimeApp extends HandlebarsApplicationMixin(ApplicationV2) {
       }
       case "gamble": return DowntimeApp.gamble(actor);
       case "watch": return L("WatchLogged");
+      case "workshop": {
+        const { WorkshopApp } = await import("./workshop.mjs");
+        WorkshopApp.open({ actor, tab: def.tab });
+        return L("WorkshopOpened");
+      }
       default: return "";
     }
   }

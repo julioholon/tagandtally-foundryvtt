@@ -46,7 +46,7 @@ export function findRelation(actor, target) {
 export async function ensureRelation(actor, target, kind) {
   const found = findRelation(actor, target);
   if (found) return found;
-  kind ??= augurEntity(target)?.type === "faction" ? "factions" : "people";
+  kind ??= augurEntity(target)?.type === "faction" || target?.type === "faction" ? "factions" : "people";
   const base = baseActor(target);
   const rows = actor.system.relations[kind].map((r) => foundry.utils.deepClone(r));
   rows.push({ ...actor.system.constructor.blankRelation(kind), uuid: base?.uuid ?? "", name: target.name ?? String(target), img: base ? relationImage(base) : "" });

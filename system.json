@@ -51,6 +51,12 @@
           "biography",
           "notes"
         ]
+      },
+      "faction": {
+        "htmlFields": [
+          "biography",
+          "notes"
+        ]
       }
     },
     "Item": {

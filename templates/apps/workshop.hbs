@@ -1,0 +1,75 @@
+<div class="tt-workshop-part">
+  <nav class="tt-segments tt-workshop-tabs">
+    {{#each tabs as |t|}}<a class="tt-segment {{#if t.active}}on{{/if}}" data-action="tab" data-tab="{{t.id}}"><i class="fa-solid {{t.icon}}"></i> {{t.label}}</a>{{/each}}
+  </nav>
+  <div class="tt-workshop-body">
+  {{#unless canAct}}<p class="hint">{{localize "TAGANDTALLY.Workshop.NotOwner"}}</p>{{/unless}}
+
+  {{#if (tt-eq tab "harvest")}}
+    <p class="hint">{{localize "TAGANDTALLY.Workshop.HarvestHint"}}</p>
+    <div class="tt-grid two">
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.SourceLevel"}}</label>
+        <select name="harvest.level">{{#each harvest.levels as |l|}}<option value="{{l.value}}" {{#if l.selected}}selected{{/if}}>{{l.label}}</option>{{/each}}</select></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.ResourceType"}} <a data-action="rollType" title="1d8"><i class="fa-solid fa-dice"></i></a></label>
+        <select name="harvest.type">{{#each harvest.types as |t|}}<option value="{{t.value}}" {{#if t.selected}}selected{{/if}}>{{t.label}}</option>{{/each}}</select></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Rarity.Rarity"}} <a data-action="rollRarity" data-tab="harvest" title="1d4"><i class="fa-solid fa-dice"></i></a></label>
+        <select name="harvest.rarity">{{#each harvest.rarities as |r|}}<option value="{{r.value}}" {{#if r.selected}}selected{{/if}}>{{r.label}}</option>{{/each}}</select></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.Task"}}</label>
+        <span class="tt-task-line">DC {{harvest.dc}}{{#if harvest.attempts}} · <span class="warn">{{localize "TAGANDTALLY.Workshop.Attempts" n=harvest.attempts}}</span> <a data-action="resetAttempts" data-key="harvest:{{harvest.level}}:{{harvest.type}}" title="{{localize 'TAGANDTALLY.Workshop.NewSource'}}"><i class="fa-solid fa-rotate-left"></i></a>{{/if}}</span></div>
+    </div>
+    {{#if canAct}}<button type="button" class="tt-roll-btn" data-action="harvest"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Workshop.Harvest"}}</button>{{/if}}
+  {{/if}}
+
+  {{#if (tt-eq tab "craft")}}
+    <p class="hint">{{localize "TAGANDTALLY.Workshop.CraftHint"}}</p>
+    <div class="tt-grid two">
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.BaseMaterial"}}</label>
+        <select name="craft.baseId"><option value="">—</option>{{#each craft.bases as |i|}}<option value="{{i.id}}" {{#if i.selected}}selected{{/if}}>{{i.name}}</option>{{/each}}</select></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.Component"}}</label>
+        <select name="craft.componentId"><option value="">{{localize "TAGANDTALLY.Workshop.NoComponent"}}</option>{{#each craft.components as |i|}}<option value="{{i.id}}" {{#if i.selected}}selected{{/if}}>{{i.name}}</option>{{/each}}</select></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.MakeA"}}</label>
+        <select name="craft.gearType">{{#each craft.gearTypes as |t|}}<option value="{{t.value}}" {{#if t.selected}}selected{{/if}}>{{t.label}}</option>{{/each}}</select></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Rarity.Rarity"}}{{#unless craft.hasComponent}} <a data-action="rollRarity" data-tab="craft" title="1d4"><i class="fa-solid fa-dice"></i></a>{{/unless}}</label>
+        {{#if craft.hasComponent}}<span>{{localize (lookup (lookup config.crafting.rarities craft.rarity) "label")}} <small>({{localize "TAGANDTALLY.Workshop.FromComponent"}})</small></span>
+        {{else}}<select name="craft.rarity">{{#each craft.rarities as |r|}}<option value="{{r.value}}" {{#if r.selected}}selected{{/if}}>{{r.label}}</option>{{/each}}</select>{{/if}}</div>
+    </div>
+    <p class="tt-task-line">{{#if craft.level}}{{localize "TAGANDTALLY.Workshop.TaskLevel" level=craft.level dc=craft.dc}}{{#if craft.attempts}} · <span class="warn">{{localize "TAGANDTALLY.Workshop.Attempts" n=craft.attempts}}</span>{{/if}}{{else}}{{localize "TAGANDTALLY.Workshop.PickBase"}}{{/if}}
+      {{#if craft.fieldWarn}}<br /><small class="dim"><i class="fa-solid fa-triangle-exclamation"></i> {{localize "TAGANDTALLY.Workshop.NeedsWorkshop"}}</small>{{/if}}</p>
+    {{#if canAct}}<button type="button" class="tt-roll-btn" data-action="craft" {{#unless craft.ready}}disabled{{/unless}}><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Workshop.Craft"}}</button>{{/if}}
+  {{/if}}
+
+  {{#if (tt-eq tab "augment")}}
+    <p class="hint">{{localize "TAGANDTALLY.Workshop.AugmentHint"}}</p>
+    <div class="tt-grid two">
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.Mode"}}</label>
+        <select name="augment.mode">{{#each augment.modes as |m|}}<option value="{{m.value}}" {{#if m.selected}}selected{{/if}}>{{m.label}}</option>{{/each}}</select></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.TargetItem"}}</label>
+        <select name="augment.itemId"><option value="">—</option>{{#each augment.items as |i|}}<option value="{{i.id}}" {{#if i.selected}}selected{{/if}}>{{i.name}}</option>{{/each}}</select></div>
+      {{#unless (tt-eq augment.mode "repair")}}
+      <div class="form-group"><label>{{localize (tt-ternary (tt-eq augment.mode "salvaged") "TAGANDTALLY.Workshop.SalvagedProperty" "TAGANDTALLY.Workshop.Material")}}</label>
+        <select name="augment.materialId"><option value="">{{#if (tt-eq augment.mode "salvaged")}}—{{else}}{{localize "TAGANDTALLY.Workshop.NoMaterial"}}{{/if}}</option>{{#each augment.materials as |i|}}<option value="{{i.id}}" {{#if i.selected}}selected{{/if}}>{{i.name}}</option>{{/each}}</select>
+        {{#if augment.noSalvaged}}<p class="hint">{{localize "TAGANDTALLY.Workshop.NoSalvaged"}}</p>{{/if}}</div>
+      {{#if (tt-eq augment.mode "augment")}}
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Rarity.Rarity"}}{{#unless augment.hasMaterial}} <a data-action="rollRarity" data-tab="augment" title="1d4"><i class="fa-solid fa-dice"></i></a>{{/unless}}</label>
+        {{#if augment.hasMaterial}}<span>{{localize (lookup (lookup config.crafting.rarities augment.rarity) "label")}} <small>({{localize "TAGANDTALLY.Workshop.FromComponent"}})</small></span>
+        {{else}}<select name="augment.rarity">{{#each augment.rarities as |r|}}<option value="{{r.value}}" {{#if r.selected}}selected{{/if}}>{{r.label}}</option>{{/each}}</select>{{/if}}</div>
+      {{/if}}
+      {{/unless}}
+    </div>
+    <p class="tt-task-line">{{#if augment.level}}{{localize "TAGANDTALLY.Workshop.TaskLevel" level=augment.level dc=augment.dc}} · {{localize "TAGANDTALLY.Workshop.AugmentCount" count=augment.count max=augment.max}}{{#if augment.broken}} · <span class="warn">{{localize "TAGANDTALLY.Gear.Broken"}}</span>{{/if}}{{#if augment.attempts}} · <span class="warn">{{localize "TAGANDTALLY.Workshop.Attempts" n=augment.attempts}}</span>{{/if}}{{else}}{{localize "TAGANDTALLY.Workshop.PickItem"}}{{/if}}
+      {{#if augment.full}}<br /><small class="warn">{{localize "TAGANDTALLY.Workshop.AugmentFull"}}</small>{{/if}}</p>
+    {{#if canAct}}<button type="button" class="tt-roll-btn" data-action="augment" {{#unless augment.ready}}disabled{{/unless}}><i class="fa-solid fa-dice-d20"></i> {{#if (tt-eq augment.mode "repair")}}{{localize "TAGANDTALLY.Workshop.Repair"}}{{else}}{{localize "TAGANDTALLY.Workshop.Augment"}}{{/if}}</button>{{/if}}
+  {{/if}}
+
+  {{#if (tt-eq tab "salvage")}}
+    <p class="hint">{{localize "TAGANDTALLY.Workshop.SalvageHint"}}</p>
+    <div class="tt-grid two">
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.TargetItem"}}</label>
+        <select name="salvage.itemId"><option value="">—</option>{{#each salvage.items as |i|}}<option value="{{i.id}}" {{#if i.selected}}selected{{/if}}>{{i.name}}</option>{{/each}}</select></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.Task"}}</label>
+        <span class="tt-task-line">{{#if salvage.level}}{{localize "TAGANDTALLY.Workshop.TaskLevel" level=salvage.level dc=salvage.dc}}{{#if salvage.attempts}} · <span class="warn">{{localize "TAGANDTALLY.Workshop.Attempts" n=salvage.attempts}}</span>{{/if}}{{else}}{{localize "TAGANDTALLY.Workshop.PickItem"}}{{/if}}</span></div>
+    </div>
+    {{#if canAct}}<button type="button" class="tt-roll-btn" data-action="salvage" {{#unless salvage.ready}}disabled{{/unless}}><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Workshop.Salvage"}}</button>{{/if}}
+  {{/if}}
+  </div>
+</div>

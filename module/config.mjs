@@ -381,8 +381,8 @@ TAGANDTALLY.downtime = {
     drinking: { icon: "fa-beer-mug-empty", max: 4, effect: "drinking" },
     gambling: { icon: "fa-dice", max: 4, effect: "gamble" },
     watch: { icon: "fa-eye", max: 4, effect: "watch", unsafeOnly: true },
-    crafting: { icon: "fa-hammer", max: 4, effect: "note", safeZone: true },
-    repair: { icon: "fa-screwdriver-wrench", max: 4, effect: "note", safeZone: true }
+    crafting: { icon: "fa-hammer", max: 4, effect: "workshop", tab: "craft", safeZone: true },
+    repair: { icon: "fa-screwdriver-wrench", max: 4, effect: "workshop", tab: "augment", safeZone: true }
   },
   /** Gambling bets: chance of winning on 1d20 and the wealth tally change on win / loss. */
   bets: {
@@ -440,4 +440,59 @@ TAGANDTALLY.travel = {
   },
   /** Fantasy terrains with their own discovery tables. */
   discoveryTerrains: ["forest", "plains", "mountain", "swamp", "island", "desert", "wastelands", "magiclands"]
+};
+
+/* ------------------------------- Crafting -------------------------------- */
+/** SRD Crafting: harvest, craft, augment (repair) and salvage tasks. DC = (level + rarity) * 3 → task level = level + rarity. */
+TAGANDTALLY.crafting = {
+  rarities: {
+    0: { label: "TAGANDTALLY.Rarity.None", modifier: 0 },
+    1: { label: "TAGANDTALLY.Rarity.Common", modifier: 1 },
+    2: { label: "TAGANDTALLY.Rarity.Uncommon", modifier: 2 },
+    3: { label: "TAGANDTALLY.Rarity.Rare", modifier: 3 },
+    4: { label: "TAGANDTALLY.Rarity.Legendary", modifier: 4 }
+  },
+  /** Resource types (d8; 8 = roll again) and the Sparks resources.json categories that feed each. */
+  resourceTypes: {
+    ore: { label: "TAGANDTALLY.ResourceType.Ore", categories: ["oreResources"] },
+    gemstone: { label: "TAGANDTALLY.ResourceType.Gemstone", categories: ["gemstoneResources"] },
+    wood: { label: "TAGANDTALLY.ResourceType.Wood", categories: ["woodResources"] },
+    fiber: { label: "TAGANDTALLY.ResourceType.Fiber", categories: ["fiberResources"] },
+    liquid: { label: "TAGANDTALLY.ResourceType.Liquid", categories: ["liquidResources", "glandFluidCreatureParts"] },
+    plants: { label: "TAGANDTALLY.ResourceType.Plants", categories: ["plantResources", "plantCreatureParts"] },
+    essence: { label: "TAGANDTALLY.ResourceType.Essence", categories: ["essenceResources"] },
+    part: { label: "TAGANDTALLY.ResourceType.Part", categories: ["organicCreatureParts", "constructCreatureParts", "magicalCreatureParts"] }
+  },
+  /** Each further attempt on the same target is hindered by this many steps. */
+  retryHinder: 2,
+  maxAugmentations: 9,
+  craftedLevel: 1,
+  craftedCost: 3,
+  /** Applying a salvaged property is a Level 5 augmenting task. */
+  salvageAugmentLevel: 5,
+  /** Gear types a crafter can make; consumables are the only field craft. */
+  craftTypes: ["weapon", "armor", "item", "trap", "consumable"],
+  /** Outcome text keys and effects per task. */
+  outcomes: {
+    harvest: { failAnd: "destroyed", failBut: "intact", successBut: "levelDown", success: "equal", successAnd: "levelUp" },
+    craft: { failAnd: "loseMaterials", failBut: "keepMaterials", successBut: "notExact", success: "intended", successAnd: "better" },
+    augment: { failAnd: "loseMaterial", failBut: "keepMaterial", successBut: "notExact", success: "intended", successAnd: "better" },
+    salvage: { failAnd: "destroyed", failBut: "undamaged", successBut: "diminished", success: "property", successAnd: "twoProperties" }
+  }
+};
+
+/* ------------------------------- Factions -------------------------------- */
+/** SRD Factions: goals progress through six phases to an End state on a tally of 5; a known goal also runs a countdown of 10. */
+TAGANDTALLY.faction = {
+  tallyMax: 5,
+  countdownMax: 10,
+  phases: [
+    { id: "shadows", label: "TAGANDTALLY.Faction.Phase.Shadows", vibe: "TAGANDTALLY.Faction.Vibe.Shadows", text: "TAGANDTALLY.Faction.Text.Shadows" },
+    { id: "whispers", label: "TAGANDTALLY.Faction.Phase.Whispers", vibe: "TAGANDTALLY.Faction.Vibe.Whispers", text: "TAGANDTALLY.Faction.Text.Whispers" },
+    { id: "signs", label: "TAGANDTALLY.Faction.Phase.Signs", vibe: "TAGANDTALLY.Faction.Vibe.Signs", text: "TAGANDTALLY.Faction.Text.Signs" },
+    { id: "omens", label: "TAGANDTALLY.Faction.Phase.Omens", vibe: "TAGANDTALLY.Faction.Vibe.Omens", text: "TAGANDTALLY.Faction.Text.Omens" },
+    { id: "manifestation", label: "TAGANDTALLY.Faction.Phase.Manifestation", vibe: "TAGANDTALLY.Faction.Vibe.Manifestation", text: "TAGANDTALLY.Faction.Text.Manifestation" },
+    { id: "brink", label: "TAGANDTALLY.Faction.Phase.Brink", vibe: "TAGANDTALLY.Faction.Vibe.Brink", text: "TAGANDTALLY.Faction.Text.Brink" },
+    { id: "end", label: "TAGANDTALLY.Faction.Phase.End", vibe: "TAGANDTALLY.Faction.Vibe.End", text: "TAGANDTALLY.Faction.Text.End", end: true }
+  ]
 };

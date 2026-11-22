@@ -1,0 +1,40 @@
+<div class="tt-factions-part">
+  <div class="tt-toolbar">
+    <span class="hint">{{localize "TAGANDTALLY.Faction.OverviewHint"}}</span>
+    {{#if isGM}}
+    <span class="tt-controls">
+      <button type="button" data-action="tick" title="{{localize 'TAGANDTALLY.Faction.TickHint'}}"><i class="fa-solid fa-hourglass-half"></i> {{localize "TAGANDTALLY.Faction.Tick"}}</button>
+      <button type="button" data-action="create"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Faction.New"}}</button>
+    </span>
+    {{/if}}
+  </div>
+  <ol class="tt-faction-list">
+    {{#each factions as |f|}}
+      <li class="tt-faction-row {{#if f.isEnd}}end{{/if}}">
+        <img src="{{f.img}}" alt="" data-action="open" data-id="{{f.id}}" />
+        <div class="tt-faction-body">
+          <strong data-action="open" data-id="{{f.id}}">{{f.name}}</strong>
+          <span class="tt-faction-phase">{{f.phaseLabel}} <small>· {{f.vibe}}</small>{{#unless f.known}} <i class="fa-solid fa-eye-slash dim" title="{{localize 'TAGANDTALLY.Faction.GoalHidden'}}"></i>{{/unless}}</span>
+          <span class="tt-faction-tallies">
+            <span title="{{localize 'TAGANDTALLY.Faction.Tally'}}"><i class="fa-solid fa-list-check"></i> <span class="tt-boxes">{{#each f.tallyBoxes as |b|}}<span class="tt-box {{#if b}}filled{{/if}}"></span>{{/each}}</span></span>
+            {{#if f.known}}<span title="{{localize 'TAGANDTALLY.Faction.Countdown'}}"><i class="fa-solid fa-hourglass"></i> <span class="tt-boxes small">{{#each f.countdownBoxes as |b|}}<span class="tt-box {{#if b}}filled{{/if}}"></span>{{/each}}</span></span>{{/if}}
+          </span>
+          {{#if f.rivals}}<small class="dim"><i class="fa-solid fa-swords"></i> {{localize "TAGANDTALLY.Faction.Against"}} {{f.rivals}}</small>{{/if}}
+        </div>
+        {{#if ../isGM}}{{#unless f.isEnd}}
+        <span class="tt-controls">
+          <button type="button" data-action="insight" data-id="{{f.id}}" title="{{localize 'TAGANDTALLY.Faction.InsightHint'}}"><i class="fa-solid fa-lightbulb"></i></button>
+          {{#if f.known}}<button type="button" data-action="countdown" data-id="{{f.id}}" title="{{localize 'TAGANDTALLY.Faction.CountdownHint'}}"><i class="fa-solid fa-hourglass"></i></button>{{/if}}
+        </span>
+        {{/unless}}{{/if}}
+      </li>
+    {{/each}}
+    {{#unless factions.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Faction.Empty"}}</li>{{/unless}}
+  </ol>
+  {{#if augur.length}}
+    <h4>{{localize "TAGANDTALLY.Faction.AugurFactions"}}</h4>
+    <ul class="tt-augur-factions">
+      {{#each augur as |j|}}<li><a data-action="importAugur" data-id="{{j.id}}"><i class="fa-solid fa-file-import"></i> {{j.name}}</a></li>{{/each}}
+    </ul>
+  {{/if}}
+</div>

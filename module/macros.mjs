@@ -11,6 +11,8 @@ const MACROS = [
   { key: "Barter", icon: "icons/svg/coins.svg", command: "game.tagandtally.macros.openBarter();" },
   { key: "Travel", icon: "icons/svg/wing.svg", command: "game.tagandtally.macros.openTravel();" },
   { key: "Downtime", icon: "icons/svg/sleep.svg", command: "game.tagandtally.macros.openDowntime();" },
+  { key: "Workshop", icon: "icons/svg/item-bag.svg", command: "game.tagandtally.macros.openWorkshop();" },
+  { key: "Factions", icon: "icons/svg/tower.svg", command: "game.tagandtally.macros.openFactions();" },
   { key: "GenerateNPC", icon: "icons/svg/mystery-man.svg", command: "game.tagandtally.macros.generateNPC();" },
   { key: "GenerateCreature", icon: "icons/svg/pawprint.svg", command: "game.tagandtally.macros.generateCreature();" },
   { key: "RandomCharacter", icon: "icons/svg/upgrade.svg", command: "game.tagandtally.macros.randomCharacter();" },
