@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1 (unreleased)
+
+- Fix: Party Overview failed to open for the GM (template rendered two root elements after the add-member toolbar was added).
+
 ## 0.3.0 (2026-11-22)
 
 - **Relations tab** replaces the "Known world" fields: Factions, People and Places lists.
