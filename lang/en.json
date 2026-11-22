@@ -557,9 +557,13 @@
       "NothingToCashOut": "Wealth is already 0.",
       "PayCoins": "Pay the coin price outright",
       "ReceiveCoins": "Receive the coin price from the merchant",
-      "MerchantBroke": "The merchant cannot pay that much.",
+      "MerchantBroke": "The merchant is broke and cannot buy anything.",
       "BoughtFor": "buys {item} from {merchant} for {coins} coins.",
-      "SoldFor": "sells {item} to {merchant} for {coins} coins."
+      "SoldFor": "sells {item} to {merchant} for {coins} coins.",
+      "BarterHint": "Coins mode: buying pays the coin price, cashing out Wealth levels when your purse is short. Selling rolls the Wealth check: success pays the full price, failure half. The merchant cashes out their own Wealth to pay and goes broke when it runs out.",
+      "SoldForHalf": "sells {item} to {merchant} for {coins} coins, half its worth.",
+      "MerchantNowBroke": "{merchant} is broke and still owes {short} coins.",
+      "CashedOutLevels": "{name} cashes out {levels} Wealth level(s) to pay."
     },
     "Augur": {
       "Import": "Import this Augur person: sentence, traits, beliefs, portrait",

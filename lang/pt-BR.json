@@ -557,9 +557,13 @@
       "NothingToCashOut": "A Riqueza já está em 0.",
       "PayCoins": "Pagar o preço em moedas diretamente",
       "ReceiveCoins": "Receber o preço em moedas do mercador",
-      "MerchantBroke": "O mercador não consegue pagar tanto.",
+      "MerchantBroke": "O mercador está falido e não pode comprar nada.",
       "BoughtFor": "compra {item} de {merchant} por {coins} moedas.",
-      "SoldFor": "vende {item} para {merchant} por {coins} moedas."
+      "SoldFor": "vende {item} para {merchant} por {coins} moedas.",
+      "BarterHint": "Modo moedas: comprar paga o preço em moedas, sacando níveis de Riqueza quando a bolsa não chega. Vender rola o teste de Riqueza: sucesso paga o preço cheio, falha paga a metade. O mercador saca a própria Riqueza para pagar e fica falido quando ela acaba.",
+      "SoldForHalf": "vende {item} para {merchant} por {coins} moedas, metade do valor.",
+      "MerchantNowBroke": "{merchant} está falido e ainda deve {short} moedas.",
+      "CashedOutLevels": "{name} saca {levels} nível(is) de Riqueza para pagar."
     },
     "Augur": {
       "Import": "Importar esta pessoa do Augur: frase, traços, crenças, retrato",
