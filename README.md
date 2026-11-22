@@ -37,6 +37,8 @@ Or download the latest `tagandtally.zip` from the releases page and unzip it int
 | Sparks | 530+ random tables from the official Obsidian vault, 22 sentence generators (NPC, creature, species, gear, places, factions, quests, wounds, appearance), oracle, table browser, create actors / items / journals from results |
 | Relations | Factions, people and places the character knows, dropped from Augur Nexus journals, NPC actors or any journal; SRD disposition ladder and relationship tallies; Augur quests link to quest items; any chat card can be logged to a journal |
 | NPC interactions | Interact from a relation row or an NPC sheet: 2d6 Drift attitude per scene, approach pathways (1d10 / 1d6) with prompts, typed question, disposition modifier applied, SRD outcome consequences applied to the relation |
+| Downtime | Shared tracker: 4 downtime points a night per character, the SRD activities (sleep, research, study, workout, meditation, socializing, dinner, drinking, gambling, watch, crafting, repair) with their effects applied: next-day tags ([Refreshed], [Zen], [Well fed], [Liquid Courage]), tiered [Hangover] and [Sore Muscles], tallies on tags, quests and relationships, gambling against the wealth tally; GM starts a new day to fade yesterday's tags |
+| Travel | Shared tracker: wilderness / urban / dungeon, pace and transport set the day's points; hexes cost by their feature's difficulty; Enter hex rolls level (from the hex you leave), terrain or district, feature, landmark and event from the Sparks tables; rest rolls the SRD 2d6 encounter checks (fewer with watchers); fast pace exhausts the party, spent points recover hangovers |
 | Party | Built-in party overview: sentence, wounds, wealth, MAI, loadout, tags, quests; GM adds or removes members |
 | GM tools | Scene level in Scene Config, world RollTable overrides for any Spark table, bulk import to RollTables |
 
@@ -83,6 +85,9 @@ game.tagandtally.macros.quickRoll(4);               // roll against level 4 with
 game.tagandtally.macros.oracle(7, "Is it trapped?");
 game.tagandtally.macros.openCombatFlow();
 game.tagandtally.macros.openParty();
+game.tagandtally.macros.openTravel();                // shared travel tracker
+game.tagandtally.macros.openDowntime();              // shared downtime tracker
+await game.tagandtally.travel.rollHex({ mode: "wilderness", fromLevel: 4 });
 game.tagandtally.macros.generateNPC();              // creates an NPC actor from Sparks
 game.tagandtally.macros.generateCreature({ values: { "creature-type": "Undead" } });
 game.tagandtally.macros.generateJournal("dungeon");
@@ -105,6 +110,15 @@ Dropping a tag, gear, spell or quest on the hotbar creates a macro that uses it.
 - Combat resolution band to wound: Fail-and Scar, Fail-but Injury, Success-but Trauma,
   Success Strain, Success-and unscathed. Armor eases the Counter phase by its class.
 - Spells follow the SRD point system and the MAI hindrance brackets (1-3 / 4-6 / 7-9).
+- Downtime: 4 points a night, 1 point = 1 hour. Sleep grants [Refreshed] and, in a safe zone,
+  the SRD rest healing on its first hour. Next-day tags last through the following day and are
+  removed when the GM starts the day after. Gambling: pick a number (+2 / -1) or even-odd
+  (+1 / -1) on a d20 against a wealth tally; 5 marks climb a Wealth level, dropping below 0
+  loses one. [Hangover] and [Sore Muscles] lose a tier for every 2 travel points the party spends.
+- Travel points: wilderness 4 / 5 / 6, urban - / 4 / 5, dungeon 10, transport +1 / +2 / +3.
+  Hex level from the hex you leave: 1-2 -> 1d4+2, 3-4 -> 1d6+2, 5-6 -> 1d8+2, 7-10 -> 1d10+2
+  (capped at 10). Rest: 1 + party rounds, minus watchers, each a 2d6 check (wilderness: 6-10
+  encounter, 11-12 discovery; safe zone: 2-5 encounter, 11-12 discovery).
 
 Where the SRD contradicts itself the formula wins over the cheat sheet; see `PLAN.md`.
 

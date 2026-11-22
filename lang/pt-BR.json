@@ -311,7 +311,8 @@
       "3": "Confortável",
       "4": "Abastado",
       "5": "Rico",
-      "6": "Podre de rico"
+      "6": "Podre de rico",
+      "TallyHint": "Marcas de riqueza (apostas): cinco marcas sobem um nível de Riqueza"
     },
     "Cost": {
       "Cost": "Custo",
@@ -594,7 +595,9 @@
       "GenerateNPC": "Gerar PdM",
       "GenerateCreature": "Gerar criatura",
       "RandomCharacter": "Personagem aleatório",
-      "ImportAugur": "Importar do Augur"
+      "ImportAugur": "Importar do Augur",
+      "Travel": "Viagem",
+      "Downtime": "Descanso"
     },
     "Words": {
       "IsA": "é um(a)",
@@ -773,6 +776,178 @@
           "SuccessAnd": "Controle total: você vira o jogo. A disposição permanente sobe 1 passo."
         }
       }
+    },
+    "Downtime": {
+      "Title": "Descanso",
+      "Day": "Dia {day}",
+      "SafeZone": "Zona segura",
+      "Camp": "Acampamento / inseguro",
+      "SafeZoneHint": "Alterne onde o grupo descansa. Zonas seguras curam ao dormir; acampamentos precisam de vigília.",
+      "AddParty": "Adicionar grupo",
+      "NewDay": "Novo dia",
+      "NewDayHint": "Avança o dia: as tags do dia seguinte de ontem somem, pontos de descanso e viagem recarregam.",
+      "NewDayConfirm": "Começar um novo dia? As tags da noite anterior à última são removidas de todos os personagens e os pontos recarregam.",
+      "ResetAll": "Remover todos",
+      "Hint": "Cada personagem tem 4 pontos de descanso por noite: 1 ponto é 1 hora de uma atividade. Os efeitos aplicam na hora; o chat guarda o registro.",
+      "Points": "Pontos de descanso restantes",
+      "Undo": "Devolver esta hora (efeitos já aplicados permanecem)",
+      "Empty": "Ninguém descansando. Adicione o grupo ou os tokens selecionados.",
+      "GmOnly": "Só o Mestre pode começar um novo dia.",
+      "DayStarted": "Começa o dia {day}.",
+      "TagsExpired": "{count} tags do dia seguinte sumiram.",
+      "OnlyUnsafe": "Só fora de uma zona segura",
+      "NeedsSafeZone": "O SRD pede uma zona segura ou um local apropriado para isto",
+      "Spend": "Gastar 1 ponto",
+      "NoTag": "Nenhuma tag (só registrar a hora)",
+      "HealPrompt": "Uma noite em zona segura cura. Escolha:",
+      "NoHeal": "Sem cura necessária",
+      "Healed": {
+        "strain": "todo o esforço curado",
+        "trauma": "1 Trauma Persistente curado",
+        "injury": "1 Lesão Debilitante rebaixada"
+      },
+      "Granted": "[{tag}] para amanhã",
+      "Tiered": "[{tag}] nível {tier}",
+      "Tally": "marca em {name}",
+      "TierUp": "{name} alcança o nível {tier}!",
+      "Mastered": "{name} dominada!",
+      "WorkoutPrompt": "Qual tag física você treina?",
+      "StudyPrompt": "Qual tag você estuda? (Tags novas são criadas na ficha primeiro.)",
+      "ResearchPrompt": "O que você pesquisa?",
+      "ResearchOther": "Outra coisa (anote no seu diário)",
+      "QuestTally": "marca de {tally} em {quest}",
+      "SocialPrompt": "Com quem você passa a hora?",
+      "SocialOther": "Alguém fora da aba Relações",
+      "RelationTally": "relação com {name}: {tally}/5",
+      "WatchLogged": "de vigília (uma verificação de encontro a menos esta noite)",
+      "BetType": "Aposta",
+      "BetNumber": "Escolher um número (ganha +2 marcas, perde -1)",
+      "BetEvenOdd": "Par ou ímpar (ganha +1 marca, perde -1)",
+      "BetPick": "Sua escolha",
+      "Even": "Par",
+      "Odd": "Ímpar",
+      "RollBet": "Rolar 1d20",
+      "BetWon": "apostou {pick}, rolou {total}: ganhou! Marcas de riqueza {tally}/5.",
+      "BetLost": "apostou {pick}, rolou {total}: perdeu. Marcas de riqueza {tally}/5.",
+      "WealthUp": "Riqueza sobe para {wealth}!",
+      "WealthDown": "Riqueza cai para {wealth}.",
+      "Activity": {
+        "sleep": {
+          "Label": "Dormir",
+          "Hint": "[Descansado] amanhã; em zona segura a primeira hora também cura (todo esforço, 1 trauma ou rebaixa 1 lesão)"
+        },
+        "research": {
+          "Label": "Pesquisar",
+          "Hint": "1 marca no Plano ou Local de uma missão (até 4 horas)"
+        },
+        "study": {
+          "Label": "Estudar",
+          "Hint": "1 marca em uma tag que você está aprendendo (até 4 horas)"
+        },
+        "workout": {
+          "Label": "Treinar",
+          "Hint": "1 marca em uma tag física; cada hora após a primeira adiciona um nível de [Músculos Doloridos]"
+        },
+        "meditation": {
+          "Label": "Meditar",
+          "Hint": "[Zen] amanhã (só 1 hora)"
+        },
+        "socializing": {
+          "Label": "Socializar",
+          "Hint": "1 marca de relação com uma pessoa (até 4 horas)"
+        },
+        "dinner": {
+          "Label": "Jantar",
+          "Hint": "[Bem alimentado] amanhã (só 1 hora)"
+        },
+        "drinking": {
+          "Label": "Beber",
+          "Hint": "[Coragem Líquida] amanhã; cada hora após a primeira adiciona um nível de [Ressaca]"
+        },
+        "gambling": {
+          "Label": "Apostar",
+          "Hint": "Uma aposta e um d20 por hora, movendo suas marcas de riqueza"
+        },
+        "watch": {
+          "Label": "Vigília",
+          "Hint": "Fazer vigília no acampamento: uma verificação de encontro a menos no descanso"
+        },
+        "crafting": {
+          "Label": "Criar",
+          "Hint": "Registra a hora; as regras de criação chegam em uma versão futura"
+        },
+        "repair": {
+          "Label": "Reparar",
+          "Hint": "Registra a hora; as regras de reparo chegam em uma versão futura"
+        }
+      },
+      "NoGm": "Nenhum Mestre conectado: os rastreadores compartilhados precisam de um Mestre online para salvar mudanças."
+    },
+    "DayTag": {
+      "Refreshed": "Descansado",
+      "Zen": "Zen",
+      "WellFed": "Bem alimentado",
+      "LiquidCourage": "Coragem Líquida",
+      "Exhausted": "Exausto",
+      "Hangover": "Ressaca",
+      "SoreMuscles": "Músculos Doloridos"
+    },
+    "Travel": {
+      "Title": "Viagem",
+      "Wilderness": "Ermos",
+      "Urban": "Urbano",
+      "Dungeon": "Masmorra",
+      "Slow": "Lento",
+      "Normal": "Normal",
+      "Fast": "Rápido",
+      "Easy": "Fácil",
+      "Rough": "Difícil",
+      "Dangerous": "Perigoso",
+      "Transport": "Transporte",
+      "TransportHint": "Montarias ou veículos: +1 / +2 / +3 pontos por ritmo (não em masmorras)",
+      "Hint": "Os pontos do dia vêm do tipo de viagem e do ritmo. Cada hex custa pela dificuldade de sua característica; Entrar no hex rola nível, terreno, característica, marco e evento. Ritmo rápido exaure o grupo; ritmo lento permite explorar, forragear e caçar.",
+      "HintDungeon": "Uma masmorra dá 10 salas antes de um descanso. Entrar na sala rola tamanho, saídas, conteúdo e evento.",
+      "Points": "Pontos de viagem",
+      "PaceNotAllowed": "Este ritmo não está disponível para este tipo de viagem.",
+      "ResetDayHint": "Recarregar os pontos de hoje sem começar um novo dia",
+      "Room": "Sala",
+      "SpendRoom": "Gastar 1 sala",
+      "EnterRoom": "Entrar na sala",
+      "EnterHex": "Entrar no hex",
+      "CurrentHex": "Hex atual",
+      "Level": "Nível",
+      "ApplyLevel": "Definir como nível da cena",
+      "ApplyLevelHint": "Usar o nível do hex como nível Tag & Tally da cena atual",
+      "LevelApplied": "A cena \"{scene}\" agora é nível {level}.",
+      "RestHint": "Descanso: {party} no grupo, {watchers} de vigília. Descansando em",
+      "Rest": "Descansar",
+      "ClearLog": "Limpar registro",
+      "OverBudget": "Só restam {left} pontos hoje e isto custa {cost}. Seguir mesmo assim?",
+      "Cost": "{cost} pts",
+      "Exhausted": "Ritmo rápido: o grupo estará [Exausto] amanhã.",
+      "District": "Distrito",
+      "Terrain": "Terreno",
+      "Feature": "Característica",
+      "Landmark": "Marco",
+      "RoomText": "{size}, {exits} outras saídas",
+      "Contents": "Conteúdo",
+      "Event": "Evento",
+      "MoveCost": "Custo de movimento",
+      "EnteredRoom": "Nova sala",
+      "EnteredDistrict": "Novo distrito",
+      "EnteredHex": "Novo hex",
+      "RestRounds": "Rodadas",
+      "RestRoundsText": "{rounds} rodadas (1 + grupo), {watchers} de vigília: {checks} verificações de encontro",
+      "RestResult": {
+        "nothing": "Nada acontece",
+        "encounter": "Encontro",
+        "discovery": "Descoberta"
+      },
+      "Check": "Verificação",
+      "Rations": "Suprimentos",
+      "RationsText": "Se você controla recursos, reduza rações e água em um.",
+      "RestSafe": "Descanso em zona segura",
+      "RestWild": "Descanso nos ermos"
     }
   }
 }

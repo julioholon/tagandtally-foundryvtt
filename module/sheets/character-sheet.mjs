@@ -8,6 +8,7 @@ export default class CharacterSheet extends BaseActorSheet {
     actions: {
       buildSentence: CharacterSheet.#onBuildSentence,
       wealthStep: CharacterSheet.#onWealthStep,
+      wealthTally: CharacterSheet.#onWealthTally,
       openParty: CharacterSheet.#onOpenParty,
       randomize: CharacterSheet.#onRandomize,
       rerollSlot: CharacterSheet.#onRerollSlot,
@@ -149,6 +150,13 @@ export default class CharacterSheet extends BaseActorSheet {
   static async #onWealthStep(event, target) {
     const value = Math.clamp(this.actor.system.wealth.value + Number(target.dataset.delta), 0, 6);
     return this.actor.update({ "system.wealth.value": value });
+  }
+
+  /** Wealth tally boxes: click fills up to that box, clicking the last filled one clears it. */
+  static async #onWealthTally(event, target) {
+    const value = Number(target.dataset.value);
+    const current = this.actor.system.wealth.tally;
+    return this.actor.update({ "system.wealth.tally": value === current ? value - 1 : value }, { ttNoClimb: true });
   }
 
   static async #onRandomize() {

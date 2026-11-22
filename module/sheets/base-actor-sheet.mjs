@@ -29,6 +29,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
       woundBox: BaseActorSheet.#onWoundBox,
       addWound: BaseActorSheet.#onAddWound,
       rest: BaseActorSheet.#onRest,
+      openDowntime: BaseActorSheet.#onOpenDowntime,
       questTally: BaseActorSheet.#onQuestTally,
       toggleHealed: BaseActorSheet.#onToggleHealed,
       rollTemporary: BaseActorSheet.#onRollTemporary,
@@ -231,6 +232,12 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
   }
 
   static async #onRest(event, target) { return this.actor.rest(target.dataset.mode); }
+
+  static async #onOpenDowntime() {
+    const { DowntimeApp } = await import("../downtime.mjs");
+    await DowntimeApp.addActors([this.actor]);
+    return DowntimeApp.open();
+  }
 
   static async #onQuestTally(event, target) {
     const item = this._getItem(target);

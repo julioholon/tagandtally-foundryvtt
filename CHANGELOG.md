@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.0 (unreleased)
+
+- **Downtime** (SRD optional module): shared tracker opened from the token controls, a macro or the
+  Wounds tab. Every character gets 4 points a night; each activity button spends one hour and applies
+  its effect at once (next-day condition tags, tiered [Hangover] / [Sore Muscles], tallies on tags,
+  quest Plan / Location tallies, relationship tallies, SRD gambling against a new wealth tally with
+  pips in the sheet header). The GM toggles safe zone / camp and starts a new day, which fades the
+  next-day tags and refills downtime and travel points.
+- **Travel** (SRD optional module): shared tracker with travel type, pace and transport setting the
+  day's points; spend by hex difficulty or room; *Enter hex* rolls the new hex's level, terrain or
+  district, feature (with its movement cost), landmark and event from the Sparks tables and can set
+  the scene level; *Rest* rolls the SRD encounter checks (one fewer per watcher) with event and
+  discovery follow-ups. Fast pace exhausts the party for the next day; every 2 points spent lower
+  hangovers and sore muscles by a tier.
+- Condition tags granted by downtime hinder by their tier (Hangover T3 hinders 3 steps).
+- Macros added in later releases are now created on existing worlds too (Travel and Downtime appear in the Tag & Tally macro folder on first load).
+
 ## 0.4.1 (2026-11-22)
 
 - Fix: the Interact dialog failed to open (property name clashed with ApplicationV2).

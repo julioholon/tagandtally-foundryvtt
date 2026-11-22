@@ -311,7 +311,8 @@
       "3": "Comfortable",
       "4": "Well-off",
       "5": "Wealthy",
-      "6": "Stupid rich"
+      "6": "Stupid rich",
+      "TallyHint": "Wealth tally (gambling): five marks climb a Wealth level"
     },
     "Cost": {
       "Cost": "Cost",
@@ -594,7 +595,9 @@
       "GenerateNPC": "Generate NPC",
       "GenerateCreature": "Generate creature",
       "RandomCharacter": "Random character",
-      "ImportAugur": "Import from Augur"
+      "ImportAugur": "Import from Augur",
+      "Travel": "Travel",
+      "Downtime": "Downtime"
     },
     "Words": {
       "IsA": "is a",
@@ -773,6 +776,178 @@
           "SuccessAnd": "Total control: you flip the script. Permanent disposition rises 1 step."
         }
       }
+    },
+    "Downtime": {
+      "Title": "Downtime",
+      "Day": "Day {day}",
+      "SafeZone": "Safe zone",
+      "Camp": "Camp / unsafe",
+      "SafeZoneHint": "Toggle where the party rests. Safe zones heal on sleep; camps need a watch.",
+      "AddParty": "Add party",
+      "NewDay": "New day",
+      "NewDayHint": "Advance the day: yesterday's next-day tags fade, downtime and travel points refill.",
+      "NewDayConfirm": "Start a new day? Next-day tags from the night before last are removed from every character and all points refill.",
+      "ResetAll": "Remove everyone",
+      "Hint": "Each character has 4 downtime points a night: 1 point is 1 hour of one activity. Effects apply at once; the chat keeps the log.",
+      "Points": "Downtime points left",
+      "Undo": "Give this hour back (effects already applied stay)",
+      "Empty": "Nobody is resting. Add the party or selected tokens.",
+      "GmOnly": "Only the GM can start a new day.",
+      "DayStarted": "Day {day} begins.",
+      "TagsExpired": "{count} next-day tags faded.",
+      "OnlyUnsafe": "Only outside a safe zone",
+      "NeedsSafeZone": "The SRD wants a safe zone or an appropriate location for this",
+      "Spend": "Spend 1 point",
+      "NoTag": "No tag (just log the hour)",
+      "HealPrompt": "A night in a safe zone heals. Choose:",
+      "NoHeal": "No healing needed",
+      "Healed": {
+        "strain": "all strain healed",
+        "trauma": "1 Lingering Trauma healed",
+        "injury": "1 Debilitating Injury downgraded"
+      },
+      "Granted": "[{tag}] for tomorrow",
+      "Tiered": "[{tag}] tier {tier}",
+      "Tally": "tally on {name}",
+      "TierUp": "{name} reaches tier {tier}!",
+      "Mastered": "{name} mastered!",
+      "WorkoutPrompt": "Which physical tag do you train?",
+      "StudyPrompt": "Which tag do you study? (New tags are added on the sheet first.)",
+      "ResearchPrompt": "What do you research?",
+      "ResearchOther": "Something else (note it in your journal)",
+      "QuestTally": "{tally} tally on {quest}",
+      "SocialPrompt": "Who do you spend the hour with?",
+      "SocialOther": "Someone not on your Relations tab",
+      "RelationTally": "relationship with {name}: {tally}/5",
+      "WatchLogged": "on watch (one fewer encounter check tonight)",
+      "BetType": "Bet",
+      "BetNumber": "Choose a number (win +2 tally, lose -1)",
+      "BetEvenOdd": "Even or odd (win +1 tally, lose -1)",
+      "BetPick": "Your pick",
+      "Even": "Even",
+      "Odd": "Odd",
+      "RollBet": "Roll 1d20",
+      "BetWon": "bet {pick}, rolled {total}: won! Wealth tally {tally}/5.",
+      "BetLost": "bet {pick}, rolled {total}: lost. Wealth tally {tally}/5.",
+      "WealthUp": "Wealth rises to {wealth}!",
+      "WealthDown": "Wealth drops to {wealth}.",
+      "Activity": {
+        "sleep": {
+          "Label": "Sleep",
+          "Hint": "[Refreshed] tomorrow; in a safe zone the first hour also heals (all strain, 1 trauma, or downgrade 1 injury)"
+        },
+        "research": {
+          "Label": "Research",
+          "Hint": "1 tally toward a quest's Plan or Location (up to 4 hours)"
+        },
+        "study": {
+          "Label": "Study",
+          "Hint": "1 tally on a tag you are learning (up to 4 hours)"
+        },
+        "workout": {
+          "Label": "Workout",
+          "Hint": "1 tally on a physical tag; every hour after the first adds a tier of [Sore Muscles]"
+        },
+        "meditation": {
+          "Label": "Meditation",
+          "Hint": "[Zen] tomorrow (1 hour only)"
+        },
+        "socializing": {
+          "Label": "Socializing",
+          "Hint": "1 relationship tally with a person (up to 4 hours)"
+        },
+        "dinner": {
+          "Label": "Dinner",
+          "Hint": "[Well fed] tomorrow (1 hour only)"
+        },
+        "drinking": {
+          "Label": "Drinking",
+          "Hint": "[Liquid Courage] tomorrow; every hour after the first adds a tier of [Hangover]"
+        },
+        "gambling": {
+          "Label": "Gambling",
+          "Hint": "One bet and a d20 per hour, moving your wealth tally"
+        },
+        "watch": {
+          "Label": "Watch",
+          "Hint": "Keep watch in camp: one fewer encounter check during the rest"
+        },
+        "crafting": {
+          "Label": "Crafting",
+          "Hint": "Logs the hour; the crafting rules arrive in a later release"
+        },
+        "repair": {
+          "Label": "Repair",
+          "Hint": "Logs the hour; the repair rules arrive in a later release"
+        }
+      },
+      "NoGm": "No GM is connected: the shared trackers need a GM online to store changes."
+    },
+    "DayTag": {
+      "Refreshed": "Refreshed",
+      "Zen": "Zen",
+      "WellFed": "Well fed",
+      "LiquidCourage": "Liquid Courage",
+      "Exhausted": "Exhausted",
+      "Hangover": "Hangover",
+      "SoreMuscles": "Sore Muscles"
+    },
+    "Travel": {
+      "Title": "Travel",
+      "Wilderness": "Wilderness",
+      "Urban": "Urban",
+      "Dungeon": "Dungeon",
+      "Slow": "Slow",
+      "Normal": "Normal",
+      "Fast": "Fast",
+      "Easy": "Easy",
+      "Rough": "Rough",
+      "Dangerous": "Dangerous",
+      "Transport": "Transport",
+      "TransportHint": "Mounts or vehicles: +1 / +2 / +3 points by pace (not in dungeons)",
+      "Hint": "Points per day come from the travel type and pace. Each hex costs by its feature's difficulty; Enter hex rolls level, terrain, feature, landmark and event. Fast pace exhausts the party; slow pace allows scouting, foraging and hunting.",
+      "HintDungeon": "A dungeon gives 10 rooms before a rest. Enter room rolls its size, exits, contents and event.",
+      "Points": "Travel points",
+      "PaceNotAllowed": "This pace is not available for this travel type.",
+      "ResetDayHint": "Refill today's points without starting a new day",
+      "Room": "Room",
+      "SpendRoom": "Spend 1 room",
+      "EnterRoom": "Enter room",
+      "EnterHex": "Enter hex",
+      "CurrentHex": "Current hex",
+      "Level": "Level",
+      "ApplyLevel": "Set as scene level",
+      "ApplyLevelHint": "Use the hex level as the Tag & Tally level of the current scene",
+      "LevelApplied": "Scene \"{scene}\" is now level {level}.",
+      "RestHint": "Rest: {party} in the party, {watchers} on watch. Resting in a",
+      "ClearLog": "Clear log",
+      "OverBudget": "Only {left} points left today and this costs {cost}. Push on anyway?",
+      "Cost": "{cost} pts",
+      "Exhausted": "Fast pace: the party will be [Exhausted] tomorrow.",
+      "District": "District",
+      "Terrain": "Terrain",
+      "Feature": "Feature",
+      "Landmark": "Landmark",
+      "RoomText": "{size}, {exits} further exits",
+      "Contents": "Contents",
+      "Event": "Event",
+      "MoveCost": "Movement cost",
+      "EnteredRoom": "New room",
+      "EnteredDistrict": "New district",
+      "EnteredHex": "New hex",
+      "RestRounds": "Rounds",
+      "RestRoundsText": "{rounds} rounds (1 + party), {watchers} on watch: {checks} encounter checks",
+      "Check": "Check",
+      "Rations": "Supplies",
+      "RationsText": "If you track resources, reduce rations and water by one.",
+      "RestSafe": "Rest in a safe zone",
+      "RestWild": "Rest in the wild",
+      "RestResult": {
+        "nothing": "Nothing happens",
+        "encounter": "Encounter",
+        "discovery": "Discovery"
+      },
+      "Rest": "Rest"
     }
   }
 }

@@ -1,4 +1,4 @@
-import { TAGANDTALLY } from "../config.mjs";
+import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
 import { htmlField } from "./shared.mjs";
 
 const fields = foundry.data.fields;
@@ -35,8 +35,10 @@ export default class TagData extends foundry.abstract.TypeDataModel {
     this.isStatic = isStatic;
     this.isUmbrella = this.category === "umbrella" || TAGANDTALLY.umbrellaTagTypes.includes(this.tagType);
     this.canTier = !isStatic && !this.isUmbrella;
+    /** Downtime/travel conditions such as Hangover hinder by their tier without earning tallies. */
+    this.tieredCondition = Boolean(TAGANDTALLY.dayTags[this.parent?.flags?.[SYSTEM_ID]?.dayTag]?.tiered);
     /** Steps this tag eases (or hinders) a task. Static and umbrella tags count 1. */
-    this.steps = this.canTier ? this.tier + (this.mastered ? 1 : 0) : 1;
+    this.steps = this.canTier ? this.tier + (this.mastered ? 1 : 0) : this.tieredCondition ? this.tier : 1;
     this.tierLabel = TAGANDTALLY.tiers[this.tier];
     this.talliesMax = TAGANDTALLY.talliesPerTier;
     this.tallyBoxes = Array.from({ length: TAGANDTALLY.talliesPerTier }, (_, i) => i < this.tallies);
@@ -45,7 +47,7 @@ export default class TagData extends foundry.abstract.TypeDataModel {
 
   buildNotation() {
     const name = this.parent?.name ?? "";
-    if (!this.canTier) return `[${name}${this.temporary ? " :" : ""}${this.hinders ? " -" : ""}]`;
+    if (!this.canTier) return `[${name}${this.tieredCondition && this.tier > 1 ? ` T${this.tier}` : ""}${this.temporary ? " :" : ""}${this.hinders ? " -" : ""}]`;
     let s = `[${name} T${this.tier > 1 ? this.tier : ""}`;
     if (this.tallies > 0) s += ` (${this.tallies})`;
     if (this.mastered) s += " !";

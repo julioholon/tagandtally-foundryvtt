@@ -266,3 +266,45 @@
 .chat-message .tt-interaction { border-top: 1px dashed var(--color-border-light-2, #999); margin-top: 0.3rem; padding-top: 0.3rem; }
 .chat-message .tt-interaction p { margin: 0.15rem 0; }
 .chat-message .tt-interaction .dim { opacity: 0.7; font-size: 0.9em; }
+
+/* ------------------------------ Downtime --------------------------------- */
+.tagandtally.downtime .tt-downtime-list, .tagandtally .tt-downtime-log, .tagandtally .tt-travel-log { list-style: none; margin: 0; padding: 0; }
+.tagandtally.downtime .tt-downtime-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.tagandtally .tt-downtime-row { border: 1px solid var(--tt-border); border-radius: 6px; padding: 0.4rem 0.6rem; }
+.tagandtally .tt-downtime-row header { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.tagandtally .tt-downtime-row header img { width: 32px; height: 32px; border: none; border-radius: 4px; object-fit: cover; }
+.tagandtally .tt-downtime-row header .tt-controls { margin-left: auto; }
+.tagandtally .tt-day-tags { display: inline-flex; gap: 0.3rem; flex-wrap: wrap; }
+.tagandtally .tt-downtime-log { margin: 0.3rem 0; font-size: 0.9em; }
+.tagandtally .tt-downtime-log li a { margin-left: 0.3rem; opacity: 0.6; cursor: pointer; } .tagandtally .tt-downtime-log li a:hover { opacity: 1; }
+.tagandtally .tt-activities { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.3rem; margin-top: 0.4rem; }
+.tagandtally .tt-activity { font-size: 0.85em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tagandtally .tt-activity.used { border-color: var(--tt-accent); }
+.tagandtally .tt-activity .dim { opacity: 0.5; }
+.tagandtally .tt-day { font-weight: 700; }
+.tagandtally .tt-toggle-zone { cursor: pointer; padding: 0.1rem 0.5rem; border: 1px solid var(--tt-border); border-radius: 999px; }
+.tagandtally .tt-toggle-zone.on { border-color: var(--tt-accent); }
+.tagandtally .tt-wealth-tally { margin-left: 0.3rem; }
+.chat-message .tt-downtime-card p { margin: 0; }
+
+/* ------------------------------- Travel ---------------------------------- */
+.tagandtally.travel .tt-toolbar { flex-wrap: wrap; gap: 0.4rem; }
+.tagandtally .tt-segments { display: inline-flex; border: 1px solid var(--tt-border); border-radius: 6px; overflow: hidden; }
+.tagandtally .tt-segment { padding: 0.2rem 0.6rem; cursor: pointer; border-right: 1px solid var(--tt-border); white-space: nowrap; }
+.tagandtally .tt-segments .tt-segment:last-child { border-right: none; }
+.tagandtally .tt-toolbar > .tt-segment { border: 1px solid var(--tt-border); border-radius: 6px; }
+.tagandtally .tt-segment.on { background: var(--tt-accent); color: #fff; }
+.tagandtally .tt-segment.disabled { opacity: 0.4; cursor: not-allowed; }
+.tagandtally .tt-segment.readonly { cursor: default; }
+.tagandtally .tt-travel-points, .tagandtally .tt-hex, .tagandtally .tt-travel-rest { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin: 0.4rem 0; }
+.tagandtally .tt-travel-points .tt-controls, .tagandtally .tt-travel-rest .tt-controls { margin-left: auto; }
+.tagandtally .tt-left { font-weight: 700; }
+.tagandtally .tt-travel-actions { display: flex; gap: 0.3rem; flex-wrap: wrap; margin: 0.4rem 0; }
+.tagandtally .tt-travel-actions .tt-roll-btn { margin-left: auto; }
+.tagandtally .tt-hex { border: 1px solid var(--tt-border); border-radius: 6px; padding: 0.3rem 0.6rem; font-size: 0.9em; }
+.tagandtally .tt-hex a { cursor: pointer; margin-left: auto; }
+.tagandtally .tt-travel-log { font-size: 0.85em; max-height: 10em; overflow-y: auto; border-top: 1px solid var(--tt-border); padding-top: 0.3rem; }
+.tagandtally .tt-clear-log { font-size: 0.85em; cursor: pointer; opacity: 0.7; }
+.chat-message .tt-travel-card ul { list-style: none; margin: 0.2rem 0 0; padding: 0; }
+.chat-message .tt-travel-card li { margin: 0.15rem 0; }
+@media (max-width: 700px) { .tagandtally .tt-activities { grid-template-columns: repeat(2, 1fr); } }

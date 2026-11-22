@@ -56,6 +56,8 @@ export function wealthSchema() {
     value: new fields.NumberField({ required: true, integer: true, min: 0, max: 6, initial: 3 }),
     qualityOfLife: new fields.NumberField({ required: true, integer: true, min: -1, max: 1, initial: 0 }),
     inDebt: new fields.BooleanField({ initial: false }),
+    /** SRD gambling tally toward the next Wealth level (5 climbs, below 0 drops). */
+    tally: new fields.NumberField({ required: true, integer: true, min: 0, max: 5, initial: 0 }),
     coins: new fields.NumberField({ required: true, integer: true, min: 0, initial: 0 })
   });
 }

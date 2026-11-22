@@ -26,6 +26,7 @@
         <a data-action="wealthStep" data-delta="-1"><i class="fa-solid fa-minus"></i></a>
         <i class="fa-solid fa-coins"></i> {{system.wealth.value}} <small>{{wealthLabel}}</small>
         <a data-action="wealthStep" data-delta="1"><i class="fa-solid fa-plus"></i></a>
+        <span class="tt-boxes small tt-wealth-tally" title="{{localize 'TAGANDTALLY.Wealth.TallyHint'}}">{{#each (tt-boxes system.wealth.tally 5) as |filled i|}}<a class="tt-box {{#if filled}}filled{{/if}}" data-action="wealthTally" data-value="{{tt-add i 1}}"></a>{{/each}}</span>
         {{#if system.wealth.inDebt}}<span class="tt-tag warn">{{localize "TAGANDTALLY.Wealth.InDebt"}}</span>{{/if}}
       </div>
       {{#if coinsMode}}<div class="tt-stat" title="{{localize 'TAGANDTALLY.Coins.Hint'}}">

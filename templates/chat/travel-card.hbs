@@ -1,0 +1,8 @@
+<div class="tagandtally chat-card tt-travel-card">
+  <h3><i class="fa-solid fa-route"></i> {{title}}</h3>
+  <ul>
+    {{#each lines as |l|}}
+      <li><i class="fa-solid {{l.icon}}"></i> <strong>{{{l.label}}}</strong>: {{{l.value}}}</li>
+    {{/each}}
+  </ul>
+</div>

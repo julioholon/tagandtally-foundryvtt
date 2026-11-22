@@ -20,6 +20,9 @@ import * as relations from "./module/relations.mjs";
 import { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel } from "./module/rolls/resolution.mjs";
 import { TaskRollDialog } from "./module/rolls/task-roll-dialog.mjs";
 import { CombatFlow, registerCombatFlowSocket } from "./module/combat/combat-flow.mjs";
+import { WorldState } from "./module/world-state.mjs";
+import { DowntimeApp, registerDowntime, grantDayTag, reduceDayTag, applyWealthTally } from "./module/downtime.mjs";
+import { TravelApp, registerTravel, rollHex, rollHexLevel, rollDiscovery } from "./module/travel.mjs";
 import { sparkTables } from "./module/sparks/tables.mjs";
 import { generate, SparkGenerator, loadGeneratorDefs } from "./module/sparks/engine.mjs";
 import { SparksApp } from "./module/sparks/sparks-app.mjs";
@@ -61,10 +64,14 @@ Hooks.once("init", () => {
   registerSettings();
   registerMigrationSetting();
   CombatFlow.registerSetting();
+  DowntimeApp.registerSetting();
+  TravelApp.registerSetting();
   registerHandlebarsHelpers();
   registerChatHooks();
   registerJournalLog();
   registerInteractions();
+  registerDowntime();
+  registerTravel();
   registerBarBrawl();
   registerItemPiles();
   registerSceneLevel();
@@ -75,7 +82,7 @@ Hooks.once("init", () => {
     config: TAGANDTALLY,
     documents: { TagAndTallyActor, TagAndTallyItem },
     sheets: { CharacterSheet, NpcSheet, TagAndTallyItemSheet },
-    apps: { TaskRollDialog, CombatFlow, SparksApp, PartyOverview, BarterApp, InteractDialog },
+    apps: { TaskRollDialog, CombatFlow, SparksApp, PartyOverview, BarterApp, InteractDialog, DowntimeApp, TravelApp },
     rolls: { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel },
     sparks: { tables: sparkTables, generate, SparkGenerator, loadGeneratorDefs, ...create },
     spells: { computeSpell, maiCheck },
@@ -93,6 +100,8 @@ Hooks.once("init", () => {
       openSparks: () => SparksApp.open({ actor: canvas.tokens?.controlled[0]?.actor ?? game.user.character }),
       openCombatFlow: () => CombatFlow.open({ actors: canvas.tokens?.controlled.map((t) => t.actor).filter(Boolean) ?? [] }),
       openParty: () => PartyOverview.open(),
+      openDowntime: () => DowntimeApp.open(),
+      openTravel: () => TravelApp.open(),
       /** Barter with the selected NPC token (buyer = your character or another selected character token). */
       openBarter: () => BarterApp.open({ merchant: canvas.tokens?.controlled.map((t) => t.actor).find((a) => a?.type === "npc") }),
       /** Build a complete random character on the selected token's actor or your character. */
@@ -114,6 +123,8 @@ Hooks.once("init", () => {
       }
     },
     interactions: { InteractDialog, rollDrift, rollInteraction },
+    downtime: { DowntimeApp, grantDayTag, reduceDayTag, applyWealthTally, newDay: () => DowntimeApp.newDay() },
+    travel: { TravelApp, rollHex, rollHexLevel, rollDiscovery, rest: () => TravelApp.rest() },
     relations,
     journal: { logMessageToJournal }
   };
@@ -130,6 +141,7 @@ Hooks.once("setup", () => {
 Hooks.once("ready", async () => {
   await sparksLoading;
   registerCombatFlowSocket();
+  WorldState.registerSocket();
   await migrateWorld();
   const created = await createDefaultMacros();
   if (created) ui.notifications.info(game.i18n.format("TAGANDTALLY.Macros.Created", { count: created }));
@@ -158,6 +170,14 @@ Hooks.on("getSceneControlButtons", (controls) => {
   tokens.tools.ttParty = {
     name: "ttParty", title: "TAGANDTALLY.Party.Title", icon: "fa-solid fa-people-group", button: true, order: 92,
     onChange: () => PartyOverview.open()
+  };
+  tokens.tools.ttTravel = {
+    name: "ttTravel", title: "TAGANDTALLY.Travel.Title", icon: "fa-solid fa-route", button: true, order: 93,
+    onChange: () => TravelApp.open()
+  };
+  tokens.tools.ttDowntime = {
+    name: "ttDowntime", title: "TAGANDTALLY.Downtime.Title", icon: "fa-solid fa-bed", button: true, order: 94,
+    onChange: () => DowntimeApp.open()
   };
 });
 
