@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 (unreleased)
+
+- Fix: the Interact dialog failed to open (property name clashed with ApplicationV2).
+
 ## 0.4.0 (2026-11-22)
 
 - NPC interactions (SRD optional module): Interact button on Relations rows and on NPC sheets opens a dialog with the permanent disposition, the 2d6 Drift attitude for the scene, the approach pathways (1d10 when you approach, 1d6 when they do) with their prompts, a free-text question and the task level. The roll goes through the task dialog with the disposition modifier fixed; the outcome band's SRD consequence is appended to the roll card and applied (disposition ±1, attitude -1, insight buttons for the GM).
