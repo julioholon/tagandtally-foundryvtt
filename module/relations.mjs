@@ -38,7 +38,7 @@ export async function addRelation(actor, kind, doc) {
   // A row typed by hand with the same name adopts the link instead of duplicating.
   const byName = rows.find((r) => !r.uuid && r.name.toLowerCase() === doc.name.toLowerCase());
   if (byName) { byName.uuid = doc.uuid; byName.img = relationImage(doc); }
-  else rows.push({ uuid: doc.uuid, name: doc.name, img: relationImage(doc) });
+  else rows.push({ ...actor.system.constructor.blankRelation(kind), uuid: doc.uuid, name: doc.name, img: relationImage(doc) });
   await actor.update({ [`system.relations.${kind}`]: rows });
   ui.notifications.info(game.i18n.format("TAGANDTALLY.Relations.Added", { name: doc.name, list: game.i18n.localize(TAGANDTALLY.relationKinds[kind].label) }));
   return true;

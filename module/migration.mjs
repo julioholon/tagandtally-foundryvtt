@@ -31,16 +31,21 @@ export async function migrateWorld() {
     if (updates.length) await scene.updateEmbeddedDocuments("Token", updates);
   }
 
-  // 0.3.0: "Known world" text fields became relation rows; the character arc became a quest.
-  for (const actor of game.actors) {
-    if (actor.type !== "character") continue;
-    const src = actor.system._source;
-    if (src.lore === undefined && src.arc === undefined) continue;
-    const update = { "system.relations": actor.system.relations.toObject?.() ?? foundry.utils.deepClone(actor.system._source.relations), "system.-=lore": null, "system.-=arc": null };
-    if (src.arc && !actor.items.some((i) => i.type === "quest" && i.system.isArc)) {
-      await actor.createEmbeddedDocuments("Item", [{ name: src.arc, type: "quest", system: { isArc: true, goal: src.arc } }]);
+  // 0.3.0: "Known world" text fields became relation rows (converted in memory by
+  // CharacterData.migrateData; persisted here) and the character arc became a quest.
+  // The old keys are stripped from the client copy, so this is gated on the version, not on the data.
+  if (foundry.utils.isNewerVersion("0.3.0", last)) {
+    for (const actor of game.actors) {
+      if (actor.type !== "character") continue;
+      const arc = actor.system.legacyArc;
+      if (arc && !actor.items.some((i) => i.type === "quest" && i.system.isArc)) {
+        await actor.createEmbeddedDocuments("Item", [{ name: arc, type: "quest", system: { isArc: true, goal: arc } }]);
+      }
+      await actor.update({
+        "system.relations": foundry.utils.deepClone(actor.system._source.relations),
+        "system.legacyArc": "", "system.-=lore": null, "system.-=arc": null
+      }, { ttNoClimb: true, ttSentenceSync: false });
     }
-    await actor.update(update, { ttNoClimb: true, ttSentenceSync: false });
   }
 
   await game.settings.set(SYSTEM_ID, "migrationVersion", current);

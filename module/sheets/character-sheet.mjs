@@ -111,7 +111,7 @@ export default class CharacterSheet extends BaseActorSheet {
   static async #onAddRelationRow(event, target) {
     const kind = target.dataset.kind;
     const rows = this.actor.system.relations[kind].map((r) => foundry.utils.deepClone(r));
-    rows.push({ name: "" });
+    rows.push(this.actor.system.constructor.blankRelation(kind));
     return this.actor.update({ [`system.relations.${kind}`]: rows });
   }
 

@@ -63,7 +63,9 @@ export default class CharacterData extends foundry.abstract.TypeDataModel {
         places: new fields.ArrayField(relationRow({ place: true }))
       }),
       biography: htmlField(),
-      notes: htmlField()
+      notes: htmlField(),
+      /** Old "Character arc" text, parked here by migrateData until the world migration turns it into a quest. */
+      legacyArc: new fields.StringField({ required: true, blank: true, initial: "" })
     };
   }
 
@@ -71,14 +73,21 @@ export default class CharacterData extends foundry.abstract.TypeDataModel {
   static migrateData(source) {
     if (source.lore && !source.relations) {
       const lore = source.lore;
+      const row = (kind, data) => ({ ...this.blankRelation(kind), ...data });
       const relations = { factions: [], people: [], places: [] };
-      if (lore.faction) relations.factions.push({ name: lore.faction, disposition: LEGACY_DISPOSITION[lore.factionDisposition] ?? TAGANDTALLY.relationDefault });
-      for (const name of String(lore.knownNpcs ?? "").split(/[,;]/).map((n) => n.trim()).filter(Boolean)) relations.people.push({ name });
-      if (lore.residence) relations.places.push({ name: lore.residence, notes: "Residence" });
-      if (lore.workplace) relations.places.push({ name: lore.workplace, notes: "Workplace" });
+      if (lore.faction) relations.factions.push(row("factions", { name: lore.faction, disposition: LEGACY_DISPOSITION[lore.factionDisposition] ?? TAGANDTALLY.relationDefault }));
+      for (const name of String(lore.knownNpcs ?? "").split(/[,;]/).map((n) => n.trim()).filter(Boolean)) relations.people.push(row("people", { name }));
+      if (lore.residence) relations.places.push(row("places", { name: lore.residence, notes: "Residence" }));
+      if (lore.workplace) relations.places.push(row("places", { name: lore.workplace, notes: "Workplace" }));
       source.relations = relations;
     }
+    if (typeof source.arc === "string" && source.arc && !source.legacyArc) source.legacyArc = source.arc;
     return super.migrateData(source);
+  }
+
+  /** A relation row with every field at its default (partial updates are not cleaned until reload). */
+  static blankRelation(kind) {
+    return this.schema.getField(`relations.${kind}.element`).getInitialValue();
   }
 
   prepareDerivedData() {
