@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.2 (unreleased)
+## 0.3.2 (2026-11-22)
 
 - Relations tab and quests accept drags from Augur Nexus itself (NPC, faction, location rows, place tree sites, quest cards), not only from the Journal sidebar.
 - Log to journal: the current scene's Augur location(s) are listed first and preselected; portraits in logged cards are shrunk to 40px and use token art.
