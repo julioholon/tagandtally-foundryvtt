@@ -815,7 +815,7 @@
       },
       "Task": "Tarefa",
       "TaskLevel": "Nível da tarefa {level} (DC {dc})",
-      "Attempts": "{n} tentativa(s) falha(s): dificultado em 2 cada",
+      "Attempts": "{n} tentativa(s) anterior(es) neste alvo: dificultado em 2 cada",
       "Retry": "Nova tentativa ×{n}",
       "NewSource": "Nova fonte (esquecer tentativas)",
       "Rolled": "{formula} = {total}: {value}",

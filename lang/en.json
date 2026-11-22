@@ -815,7 +815,7 @@
       },
       "Task": "Task",
       "TaskLevel": "Task level {level} (DC {dc})",
-      "Attempts": "{n} failed attempt(s): hindered by 2 each",
+      "Attempts": "{n} earlier attempt(s) on this target: hindered by 2 each",
       "Retry": "Retry ×{n}",
       "NewSource": "New source (forget attempts)",
       "Rolled": "{formula} = {total}: {value}",

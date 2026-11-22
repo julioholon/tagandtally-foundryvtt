@@ -38,7 +38,7 @@ export function allFactions() {
 export async function postFactionCard(faction, title, lines = [], { force = null } = {}) {
   const known = force ?? faction.system.revealed.goal;
   const content = `<div class="tagandtally chat-card tt-faction-card"><h3><i class="fa-solid fa-flag"></i> ${esc(faction.name)} · ${esc(title)}</h3>${lines.map((l) => `<p>${l}</p>`).join("")}</div>`;
-  return ChatMessage.create({ content, speaker: { alias: esc(faction.name) }, whisper: known ? [] : game.users.filter((u) => u.isGM).map((u) => u.id) });
+  return ChatMessage.create({ content, speaker: { alias: faction.name }, whisper: known ? [] : game.users.filter((u) => u.isGM).map((u) => u.id) });
 }
 
 async function appendLog(faction, text, update = {}) {
