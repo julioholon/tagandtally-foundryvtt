@@ -31,6 +31,18 @@ export async function migrateWorld() {
     if (updates.length) await scene.updateEmbeddedDocuments("Token", updates);
   }
 
+  // 0.3.0: "Known world" text fields became relation rows; the character arc became a quest.
+  for (const actor of game.actors) {
+    if (actor.type !== "character") continue;
+    const src = actor.system._source;
+    if (src.lore === undefined && src.arc === undefined) continue;
+    const update = { "system.relations": actor.system.relations.toObject?.() ?? foundry.utils.deepClone(actor.system._source.relations), "system.-=lore": null, "system.-=arc": null };
+    if (src.arc && !actor.items.some((i) => i.type === "quest" && i.system.isArc)) {
+      await actor.createEmbeddedDocuments("Item", [{ name: src.arc, type: "quest", system: { isArc: true, goal: src.arc } }]);
+    }
+    await actor.update(update, { ttNoClimb: true, ttSentenceSync: false });
+  }
+
   await game.settings.set(SYSTEM_ID, "migrationVersion", current);
 }
 

@@ -21,7 +21,7 @@
     "DeleteItem": "Excluir item",
     "DeleteItemConfirm": "Excluir {name}? Segure Shift para pular esta confirmação.",
     "Biography": "Biografia",
-    "Notes": "Anotações",
+    "Notes": "Notas",
     "Sheet": {
       "Character": "Ficha de Personagem Tag & Tally",
       "Npc": "Ficha de PdM Tag & Tally",
@@ -37,7 +37,8 @@
       "wounds": "Ferimentos",
       "biography": "Biografia",
       "details": "Detalhes",
-      "description": "Descrição"
+      "description": "Descrição",
+      "relations": "Relações"
     },
     "Sentence": {
       "Title": "Frase",
@@ -62,14 +63,6 @@
       "clothing": "Vestimenta",
       "voice": "Voz",
       "distinguishing": "Marca distintiva"
-    },
-    "Lore": {
-      "Title": "Mundo conhecido",
-      "Residence": "Residência",
-      "Workplace": "Local de trabalho",
-      "Faction": "Facção",
-      "FactionDisposition": "Relação com a facção",
-      "KnownNpcs": "PdMs conhecidos"
     },
     "LifeStage": {
       "LifeStage": "Fase da vida",
@@ -413,7 +406,14 @@
       "ResolveTitle": "Missão: {name}",
       "PlanComplete": "Plano completo",
       "PlanMissing": "Plano incompleto",
-      "Empty": "Nenhuma missão ainda."
+      "Empty": "Nenhuma missão ainda.",
+      "AugurLinked": "Missão {name} vinculada ao registro do Augur.",
+      "AugurHint": "Arraste um diário de missão do Augur para a ficha para acompanhá-la aqui.",
+      "AugurQuest": "Missão do Augur",
+      "OpenAugur": "Abrir a missão no Augur",
+      "Sync": "Copiar os objetivos do Augur para as etapas",
+      "Synced": "{name}: {count} objetivos copiados.",
+      "NoObjectives": "Nenhum objetivo visível."
     },
     "Npc": {
       "Creature": "Criatura",
@@ -490,7 +490,11 @@
     },
     "Party": {
       "Title": "Visão do grupo",
-      "Empty": "Nenhum personagem de jogador."
+      "Empty": "Ainda não há personagens no grupo.",
+      "Add": "Adicionar ao grupo",
+      "AddButton": "Adicionar",
+      "Remove": "Remover do grupo",
+      "Hint": "Personagens de jogadores entram automaticamente."
     },
     "Barter": {
       "Title": "Negociar",
@@ -609,6 +613,51 @@
       "Spell": "magia",
       "This": "Este(a)",
       "LocatedOn": "em"
+    },
+    "Relation": {
+      "Loathing": "Repulsa",
+      "Hostility": "Hostilidade",
+      "Rivalry": "Rivalidade",
+      "Conflict": "Conflito",
+      "Irritated": "Irritado",
+      "Indifferent": "Indiferente",
+      "Reliable": "Confiável",
+      "Loyal": "Leal",
+      "EnduringTrust": "Confiança duradoura",
+      "UnyieldingLoyalty": "Lealdade inabalável",
+      "UnbreakableBond": "Laço inquebrável"
+    },
+    "Relations": {
+      "Title": "Relações",
+      "Factions": "Facções",
+      "People": "Pessoas",
+      "Places": "Lugares",
+      "Hint": "Arraste diários do Augur Nexus (facções, pessoas, locais), atores de PdM ou qualquer diário para esta ficha para adicioná-los. Disposições facilitam (+) ou dificultam (-) tarefas sociais. Arraste uma missão do Augur para vinculá-la na aba Missões.",
+      "Empty": "Nada conhecido ainda.",
+      "AddManual": "Adicionar uma linha à mão",
+      "Remove": "Remover",
+      "Disposition": "Disposição",
+      "Attitude": "Atitude nesta cena",
+      "Tally": "Marcas de relacionamento (Socializar)",
+      "Visited": "Visitado",
+      "SafeZone": "Zona segura",
+      "Already": "{name} já está na lista.",
+      "Added": "{name} adicionado em {list}.",
+      "WhichList": "Onde {name} se encaixa?",
+      "Missing": "O documento vinculado não existe mais."
+    },
+    "Journal": {
+      "Log": "Registrar no diário",
+      "Target": "Diário",
+      "Chronicle": "Crônica",
+      "ChronicleOf": "Crônica: {name}",
+      "Hint": "A mensagem é anexada à página do diário com data e hora. Descreva no diário o que aconteceu em seguida.",
+      "GroupActor": "Este personagem",
+      "GroupRelations": "Relações",
+      "GroupAll": "Todos os diários",
+      "NoTarget": "Nenhum diário disponível para registrar.",
+      "AskGM": "Um Mestre precisa estar online para registrar nesse diário.",
+      "Logged": "Registrado em {name}."
     }
   }
 }

@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.3.0 (unreleased)
+
+- **Relations tab** replaces the "Known world" fields: Factions, People and Places lists.
+  Drop Augur Nexus journals (factions, people, locations, ships), NPC actors or any journal
+  entry on the character sheet to add a row; rows carry the SRD disposition ladder (Loathing
+  to Unbreakable bond, with the social ease/hinder), a relationship tally for people, and
+  visited/safe-zone toggles for places. Old text fields are migrated into rows and the
+  character arc becomes a quest item.
+- **Log to journal** button on every chat message: appends the message to an Augur entity's
+  Journal page, any journal, or a per-character Chronicle journal (created on demand), with a
+  Simple Calendar or real-time stamp, so the GM can write what happened next.
+- **Augur quests**: drop an Augur quest journal on a character to create a linked quest item;
+  the Quests tab shows its objectives read-only, with a button to copy them into the steps.
+- **Party overview**: GM can add any character to the party or remove one; player-owned
+  characters are still listed automatically.
+
 ## 0.2.2 (unreleased)
 
 - Fix: a connective translated as empty (pt-BR "damage") no longer falls back to English.
