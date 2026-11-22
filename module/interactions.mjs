@@ -173,7 +173,7 @@ export class InteractDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     this.target = target ?? null;
     this.kind = kind;
     this.index = index;
-    this.state = { approach: "approach", pathway: "", question: "", level: defaultLevel(target), rolled: null };
+    this.talk = { approach: "approach", pathway: "", question: "", level: defaultLevel(target), rolled: null };
   }
 
   static DEFAULT_OPTIONS = {
@@ -218,15 +218,15 @@ export class InteractDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!row) { this.close(); return {}; }
     const attitude = sceneAttitude(row);
     const modifier = TAGANDTALLY.relationSteps[row.disposition]?.modifier ?? 0;
-    const pathways = pathwayList(this.state.approach).map((p) => ({ ...p, selected: p.id === this.state.pathway }));
+    const pathways = pathwayList(this.talk.approach).map((p) => ({ ...p, selected: p.id === this.talk.pathway }));
     return {
-      row, actor: this.actor, target: this.target, state: this.state,
+      row, actor: this.actor, target: this.target, talk: this.talk,
       img: row.img || this.target?.img || "icons/svg/mystery-man.svg",
       steps: TAGANDTALLY.relationSteps.map((s) => ({ ...s, label: game.i18n.localize(s.label), modifier: signed(s.modifier), selected: s.value === row.disposition })),
       modifier: signed(modifier), modifierClass: modifier > 0 ? "ease" : modifier < 0 ? "hinder" : "",
       attitudeLabel: stepLabel(attitude), attitudeDrifted: row.attitudeActive,
-      pathways, isApproach: this.state.approach === "approach", die: this.state.approach === "approach" ? "1d10" : "1d6",
-      levels: Object.entries(TAGANDTALLY.levels).map(([v, label]) => ({ value: Number(v), label: `${v}: ${game.i18n.localize(label)} (DC ${3 * v})`, selected: Number(v) === Number(this.state.level) }))
+      pathways, isApproach: this.talk.approach === "approach", die: this.talk.approach === "approach" ? "1d10" : "1d6",
+      levels: Object.entries(TAGANDTALLY.levels).map(([v, label]) => ({ value: Number(v), label: `${v}: ${game.i18n.localize(label)} (DC ${3 * v})`, selected: Number(v) === Number(this.talk.level) }))
     };
   }
 
@@ -239,20 +239,20 @@ export class InteractDialog extends HandlebarsApplicationMixin(ApplicationV2) {
         return this.render();
       }
       this.#readForm();
-      if (ev.target.name === "approach") { this.state.pathway = ""; this.state.question = ""; this.render(); }
+      if (ev.target.name === "approach") { this.talk.pathway = ""; this.talk.question = ""; this.render(); }
     });
   }
 
   #readForm() {
     const data = new foundry.applications.ux.FormDataExtended(this.element).object;
-    if (data.approach) this.state.approach = data.approach;
-    this.state.question = data.question ?? this.state.question;
-    this.state.level = Math.clamp(Number(data.level) || 1, 1, 10);
+    if (data.approach) this.talk.approach = data.approach;
+    this.talk.question = data.question ?? this.talk.question;
+    this.talk.level = Math.clamp(Number(data.level) || 1, 1, 10);
   }
 
   #setPathway(id) {
-    this.state.pathway = id;
-    this.state.question = game.i18n.localize(`TAGANDTALLY.Interaction.Pathway.${id}.Prompt`);
+    this.talk.pathway = id;
+    this.talk.question = game.i18n.localize(`TAGANDTALLY.Interaction.Pathway.${id}.Prompt`);
   }
 
   static async #onSubmit(event) { return InteractDialog.#onRoll.call(this, event); }
@@ -270,11 +270,11 @@ export class InteractDialog extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static async #onRandomPathway() {
     this.#readForm();
-    const list = TAGANDTALLY.interaction.pathways[this.state.approach];
+    const list = TAGANDTALLY.interaction.pathways[this.talk.approach];
     const roll = await new Roll(`1d${list.length}`).evaluate();
     this.#setPathway(list[roll.total - 1]);
-    this.state.rolled = roll.total;
-    await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: game.i18n.format("TAGANDTALLY.Interaction.PathwayRolled", { label: game.i18n.localize(`TAGANDTALLY.Interaction.Pathway.${this.state.pathway}.Label`) }) });
+    this.talk.rolled = roll.total;
+    await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: game.i18n.format("TAGANDTALLY.Interaction.PathwayRolled", { label: game.i18n.localize(`TAGANDTALLY.Interaction.Pathway.${this.talk.pathway}.Label`) }) });
     this.render();
   }
 
@@ -284,7 +284,7 @@ export class InteractDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     event?.preventDefault?.();
     this.#readForm();
     await this.close();
-    return rollInteraction({ actor: this.actor, target: this.target, kind: this.kind, index: this.index, approach: this.state.approach, pathway: this.state.pathway, question: this.state.question, level: this.state.level });
+    return rollInteraction({ actor: this.actor, target: this.target, kind: this.kind, index: this.index, approach: this.talk.approach, pathway: this.talk.pathway, question: this.talk.question, level: this.talk.level });
   }
 }
 
