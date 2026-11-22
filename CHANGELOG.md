@@ -6,7 +6,8 @@
 - API: `game.tagandtally.augur` also exposes `findAugurPerson` and `mapAugurPerson`.
 - Fix: Item Piles kept the old "Wealth" currency (picking up a pile gave +3 Wealth) because
   it only re-reads the system integration on a version bump. Now bumped; piles trade in coins.
-  Unlinked pile tokens still holding Wealth 3 are migrated to 0.
+  Unlinked pile tokens still holding Wealth 3 are migrated to 0. The "Default Item Pile" actor
+  that Item Piles recreates was still born with Wealth 3 (dotted flag key); fixed and migrated again.
 - Coins mode barter reworked: buying cashes out Wealth levels when the purse is short; selling
   keeps the SRD check and pays the full coin price on success, half on failure; the merchant
   cashes out their own Wealth to pay and goes broke when it runs out. The Wealth-only buttons

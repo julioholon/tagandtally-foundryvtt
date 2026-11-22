@@ -7,7 +7,9 @@ export default class TagAndTallyActor extends Actor {
     const allowed = await super._preCreate(data, options, user);
     if (allowed === false) return false;
     // Item Piles creates piles and merchants as NPC actors: they must not carry the NPC default Wealth.
-    if (data.flags?.["item-piles"] && foundry.utils.getProperty(data, "system.wealth.value") === undefined) {
+    // Item Piles passes its flag as a dotted key ("flags.item-piles.data"), so read the expanded source.
+    const given = foundry.utils.expandObject(data);
+    if (this.flags?.["item-piles"] && foundry.utils.getProperty(given, "system.wealth.value") === undefined) {
       this.updateSource({ "system.wealth.value": 0, "system.wealth.coins": 0 });
     }
     const prototypeToken = {
