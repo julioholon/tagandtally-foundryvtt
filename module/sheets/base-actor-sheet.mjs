@@ -101,7 +101,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
     if (this.actor.type === "character") {
       const { handleRelationDrop } = await import("../relations.mjs");
-      if (await handleRelationDrop(this.actor, data)) return;
+      if (await handleRelationDrop(this.actor, data, event)) return;
     }
     if (data?.type !== "Item") return;
     const item = await Item.implementation.fromDropData(data);

@@ -657,7 +657,8 @@
       "GroupAll": "All journals",
       "NoTarget": "No journal available to log to.",
       "AskGM": "A GM must be online to log to that journal.",
-      "Logged": "Logged to {name}."
+      "Logged": "Logged to {name}.",
+      "GroupHere": "Current location"
     }
   }
 }
