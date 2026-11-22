@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.1 (unreleased)
+## 0.3.1 (2026-11-22)
 
 - Fix: Party Overview failed to open for the GM (template rendered two root elements after the add-member toolbar was added).
 
