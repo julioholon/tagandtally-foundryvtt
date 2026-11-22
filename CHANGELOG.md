@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.0 (unreleased)
+## 0.5.0 (2026-11-22)
 
 - **Downtime** (SRD optional module): shared tracker opened from the token controls, a macro or the
   Wounds tab. Every character gets 4 points a night; each activity button spends one hour and applies
