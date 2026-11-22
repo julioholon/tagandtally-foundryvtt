@@ -1,0 +1,50 @@
+<div class="tt-downtime">
+  <div class="tt-toolbar">
+    <span class="tt-day"><i class="fa-solid fa-calendar-day"></i> {{localize "TAGANDTALLY.Downtime.Day" day=day}}</span>
+    {{#if isGM}}
+      <a class="tt-toggle-zone {{#if safeZone}}on{{/if}}" data-action="toggleSafeZone" title="{{localize 'TAGANDTALLY.Downtime.SafeZoneHint'}}"><i class="fa-solid {{#if safeZone}}fa-shield-halved{{else}}fa-campground{{/if}}"></i> {{localize (tt-ternary safeZone "TAGANDTALLY.Downtime.SafeZone" "TAGANDTALLY.Downtime.Camp")}}</a>
+    {{else}}
+      <span class="tt-toggle-zone"><i class="fa-solid {{#if safeZone}}fa-shield-halved{{else}}fa-campground{{/if}}"></i> {{localize (tt-ternary safeZone "TAGANDTALLY.Downtime.SafeZone" "TAGANDTALLY.Downtime.Camp")}}</span>
+    {{/if}}
+    <span class="tt-controls">
+      <button type="button" data-action="addParty"><i class="fa-solid fa-people-group"></i> {{localize "TAGANDTALLY.Downtime.AddParty"}}</button>
+      <button type="button" data-action="addSelected"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Combat.AddSelected"}}</button>
+      {{#if isGM}}
+        <button type="button" data-action="newDay" title="{{localize 'TAGANDTALLY.Downtime.NewDayHint'}}"><i class="fa-solid fa-sun"></i> {{localize "TAGANDTALLY.Downtime.NewDay"}}</button>
+        <button type="button" data-action="resetAll" title="{{localize 'TAGANDTALLY.Downtime.ResetAll'}}"><i class="fa-solid fa-trash"></i></button>
+      {{/if}}
+    </span>
+  </div>
+  <p class="hint">{{localize "TAGANDTALLY.Downtime.Hint"}}</p>
+  <ol class="tt-downtime-list">
+    {{#each participants as |p|}}
+      <li class="tt-downtime-row" data-uuid="{{p.uuid}}">
+        <header>
+          <img src="{{p.img}}" alt="" />
+          <strong>{{p.name}}</strong>
+          <span class="tt-boxes" title="{{localize 'TAGANDTALLY.Downtime.Points'}}">{{#each p.pips as |filled|}}<span class="tt-box {{#if filled}}filled{{/if}}"></span>{{/each}}</span>
+          <span class="tt-day-tags">{{#each p.tags as |t|}}<span class="tt-tag {{#if t.hinders}}warn{{/if}}">{{t.notation}}</span>{{/each}}</span>
+          <span class="tt-controls"><a data-action="remove" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-xmark"></i></a></span>
+        </header>
+        {{#if p.log.length}}
+          <ul class="tt-downtime-log">
+            {{#each p.log as |l|}}
+              <li><i class="fa-solid {{l.icon}}"></i> <strong>{{l.label}}</strong>{{#if l.text}} · {{{l.text}}}{{/if}}
+                {{#if p.canAct}}<a data-action="undo" data-uuid="{{p.uuid}}" data-index="{{l.index}}" title="{{localize 'TAGANDTALLY.Downtime.Undo'}}"><i class="fa-solid fa-rotate-left"></i></a>{{/if}}</li>
+            {{/each}}
+          </ul>
+        {{/if}}
+        {{#if p.canAct}}
+          <div class="tt-activities">
+            {{#each p.activities as |a|}}
+              <button type="button" class="tt-activity {{#if a.hours}}used{{/if}}" data-action="activity" data-activity="{{a.id}}" {{#if a.disabled}}disabled{{/if}} title="{{a.hint}}{{#if a.blocked}} — {{a.blocked}}{{/if}}{{#if a.warn}} — {{a.warn}}{{/if}}">
+                <i class="fa-solid {{a.icon}}"></i> {{a.label}}{{#if a.hours}} <small>×{{a.hours}}</small>{{/if}}{{#if a.warn}} <i class="fa-solid fa-triangle-exclamation dim"></i>{{/if}}
+              </button>
+            {{/each}}
+          </div>
+        {{/if}}
+      </li>
+    {{/each}}
+    {{#unless participants.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Downtime.Empty"}}</li>{{/unless}}
+  </ol>
+</div>

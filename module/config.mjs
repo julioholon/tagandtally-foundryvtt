@@ -362,3 +362,82 @@ TAGANDTALLY.interaction = {
     }
   }
 };
+
+/* ------------------------------ Downtime -------------------------------- */
+/**
+ * SRD Downtime: 4 points a night, 1 point = 1 activity for 1 hour. `max` is
+ * the hours the SRD allows per night; `effect` is handled in module/downtime.mjs.
+ */
+TAGANDTALLY.downtime = {
+  points: 4,
+  activities: {
+    sleep: { icon: "fa-bed", max: 4, effect: "sleep" },
+    research: { icon: "fa-magnifying-glass", max: 4, effect: "research", safeZone: true },
+    study: { icon: "fa-book-open", max: 4, effect: "study", safeZone: true },
+    workout: { icon: "fa-dumbbell", max: 4, effect: "workout" },
+    meditation: { icon: "fa-spa", max: 1, effect: "dayTag", tag: "zen" },
+    socializing: { icon: "fa-people-group", max: 4, effect: "socialize" },
+    dinner: { icon: "fa-utensils", max: 1, effect: "dayTag", tag: "wellFed" },
+    drinking: { icon: "fa-beer-mug-empty", max: 4, effect: "drinking" },
+    gambling: { icon: "fa-dice", max: 4, effect: "gamble" },
+    watch: { icon: "fa-eye", max: 4, effect: "watch", unsafeOnly: true },
+    crafting: { icon: "fa-hammer", max: 4, effect: "note", safeZone: true },
+    repair: { icon: "fa-screwdriver-wrench", max: 4, effect: "note", safeZone: true }
+  },
+  /** Gambling bets: chance of winning on 1d20 and the wealth tally change on win / loss. */
+  bets: {
+    number: { win: 2, loss: -1 },
+    evenOdd: { win: 1, loss: -1 }
+  },
+  wealthTallyMax: 5
+};
+
+/**
+ * Condition tags granted by downtime and travel. Next-day tags last through the
+ * following day; `tiered` ones stack a tier per hour (max 4) and `recover` ones
+ * lose a tier for every 2 travel points the party spends.
+ */
+TAGANDTALLY.dayTags = {
+  refreshed: { label: "TAGANDTALLY.DayTag.Refreshed", hinders: false, nextDay: true },
+  zen: { label: "TAGANDTALLY.DayTag.Zen", hinders: false, nextDay: true },
+  wellFed: { label: "TAGANDTALLY.DayTag.WellFed", hinders: false, nextDay: true },
+  liquidCourage: { label: "TAGANDTALLY.DayTag.LiquidCourage", hinders: false, nextDay: true },
+  exhausted: { label: "TAGANDTALLY.DayTag.Exhausted", hinders: true, nextDay: true, tiered: true },
+  hangover: { label: "TAGANDTALLY.DayTag.Hangover", hinders: true, tiered: true, recover: 2 },
+  soreMuscles: { label: "TAGANDTALLY.DayTag.SoreMuscles", hinders: true, tiered: true, recover: 2 }
+};
+TAGANDTALLY.dayTagMaxTier = 4;
+
+/* ------------------------------- Travel --------------------------------- */
+TAGANDTALLY.travel = {
+  modes: {
+    wilderness: { label: "TAGANDTALLY.Travel.Wilderness", icon: "fa-tree", points: { slow: 4, normal: 5, fast: 6 }, transport: true },
+    urban: { label: "TAGANDTALLY.Travel.Urban", icon: "fa-city", points: { slow: null, normal: 4, fast: 5 }, transport: true },
+    dungeon: { label: "TAGANDTALLY.Travel.Dungeon", icon: "fa-dungeon", points: { slow: null, normal: 10, fast: null }, transport: false }
+  },
+  paces: {
+    slow: { label: "TAGANDTALLY.Travel.Slow", transport: 1 },
+    normal: { label: "TAGANDTALLY.Travel.Normal", transport: 2 },
+    fast: { label: "TAGANDTALLY.Travel.Fast", transport: 3 }
+  },
+  /** Movement cost by the entered hex's feature difficulty. */
+  costs: {
+    easy: { label: "TAGANDTALLY.Travel.Easy", cost: 1 },
+    rough: { label: "TAGANDTALLY.Travel.Rough", cost: 2 },
+    dangerous: { label: "TAGANDTALLY.Travel.Dangerous", cost: 3 }
+  },
+  /** New hex level from the level of the hex being left (11-12 on 1d10+2 count as 10). */
+  hexLevel: [
+    { min: 1, max: 2, formula: "1d4+2" },
+    { min: 3, max: 4, formula: "1d6+2" },
+    { min: 5, max: 6, formula: "1d8+2" },
+    { min: 7, max: 10, formula: "1d10+2" }
+  ],
+  /** Rest encounter check, 2d6. */
+  rest: {
+    wilderness: [{ min: 2, max: 5, result: "nothing" }, { min: 6, max: 10, result: "encounter" }, { min: 11, max: 12, result: "discovery" }],
+    safeZone: [{ min: 2, max: 5, result: "encounter" }, { min: 6, max: 10, result: "nothing" }, { min: 11, max: 12, result: "discovery" }]
+  },
+  /** Fantasy terrains with their own discovery tables. */
+  discoveryTerrains: ["forest", "plains", "mountain", "swamp", "island", "desert", "wastelands", "magiclands"]
+};

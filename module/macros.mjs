@@ -9,6 +9,8 @@ const MACROS = [
   { key: "RollInjury", icon: "icons/svg/blood.svg", command: "game.tagandtally.macros.rollInjury();" },
   { key: "Party", icon: "icons/svg/village.svg", command: "game.tagandtally.macros.openParty();" },
   { key: "Barter", icon: "icons/svg/coins.svg", command: "game.tagandtally.macros.openBarter();" },
+  { key: "Travel", icon: "icons/svg/wing.svg", command: "game.tagandtally.macros.openTravel();" },
+  { key: "Downtime", icon: "icons/svg/sleep.svg", command: "game.tagandtally.macros.openDowntime();" },
   { key: "GenerateNPC", icon: "icons/svg/mystery-man.svg", command: "game.tagandtally.macros.generateNPC();" },
   { key: "GenerateCreature", icon: "icons/svg/pawprint.svg", command: "game.tagandtally.macros.generateCreature();" },
   { key: "RandomCharacter", icon: "icons/svg/upgrade.svg", command: "game.tagandtally.macros.randomCharacter();" },
@@ -17,7 +19,7 @@ const MACROS = [
 
 export async function createDefaultMacros({ force = false } = {}) {
   if (!game.user.isGM) return 0;
-  if (!force && game.settings.get(SYSTEM_ID, "macrosCreated")) return 0;
+  // Existing worlds still receive macros added in later releases: the per-key check below skips the ones they already have.
   const folderName = "Tag & Tally";
   let folder = game.folders.find((f) => f.type === "Macro" && f.name === folderName);
   folder ??= await Folder.create({ name: folderName, type: "Macro" });

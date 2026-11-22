@@ -1,0 +1,64 @@
+<div class="tt-travel">
+  <div class="tt-toolbar">
+    <span class="tt-segments">
+      {{#each modes as |m|}}<a class="tt-segment {{#if m.active}}on{{/if}} {{#unless ../isGM}}readonly{{/unless}}" data-action="setMode" data-mode="{{m.id}}"><i class="fa-solid {{m.icon}}"></i> {{m.label}}</a>{{/each}}
+    </span>
+    <span class="tt-segments">
+      {{#each paces as |p|}}<a class="tt-segment {{#if p.active}}on{{/if}} {{#if p.disabled}}disabled{{/if}} {{#unless ../isGM}}readonly{{/unless}}" data-action="setPace" data-pace="{{p.id}}">{{p.label}}</a>{{/each}}
+    </span>
+    {{#if canTransport}}<a class="tt-segment {{#if state.transport}}on{{/if}} {{#unless isGM}}readonly{{/unless}}" data-action="toggleTransport" title="{{localize 'TAGANDTALLY.Travel.TransportHint'}}"><i class="fa-solid fa-horse"></i> {{localize "TAGANDTALLY.Travel.Transport"}}</a>{{/if}}
+  </div>
+  <p class="hint">{{localize (tt-ternary isDungeon "TAGANDTALLY.Travel.HintDungeon" "TAGANDTALLY.Travel.Hint")}}</p>
+
+  <div class="tt-travel-points">
+    <strong>{{localize "TAGANDTALLY.Travel.Points"}}</strong>
+    {{#if max}}
+      <span class="tt-boxes">{{#each pips as |filled|}}<span class="tt-box {{#if filled}}filled{{/if}}"></span>{{/each}}</span>
+      <span class="tt-left">{{left}} / {{max}}</span>
+    {{else}}
+      <em>{{localize "TAGANDTALLY.Travel.PaceNotAllowed"}}</em>
+    {{/if}}
+    {{#if state.exhaustedApplied}}<span class="tt-tag warn"><i class="fa-solid fa-face-tired"></i> {{localize "TAGANDTALLY.DayTag.Exhausted"}}</span>{{/if}}
+    <span class="tt-controls">
+      {{#if isGM}}<a data-action="resetDay" title="{{localize 'TAGANDTALLY.Travel.ResetDayHint'}}"><i class="fa-solid fa-rotate-left"></i></a>{{/if}}
+    </span>
+  </div>
+
+  <div class="tt-travel-actions">
+    {{#if isDungeon}}
+      <button type="button" data-action="spend" data-cost="1" data-label="{{localize 'TAGANDTALLY.Travel.Room'}}"><i class="fa-solid fa-door-open"></i> {{localize "TAGANDTALLY.Travel.SpendRoom"}}</button>
+    {{else}}
+      {{#each costs as |c|}}<button type="button" data-action="spend" data-cost="{{c.cost}}" data-label="{{c.label}}"><i class="fa-solid fa-shoe-prints"></i> {{c.label}} <small>{{c.cost}}</small></button>{{/each}}
+    {{/if}}
+    {{#if isGM}}<button type="button" class="tt-roll-btn" data-action="enter"><i class="fa-solid fa-dice"></i> {{localize (tt-ternary isDungeon "TAGANDTALLY.Travel.EnterRoom" "TAGANDTALLY.Travel.EnterHex")}}</button>{{/if}}
+  </div>
+
+  {{#if state.hex.level}}
+    <div class="tt-hex">
+      <strong><i class="fa-solid fa-hexagon"></i> {{localize "TAGANDTALLY.Travel.CurrentHex"}}</strong>
+      <span>{{localize "TAGANDTALLY.Travel.Level"}} {{state.hex.level}} · {{hexLevelLabel}}</span>
+      {{#if state.hex.terrain}}<span>{{state.hex.terrain}}</span>{{/if}}
+      {{#if state.hex.feature}}<span>{{state.hex.feature}}</span>{{/if}}
+      {{#if state.hex.landmark}}<span><i class="fa-solid fa-monument"></i> {{state.hex.landmark}}</span>{{/if}}
+      {{#if isGM}}{{#unless (tt-eq state.hex.level sceneLevel)}}<a data-action="applyLevel" title="{{localize 'TAGANDTALLY.Travel.ApplyLevelHint'}}"><i class="fa-solid fa-arrow-right-to-bracket"></i> {{localize "TAGANDTALLY.Travel.ApplyLevel"}}</a>{{/unless}}{{/if}}
+    </div>
+  {{/if}}
+
+  <div class="tt-travel-rest">
+    <span class="hint">{{localize "TAGANDTALLY.Travel.RestHint" party=party watchers=watchers}} {{localize (tt-ternary safeZone "TAGANDTALLY.Downtime.SafeZone" "TAGANDTALLY.Downtime.Camp")}}.</span>
+    <span class="tt-controls">
+      <button type="button" data-action="openDowntime"><i class="fa-solid fa-bed"></i> {{localize "TAGANDTALLY.Downtime.Title"}}</button>
+      {{#if isGM}}
+        <button type="button" data-action="rest"><i class="fa-solid fa-moon"></i> {{localize "TAGANDTALLY.Travel.Rest"}}</button>
+        <button type="button" data-action="newDay" title="{{localize 'TAGANDTALLY.Downtime.NewDayHint'}}"><i class="fa-solid fa-sun"></i> {{localize "TAGANDTALLY.Downtime.NewDay"}}</button>
+      {{/if}}
+    </span>
+  </div>
+
+  {{#if log.length}}
+    <ol class="tt-travel-log">
+      {{#each log as |l|}}<li><i class="fa-solid {{l.icon}}"></i> {{l.text}}</li>{{/each}}
+    </ol>
+    {{#if isGM}}<a class="tt-clear-log" data-action="clearLog"><i class="fa-solid fa-trash"></i> {{localize "TAGANDTALLY.Travel.ClearLog"}}</a>{{/if}}
+  {{/if}}
+</div>
