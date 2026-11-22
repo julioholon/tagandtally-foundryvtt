@@ -27,6 +27,14 @@ export default class GearData extends foundry.abstract.TypeDataModel {
       capacity: new fields.NumberField({ required: true, integer: true, min: 0, initial: 0 }),
       /** Spark table this item was generated from (enables reroll). */
       source: new fields.StringField({ required: true, blank: true, initial: "" }),
+      /** Crafting (SRD): rarity 0 none / 1-4 common..legendary (resources and magical components). */
+      rarity: new fields.NumberField({ required: true, integer: true, min: 0, max: 4, initial: 0 }),
+      /** Augmentations added by the Workshop, each a tag appended to the sentence. */
+      augmentations: new fields.ArrayField(new fields.StringField({ required: true, blank: true, initial: "" })),
+      /** Broken gear eases nothing until repaired (Workshop > Augment > Repair). */
+      broken: new fields.BooleanField({ initial: false }),
+      /** A property salvaged from a destroyed item; applied with a Level 5 augment. */
+      salvaged: new fields.BooleanField({ initial: false }),
       description: htmlField()
     };
   }
@@ -41,8 +49,11 @@ export default class GearData extends foundry.abstract.TypeDataModel {
     this.isArmor = this.gearType === "armor";
     this.isConsumable = this.gearType === "consumable";
     this.isContainer = this.gearType === "container";
-    /** Gear eases a task by 1 as an asset; armor eases defense by its class. */
-    this.steps = this.isArmor ? (this.armor?.defense ?? 1) : 1;
+    this.isResource = this.gearType === "resource";
+    this.rarityLabel = TAGANDTALLY.crafting.rarities[this.rarity]?.label;
+    this.rarityModifier = TAGANDTALLY.crafting.rarities[this.rarity]?.modifier ?? 0;
+    /** Gear eases a task by 1 as an asset; armor eases defense by its class. Broken gear eases nothing. */
+    this.steps = this.broken ? 0 : this.isArmor ? (this.armor?.defense ?? 1) : 1;
     const hasFields = Boolean(this.descriptor || this.material || this.subtype || this.special || this.damageType);
     this.sentenceText = hasFields || !this.sentence ? this.buildSentence() : this.sentence;
   }
@@ -51,7 +62,9 @@ export default class GearData extends foundry.abstract.TypeDataModel {
     const name = this.parent?.name ?? "This item";
     const t = (v) => (v ? `[${v}]` : "");
     const head = [this.descriptor, this.material, this.subtype].map(t).filter(Boolean).join(" ");
-    return tidy(this.#sentence(name, t, head));
+    const base = this.#sentence(name, t, head).replace(/\.\s*$/, "");
+    const extra = (this.augmentations ?? []).filter(Boolean).map((a) => `${word("And", "and")} ${t(a)}`).join(" ");
+    return tidy(`${base}${extra ? ` ${extra}` : ""}.`);
   }
 
   #sentence(name, t, head) {

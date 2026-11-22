@@ -23,6 +23,9 @@ import { CombatFlow, registerCombatFlowSocket } from "./module/combat/combat-flo
 import { WorldState } from "./module/world-state.mjs";
 import { DowntimeApp, registerDowntime, grantDayTag, reduceDayTag, applyWealthTally } from "./module/downtime.mjs";
 import { TravelApp, registerTravel, rollHex, rollHexLevel, rollDiscovery } from "./module/travel.mjs";
+import { WorkshopApp, registerWorkshop } from "./module/workshop.mjs";
+import * as factions from "./module/factions.mjs";
+import FactionSheet from "./module/sheets/faction-sheet.mjs";
 import { sparkTables } from "./module/sparks/tables.mjs";
 import { generate, SparkGenerator, loadGeneratorDefs } from "./module/sparks/engine.mjs";
 import { SparksApp } from "./module/sparks/sparks-app.mjs";
@@ -42,13 +45,14 @@ Hooks.once("init", () => {
 
   CONFIG.Actor.documentClass = TagAndTallyActor;
   CONFIG.Item.documentClass = TagAndTallyItem;
-  CONFIG.Actor.dataModels = { character: models.CharacterData, npc: models.NpcData };
+  CONFIG.Actor.dataModels = { character: models.CharacterData, npc: models.NpcData, faction: models.FactionData };
   CONFIG.Item.dataModels = { tag: models.TagData, gear: models.GearData, spell: models.SpellData, quest: models.QuestData, wound: models.WoundData };
 
   // Token bar attributes shown in the token config.
   CONFIG.Actor.trackableAttributes = {
     character: { bar: ["wounds.vitality", "wounds.strain", "wounds.lingeringTrauma", "wounds.debilitatingInjury", "wounds.lastingScar", "wounds.total"], value: ["wounds.severity", "wealth.value", "mai.total"] },
-    npc: { bar: ["wounds.vitality", "wounds.strain", "wounds.lingeringTrauma", "wounds.debilitatingInjury", "wounds.lastingScar", "wounds.total"], value: ["wounds.severity", "level", "wealth.value"] }
+    npc: { bar: ["wounds.vitality", "wounds.strain", "wounds.lingeringTrauma", "wounds.debilitatingInjury", "wounds.lastingScar", "wounds.total"], value: ["wounds.severity", "level", "wealth.value"] },
+    faction: { bar: [], value: ["phase", "tally", "countdown"] }
   };
 
   // Initiative: creatures act by level, characters roll a d20.
@@ -58,6 +62,7 @@ Hooks.once("init", () => {
   Actors.unregisterSheet("core", foundry.appv1.sheets.ActorSheet);
   Actors.registerSheet(SYSTEM_ID, CharacterSheet, { types: ["character"], makeDefault: true, label: "TAGANDTALLY.Sheet.Character" });
   Actors.registerSheet(SYSTEM_ID, NpcSheet, { types: ["npc"], makeDefault: true, label: "TAGANDTALLY.Sheet.Npc" });
+  Actors.registerSheet(SYSTEM_ID, FactionSheet, { types: ["faction"], makeDefault: true, label: "TAGANDTALLY.Sheet.Faction" });
   Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
   Items.registerSheet(SYSTEM_ID, TagAndTallyItemSheet, { makeDefault: true, label: "TAGANDTALLY.Sheet.Item" });
 
@@ -72,6 +77,8 @@ Hooks.once("init", () => {
   registerInteractions();
   registerDowntime();
   registerTravel();
+  registerWorkshop();
+  factions.registerFactions();
   registerBarBrawl();
   registerItemPiles();
   registerSceneLevel();
@@ -82,7 +89,7 @@ Hooks.once("init", () => {
     config: TAGANDTALLY,
     documents: { TagAndTallyActor, TagAndTallyItem },
     sheets: { CharacterSheet, NpcSheet, TagAndTallyItemSheet },
-    apps: { TaskRollDialog, CombatFlow, SparksApp, PartyOverview, BarterApp, InteractDialog, DowntimeApp, TravelApp },
+    apps: { TaskRollDialog, CombatFlow, SparksApp, PartyOverview, BarterApp, InteractDialog, DowntimeApp, TravelApp, WorkshopApp, FactionsApp: factions.FactionsApp },
     rolls: { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel },
     sparks: { tables: sparkTables, generate, SparkGenerator, loadGeneratorDefs, ...create },
     spells: { computeSpell, maiCheck },
@@ -102,6 +109,9 @@ Hooks.once("init", () => {
       openParty: () => PartyOverview.open(),
       openDowntime: () => DowntimeApp.open(),
       openTravel: () => TravelApp.open(),
+      /** Crafting workshop for the selected token's actor or your character. */
+      openWorkshop: (tab) => WorkshopApp.open({ tab }),
+      openFactions: () => factions.FactionsApp.open(),
       /** Barter with the selected NPC token (buyer = your character or another selected character token). */
       openBarter: () => BarterApp.open({ merchant: canvas.tokens?.controlled.map((t) => t.actor).find((a) => a?.type === "npc") }),
       /** Build a complete random character on the selected token's actor or your character. */
@@ -125,6 +135,8 @@ Hooks.once("init", () => {
     interactions: { InteractDialog, rollDrift, rollInteraction },
     downtime: { DowntimeApp, grantDayTag, reduceDayTag, applyWealthTally, newDay: () => DowntimeApp.newDay() },
     travel: { TravelApp, rollHex, rollHexLevel, rollDiscovery, rest: () => TravelApp.rest() },
+    crafting: { WorkshopApp },
+    factions,
     relations,
     journal: { logMessageToJournal }
   };
@@ -174,6 +186,10 @@ Hooks.on("getSceneControlButtons", (controls) => {
   tokens.tools.ttTravel = {
     name: "ttTravel", title: "TAGANDTALLY.Travel.Title", icon: "fa-solid fa-route", button: true, order: 93,
     onChange: () => TravelApp.open()
+  };
+  tokens.tools.ttWorkshop = {
+    name: "ttWorkshop", title: "TAGANDTALLY.Workshop.Title", icon: "fa-solid fa-hammer", button: true, order: 95,
+    onChange: () => WorkshopApp.open()
   };
   tokens.tools.ttDowntime = {
     name: "ttDowntime", title: "TAGANDTALLY.Downtime.Title", icon: "fa-solid fa-bed", button: true, order: 94,

@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.6.0 (unreleased)
+
+- **Crafting** (SRD optional module): a per-character Workshop opened from the Inventory tab, the
+  token controls, a macro or the Downtime crafting / repair hours. Harvest rolls against a source
+  level with a resource type (d8) and rarity (d4) and creates resource items; Craft turns a base
+  material and an optional magical component into Level 1 gear (Cost 3) with a Sparks-prefilled
+  sentence; Augment adds a tag and a level (two with rare / legendary material), Repair clears the
+  new "broken" flag, and a salvaged property is applied with a Level 5 task; Salvage destroys an
+  item to keep one (or two) of its properties. Every task goes through the Task Roll dialog with
+  the SRD retry hindrance (+2 per failed attempt) and appends its outcome to the roll card.
+- Gear gains rarity, augmentations (appended to the sentence), broken (eases nothing) and salvaged
+  fields, all editable on the item sheet.
+- **Factions** (SRD optional module): a new Faction actor type with the faction sentence, goal /
+  secret / headquarters hidden from players until revealed, the six-phase goal timer (tally of 5,
+  countdown of 10 once the goal is known, thwart on a full countdown), rival factions (the thwart
+  mechanism), a log and chat cards (whispered until the goal is known). A GM overview lists every
+  faction with Insight / Countdown buttons and a "Time passes" tick, and imports Augur Nexus faction
+  journals. Dropping a faction actor on a character sheet adds it to the Factions relations.
+- New macros: Workshop, Factions.
+
 ## 0.5.1 (2026-11-22)
 
 - Travel and new-day chat cards now speak as "Travel" / "Downtime" instead of the GM's selected token.

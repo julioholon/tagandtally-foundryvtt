@@ -1,0 +1,25 @@
+<header class="tt-header">
+  <img class="tt-portrait" src="{{actor.img}}" data-edit="img" data-action="editImage" alt="{{actor.name}}" />
+  <div class="tt-header-main">
+    <div class="tt-name-row">
+      {{#if owner}}<input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TAGANDTALLY.Name'}}" />{{else}}<h2>{{actor.name}}</h2>{{/if}}
+      {{#if augurLinked}}<button type="button" class="tt-icon-btn" data-action="importAugur" title="{{localize 'TAGANDTALLY.Faction.ImportAugur'}}"><i class="fa-solid fa-file-import"></i></button>{{/if}}
+      {{#if isGM}}<button type="button" class="tt-icon-btn" data-action="generateSentence" title="{{localize 'TAGANDTALLY.Sparks.Regenerate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></button>{{/if}}
+      <button type="button" class="tt-icon-btn" data-action="sentenceToChat" title="{{localize 'TAGANDTALLY.ToChat'}}"><i class="fa-solid fa-comment"></i></button>
+    </div>
+    <div class="tt-status-row">
+      <div class="tt-stat tt-faction-phase-stat {{#if system.isEnd}}end{{/if}}" title="{{vibe}}">
+        {{#if isGM}}<a data-action="phaseStep" data-delta="-1"><i class="fa-solid fa-minus"></i></a>{{/if}}
+        <i class="fa-solid fa-flag"></i> {{phaseLabel}}
+        {{#if isGM}}<a data-action="phaseStep" data-delta="1"><i class="fa-solid fa-plus"></i></a>{{/if}}
+      </div>
+      <div class="tt-stat" title="{{localize 'TAGANDTALLY.Faction.Tally'}}"><i class="fa-solid fa-list-check"></i>
+        <span class="tt-boxes">{{#each system.tallyBoxes as |b i|}}<span class="tt-box {{#if b}}filled{{/if}}" {{#if ../isGM}}data-action="setTally" data-value="{{tt-add i 1}}"{{/if}}></span>{{/each}}</span></div>
+      {{#if system.countdownActive}}
+      <div class="tt-stat" title="{{localize 'TAGANDTALLY.Faction.Countdown'}}"><i class="fa-solid fa-hourglass"></i>
+        <span class="tt-boxes small">{{#each system.countdownBoxes as |b i|}}<span class="tt-box {{#if b}}filled{{/if}}" {{#if ../isGM}}data-action="setCountdown" data-value="{{tt-add i 1}}"{{/if}}></span>{{/each}}</span></div>
+      {{/if}}
+    </div>
+    <p class="tt-sentence">{{tt-tags sentenceText}}</p>
+  </div>
+</header>

@@ -2,6 +2,7 @@
   <div class="tt-toolbar">
     <span>{{#if loadout}}{{localize "TAGANDTALLY.Gear.Loadout"}} {{loadout.value}}/{{loadout.max}} · {{localize "TAGANDTALLY.GearKind.Ephemeral"}} {{loadout.ephemeral}}/{{loadout.ephemeralMax}} · {{/if}}<i class="fa-solid fa-coins"></i> {{localize "TAGANDTALLY.Wealth.Wealth"}} {{system.wealth.value}}</span>
     <span class="tt-controls">
+      <a data-action="openWorkshop" title="{{localize 'TAGANDTALLY.Workshop.Hint'}}"><i class="fa-solid fa-hammer"></i> {{localize "TAGANDTALLY.Workshop.Title"}}</a>
       {{#each config.gearTypes as |label key|}}<a data-action="createItem" data-type="gear" data-gear-type="{{key}}"><i class="fa-solid fa-plus"></i> {{localize label}}</a>{{/each}}
     </span>
   </div>
@@ -11,7 +12,7 @@
       <li class="tt-item gear {{#unless item.system.equipped}}unequipped{{/unless}}" data-item-id="{{item.id}}">
         <img src="{{item.img}}" alt="" data-action="useItem" title="{{localize 'TAGANDTALLY.Roll.WithGear'}}" />
         <div class="tt-item-body">
-          <span class="tt-item-name" data-action="editItem">{{item.name}} <small>{{localize (lookup ../config.gearTypes item.system.gearType)}}{{#if item.system.isArmor}} · {{localize item.system.armor.label}}{{/if}}{{#if item.system.damageType}} · {{item.system.damageType}}{{/if}}</small></span>
+          <span class="tt-item-name" data-action="editItem">{{item.name}}{{#if item.system.broken}} <i class="fa-solid fa-heart-crack warn" title="{{localize 'TAGANDTALLY.Gear.Broken'}}"></i>{{/if}} <small>{{#if item.system.rarity}}{{localize item.system.rarityLabel}} · {{/if}}{{localize (lookup ../config.gearTypes item.system.gearType)}}{{#if item.system.isArmor}} · {{localize item.system.armor.label}}{{/if}}{{#if item.system.damageType}} · {{item.system.damageType}}{{/if}}</small></span>
           <span class="tt-item-sub">{{tt-tags item.system.sentenceText}}</span>
         </div>
         <span class="tt-col-level" title="{{localize item.system.levelLabel}}">{{item.system.level}}</span>

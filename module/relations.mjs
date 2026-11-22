@@ -96,7 +96,7 @@ export async function resolveAugurDrag(event, data) {
 /** Which relation list a dropped document belongs to, or null when it is not a relation. */
 export function relationKindFor(doc) {
   if (!doc) return null;
-  if (doc.documentName === "Actor") return "people";
+  if (doc.documentName === "Actor") return doc.type === "faction" ? "factions" : "people";
   if (doc.documentName === "Scene" || doc.documentName === "JournalEntryPage") return "places";
   const entity = augurEntity(doc);
   if (entity) {

@@ -24,6 +24,9 @@ export default class TagAndTallyActor extends Actor {
         displayName: CONST.TOKEN_DISPLAY_MODES.HOVER,
         sight: { enabled: true }
       });
+    } else if (this.type === "faction") {
+      prototypeToken.bar1 = { attribute: null };
+      prototypeToken.disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
     } else {
       prototypeToken.disposition = CONST.TOKEN_DISPOSITIONS.HOSTILE;
     }

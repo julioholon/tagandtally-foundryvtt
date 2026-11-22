@@ -2,7 +2,8 @@
   "TYPES": {
     "Actor": {
       "character": "Character",
-      "npc": "NPC / Creature"
+      "npc": "NPC / Creature",
+      "faction": "Faction"
     },
     "Item": {
       "tag": "Tag",
@@ -25,7 +26,8 @@
     "Sheet": {
       "Character": "Tag & Tally Character Sheet",
       "Npc": "Tag & Tally NPC Sheet",
-      "Item": "Tag & Tally Item Sheet"
+      "Item": "Tag & Tally Item Sheet",
+      "Faction": "Tag & Tally Faction Sheet"
     },
     "Tabs": {
       "main": "Main",
@@ -267,7 +269,10 @@
       "Capacity": "Capacity",
       "Loadout": "Loadout",
       "CustomSentence": "Custom sentence (used only when the fields above are empty)",
-      "Empty": "No gear yet."
+      "Empty": "No gear yet.",
+      "Broken": "Broken",
+      "Salvaged": "Salvaged property",
+      "Augmentations": "Augmentations"
     },
     "GearKind": {
       "Kind": "Gear kind",
@@ -597,7 +602,9 @@
       "RandomCharacter": "Random character",
       "ImportAugur": "Import from Augur",
       "Travel": "Travel",
-      "Downtime": "Downtime"
+      "Downtime": "Downtime",
+      "Workshop": "Workshop",
+      "Factions": "Factions"
     },
     "Words": {
       "IsA": "is a",
@@ -777,6 +784,199 @@
         }
       }
     },
+    "Rarity": {
+      "Rarity": "Rarity",
+      "None": "No rarity",
+      "Common": "Common",
+      "Uncommon": "Uncommon",
+      "Rare": "Rare",
+      "Legendary": "Legendary"
+    },
+    "ResourceType": {
+      "Ore": "Ore",
+      "Gemstone": "Gemstone",
+      "Wood": "Wood",
+      "Fiber": "Fiber",
+      "Liquid": "Liquid",
+      "Plants": "Plants",
+      "Essence": "Essence",
+      "Part": "Creature part"
+    },
+    "Workshop": {
+      "Title": "Workshop",
+      "Hint": "Harvest, craft, augment (repair) and salvage gear",
+      "NoActor": "Select a token or assign yourself a character to open the Workshop.",
+      "NotOwner": "You do not own this character; the Workshop is read-only.",
+      "Tab": {
+        "harvest": "Harvest",
+        "craft": "Craft",
+        "augment": "Augment",
+        "salvage": "Salvage"
+      },
+      "Task": "Task",
+      "TaskLevel": "Task level {level} (DC {dc})",
+      "Attempts": "{n} failed attempt(s): hindered by 2 each",
+      "Retry": "Retry ×{n}",
+      "NewSource": "New source (forget attempts)",
+      "Rolled": "{formula} = {total}: {value}",
+      "Cancelled": "Cancelled; nothing was created.",
+      "HarvestHint": "Roll against the source's level (a creature or resource node, DC = level × 3). The first item is at full level; every further try or item from the same source is hindered by 2.",
+      "SourceLevel": "Source level",
+      "ResourceType": "Resource type",
+      "Harvest": "Harvest",
+      "Harvested": "Harvested {name} (level {level}, {rarity}).",
+      "CraftHint": "Pick a base material and, optionally, a magical component that sets the rarity. DC = (base level + rarity) × 3. The new item is Level 1 (2 with a rare or legendary component) and Cost 3. Only consumables can be crafted in the field.",
+      "BaseMaterial": "Base material",
+      "Component": "Magical component",
+      "NoComponent": "None (pick a rarity)",
+      "MakeA": "Make a",
+      "FromComponent": "from the component",
+      "PickBase": "Pick a base material from the inventory (a harvested resource).",
+      "NeedsWorkshop": "Needs specialized equipment: not in the field.",
+      "Craft": "Craft",
+      "NewItem": "New item",
+      "SentenceHint": "Describe what the item does based on where its materials came from. The party should agree it is a viable idea.",
+      "MaterialsLost": "Materials lost: {names}.",
+      "CraftedFrom": "Crafted from {base} {component}.",
+      "Crafted": "Created {name} (level {level}).",
+      "AugmentHint": "Change an item with a new material (DC = (item level + rarity) × 3, +1 level, +2 with rare or legendary), repair it (no material, no rarity) or apply a salvaged property (Level 5 task). Up to 9 augmentations.",
+      "Mode": {
+        "augment": "Augment",
+        "repair": "Repair",
+        "salvaged": "Apply salvaged property"
+      },
+      "TargetItem": "Item",
+      "Material": "Material",
+      "NoMaterial": "Unlisted material (pick a rarity)",
+      "SalvagedProperty": "Salvaged property",
+      "NoSalvaged": "No salvaged properties in the inventory. Salvage an item first.",
+      "AugmentCount": "{count}/{max} augmentations",
+      "AugmentFull": "This item already has the maximum of 9 augmentations.",
+      "PickItem": "Pick an item.",
+      "Augment": "Augment",
+      "Repair": "Repair",
+      "Repaired": "{name} is repaired.",
+      "AugmentTag": "New tag on the item",
+      "Augmented": "{name} gains [{tag}] and is now level {level}.",
+      "SalvageHint": "Destroy a magical item to keep one of its properties (DC = item level × 3). The property is applied to another item with a Level 5 augment.",
+      "Salvage": "Salvage",
+      "Destroyed": "{name} was destroyed.",
+      "SalvageProperty": "Property {n} of {count} to keep",
+      "SalvagedName": "Salvaged: {property}",
+      "SalvagedFrom": "Salvaged from {name}.",
+      "Salvaged": "{name} salvaged: {properties}.",
+      "Outcome": {
+        "harvest": {
+          "destroyed": "You failed to harvest the item and destroyed the resource.",
+          "intact": "You failed to harvest the item but the node is intact.",
+          "levelDown": "Harvested, but the item is one level lower than the source.",
+          "equal": "Harvested an item of the source's level.",
+          "levelUp": "Harvested, and the item is one level higher than the source."
+        },
+        "craft": {
+          "loseMaterials": "You failed to craft the item and lost the materials.",
+          "keepMaterials": "You failed to craft the item but kept the materials.",
+          "notExact": "Crafted, but it doesn't do exactly what you wanted.",
+          "intended": "Crafted, and it does what you intended.",
+          "better": "Crafted, and it does something better than expected."
+        },
+        "augment": {
+          "loseMaterial": "You failed to augment the item and lost the material.",
+          "keepMaterial": "You failed to augment the item but kept the material.",
+          "notExact": "Augmented, but it doesn't do exactly what you wanted.",
+          "intended": "Augmented, and it does what you intended.",
+          "better": "Augmented, and it does something better than expected."
+        },
+        "salvage": {
+          "destroyed": "You failed to salvage and destroyed the item.",
+          "undamaged": "You failed to salvage but the item is undamaged.",
+          "diminished": "Salvaged, but the property is diminished (one level lower).",
+          "property": "Salvaged the intended property.",
+          "twoProperties": "Salvaged two properties."
+        }
+      }
+    },
+    "Faction": {
+      "Faction": "Faction",
+      "Overview": "Factions",
+      "OverviewHint": "Goals progress on their own: 5 marks a phase, six phases to the End. Insights mark a faction's tally and its rivals' countdowns.",
+      "Tick": "Time passes",
+      "TickHint": "One mark on every faction's phase tally",
+      "TimePasses": "time passes",
+      "ByGm": "GM",
+      "New": "New faction",
+      "Empty": "No factions yet. Create one or import an Augur Nexus faction.",
+      "AugurFactions": "Augur Nexus factions not yet imported",
+      "ImportAugur": "Refresh from the Augur faction journal",
+      "Imported": "{name} updated from {journal}.",
+      "DespiteReputation": "Despite their outward reputation, they",
+      "OrganizationType": "Organization type",
+      "CoreFunction": "Core function or purpose",
+      "Goal": "Goal",
+      "Secret": "Secret",
+      "Headquarters": "Headquarters",
+      "KnownHint": "Known to the players (shown on their sheet; the goal also starts the countdown)",
+      "KnownToPlayers": "Known",
+      "Unknown": "Unknown",
+      "GoalHidden": "Goal unknown to the players: no countdown",
+      "PhaseTimer": "Phase timer",
+      "Tally": "Phase tally (5 marks start the next phase)",
+      "Countdown": "Countdown (10 marks thwart the phase)",
+      "Insight": "Insight",
+      "InsightHint": "A goal or plan insight was found: +1 tally here, +1 countdown on each rival",
+      "CountdownPlus": "Countdown +1",
+      "CountdownHint": "One mark on the countdown",
+      "NextPhase": "Next phase",
+      "ResetPhase": "Reset phase",
+      "CountdownResets": "Countdown resets when it thwarts",
+      "CountdownResetsHint": "Off: the SRD variant where the countdown keeps running after a thwart",
+      "TimerHint": "A full tally starts the next phase and sabotages each rival's current tally. A full countdown (only while the goal is known) resets this phase's tally instead.",
+      "Rivals": "Working against",
+      "RivalsHint": "Insights for this faction also fill these factions' countdowns",
+      "NoRivals": "No rival factions.",
+      "AddRival": "Add a rival…",
+      "Against": "against",
+      "Log": "Log",
+      "PhaseReached": "Phase {phase}",
+      "PhaseSet": "Phase set to {phase}",
+      "PhaseReset": "Phase tally and countdown reset",
+      "TallyMark": "Tally {value}/{max}",
+      "CountdownMark": "Countdown {value}/{max}",
+      "InsightReason": "insight",
+      "RivalInsight": "insight found for {name}",
+      "Sabotaged": "Current task sabotaged by {by}",
+      "SabotagedTitle": "Sabotaged",
+      "Thwarted": "Plan thwarted: the phase begins anew",
+      "ThwartedTitle": "Thwarted",
+      "ThwartedText": "The countdown ran out during {phase}. The phase tally resets; they must find another way.",
+      "Phase": {
+        "Shadows": "Shadows",
+        "Whispers": "Whispers",
+        "Signs": "Signs",
+        "Omens": "Omens",
+        "Manifestation": "Manifestation",
+        "Brink": "The Brink",
+        "End": "End"
+      },
+      "Vibe": {
+        "Shadows": "Subtle anomalies.",
+        "Whispers": "Localized trouble.",
+        "Signs": "The point of no return.",
+        "Omens": "Escalation and fear.",
+        "Manifestation": "The plan is in motion.",
+        "Brink": "The world is breaking.",
+        "End": "Total transformation."
+      },
+      "Text": {
+        "Shadows": "The threat is just beginning to manifest. A missing pet, a strange smell, a flickering light. Most people ignore it or find a rational explanation.",
+        "Whispers": "The faction starts taking active steps. A specific victim is targeted or a minor resource is stolen. The community feels off, but the threat is still hiding.",
+        "Signs": "The faction's influence becomes visible to those looking for it. The first messy event occurs; the first rumors reach the party's ears.",
+        "Omens": "The faction no longer cares about secrecy and openly prepares for its goal. The body count rises or the changes become impossible to ignore.",
+        "Manifestation": "The leader initiates the ultimate goal. This is the climax: the threat is at its most powerful and most dangerous.",
+        "Brink": "The plan has succeeded and its consequences tear through the area. There is a tiny window to mitigate the damage, but the faction has won.",
+        "End": "The region is permanently changed: the faction holds total dominance, the ritual is complete, the town is gone. This arc is over."
+      }
+    },
     "Downtime": {
       "Title": "Downtime",
       "Day": "Day {day}",
@@ -874,14 +1074,15 @@
         },
         "crafting": {
           "Label": "Crafting",
-          "Hint": "Logs the hour; the crafting rules arrive in a later release"
+          "Hint": "Opens the Workshop (craft) for this hour"
         },
         "repair": {
           "Label": "Repair",
-          "Hint": "Logs the hour; the repair rules arrive in a later release"
+          "Hint": "Opens the Workshop (repair) for this hour"
         }
       },
-      "NoGm": "No GM is connected: the shared trackers need a GM online to store changes."
+      "NoGm": "No GM is connected: the shared trackers need a GM online to store changes.",
+      "WorkshopOpened": "Workshop opened"
     },
     "DayTag": {
       "Refreshed": "Refreshed",

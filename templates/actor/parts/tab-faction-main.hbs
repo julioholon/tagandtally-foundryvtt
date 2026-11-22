@@ -1,0 +1,49 @@
+<section class="tab {{tab.cssClass}} tt-faction-main" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  {{#if owner}}
+  <h3>{{localize "TAGANDTALLY.Sentence.Title"}}</h3>
+  <div class="tt-grid two">
+    <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.Descriptor"}}</label><input type="text" name="system.sentence.descriptor" value="{{system.sentence.descriptor}}" /></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.Faction.OrganizationType"}}</label><input type="text" name="system.sentence.organizationType" value="{{system.sentence.organizationType}}" /></div>
+    <div class="form-group span2"><label>{{localize "TAGANDTALLY.Faction.CoreFunction"}}</label><input type="text" name="system.sentence.coreFunction" value="{{system.sentence.coreFunction}}" /></div>
+    <div class="form-group span2"><label>{{localize "TAGANDTALLY.Faction.Goal"}}</label><div class="tt-inline"><input type="text" name="system.sentence.goal" value="{{system.sentence.goal}}" /><label class="tt-toggle" title="{{localize 'TAGANDTALLY.Faction.KnownHint'}}"><input type="checkbox" name="system.revealed.goal" {{checked system.revealed.goal}} /> <i class="fa-solid fa-eye"></i></label></div></div>
+    <div class="form-group span2"><label>{{localize "TAGANDTALLY.Faction.Secret"}}</label><div class="tt-inline"><input type="text" name="system.sentence.secret" value="{{system.sentence.secret}}" /><label class="tt-toggle" title="{{localize 'TAGANDTALLY.Faction.KnownHint'}}"><input type="checkbox" name="system.revealed.secret" {{checked system.revealed.secret}} /> <i class="fa-solid fa-eye"></i></label></div></div>
+    <div class="form-group span2"><label>{{localize "TAGANDTALLY.Faction.Headquarters"}}</label><div class="tt-inline"><input type="text" name="system.headquarters" value="{{system.headquarters}}" /><label class="tt-toggle" title="{{localize 'TAGANDTALLY.Faction.KnownHint'}}"><input type="checkbox" name="system.revealed.headquarters" {{checked system.revealed.headquarters}} /> <i class="fa-solid fa-eye"></i></label></div></div>
+  </div>
+  {{else}}
+  <dl class="tt-faction-known">
+    <dt>{{localize "TAGANDTALLY.Faction.Goal"}}</dt><dd>{{#if canSee.goal}}{{system.sentence.goal}}{{else}}<em>{{localize "TAGANDTALLY.Faction.Unknown"}}</em>{{/if}}</dd>
+    <dt>{{localize "TAGANDTALLY.Faction.Secret"}}</dt><dd>{{#if canSee.secret}}{{system.sentence.secret}}{{else}}<em>{{localize "TAGANDTALLY.Faction.Unknown"}}</em>{{/if}}</dd>
+    <dt>{{localize "TAGANDTALLY.Faction.Headquarters"}}</dt><dd>{{#if canSee.headquarters}}{{system.headquarters}}{{else}}<em>{{localize "TAGANDTALLY.Faction.Unknown"}}</em>{{/if}}</dd>
+  </dl>
+  {{/if}}
+
+  <h3>{{localize "TAGANDTALLY.Faction.PhaseTimer"}}</h3>
+  <div class="tt-faction-phase-box">
+    <strong>{{phaseLabel}}</strong> <em>{{vibe}}</em>
+    <p>{{phaseText}}</p>
+    {{#if isGM}}
+    <div class="tt-inline tt-faction-actions">
+      <button type="button" data-action="insight" title="{{localize 'TAGANDTALLY.Faction.InsightHint'}}" {{#if system.isEnd}}disabled{{/if}}><i class="fa-solid fa-lightbulb"></i> {{localize "TAGANDTALLY.Faction.Insight"}}</button>
+      <button type="button" data-action="countdown" title="{{localize 'TAGANDTALLY.Faction.CountdownHint'}}" {{#unless system.countdownActive}}disabled{{/unless}}><i class="fa-solid fa-hourglass"></i> {{localize "TAGANDTALLY.Faction.CountdownPlus"}}</button>
+      <button type="button" data-action="nextPhase" {{#if system.isEnd}}disabled{{/if}}><i class="fa-solid fa-forward-step"></i> {{localize "TAGANDTALLY.Faction.NextPhase"}}</button>
+      <button type="button" data-action="resetPhase"><i class="fa-solid fa-rotate-left"></i> {{localize "TAGANDTALLY.Faction.ResetPhase"}}</button>
+      <label class="tt-toggle" title="{{localize 'TAGANDTALLY.Faction.CountdownResetsHint'}}"><input type="checkbox" name="system.countdownResets" {{checked system.countdownResets}} /> {{localize "TAGANDTALLY.Faction.CountdownResets"}}</label>
+    </div>
+    <p class="hint">{{localize "TAGANDTALLY.Faction.TimerHint"}}</p>
+    {{/if}}
+  </div>
+
+  {{#if isGM}}
+  <h3>{{localize "TAGANDTALLY.Faction.Rivals"}} <small class="hint">{{localize "TAGANDTALLY.Faction.RivalsHint"}}</small></h3>
+  <ul class="tt-faction-rivals">
+    {{#each rivals as |r|}}<li><a data-action="openRival" data-uuid="{{r.uuid}}"><img src="{{r.img}}" alt="" /> {{r.name}}</a> <small>{{r.phaseLabel}}</small> <a data-action="removeRival" data-uuid="{{r.uuid}}" title="{{localize 'TAGANDTALLY.Relations.Remove'}}"><i class="fa-solid fa-xmark"></i></a></li>{{/each}}
+    {{#unless rivals.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Faction.NoRivals"}}</li>{{/unless}}
+  </ul>
+  {{#if rivalOptions.length}}<div class="tt-inline"><select data-rival-pick><option value="">{{localize "TAGANDTALLY.Faction.AddRival"}}</option>{{#each rivalOptions as |o|}}<option value="{{o.uuid}}">{{o.name}}</option>{{/each}}</select></div>{{/if}}
+  {{/if}}
+
+  {{#if log.length}}
+  <h3>{{localize "TAGANDTALLY.Faction.Log"}} {{#if isGM}}<a data-action="clearLog" title="{{localize 'TAGANDTALLY.Travel.ClearLog'}}"><i class="fa-solid fa-trash"></i></a>{{/if}}</h3>
+  <ol class="tt-faction-log">{{#each log as |l|}}<li><small class="dim">{{localize "TAGANDTALLY.Downtime.Day" day=l.day}} · {{l.phaseLabel}}</small> {{l.text}}</li>{{/each}}</ol>
+  {{/if}}
+</section>

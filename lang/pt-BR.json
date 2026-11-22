@@ -2,7 +2,8 @@
   "TYPES": {
     "Actor": {
       "character": "Personagem",
-      "npc": "PdM / Criatura"
+      "npc": "PdM / Criatura",
+      "faction": "Facção"
     },
     "Item": {
       "tag": "Tag",
@@ -25,7 +26,8 @@
     "Sheet": {
       "Character": "Ficha de Personagem Tag & Tally",
       "Npc": "Ficha de PdM Tag & Tally",
-      "Item": "Ficha de Item Tag & Tally"
+      "Item": "Ficha de Item Tag & Tally",
+      "Faction": "Ficha de Facção Tag & Tally"
     },
     "Tabs": {
       "main": "Principal",
@@ -267,7 +269,10 @@
       "Capacity": "Capacidade",
       "Loadout": "Carga",
       "CustomSentence": "Frase personalizada (usada só quando os campos acima estão vazios)",
-      "Empty": "Nenhum equipamento ainda."
+      "Empty": "Nenhum equipamento ainda.",
+      "Broken": "Quebrado",
+      "Salvaged": "Propriedade recuperada",
+      "Augmentations": "Aprimoramentos"
     },
     "GearKind": {
       "Kind": "Natureza",
@@ -597,7 +602,9 @@
       "RandomCharacter": "Personagem aleatório",
       "ImportAugur": "Importar do Augur",
       "Travel": "Viagem",
-      "Downtime": "Descanso"
+      "Downtime": "Descanso",
+      "Workshop": "Oficina",
+      "Factions": "Facções"
     },
     "Words": {
       "IsA": "é um(a)",
@@ -777,6 +784,199 @@
         }
       }
     },
+    "Rarity": {
+      "Rarity": "Raridade",
+      "None": "Sem raridade",
+      "Common": "Comum",
+      "Uncommon": "Incomum",
+      "Rare": "Raro",
+      "Legendary": "Lendário"
+    },
+    "ResourceType": {
+      "Ore": "Minério",
+      "Gemstone": "Gema",
+      "Wood": "Madeira",
+      "Fiber": "Fibra",
+      "Liquid": "Líquido",
+      "Plants": "Plantas",
+      "Essence": "Essência",
+      "Part": "Parte de criatura"
+    },
+    "Workshop": {
+      "Title": "Oficina",
+      "Hint": "Colher, fabricar, aprimorar (consertar) e recuperar equipamento",
+      "NoActor": "Selecione um token ou atribua um personagem a você para abrir a Oficina.",
+      "NotOwner": "Você não é dono deste personagem; a Oficina é somente leitura.",
+      "Tab": {
+        "harvest": "Colher",
+        "craft": "Fabricar",
+        "augment": "Aprimorar",
+        "salvage": "Recuperar"
+      },
+      "Task": "Tarefa",
+      "TaskLevel": "Nível da tarefa {level} (DC {dc})",
+      "Attempts": "{n} tentativa(s) falha(s): dificultado em 2 cada",
+      "Retry": "Nova tentativa ×{n}",
+      "NewSource": "Nova fonte (esquecer tentativas)",
+      "Rolled": "{formula} = {total}: {value}",
+      "Cancelled": "Cancelado; nada foi criado.",
+      "HarvestHint": "Role contra o nível da fonte (criatura ou veio de recurso, DC = nível × 3). O primeiro item é no nível cheio; cada tentativa ou item extra da mesma fonte é dificultado em 2.",
+      "SourceLevel": "Nível da fonte",
+      "ResourceType": "Tipo de recurso",
+      "Harvest": "Colher",
+      "Harvested": "Colhido {name} (nível {level}, {rarity}).",
+      "CraftHint": "Escolha um material base e, opcionalmente, um componente mágico que define a raridade. DC = (nível da base + raridade) × 3. O item novo é Nível 1 (2 com componente raro ou lendário) e Custo 3. Só consumíveis podem ser fabricados em campo.",
+      "BaseMaterial": "Material base",
+      "Component": "Componente mágico",
+      "NoComponent": "Nenhum (escolha a raridade)",
+      "MakeA": "Fabricar",
+      "FromComponent": "do componente",
+      "PickBase": "Escolha um material base do inventário (um recurso colhido).",
+      "NeedsWorkshop": "Exige equipamento especializado: não em campo.",
+      "Craft": "Fabricar",
+      "NewItem": "Novo item",
+      "SentenceHint": "Descreva o que o item faz com base na origem dos materiais. O grupo deve concordar que a ideia é viável.",
+      "MaterialsLost": "Materiais perdidos: {names}.",
+      "CraftedFrom": "Fabricado a partir de {base} {component}.",
+      "Crafted": "Criado {name} (nível {level}).",
+      "AugmentHint": "Altere um item com um material novo (DC = (nível do item + raridade) × 3, +1 nível, +2 com raro ou lendário), conserte-o (sem material nem raridade) ou aplique uma propriedade recuperada (tarefa Nível 5). Até 9 aprimoramentos.",
+      "Mode": {
+        "augment": "Aprimorar",
+        "repair": "Consertar",
+        "salvaged": "Aplicar propriedade recuperada"
+      },
+      "TargetItem": "Item",
+      "Material": "Material",
+      "NoMaterial": "Material não listado (escolha a raridade)",
+      "SalvagedProperty": "Propriedade recuperada",
+      "NoSalvaged": "Nenhuma propriedade recuperada no inventário. Recupere um item antes.",
+      "AugmentCount": "{count}/{max} aprimoramentos",
+      "AugmentFull": "Este item já tem o máximo de 9 aprimoramentos.",
+      "PickItem": "Escolha um item.",
+      "Augment": "Aprimorar",
+      "Repair": "Consertar",
+      "Repaired": "{name} foi consertado.",
+      "AugmentTag": "Nova tag no item",
+      "Augmented": "{name} ganha [{tag}] e agora é nível {level}.",
+      "SalvageHint": "Destrua um item mágico para guardar uma de suas propriedades (DC = nível do item × 3). A propriedade é aplicada a outro item com um aprimoramento Nível 5.",
+      "Salvage": "Recuperar",
+      "Destroyed": "{name} foi destruído.",
+      "SalvageProperty": "Propriedade {n} de {count} a guardar",
+      "SalvagedName": "Recuperado: {property}",
+      "SalvagedFrom": "Recuperado de {name}.",
+      "Salvaged": "{name} recuperado: {properties}.",
+      "Outcome": {
+        "harvest": {
+          "destroyed": "Você falhou em colher e destruiu o recurso.",
+          "intact": "Você falhou em colher, mas o veio está intacto.",
+          "levelDown": "Colhido, mas o item é um nível abaixo da fonte.",
+          "equal": "Colhido um item do nível da fonte.",
+          "levelUp": "Colhido, e o item é um nível acima da fonte."
+        },
+        "craft": {
+          "loseMaterials": "Você falhou em fabricar e perdeu os materiais.",
+          "keepMaterials": "Você falhou em fabricar, mas manteve os materiais.",
+          "notExact": "Fabricado, mas não faz exatamente o que você queria.",
+          "intended": "Fabricado, e faz o que você pretendia.",
+          "better": "Fabricado, e faz algo melhor que o esperado."
+        },
+        "augment": {
+          "loseMaterial": "Você falhou em aprimorar e perdeu o material.",
+          "keepMaterial": "Você falhou em aprimorar, mas manteve o material.",
+          "notExact": "Aprimorado, mas não faz exatamente o que você queria.",
+          "intended": "Aprimorado, e faz o que você pretendia.",
+          "better": "Aprimorado, e faz algo melhor que o esperado."
+        },
+        "salvage": {
+          "destroyed": "Você falhou em recuperar e destruiu o item.",
+          "undamaged": "Você falhou em recuperar, mas o item não foi danificado.",
+          "diminished": "Recuperado, mas a propriedade está diminuída (um nível abaixo).",
+          "property": "Recuperada a propriedade pretendida.",
+          "twoProperties": "Recuperadas duas propriedades."
+        }
+      }
+    },
+    "Faction": {
+      "Faction": "Facção",
+      "Overview": "Facções",
+      "OverviewHint": "Objetivos avançam sozinhos: 5 marcas por fase, seis fases até o Fim. Insights marcam a tally da facção e as contagens regressivas dos rivais.",
+      "Tick": "O tempo passa",
+      "TickHint": "Uma marca na tally de fase de cada facção",
+      "TimePasses": "o tempo passa",
+      "ByGm": "Mestre",
+      "New": "Nova facção",
+      "Empty": "Nenhuma facção ainda. Crie uma ou importe uma facção do Augur Nexus.",
+      "AugurFactions": "Facções do Augur Nexus ainda não importadas",
+      "ImportAugur": "Atualizar do diário de facção do Augur",
+      "Imported": "{name} atualizada a partir de {journal}.",
+      "DespiteReputation": "Apesar da reputação, eles",
+      "OrganizationType": "Tipo de organização",
+      "CoreFunction": "Função ou propósito",
+      "Goal": "Objetivo",
+      "Secret": "Segredo",
+      "Headquarters": "Quartel-general",
+      "KnownHint": "Conhecido pelos jogadores (aparece na ficha deles; o objetivo também inicia a contagem regressiva)",
+      "KnownToPlayers": "Conhecido",
+      "Unknown": "Desconhecido",
+      "GoalHidden": "Objetivo desconhecido pelos jogadores: sem contagem regressiva",
+      "PhaseTimer": "Cronômetro de fases",
+      "Tally": "Tally da fase (5 marcas iniciam a próxima fase)",
+      "Countdown": "Contagem regressiva (10 marcas frustram a fase)",
+      "Insight": "Insight",
+      "InsightHint": "Um insight de objetivo ou plano foi descoberto: +1 tally aqui, +1 contagem em cada rival",
+      "CountdownPlus": "Contagem +1",
+      "CountdownHint": "Uma marca na contagem regressiva",
+      "NextPhase": "Próxima fase",
+      "ResetPhase": "Reiniciar fase",
+      "CountdownResets": "Contagem reinicia ao frustrar",
+      "CountdownResetsHint": "Desligado: variante do SRD em que a contagem continua após frustrar",
+      "TimerHint": "Uma tally cheia inicia a próxima fase e sabota a tally atual de cada rival. Uma contagem cheia (só com objetivo conhecido) zera a tally desta fase.",
+      "Rivals": "Trabalha contra",
+      "RivalsHint": "Insights desta facção também enchem a contagem destas facções",
+      "NoRivals": "Sem facções rivais.",
+      "AddRival": "Adicionar rival…",
+      "Against": "contra",
+      "Log": "Registro",
+      "PhaseReached": "Fase {phase}",
+      "PhaseSet": "Fase definida: {phase}",
+      "PhaseReset": "Tally e contagem da fase zeradas",
+      "TallyMark": "Tally {value}/{max}",
+      "CountdownMark": "Contagem {value}/{max}",
+      "InsightReason": "insight",
+      "RivalInsight": "insight descoberto para {name}",
+      "Sabotaged": "Tarefa atual sabotada por {by}",
+      "SabotagedTitle": "Sabotada",
+      "Thwarted": "Plano frustrado: a fase recomeça",
+      "ThwartedTitle": "Frustrada",
+      "ThwartedText": "A contagem acabou durante {phase}. A tally da fase zera; precisam achar outro caminho.",
+      "Phase": {
+        "Shadows": "Sombras",
+        "Whispers": "Sussurros",
+        "Signs": "Sinais",
+        "Omens": "Presságios",
+        "Manifestation": "Manifestação",
+        "Brink": "O Limiar",
+        "End": "Fim"
+      },
+      "Vibe": {
+        "Shadows": "Anomalias sutis.",
+        "Whispers": "Problemas locais.",
+        "Signs": "O ponto sem volta.",
+        "Omens": "Escalada e medo.",
+        "Manifestation": "O plano em andamento.",
+        "Brink": "O mundo se rompe.",
+        "End": "Transformação total."
+      },
+      "Text": {
+        "Shadows": "A ameaça apenas começa a se manifestar. Um animal sumido, um cheiro estranho, uma luz piscando. A maioria ignora ou acha uma explicação racional.",
+        "Whispers": "A facção começa a agir. Uma vítima específica é visada ou um recurso menor é roubado. A comunidade sente algo errado, mas a ameaça ainda se esconde.",
+        "Signs": "A influência da facção fica visível para quem procura. O primeiro evento feio acontece; os primeiros boatos chegam ao grupo.",
+        "Omens": "A facção abandona o sigilo e se prepara abertamente para seu objetivo. O número de mortos sobe ou as mudanças ficam impossíveis de ignorar.",
+        "Manifestation": "O líder inicia o objetivo final. É o clímax: a ameaça está no auge de poder e perigo.",
+        "Brink": "O plano deu certo e suas consequências varrem a região. Há uma brecha mínima para reduzir o dano, mas a facção venceu.",
+        "End": "A região mudou para sempre: a facção domina, o ritual se completou, a cidade acabou. Este arco terminou."
+      }
+    },
     "Downtime": {
       "Title": "Descanso",
       "Day": "Dia {day}",
@@ -874,14 +1074,15 @@
         },
         "crafting": {
           "Label": "Criar",
-          "Hint": "Registra a hora; as regras de criação chegam em uma versão futura"
+          "Hint": "Abre a Oficina (fabricar) nesta hora"
         },
         "repair": {
           "Label": "Reparar",
-          "Hint": "Registra a hora; as regras de reparo chegam em uma versão futura"
+          "Hint": "Abre a Oficina (consertar) nesta hora"
         }
       },
-      "NoGm": "Nenhum Mestre conectado: os rastreadores compartilhados precisam de um Mestre online para salvar mudanças."
+      "NoGm": "Nenhum Mestre conectado: os rastreadores compartilhados precisam de um Mestre online para salvar mudanças.",
+      "WorkshopOpened": "Oficina aberta"
     },
     "DayTag": {
       "Refreshed": "Descansado",

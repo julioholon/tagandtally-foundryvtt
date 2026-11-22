@@ -308,3 +308,38 @@
 .chat-message .tt-travel-card ul { list-style: none; margin: 0.2rem 0 0; padding: 0; }
 .chat-message .tt-travel-card li { margin: 0.15rem 0; }
 @media (max-width: 700px) { .tagandtally .tt-activities { grid-template-columns: repeat(2, 1fr); } }
+
+/* ------------------------------- Workshop -------------------------------- */
+.tagandtally.tt-workshop .tt-workshop-tabs { margin-bottom: 0.5rem; }
+.tagandtally.tt-workshop .tt-workshop-tabs .tt-segment { flex: 1; text-align: center; }
+.tagandtally .tt-task-line { margin: 0.3rem 0 0.5rem; }
+.tagandtally .tt-task-line .warn, .tagandtally .warn { color: var(--tt-warn, #c0392b); }
+.tagandtally.tt-workshop .tt-roll-btn { width: 100%; }
+.tagandtally .tt-augmentations { margin: 0; padding-left: 1.2rem; }
+.tagandtally .tt-augmentations li { margin-bottom: 0.2rem; }
+.chat-message .tt-workshop-outcome p { margin: 0.2rem 0; }
+
+/* ------------------------------- Factions -------------------------------- */
+.tagandtally .tt-faction-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.tagandtally .tt-faction-row { display: flex; align-items: center; gap: 0.6rem; border: 1px solid var(--tt-border); border-radius: 6px; padding: 0.35rem 0.5rem; }
+.tagandtally .tt-faction-row.end { opacity: 0.6; }
+.tagandtally .tt-faction-row img { width: 36px; height: 36px; border: none; border-radius: 4px; object-fit: cover; cursor: pointer; }
+.tagandtally .tt-faction-body { display: flex; flex-direction: column; gap: 0.15rem; flex: 1; min-width: 0; }
+.tagandtally .tt-faction-body strong { cursor: pointer; }
+.tagandtally .tt-faction-tallies { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
+.tagandtally .tt-faction-row .tt-controls { margin-left: auto; display: flex; gap: 0.3rem; }
+.tagandtally .tt-augur-factions { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tagandtally .tt-augur-factions a { cursor: pointer; }
+.tagandtally.faction .tt-faction-phase-stat.end { color: var(--tt-warn, #c0392b); }
+.tagandtally .tt-faction-phase-box { border: 1px solid var(--tt-border); border-radius: 6px; padding: 0.5rem 0.7rem; margin-bottom: 0.6rem; }
+.tagandtally .tt-faction-phase-box p { margin: 0.3rem 0; }
+.tagandtally .tt-faction-actions { flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
+.tagandtally .tt-faction-known { display: grid; grid-template-columns: max-content 1fr; gap: 0.2rem 0.8rem; margin: 0 0 0.6rem; }
+.tagandtally .tt-faction-known dt { font-weight: 700; } .tagandtally .tt-faction-known dd { margin: 0; }
+.tagandtally .tt-faction-rivals { list-style: none; margin: 0 0 0.4rem; padding: 0; }
+.tagandtally .tt-faction-rivals li { display: flex; align-items: center; gap: 0.4rem; }
+.tagandtally .tt-faction-rivals img { width: 22px; height: 22px; border: none; border-radius: 3px; vertical-align: middle; }
+.tagandtally .tt-faction-rivals a { cursor: pointer; }
+.tagandtally .tt-faction-log { margin: 0; padding-left: 1.2rem; font-size: 0.9em; }
+.tagandtally .tt-faction-main .tt-inline input[type="text"] { flex: 1; }
+.chat-message .tt-faction-card p { margin: 0.2rem 0; }

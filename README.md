@@ -39,6 +39,8 @@ Or download the latest `tagandtally.zip` from the releases page and unzip it int
 | NPC interactions | Interact from a relation row or an NPC sheet: 2d6 Drift attitude per scene, approach pathways (1d10 / 1d6) with prompts, typed question, disposition modifier applied, SRD outcome consequences applied to the relation |
 | Downtime | Shared tracker: 4 downtime points a night per character, the SRD activities (sleep, research, study, workout, meditation, socializing, dinner, drinking, gambling, watch, crafting, repair) with their effects applied: next-day tags ([Refreshed], [Zen], [Well fed], [Liquid Courage]), tiered [Hangover] and [Sore Muscles], tallies on tags, quests and relationships, gambling against the wealth tally; GM starts a new day to fade yesterday's tags |
 | Travel | Shared tracker: wilderness / urban / dungeon, pace and transport set the day's points; hexes cost by their feature's difficulty; Enter hex rolls level (from the hex you leave), terrain or district, feature, landmark and event from the Sparks tables; rest rolls the SRD 2d6 encounter checks (fewer with watchers); fast pace exhausts the party, spent points recover hangovers |
+| Crafting | Per-character Workshop (inventory tab, token controls, macro, or the Downtime crafting / repair hours): Harvest resources by source level and rarity, Craft gear from a base material and a magical component, Augment or Repair gear, Salvage a magical item's properties; every task is a Task Roll with the SRD retry hindrance, outcomes create, change or destroy items |
+| Factions | Faction actors with the SRD sentence, hidden goal / secret / headquarters, the six-phase goal timer (tally of 5 a phase, countdown of 10 once the goal is known), rival factions (insights fill their countdowns, a completed phase sabotages their tally), a log and chat cards; GM overview app; import from Augur Nexus faction journals |
 | Party | Built-in party overview: sentence, wounds, wealth, MAI, loadout, tags, quests; GM adds or removes members |
 | GM tools | Scene level in Scene Config, world RollTable overrides for any Spark table, bulk import to RollTables |
 
@@ -87,6 +89,9 @@ game.tagandtally.macros.openCombatFlow();
 game.tagandtally.macros.openParty();
 game.tagandtally.macros.openTravel();                // shared travel tracker
 game.tagandtally.macros.openDowntime();              // shared downtime tracker
+game.tagandtally.macros.openWorkshop("craft");       // crafting workshop for the selected token's actor
+game.tagandtally.macros.openFactions();              // faction overview (GM)
+await game.tagandtally.factions.addInsight(game.actors.getName("The Cult"));
 await game.tagandtally.travel.rollHex({ mode: "wilderness", fromLevel: 4 });
 game.tagandtally.macros.generateNPC();              // creates an NPC actor from Sparks
 game.tagandtally.macros.generateCreature({ values: { "creature-type": "Undead" } });
@@ -119,6 +124,16 @@ Dropping a tag, gear, spell or quest on the hotbar creates a macro that uses it.
   Hex level from the hex you leave: 1-2 -> 1d4+2, 3-4 -> 1d6+2, 5-6 -> 1d8+2, 7-10 -> 1d10+2
   (capped at 10). Rest: 1 + party rounds, minus watchers, each a 2d6 check (wilderness: 6-10
   encounter, 11-12 discovery; safe zone: 2-5 encounter, 11-12 discovery).
+- Crafting: harvest DC = source level x 3; craft and augment DC = (level + rarity) x 3 with rarity
+  Common 1 / Uncommon 2 / Rare 3 / Legendary 4; salvage DC = item level x 3. Every further attempt
+  on the same target is hindered by 2. Crafted gear is Level 1 (2 with a rare or legendary
+  component) and Cost 3. Augmenting adds a tag and +1 level (+2 rare or legendary), up to 9.
+  Repair is an augment without rarity. A salvaged property is applied with a Level 5 augment.
+- Factions: phases Shadows, Whispers, Signs, Omens, Manifestation, The Brink, End. A full tally
+  (5) starts the next phase and resets the countdown; the countdown (10) only runs while the
+  players know the goal and, when it fills first, resets the phase tally (and itself, unless the
+  faction's "countdown resets" toggle is off). An insight for faction A marks A's tally and each
+  rival's countdown; when A's phase completes, each rival's current tally is reset.
 
 Where the SRD contradicts itself the formula wins over the cheat sheet; see `PLAN.md`.
 
