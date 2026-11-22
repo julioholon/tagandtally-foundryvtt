@@ -147,7 +147,7 @@ export class DowntimeApp extends HandlebarsApplicationMixin(ApplicationV2) {
     for (const actor of game.actors.filter((a) => a.type === "character")) expired += await expireDayTags(actor, state.day);
     await DowntimeApp.state.set(state);
     Hooks.callAll(`${SYSTEM_ID}.newDay`, state.day);
-    await ChatMessage.create({ content: `<div class="tagandtally chat-card"><h3><i class="fa-solid fa-sun"></i> ${game.i18n.format("TAGANDTALLY.Downtime.DayStarted", { day: state.day })}</h3>${expired ? `<p>${game.i18n.format("TAGANDTALLY.Downtime.TagsExpired", { count: expired })}</p>` : ""}</div>` });
+    await ChatMessage.create({ speaker: { alias: game.i18n.localize("TAGANDTALLY.Downtime.Title") }, content: `<div class="tagandtally chat-card"><h3><i class="fa-solid fa-sun"></i> ${game.i18n.format("TAGANDTALLY.Downtime.DayStarted", { day: state.day })}</h3>${expired ? `<p>${game.i18n.format("TAGANDTALLY.Downtime.TagsExpired", { count: expired })}</p>` : ""}</div>` });
     return state.day;
   }
 
