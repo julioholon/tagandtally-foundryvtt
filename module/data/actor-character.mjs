@@ -3,6 +3,30 @@ import { woundsSchema, prepareWounds, wealthSchema, htmlField, word, tidy } from
 
 const fields = foundry.data.fields;
 
+/** One row of a relations list: a linked document (optional) plus the character's view of it. */
+function relationRow({ disposition = false, tally = false, place = false } = {}) {
+  const schema = {
+    uuid: new fields.StringField({ required: true, blank: true, initial: "" }),
+    name: new fields.StringField({ required: true, blank: true, initial: "" }),
+    img: new fields.StringField({ required: true, blank: true, initial: "" }),
+    notes: new fields.StringField({ required: true, blank: true, initial: "" })
+  };
+  if (disposition) {
+    schema.disposition = new fields.NumberField({ required: true, integer: true, min: 0, max: TAGANDTALLY.relationSteps.length - 1, initial: TAGANDTALLY.relationDefault });
+    /** Temporary attitude for the current scene (null = same as disposition). Set by the Drift roll. */
+    schema.attitude = new fields.NumberField({ required: false, nullable: true, integer: true, min: 0, max: TAGANDTALLY.relationSteps.length - 1, initial: null });
+  }
+  if (tally) schema.tally = new fields.NumberField({ required: true, integer: true, min: 0, max: TAGANDTALLY.relationTallyMax, initial: 0 });
+  if (place) {
+    schema.visited = new fields.BooleanField({ initial: true });
+    schema.safeZone = new fields.BooleanField({ initial: false });
+  }
+  return new fields.SchemaField(schema);
+}
+
+/** Old free-text "Known world" fields → relation rows (0.3.0). */
+const LEGACY_DISPOSITION = { hostile: 1, unfriendly: 4, indifferent: 5, friendly: 7, allied: 9 };
+
 export default class CharacterData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     return {
@@ -32,17 +56,38 @@ export default class CharacterData extends foundry.abstract.TypeDataModel {
         voice: new fields.StringField({ required: true, blank: true, initial: "" }),
         distinguishing: new fields.StringField({ required: true, blank: true, initial: "" })
       }),
-      lore: new fields.SchemaField({
-        residence: new fields.StringField({ required: true, blank: true, initial: "" }),
-        workplace: new fields.StringField({ required: true, blank: true, initial: "" }),
-        faction: new fields.StringField({ required: true, blank: true, initial: "" }),
-        factionDisposition: new fields.StringField({ required: true, initial: "indifferent", choices: Object.keys(TAGANDTALLY.dispositions) }),
-        knownNpcs: new fields.StringField({ required: true, blank: true, initial: "" })
+      /** Known world: factions, people and places the character has a relation with. */
+      relations: new fields.SchemaField({
+        factions: new fields.ArrayField(relationRow({ disposition: true })),
+        people: new fields.ArrayField(relationRow({ disposition: true, tally: true })),
+        places: new fields.ArrayField(relationRow({ place: true }))
       }),
-      arc: new fields.StringField({ required: true, blank: true, initial: "" }),
       biography: htmlField(),
-      notes: htmlField()
+      notes: htmlField(),
+      /** Old "Character arc" text, parked here by migrateData until the world migration turns it into a quest. */
+      legacyArc: new fields.StringField({ required: true, blank: true, initial: "" })
     };
+  }
+
+  /** @override */
+  static migrateData(source) {
+    if (source.lore && !source.relations) {
+      const lore = source.lore;
+      const row = (kind, data) => ({ ...this.blankRelation(kind), ...data });
+      const relations = { factions: [], people: [], places: [] };
+      if (lore.faction) relations.factions.push(row("factions", { name: lore.faction, disposition: LEGACY_DISPOSITION[lore.factionDisposition] ?? TAGANDTALLY.relationDefault }));
+      for (const name of String(lore.knownNpcs ?? "").split(/[,;]/).map((n) => n.trim()).filter(Boolean)) relations.people.push(row("people", { name }));
+      if (lore.residence) relations.places.push(row("places", { name: lore.residence, notes: "Residence" }));
+      if (lore.workplace) relations.places.push(row("places", { name: lore.workplace, notes: "Workplace" }));
+      source.relations = relations;
+    }
+    if (typeof source.arc === "string" && source.arc && !source.legacyArc) source.legacyArc = source.arc;
+    return super.migrateData(source);
+  }
+
+  /** A relation row with every field at its default (partial updates are not cleaned until reload). */
+  static blankRelation(kind) {
+    return this.schema.getField(`relations.${kind}.element`).getInitialValue();
   }
 
   prepareDerivedData() {
@@ -65,6 +110,17 @@ export default class CharacterData extends foundry.abstract.TypeDataModel {
     this.wealth.canClimb = this.wealth.value < 6 && this.wealth.coins >= this.wealth.climbCost;
     this.wealth.dc = TAGANDTALLY.dcForLevel(this.wealth.value) || 0;
     this.sentenceText = this.buildSentence(actor?.name);
+    for (const kind of Object.keys(TAGANDTALLY.relationKinds)) {
+      for (const row of this.relations[kind]) {
+        if ("disposition" in row) {
+          const step = TAGANDTALLY.relationSteps[row.disposition] ?? TAGANDTALLY.relationSteps[TAGANDTALLY.relationDefault];
+          row.stepLabel = step.label;
+          row.modifier = step.modifier;
+          row.attitudeLabel = row.attitude === null ? null : TAGANDTALLY.relationSteps[row.attitude]?.label;
+        }
+        if ("tally" in row) row.tallyBoxes = Array.from({ length: TAGANDTALLY.relationTallyMax }, (_, i) => i < row.tally);
+      }
+    }
   }
 
   buildSentence(name = "") {

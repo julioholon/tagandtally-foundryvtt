@@ -12,9 +12,18 @@
         <td>{{r.loadout.value}}/{{r.loadout.max}}</td>
         <td>{{r.tags}}</td>
         <td>{{r.quests}}</td>
-        <td><a data-action="rollTask" data-actor-id="{{r.id}}" title="{{localize 'TAGANDTALLY.Roll.Task'}}"><i class="fa-solid fa-dice-d20"></i></a></td>
+        <td><a data-action="rollTask" data-actor-id="{{r.id}}" title="{{localize 'TAGANDTALLY.Roll.Task'}}"><i class="fa-solid fa-dice-d20"></i></a>{{#if ../isGM}} <a data-action="removeMember" data-actor-id="{{r.id}}" title="{{localize 'TAGANDTALLY.Party.Remove'}}"><i class="fa-solid fa-user-minus"></i></a>{{/if}}</td>
       </tr>
     {{/each}}
     {{#unless rows.length}}<tr><td colspan="10" class="tt-empty">{{localize "TAGANDTALLY.Party.Empty"}}</td></tr>{{/unless}}
   </tbody>
 </table>
+{{#if isGM}}
+<div class="tt-toolbar tt-party-add">
+  <label>{{localize "TAGANDTALLY.Party.Add"}}
+    <select name="member">{{#each candidates as |c|}}<option value="{{c.id}}">{{c.name}}</option>{{/each}}</select>
+  </label>
+  <button type="button" data-action="addMember" {{#unless candidates.length}}disabled{{/unless}}><i class="fa-solid fa-user-plus"></i> {{localize "TAGANDTALLY.Party.AddButton"}}</button>
+  <span class="hint">{{localize "TAGANDTALLY.Party.Hint"}}</span>
+</div>
+{{/if}}

@@ -27,6 +27,7 @@ export const TEMPLATES = [
   "templates/actor/parts/tab-inventory.hbs",
   "templates/actor/parts/tab-spells.hbs",
   "templates/actor/parts/tab-quests.hbs",
+  "templates/actor/parts/tab-relations.hbs",
   "templates/actor/parts/tab-wounds.hbs",
   "templates/actor/parts/tab-biography.hbs",
   "templates/actor/parts/tab-npc-main.hbs",

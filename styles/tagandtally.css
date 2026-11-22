@@ -235,3 +235,18 @@
   .tagandtally .tt-columns, .tagandtally .tt-roll-columns { grid-template-columns: 1fr; }
   .tagandtally .tt-phases { grid-template-columns: 1fr; }
 }
+
+/* ------------------------------ Relations -------------------------------- */
+.tagandtally .tt-relations h3 { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.8rem; }
+.tagandtally .tt-relations h3 .tt-controls { margin-left: auto; }
+.tagandtally .tt-relation select { max-width: 11em; }
+.tagandtally .tt-relation .tt-item-name input { width: 12em; }
+.tagandtally .tt-relation input.tt-item-sub { border: none; background: transparent; font-style: italic; padding: 0; height: 1.4em; }
+.tagandtally .tt-relation input.tt-item-sub:focus { background: rgba(0,0,0,0.05); }
+.tagandtally .tt-relation .tt-toggle { margin: 0 0.2rem; }
+.tagandtally .tt-relations .dim, .tagandtally .tt-augur-objectives .dim { opacity: 0.5; }
+.tagandtally .tt-augur-objectives { list-style: none; margin: 0.2rem 0 0; padding: 0; font-size: 0.85em; }
+.tagandtally .tt-augur-objectives li.done { opacity: 0.6; text-decoration: line-through; }
+.tagandtally .tt-party-add { margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.chat-message .tt-log-journal { margin-right: 0.3rem; cursor: pointer; opacity: 0.7; }
+.chat-message .tt-log-journal:hover { opacity: 1; text-shadow: 0 0 6px var(--tt-accent, #c9a227); }

@@ -82,7 +82,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
    */
   async _onRender(context, options) {
     await super._onRender(context, options);
-    const nativeDrop = typeof this._onDropItem === "function" || typeof this._onDrop === "function";
+    const nativeDrop = typeof ActorSheetV2.prototype._onDropItem === "function" || typeof ActorSheetV2.prototype._onDrop === "function";
     new foundry.applications.ux.DragDrop.implementation({
       dragSelector: ".tt-item[data-item-id]",
       dropSelector: nativeDrop ? ".tt-never" : null,
@@ -99,6 +99,10 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
 
   async #onDropV13(event) {
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+    if (this.actor.type === "character") {
+      const { handleRelationDrop } = await import("../relations.mjs");
+      if (await handleRelationDrop(this.actor, data)) return;
+    }
     if (data?.type !== "Item") return;
     const item = await Item.implementation.fromDropData(data);
     if (!item) return;

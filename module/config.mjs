@@ -297,6 +297,33 @@ TAGANDTALLY.dispositions = {
   allied: "TAGANDTALLY.Disposition.Allied"
 };
 
+/**
+ * SRD NPC-interaction ladder: permanent disposition and temporary attitude.
+ * Stored as an index into this list (5 = Indifferent). `modifier` eases (+)
+ * or hinders (-) social tasks; the SRD list is not monotonic on purpose.
+ */
+TAGANDTALLY.relationSteps = [
+  { value: 0, modifier: -3, label: "TAGANDTALLY.Relation.Loathing" },
+  { value: 1, modifier: -2, label: "TAGANDTALLY.Relation.Hostility" },
+  { value: 2, modifier: -1, label: "TAGANDTALLY.Relation.Rivalry" },
+  { value: 3, modifier: -1, label: "TAGANDTALLY.Relation.Conflict" },
+  { value: 4, modifier: -1, label: "TAGANDTALLY.Relation.Irritated" },
+  { value: 5, modifier: 0, label: "TAGANDTALLY.Relation.Indifferent" },
+  { value: 6, modifier: 0, label: "TAGANDTALLY.Relation.Reliable" },
+  { value: 7, modifier: 1, label: "TAGANDTALLY.Relation.Loyal" },
+  { value: 8, modifier: 1, label: "TAGANDTALLY.Relation.EnduringTrust" },
+  { value: 9, modifier: 2, label: "TAGANDTALLY.Relation.UnyieldingLoyalty" },
+  { value: 10, modifier: 3, label: "TAGANDTALLY.Relation.UnbreakableBond" }
+];
+TAGANDTALLY.relationDefault = 5;
+TAGANDTALLY.relationTallyMax = 5;
+/** Relation lists on the character sheet and which documents feed them. */
+TAGANDTALLY.relationKinds = {
+  factions: { label: "TAGANDTALLY.Relations.Factions", icon: "fa-solid fa-flag", augurTypes: ["faction"] },
+  people: { label: "TAGANDTALLY.Relations.People", icon: "fa-solid fa-user-group", augurTypes: ["npc", "person"] },
+  places: { label: "TAGANDTALLY.Relations.Places", icon: "fa-solid fa-map-location-dot", augurTypes: ["location", "site", "ship"] }
+};
+
 TAGANDTALLY.sparkThemes = {
   fantasy: "TAGANDTALLY.Theme.Fantasy",
   modern: "TAGANDTALLY.Theme.Modern",

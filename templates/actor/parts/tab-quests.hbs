@@ -1,6 +1,6 @@
 <section class="tab {{tab.cssClass}} tt-quests" data-tab="{{tab.id}}" data-group="{{tab.group}}">
   <div class="tt-toolbar">
-    <span class="hint">{{localize "TAGANDTALLY.Quest.Hint"}}</span>
+    <span class="hint">{{localize "TAGANDTALLY.Quest.Hint"}} {{localize "TAGANDTALLY.Quest.AugurHint"}}</span>
     <span class="tt-controls"><a data-action="createItem" data-type="quest"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Quest.Quest"}}</a></span>
   </div>
   <ol class="tt-item-list tt-quest-list">
@@ -10,6 +10,12 @@
         <div class="tt-item-body">
           <span class="tt-item-name" data-action="editItem">{{item.name}} {{#if item.system.isArc}}<i class="fa-solid fa-route" title="{{localize 'TAGANDTALLY.Quest.Arc'}}"></i>{{/if}}<small>{{localize (lookup ../config.questStatus item.system.status)}}</small></span>
           <span class="tt-item-sub">{{#if item.system.goal}}{{item.system.goal}}{{else}}{{tt-tags item.system.sentenceText}}{{/if}}</span>
+          {{#with (lookup ../questAugur item.id) as |aq|}}
+            <ul class="tt-augur-objectives" data-uuid="{{aq.uuid}}">
+              {{#each aq.objectives as |o|}}<li class="{{#if o.done}}done{{/if}}"><i class="fa-regular {{#if o.done}}fa-square-check{{else}}fa-square{{/if}}"></i> {{o.text}}{{#if o.hidden}} <i class="fa-solid fa-eye-slash dim"></i>{{/if}}</li>{{/each}}
+              {{#unless aq.objectives.length}}<li class="dim">{{localize "TAGANDTALLY.Quest.NoObjectives"}}</li>{{/unless}}
+            </ul>
+          {{/with}}
           <div class="tt-quest-tallies">
             {{#each item.system.tallies as |t key|}}{{#if t.enabled}}
               <span class="tt-tally"><label>{{localize t.label}}</label>
@@ -18,6 +24,7 @@
           </div>
         </div>
         <span class="tt-controls">
+          {{#if item.system.augurUuid}}<a data-action="openRelation" data-uuid="{{item.system.augurUuid}}" title="{{localize 'TAGANDTALLY.Quest.OpenAugur'}}"><i class="fa-solid fa-link"></i></a><a data-action="syncQuest" title="{{localize 'TAGANDTALLY.Quest.Sync'}}"><i class="fa-solid fa-rotate"></i></a>{{/if}}
           {{#if item.system.source}}<a data-action="rerollItem" title="{{localize 'TAGANDTALLY.Builder.Reroll'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}
           <a data-action="useItem" title="{{localize 'TAGANDTALLY.Quest.Resolve'}}" class="{{#unless item.system.readyToResolve}}dim{{/unless}}"><i class="fa-solid fa-dice-d20"></i></a>
           <a data-action="chatItem"><i class="fa-solid fa-comment"></i></a>

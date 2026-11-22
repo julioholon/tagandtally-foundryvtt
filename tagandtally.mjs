@@ -14,6 +14,8 @@ import { registerSettings } from "./module/settings.mjs";
 import { registerMigrationSetting, migrateWorld } from "./module/migration.mjs";
 import { registerHandlebarsHelpers, preloadTemplates } from "./module/handlebars.mjs";
 import { registerChatHooks } from "./module/rolls/chat.mjs";
+import { registerJournalLog, logMessageToJournal } from "./module/journal-log.mjs";
+import * as relations from "./module/relations.mjs";
 import { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel } from "./module/rolls/resolution.mjs";
 import { TaskRollDialog } from "./module/rolls/task-roll-dialog.mjs";
 import { CombatFlow, registerCombatFlowSocket } from "./module/combat/combat-flow.mjs";
@@ -60,6 +62,7 @@ Hooks.once("init", () => {
   CombatFlow.registerSetting();
   registerHandlebarsHelpers();
   registerChatHooks();
+  registerJournalLog();
   registerBarBrawl();
   registerItemPiles();
   registerSceneLevel();
@@ -99,8 +102,11 @@ Hooks.once("init", () => {
       importSparkTables: (group) => sparkTables.importToWorld({ group }),
       generateNPC: (options) => create.createActorFromSpark("npc", options),
       generateCreature: (options) => create.createActorFromSpark("creature", options),
-      generateJournal: (generatorId, options) => create.createJournalFromSpark(generatorId, options)
-    }
+      generateJournal: (generatorId, options) => create.createJournalFromSpark(generatorId, options),
+      logToJournal: (message) => logMessageToJournal(message ?? game.messages.contents.at(-1))
+    },
+    relations,
+    journal: { logMessageToJournal }
   };
 
   return preloadTemplates();

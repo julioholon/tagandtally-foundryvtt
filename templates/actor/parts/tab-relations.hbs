@@ -1,0 +1,36 @@
+<section class="tab {{tab.cssClass}} tt-relations" data-tab="{{tab.id}}" data-group="{{tab.group}}">
+  <p class="hint">{{localize "TAGANDTALLY.Relations.Hint"}}</p>
+  {{#each relationLists as |list|}}
+    <div class="tt-relation-list" data-kind="{{list.kind}}">
+      <h3><i class="{{list.icon}}"></i> {{localize list.label}} <span class="tt-controls"><a data-action="addRelationRow" data-kind="{{list.kind}}" title="{{localize 'TAGANDTALLY.Relations.AddManual'}}"><i class="fa-solid fa-plus"></i></a></span></h3>
+      <ol class="tt-item-list">
+        {{#each list.rows as |row i|}}
+          <li class="tt-item tt-relation" data-kind="{{list.kind}}" data-index="{{i}}" data-uuid="{{row.uuid}}">
+            <img src="{{row.img}}" alt="" {{#if row.uuid}}data-action="openRelation"{{/if}} />
+            <div class="tt-item-body">
+              <span class="tt-item-name" {{#if row.uuid}}data-action="openRelation"{{/if}}>
+                {{#if row.uuid}}{{row.name}} <i class="fa-solid fa-link dim"></i>{{else}}<input type="text" name="system.relations.{{list.kind}}.{{i}}.name" value="{{row.name}}" placeholder="{{localize 'TAGANDTALLY.Name'}}" />{{/if}}
+                {{#if row.attitudeLabel}}<small title="{{localize 'TAGANDTALLY.Relations.Attitude'}}"><i class="fa-solid fa-face-meh"></i> {{localize row.attitudeLabel}}</small>{{/if}}
+              </span>
+              <input type="text" class="tt-item-sub" name="system.relations.{{list.kind}}.{{i}}.notes" value="{{row.notes}}" placeholder="{{localize 'TAGANDTALLY.Notes'}}" />
+            </div>
+            {{#if list.hasDisposition}}
+              <select name="system.relations.{{list.kind}}.{{i}}.disposition" title="{{localize 'TAGANDTALLY.Relations.Disposition'}}">
+                {{#each row.steps as |s|}}<option value="{{s.value}}" {{#if s.selected}}selected{{/if}}>{{localize s.label}} ({{tt-signed s.modifier}})</option>{{/each}}
+              </select>
+            {{/if}}
+            {{#if list.hasTally}}
+              <span class="tt-boxes small" title="{{localize 'TAGANDTALLY.Relations.Tally'}}">{{#each row.tallyBoxes as |filled j|}}<a class="tt-box {{#if filled}}filled{{/if}}" data-action="relationTally" data-index="{{j}}"></a>{{/each}}</span>
+            {{/if}}
+            {{#if list.isPlace}}
+              <label class="tt-toggle" title="{{localize 'TAGANDTALLY.Relations.Visited'}}"><input type="checkbox" name="system.relations.{{list.kind}}.{{i}}.visited" {{checked row.visited}} /> <i class="fa-solid fa-shoe-prints"></i></label>
+              <label class="tt-toggle" title="{{localize 'TAGANDTALLY.Relations.SafeZone'}}"><input type="checkbox" name="system.relations.{{list.kind}}.{{i}}.safeZone" {{checked row.safeZone}} /> <i class="fa-solid fa-shield-halved"></i></label>
+            {{/if}}
+            <span class="tt-controls"><a data-action="removeRelation" title="{{localize 'TAGANDTALLY.Relations.Remove'}}"><i class="fa-solid fa-trash"></i></a></span>
+          </li>
+        {{/each}}
+        {{#unless list.rows.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Relations.Empty"}}</li>{{/unless}}
+      </ol>
+    </div>
+  {{/each}}
+</section>

@@ -37,7 +37,8 @@
       "wounds": "Wounds",
       "biography": "Biography",
       "details": "Details",
-      "description": "Description"
+      "description": "Description",
+      "relations": "Relations"
     },
     "Sentence": {
       "Title": "Sentence",
@@ -62,14 +63,6 @@
       "clothing": "Clothing",
       "voice": "Voice",
       "distinguishing": "Distinguishing"
-    },
-    "Lore": {
-      "Title": "Known world",
-      "Residence": "Residence",
-      "Workplace": "Workplace",
-      "Faction": "Faction",
-      "FactionDisposition": "Faction disposition",
-      "KnownNpcs": "Known NPCs"
     },
     "LifeStage": {
       "LifeStage": "Life stage",
@@ -413,7 +406,14 @@
       "ResolveTitle": "Quest: {name}",
       "PlanComplete": "Plan complete",
       "PlanMissing": "Plan incomplete",
-      "Empty": "No quests yet."
+      "Empty": "No quests yet.",
+      "AugurLinked": "Quest {name} linked to its Augur record.",
+      "AugurHint": "Drop an Augur quest journal on the sheet to track it here.",
+      "AugurQuest": "Augur quest",
+      "OpenAugur": "Open the Augur quest",
+      "Sync": "Copy Augur objectives into the steps",
+      "Synced": "{name}: {count} objectives copied.",
+      "NoObjectives": "No visible objectives."
     },
     "Npc": {
       "Creature": "Creature",
@@ -490,7 +490,11 @@
     },
     "Party": {
       "Title": "Party overview",
-      "Empty": "No player-owned characters."
+      "Empty": "No characters in the party yet.",
+      "Add": "Add to party",
+      "AddButton": "Add",
+      "Remove": "Remove from party",
+      "Hint": "Player-owned characters are listed automatically."
     },
     "Barter": {
       "Title": "Barter",
@@ -609,6 +613,51 @@
       "Spell": "spell",
       "This": "This",
       "LocatedOn": "located on"
+    },
+    "Relation": {
+      "Loathing": "Loathing",
+      "Hostility": "Hostility",
+      "Rivalry": "Rivalry",
+      "Conflict": "Conflict",
+      "Irritated": "Irritated",
+      "Indifferent": "Indifferent",
+      "Reliable": "Reliable",
+      "Loyal": "Loyal",
+      "EnduringTrust": "Enduring trust",
+      "UnyieldingLoyalty": "Unyielding loyalty",
+      "UnbreakableBond": "Unbreakable bond"
+    },
+    "Relations": {
+      "Title": "Relations",
+      "Factions": "Factions",
+      "People": "People",
+      "Places": "Places",
+      "Hint": "Drop Augur Nexus journals (factions, people, locations), NPC actors or any journal entry on this sheet to add them. Dispositions ease (+) or hinder (-) social tasks. Drop an Augur quest to link it on the Quests tab.",
+      "Empty": "Nothing known yet.",
+      "AddManual": "Add a row by hand",
+      "Remove": "Remove",
+      "Disposition": "Disposition",
+      "Attitude": "Attitude this scene",
+      "Tally": "Relationship tally (Socializing)",
+      "Visited": "Visited",
+      "SafeZone": "Safe zone",
+      "Already": "{name} is already listed.",
+      "Added": "{name} added to {list}.",
+      "WhichList": "Where does {name} belong?",
+      "Missing": "The linked document no longer exists."
+    },
+    "Journal": {
+      "Log": "Log to journal",
+      "Target": "Journal",
+      "Chronicle": "Chronicle",
+      "ChronicleOf": "Chronicle: {name}",
+      "Hint": "The message is appended to the journal's page with a timestamp. Describe what happened next in the journal.",
+      "GroupActor": "This character",
+      "GroupRelations": "Relations",
+      "GroupAll": "All journals",
+      "NoTarget": "No journal available to log to.",
+      "AskGM": "A GM must be online to log to that journal.",
+      "Logged": "Logged to {name}."
     }
   }
 }

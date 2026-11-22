@@ -7,6 +7,7 @@
     <div class="form-group"><label>{{localize "TAGANDTALLY.Quest.Consequence"}}</label><input type="text" name="system.consequence" value="{{system.consequence}}" /></div>
     <div class="form-group"><label>{{localize "TAGANDTALLY.Quest.Status"}}</label><select name="system.status">{{selectOptions statuses selected=system.status localize=true}}</select></div>
     <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.isArc" {{checked system.isArc}} /> {{localize "TAGANDTALLY.Quest.Arc"}}</label></div>
+    {{#if system.augurUuid}}<div class="form-group span2"><label>{{localize "TAGANDTALLY.Quest.AugurQuest"}}</label><span>{{#if isGM}}<input type="text" name="system.augurUuid" value="{{system.augurUuid}}" />{{else}}<code>{{system.augurUuid}}</code>{{/if}}</span></div>{{/if}}
   </div>
   <h3>{{localize "TAGANDTALLY.Tally.Tallies"}}</h3>
   <div class="tt-grid three">
