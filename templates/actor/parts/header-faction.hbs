@@ -3,7 +3,7 @@
   <div class="tt-header-main">
     <div class="tt-name-row">
       {{#if owner}}<input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TAGANDTALLY.Name'}}" />{{else}}<h2>{{actor.name}}</h2>{{/if}}
-      {{#if augurLinked}}<button type="button" class="tt-icon-btn" data-action="importAugur" title="{{localize 'TAGANDTALLY.Faction.ImportAugur'}}"><i class="fa-solid fa-file-import"></i></button>{{/if}}
+      {{#if augurLinked}}<button type="button" class="tt-icon-btn" data-action="openAugur" title="{{localize 'TAGANDTALLY.Augur.Open'}}"><i class="fa-solid fa-book-open"></i></button><button type="button" class="tt-icon-btn" data-action="importAugur" title="{{localize 'TAGANDTALLY.Faction.ImportAugur'}}"><i class="fa-solid fa-file-import"></i></button>{{/if}}
       {{#if isGM}}<button type="button" class="tt-icon-btn" data-action="generateSentence" title="{{localize 'TAGANDTALLY.Sparks.Regenerate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></button>{{/if}}
       <button type="button" class="tt-icon-btn" data-action="sentenceToChat" title="{{localize 'TAGANDTALLY.ToChat'}}"><i class="fa-solid fa-comment"></i></button>
     </div>

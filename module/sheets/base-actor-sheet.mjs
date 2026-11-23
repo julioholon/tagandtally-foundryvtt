@@ -1,7 +1,8 @@
 import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
 import { rollTemporaryTag } from "../rolls/resolution.mjs";
 import { createWoundItemFromSpark, generateAppearanceFor } from "../sparks/create.mjs";
-import { hasAugurPerson, importAugurPerson } from "../integrations/augur.mjs";
+import { hasAugurPerson, importAugurPerson, findAugurPerson, linkAugurPerson } from "../integrations/augur.mjs";
+import { openAugurDossier } from "../relations.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -41,6 +42,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
       cashOut: BaseActorSheet.#onCashOut,
       climbWealth: BaseActorSheet.#onClimbWealth,
       importAugur: BaseActorSheet.#onImportAugur,
+      openAugur: BaseActorSheet.#onOpenAugur,
       addStageTag: BaseActorSheet.#onAddStageTag
     }
   };
@@ -66,7 +68,8 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
       coinsMode: game.settings.get(SYSTEM_ID, "coinsMode"),
       coinsWidth: Math.max(4, String(this.actor.system.wealth.coins ?? 0).length + 3),
       climbCostLabel: Number(this.actor.system.wealth.climbCost ?? 0).toLocaleString(game.i18n.lang),
-      augurLinked: hasAugurPerson(actor)
+      augurLinked: hasAugurPerson(actor),
+      augurActive: Boolean(game.modules.get("augur-nexus")?.active) && game.user.isGM
     });
     return context;
   }
@@ -277,6 +280,13 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
   static async #onCashOut() { return this.actor.cashOut(); }
   static async #onClimbWealth() { return this.actor.climbWealth(); }
   static async #onImportAugur() { return importAugurPerson(this.actor); }
+
+  /** Linked: open the Nexus dossier. Not linked yet: pick the Augur person this actor is, then import it. */
+  static async #onOpenAugur() {
+    const journal = findAugurPerson(this.actor);
+    if (journal) { if (await openAugurDossier(journal)) return; return journal.sheet.render({ force: true }); }
+    return linkAugurPerson(this.actor);
+  }
 
   static async #onRerollItem(event, target) {
     const item = this._getItem(target);

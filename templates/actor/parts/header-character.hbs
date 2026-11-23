@@ -3,7 +3,7 @@
   <div class="tt-header-main">
     <div class="tt-name-row">
       <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TAGANDTALLY.Name'}}" />
-      {{#if augurLinked}}<button type="button" class="tt-icon-btn" data-action="importAugur" title="{{localize 'TAGANDTALLY.Augur.Import'}}"><i class="fa-solid fa-file-import"></i></button>{{/if}}
+      {{#if augurLinked}}<button type="button" class="tt-icon-btn" data-action="openAugur" title="{{localize 'TAGANDTALLY.Augur.Open'}}"><i class="fa-solid fa-book-open"></i></button><button type="button" class="tt-icon-btn" data-action="importAugur" title="{{localize 'TAGANDTALLY.Augur.Import'}}"><i class="fa-solid fa-file-import"></i></button>{{else if augurActive}}<button type="button" class="tt-icon-btn" data-action="openAugur" title="{{localize 'TAGANDTALLY.Augur.Link'}}"><i class="fa-solid fa-link"></i></button>{{/if}}
       {{#if owner}}<button type="button" class="tt-icon-btn" data-action="randomize" title="{{localize 'TAGANDTALLY.Builder.Title'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></button>{{/if}}
       <button type="button" class="tt-roll-btn" data-action="rollTask" title="{{localize 'TAGANDTALLY.Roll.Task'}}"><i class="fa-solid fa-dice-d20"></i> {{localize "TAGANDTALLY.Roll.Roll"}}</button>
     </div>

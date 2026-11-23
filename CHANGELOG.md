@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.6.5 (2026-11-23)
+## 0.6.6 (unreleased)
+
+- Character, NPC and Faction sheets get an Augur button: linked actors open their Nexus dossier (the
+  import button stays beside it); unlinked characters and NPCs pick the Augur person they are, which
+  links and imports them.
+
+## 0.6.5 (unreleased)
 
 - Relation rows (and the faction headquarters link) open the Augur Nexus dossier of NPCs, factions
   and locations instead of the journal page, falling back to the journal when Augur cannot.

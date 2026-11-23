@@ -82,3 +82,32 @@ export async function importAugurPerson(actor, { journal } = {}) {
   ui.notifications.info(game.i18n.format("TAGANDTALLY.Augur.Imported", { name: actor.name, person, count: tags.length }));
   return actor;
 }
+
+/** Augur person journals (NPC entities) not yet projected onto an actor, plus the one linked to `actor`. */
+export function augurPersonJournals(actor = null) {
+  return game.journal.filter((j) => {
+    const ce = j.flags?.["augur-nexus"]?.campaignEntity;
+    if (ce?.type !== "npc") return false;
+    const projected = ce.projections?.actorUuid;
+    return !projected || projected === actor?.uuid;
+  });
+}
+
+/** Ask which Augur person this actor is, remember it on the actor (Augur's own flag) and import it. */
+export async function linkAugurPerson(actor) {
+  const options = augurPersonJournals(actor).sort((a, b) => a.name.localeCompare(b.name));
+  if (!options.length) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Augur.NoPeople"));
+  const byName = options.find((j) => j.name.toLowerCase() === actor.name.toLowerCase());
+  const select = `<select name="journal" autofocus>${options.map((j) => `<option value="${j.uuid}" ${j === byName ? "selected" : ""}>${foundry.utils.escapeHTML(j.name)}</option>`).join("")}</select>`;
+  const uuid = await foundry.applications.api.DialogV2.prompt({
+    window: { title: game.i18n.localize("TAGANDTALLY.Augur.Link") },
+    content: `<p>${game.i18n.format("TAGANDTALLY.Augur.LinkHint", { name: foundry.utils.escapeHTML(actor.name) })}</p><div class="form-group">${select}</div>`,
+    ok: { label: game.i18n.localize("TAGANDTALLY.Augur.Link"), callback: (event, button) => button.form.elements.journal.value },
+    rejectClose: false
+  });
+  if (!uuid) return null;
+  await actor.setFlag("augur-nexus", "campaignEntityRef", { journalEntryUuid: uuid });
+  const journal = await fromUuid(uuid);
+  if (journal) await importAugurPerson(actor, { journal });
+  return journal;
+}
