@@ -586,7 +586,11 @@
         "male": "He / Him",
         "nonbinary": "They / Them",
         "other": "They / Them"
-      }
+      },
+      "Open": "Open the Augur Nexus dossier",
+      "Link": "Link to an Augur person",
+      "LinkHint": "Which Augur Nexus person is {name}? The sentence, traits, beliefs and portrait are imported.",
+      "NoPeople": "No unlinked Augur Nexus people in this world."
     },
     "Macros": {
       "Created": "{count} Tag & Tally macros created in the Macro folder.",

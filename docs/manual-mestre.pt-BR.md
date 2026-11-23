@@ -255,9 +255,11 @@ Fluxo sugerido para construir o mundo em conjunto:
    no Nexus.
 4. Para cada PdM relevante, gere pelo Sparks, crie o ator e arraste para o Nexus como
    Pessoa. Os segredos ficam ocultos até serem descobertos.
-5. No caminho inverso, uma **Pessoa criada pelo Augur** e vinculada a um ator mostra um
-   botão de importar no cabeçalho da ficha: a frase vem do descritor, ancestralidade,
-   papel e impulso; traços e crenças viram tags; retrato e pronome são copiados.
+5. No caminho inverso, toda ficha de personagem e PdM tem um botão **Augur** no
+   cabeçalho: atores vinculados abrem seu dossiê no Nexus (o botão de importar ao lado
+   atualiza a frase a partir de descritor, ancestralidade, papel e impulso, traços e crenças
+   como tags, retrato e pronome); um ator sem vínculo pergunta qual pessoa do Augur ele é,
+   depois vincula e importa.
 
 ## 17. Jogando com vários Mestres
 

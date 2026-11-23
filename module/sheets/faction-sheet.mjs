@@ -1,6 +1,6 @@
 import { TAGANDTALLY } from "../config.mjs";
 import { addInsight, addCountdown, nextPhase, resetPhase, setPhase, resolveFaction, findAugurFaction, importAugurFaction, allFactions, augurFactionJournals, createFactionFromAugur, addRival, setHeadquarters, addFactionTags } from "../factions.mjs";
-import { augurEntity, resolveAugurDrag, openRelation } from "../relations.mjs";
+import { augurEntity, resolveAugurDrag, openRelation, openAugurDossier } from "../relations.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -24,6 +24,7 @@ export default class FactionSheet extends HandlebarsApplicationMixin(ActorSheetV
       removeRival: FactionSheet.#onRemoveRival,
       clearLog: FactionSheet.#onClearLog,
       importAugur: FactionSheet.#onImportAugur,
+      openAugur: FactionSheet.#onOpenAugur,
       generateSentence: FactionSheet.#onGenerateSentence,
       sentenceToChat: FactionSheet.#onSentenceToChat,
       openHeadquarters: FactionSheet.#onOpenHeadquarters,
@@ -154,6 +155,11 @@ export default class FactionSheet extends HandlebarsApplicationMixin(ActorSheetV
   static #onRemoveRival(event, target) { return this.actor.update({ "system.rivals": this.actor.system.rivals.filter((u) => u !== target.dataset.uuid) }); }
   static #onClearLog() { return this.actor.update({ "system.log": [] }); }
   static #onImportAugur() { return importAugurFaction(this.actor); }
+  static async #onOpenAugur() {
+    const journal = findAugurFaction(this.actor);
+    if (!journal) return;
+    if (!(await openAugurDossier(journal))) journal.sheet.render({ force: true });
+  }
 
   /** Fill the sentence from the Sparks faction generator. */
   static async #onGenerateSentence() {

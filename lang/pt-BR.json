@@ -586,7 +586,11 @@
         "male": "Ele / Dele",
         "nonbinary": "Elu / Delu",
         "other": "Elu / Delu"
-      }
+      },
+      "Open": "Abrir o dossiê do Augur Nexus",
+      "Link": "Vincular a uma pessoa do Augur",
+      "LinkHint": "Qual pessoa do Augur Nexus é {name}? Frase, traços, crenças e retrato são importados.",
+      "NoPeople": "Nenhuma pessoa do Augur Nexus sem vínculo neste mundo."
     },
     "Macros": {
       "Created": "{count} macros do Tag & Tally criados na pasta de Macros.",

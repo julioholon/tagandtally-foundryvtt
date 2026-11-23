@@ -262,9 +262,10 @@ Suggested workflow for building the world together:
    and link it in Nexus.
 4. For each relevant NPC, generate with Sparks, create the actor and drag it into Nexus as a
    Person. Secrets stay hidden until discovered.
-5. In the other direction, an **Augur-made Person** linked to an actor shows an import button
-   in the sheet header: the sentence comes from descriptor, ancestry, role and drive; traits
-   and beliefs become tags; portrait and pronoun are copied.
+5. In the other direction, every character and NPC sheet has an **Augur** button in the
+   header: linked actors open their Nexus dossier (the import button beside it refreshes the
+   sentence from descriptor, ancestry, role and drive, traits and beliefs as tags, portrait
+   and pronoun); an unlinked actor asks which Augur person it is, then links and imports.
 
 ## 17. Playing with several GMs
 
