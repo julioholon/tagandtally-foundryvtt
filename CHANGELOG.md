@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.2 (unreleased)
+## 0.6.2 (2026-11-22)
 
 - Manifest: Foundry v14 is now the minimum (v13 was never tested); cover and icon media for the
   package listing.
