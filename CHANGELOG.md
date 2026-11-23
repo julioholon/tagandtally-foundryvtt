@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.5 (unreleased)
+## 0.6.5 (2026-11-23)
 
 - Relation rows (and the faction headquarters link) open the Augur Nexus dossier of NPCs, factions
   and locations instead of the journal page, falling back to the journal when Augur cannot.
