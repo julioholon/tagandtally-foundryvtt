@@ -22,6 +22,8 @@ export default class FactionData extends foundry.abstract.TypeDataModel {
         secret: str()
       }),
       headquarters: str(),
+      /** Linked place (Augur location journal, scene or site page) behind the headquarters, if any. */
+      headquartersUuid: str(),
       /** Hidden until learned through insights (or shown to owners / GMs). */
       revealed: new fields.SchemaField({
         goal: new fields.BooleanField({ initial: false }),

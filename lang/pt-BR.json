@@ -976,7 +976,18 @@
         "Manifestation": "O líder inicia o objetivo final. É o clímax: a ameaça está no auge de poder e perigo.",
         "Brink": "O plano deu certo e suas consequências varrem a região. Há uma brecha mínima para reduzir o dano, mas a facção venceu.",
         "End": "A região mudou para sempre: a facção domina, o ritual se completou, a cidade acabou. Este arco terminou."
-      }
+      },
+      "AugurOption": "Augur: {name} (importar)",
+      "RivalAdded": "{name} agora trabalha contra {faction}.",
+      "NoRivalOptions": "Rivais são outros atores Facção: crie um, importe da visão geral de Facções ou solte uma facção aqui.",
+      "HeadquartersSet": "{name} agora é o quartel-general de {faction}.",
+      "DropHint": "solte um lugar aqui",
+      "OpenHeadquarters": "Abrir o quartel-general",
+      "UnlinkHeadquarters": "Desvincular o lugar (mantém o nome)",
+      "Tags": "Tags",
+      "AddTag": "Adicionar tag",
+      "AddTagPlaceholder": "Nome da tag",
+      "RemoveTag": "Remover tag"
     },
     "Downtime": {
       "Title": "Descanso",

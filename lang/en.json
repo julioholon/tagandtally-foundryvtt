@@ -976,7 +976,18 @@
         "Manifestation": "The leader initiates the ultimate goal. This is the climax: the threat is at its most powerful and most dangerous.",
         "Brink": "The plan has succeeded and its consequences tear through the area. There is a tiny window to mitigate the damage, but the faction has won.",
         "End": "The region is permanently changed: the faction holds total dominance, the ritual is complete, the town is gone. This arc is over."
-      }
+      },
+      "AugurOption": "Augur: {name} (import)",
+      "RivalAdded": "{name} now works against {faction}.",
+      "NoRivalOptions": "Rivals are other Faction actors: create one, import one from the Factions overview, or drop a faction here.",
+      "HeadquartersSet": "{name} is now the headquarters of {faction}.",
+      "DropHint": "drop a place here",
+      "OpenHeadquarters": "Open the headquarters",
+      "UnlinkHeadquarters": "Unlink the place (keeps the name)",
+      "Tags": "Tags",
+      "AddTag": "Add tag",
+      "AddTagPlaceholder": "Tag name",
+      "RemoveTag": "Remove tag"
     },
     "Downtime": {
       "Title": "Downtime",

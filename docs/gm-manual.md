@@ -152,7 +152,7 @@ would change the character or the situation.
 
 - The **Relations** tab lists the factions, people and places the character knows. Drag an
   NPC actor, a Faction actor, an Augur Nexus journal or any journal entry onto the sheet to
-  add it. Each row keeps the SRD **disposition** (Hostile to Devoted) and relationship
+  add it. Clicking an Augur relation opens its Nexus dossier. Each row keeps the SRD **disposition** (Hostile to Devoted) and relationship
   tallies; five tallies move the disposition one step.
 - **Interact** (button on a relation row or on the NPC sheet) runs an SRD conversation: the
   NPC's **Drift** attitude is rolled once per scene (2d6), then you pick an **approach**
@@ -212,8 +212,12 @@ would change the character or the situation.
 
 - Create a **Faction** actor. The sentence ("a [descriptor] [organization] that [function]
   and [goal]; despite their reputation, they [secret]") comes from the **wand** or from an
-  Augur Nexus faction journal (**Import** in the header). Goal, secret and headquarters stay
-  hidden until you click the eye.
+  Augur Nexus faction journal (**Import** in the header, or drop the journal on the sheet):
+  type and disposition fill the organization and descriptor, the Purpose, The World and
+  Authority tenets fill function, goal and secret, and drive, action, theme and focus become
+  **tags**. Drop an Augur location, scene or site page on the sheet to set the
+  **headquarters**; drop another faction to add a **rival**. Goal, secret and headquarters
+  stay hidden until you click the eye.
 - The **phase timer**: seven phases from Shadows to End. Each **Insight** the players gain
   marks a tally; five complete the phase and post a card (whispered to the GMs until the
   goal is known). Once the players know the goal the **countdown** of 10 runs; when it fills

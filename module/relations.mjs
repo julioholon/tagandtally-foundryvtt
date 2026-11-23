@@ -1,4 +1,4 @@
-import { TAGANDTALLY } from "./config.mjs";
+import { TAGANDTALLY, SYSTEM_ID } from "./config.mjs";
 
 const AUGUR = "augur-nexus";
 
@@ -153,8 +153,39 @@ export async function askRelationKind(doc) {
 export async function openRelation(uuid) {
   const doc = uuid ? await fromUuid(uuid) : null;
   if (!doc) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Relations.Missing"));
+  if (await openAugurDossier(doc)) return true;
   if (doc.documentName === "JournalEntryPage") return doc.parent.sheet.render({ force: true, pageId: doc.id });
   return doc.sheet.render({ force: true });
+}
+
+/** Absolute URL of an Augur Nexus API module (works from any importer, route prefix included). */
+export function augurApiUrl(name) {
+  return new URL(foundry.utils.getRoute(`modules/${AUGUR}/scripts/api/${name}.js`), window.location.href).href;
+}
+
+/** Augur Nexus API modules that open an entity's dossier, by entity type. */
+const AUGUR_DOSSIERS = {
+  npc: ["npcs", "openNpcDossier"],
+  faction: ["factions", "openFactionDossier"],
+  location: ["locations", "openLocationDossier"],
+  quest: ["quests", "openQuestDossier"],
+  ship: ["ships", "openShipDossier"]
+};
+
+/** Open the Nexus dossier of an Augur campaign entity journal; false when it is not one or Augur cannot open it. */
+export async function openAugurDossier(doc) {
+  const entity = augurEntity(doc);
+  const def = entity && game.modules.get(AUGUR)?.active ? AUGUR_DOSSIERS[entity.type] : null;
+  if (!def) return false;
+  try {
+    const api = await import(augurApiUrl(def[0]));
+    if (typeof api[def[1]] !== "function") return false;
+    await api[def[1]](entity.id);
+    return true;
+  } catch (err) {
+    console.warn(`${SYSTEM_ID} | Augur dossier unavailable, opening the journal instead`, err);
+    return false;
+  }
 }
 
 /**

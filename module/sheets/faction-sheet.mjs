@@ -1,5 +1,6 @@
 import { TAGANDTALLY } from "../config.mjs";
-import { addInsight, addCountdown, nextPhase, resetPhase, setPhase, resolveFaction, findAugurFaction, importAugurFaction, allFactions } from "../factions.mjs";
+import { addInsight, addCountdown, nextPhase, resetPhase, setPhase, resolveFaction, findAugurFaction, importAugurFaction, allFactions, augurFactionJournals, createFactionFromAugur, addRival, setHeadquarters, addFactionTags } from "../factions.mjs";
+import { augurEntity, resolveAugurDrag, openRelation } from "../relations.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -24,7 +25,11 @@ export default class FactionSheet extends HandlebarsApplicationMixin(ActorSheetV
       clearLog: FactionSheet.#onClearLog,
       importAugur: FactionSheet.#onImportAugur,
       generateSentence: FactionSheet.#onGenerateSentence,
-      sentenceToChat: FactionSheet.#onSentenceToChat
+      sentenceToChat: FactionSheet.#onSentenceToChat,
+      openHeadquarters: FactionSheet.#onOpenHeadquarters,
+      clearHeadquarters: FactionSheet.#onClearHeadquarters,
+      addTag: FactionSheet.#onAddTag,
+      removeTag: FactionSheet.#onRemoveTag
     }
   };
 
@@ -52,7 +57,10 @@ export default class FactionSheet extends HandlebarsApplicationMixin(ActorSheetV
     const label = (n) => { const d = F.phases[n - 1]; return d ? `${d.end ? "" : `${n}. `}${game.i18n.localize(d.label)}` : String(n); };
     const canSee = { goal: actor.canSeeHidden("goal"), secret: actor.canSeeHidden("secret"), headquarters: actor.canSeeHidden("headquarters") };
     const rivals = system.rivals.map(resolveFaction).filter(Boolean).map((r) => ({ uuid: r.uuid, name: r.name, img: r.img, phaseLabel: label(r.system.phase) }));
-    const rivalOptions = allFactions().filter((a) => a.id !== actor.id && !system.rivals.includes(a.uuid)).map((a) => ({ uuid: a.uuid, name: a.name }));
+    const linked = new Set(allFactions().flatMap((a) => [a.system.augurUuid, a.name.toLowerCase()]).filter(Boolean));
+    const rivalOptions = allFactions().filter((a) => a.id !== actor.id && !system.rivals.includes(a.uuid)).map((a) => ({ value: a.uuid, name: a.name }));
+    if (game.user.isGM) for (const j of augurFactionJournals()) if (!linked.has(j.uuid) && !linked.has(j.name.toLowerCase())) rivalOptions.push({ value: `augur:${j.id}`, name: game.i18n.format("TAGANDTALLY.Faction.AugurOption", { name: j.name }) });
+    const tags = actor.items.filter((i) => i.type === "tag").map((i) => ({ id: i.id, name: i.name })).sort((a, b) => a.name.localeCompare(b.name));
     Object.assign(context, {
       actor, system, config: TAGANDTALLY, fields: system.schema.fields,
       isGM: game.user.isGM, owner: actor.isOwner, limited: actor.limited,
@@ -63,7 +71,8 @@ export default class FactionSheet extends HandlebarsApplicationMixin(ActorSheetV
       phaseLabel: label(system.phase),
       vibe: game.i18n.localize(system.phaseDef.vibe),
       phaseText: game.i18n.localize(system.phaseDef.text),
-      rivals, rivalOptions,
+      rivals, rivalOptions, tags, showTags: tags.length > 0 || actor.isOwner,
+      headquartersLinked: Boolean(system.headquartersUuid),
       log: [...system.log].reverse().map((l) => ({ ...l, phaseLabel: label(l.phase) })),
       augurLinked: Boolean(game.modules.get("augur-nexus")?.active && findAugurFaction(actor))
     });
@@ -79,11 +88,54 @@ export default class FactionSheet extends HandlebarsApplicationMixin(ActorSheetV
   _onRender(context, options) {
     super._onRender(context, options);
     this.element.querySelector("[data-rival-pick]")?.addEventListener("change", async (event) => {
-      const uuid = event.target.value;
-      if (!uuid) return;
-      await this.actor.update({ "system.rivals": [...this.actor.system.rivals, uuid] });
+      const value = event.target.value;
+      if (!value) return;
+      if (value.startsWith("augur:")) {
+        const journal = game.journal.get(value.slice(6));
+        const rival = journal ? await createFactionFromAugur(journal, { render: false }) : null;
+        if (rival) await addRival(this.actor, rival);
+        return;
+      }
+      await addRival(this.actor, value);
     });
   }
+
+  /**
+   * Drops on the sheet: another faction becomes a rival, an Augur faction journal fills the
+   * sentence, a place (Augur location, scene, site page or plain journal) becomes the headquarters.
+   */
+  async _onDrop(event) {
+    if (this.isEditable && await this.#handleDrop(event)) return;
+    return super._onDrop?.(event);
+  }
+
+  async #handleDrop(event) {
+    const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+    const doc = ["Actor", "JournalEntry", "Scene", "JournalEntryPage"].includes(data?.type) ? await fromUuid(data.uuid) : await resolveAugurDrag(event, data);
+    if (!doc || doc === this.actor) return false;
+    if (doc.documentName === "Actor") { if (doc.type !== "faction") return false; await addRival(this.actor, doc); return true; }
+    const entity = augurEntity(doc);
+    if (entity?.type === "faction") {
+      await importAugurFaction(this.actor, { journal: doc });
+      if (/^New |^Nov[oa] /.test(this.actor.name)) await this.actor.update({ name: doc.name });
+      return true;
+    }
+    if (doc.documentName === "Scene" || doc.documentName === "JournalEntryPage" || entity?.type === "location" || (doc.documentName === "JournalEntry" && !entity)) { await setHeadquarters(this.actor, doc); return true; }
+    return false;
+  }
+
+  static #onOpenHeadquarters() { return openRelation(this.actor.system.headquartersUuid); }
+  static #onClearHeadquarters() { return this.actor.update({ "system.headquartersUuid": "" }); }
+  static async #onAddTag() {
+    const name = await foundry.applications.api.DialogV2.prompt({
+      window: { title: game.i18n.localize("TAGANDTALLY.Faction.AddTag") },
+      content: `<input type="text" name="name" autofocus placeholder="${game.i18n.localize("TAGANDTALLY.Faction.AddTagPlaceholder")}" />`,
+      ok: { label: game.i18n.localize("TAGANDTALLY.Faction.AddTag"), callback: (event, button) => button.form.elements.name.value },
+      rejectClose: false
+    });
+    if (name) return addFactionTags(this.actor, [name]);
+  }
+  static #onRemoveTag(event, target) { return this.actor.items.get(target.dataset.itemId)?.delete(); }
 
   static #onInsight() { return addInsight(this.actor); }
   static #onCountdown() { return addCountdown(this.actor, 1, { reason: game.i18n.localize("TAGANDTALLY.Faction.TimePasses") }); }
