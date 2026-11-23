@@ -44,21 +44,16 @@ export default class NpcSheet extends BaseActorSheet {
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
     const actor = this.actor;
-    const hide = game.settings.get(SYSTEM_ID, "hideCreatureSecrets") || actor.constructor.veiled;
+    const def = actor.system.hiddenDef;
     context.dispositions = TAGANDTALLY.dispositions;
     context.damageTypes = TAGANDTALLY.damageTypes;
     context.levels = TAGANDTALLY.levels;
     context.dc = actor.system.dc;
     context.levelLabel = game.i18n.localize(actor.system.levelLabel ?? "");
-    context.canSee = {
-      strength: !hide || actor.canSeeHidden("strength"),
-      weakness: !hide || actor.canSeeHidden("weakness"),
-      secret: !hide || actor.canSeeHidden("secret")
-    };
-    context.insightBoxes = {
-      strength: Array.from({ length: TAGANDTALLY.insightsPerTally }, (_, i) => i < actor.system.insights.strength),
-      weakness: Array.from({ length: TAGANDTALLY.insightsPerTally }, (_, i) => i < actor.system.insights.weakness)
-    };
+    context.canSee = Object.fromEntries(Object.keys(actor.system.sentence).map((k) => [k, actor.system.canSee(k)]));
+    context.hiddenKeys = def.keys;
+    context.insightKeys = def.insight;
+    context.insightBoxes = Object.fromEntries(def.insight.map((k) => [k, Array.from({ length: TAGANDTALLY.insightsPerTally }, (_, i) => i < actor.system.insights[k])]));
     return context;
   }
 

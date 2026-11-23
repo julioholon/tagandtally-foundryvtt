@@ -363,3 +363,9 @@
 .tagandtally.faction .tt-faction-tags .tt-tag a:hover { opacity: 1; }
 .tagandtally.faction .tt-add-tag { font-size: 0.85em; opacity: 0.8; cursor: pointer; }
 .tagandtally.faction .form-group .tt-inline a { cursor: pointer; padding: 0 0.25rem; }
+
+/* NPC hidden fields */
+.tagandtally .tt-npc-main .form-group { position: relative; }
+.tagandtally .tt-npc-main .form-group .tt-reveal { position: absolute; right: 0.4rem; top: 0; font-size: 0.85em; opacity: 0.6; cursor: pointer; }
+.tagandtally .tt-npc-main .form-group .tt-reveal:hover { opacity: 1; }
+.tagandtally .tt-npc-main .form-group .tt-secret { display: inline-block; padding: 0.35rem 0.2rem; opacity: 0.7; font-style: italic; }

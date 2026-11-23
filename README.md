@@ -33,7 +33,7 @@ Or download the latest `tagandtally.zip` from the releases page and unzip it int
 | Quests | Plan / Location / Countdown tallies, steps, status, resolution roll with plan modifier |
 | Gear | Weapons, armor, items, consumables, containers, resources, traps, kits; level 1-10, kind, cost, equipped, quantities; loadout counter |
 | Barter | Buy from and sell to NPC merchants with Wealth checks per the SRD, no extra module needed |
-| NPCs / creatures | Creature or NPC sentence, level and DC, strength / weakness / secret hidden from players until revealed or learned via insights |
+| NPCs / creatures | Creature or NPC sentence, level and DC; players see only the core sentence until the GM reveals motivation, wants, attack, damage type or special ability; a creature's strength and weakness and an NPC's secret also reveal through five insights |
 | Sparks | 530+ random tables from the official Obsidian vault, 22 sentence generators (NPC, creature, species, gear, places, factions, quests, wounds, appearance), oracle, table browser, create actors / items / journals from results |
 | Relations | Factions, people and places the character knows, dropped from Augur Nexus journals, NPC actors or any journal; SRD disposition ladder and relationship tallies; Augur quests link to quest items; any chat card can be logged to a journal |
 | NPC interactions | Interact from a relation row or an NPC sheet: 2d6 Drift attitude per scene, approach pathways (1d10 / 1d6) with prompts, typed question, disposition modifier applied, SRD outcome consequences applied to the relation |

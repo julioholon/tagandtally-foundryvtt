@@ -22,12 +22,13 @@ export function registerSettings() {
     name: "TAGANDTALLY.Settings.SoloVeil.Name",
     hint: "TAGANDTALLY.Settings.SoloVeil.Hint",
     scope: "world", config: true, type: Boolean, default: false,
-    onChange: () => { for (const app of foundry.applications.instances.values()) if (app.document?.documentName === "Actor" || app.id === "tt-factions") app.render(); }
+    onChange: () => { for (const a of game.actors) a.prepareData(); for (const app of foundry.applications.instances.values()) if (app.document?.documentName === "Actor" || app.id === "tt-factions") app.render(); }
   });
   game.settings.register(SYSTEM_ID, "hideCreatureSecrets", {
     name: "TAGANDTALLY.Settings.HideSecrets.Name",
     hint: "TAGANDTALLY.Settings.HideSecrets.Hint",
-    scope: "world", config: true, type: Boolean, default: true
+    scope: "world", config: true, type: Boolean, default: true,
+    onChange: () => { for (const a of game.actors) a.prepareData(); for (const app of foundry.applications.instances.values()) if (app.document?.documentName === "Actor") app.render(); }
   });
   game.settings.register(SYSTEM_ID, "barBrawlDefaults", {
     name: "TAGANDTALLY.Settings.BarBrawl.Name",

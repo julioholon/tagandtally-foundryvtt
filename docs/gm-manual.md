@@ -134,8 +134,11 @@ would change the character or the situation.
   motivation, wants, secret).
 - The **wand** in the header generates the whole sentence with Sparks. Level comes from the
   scene.
-- **Hidden from players**: strength, weakness and secret stay hidden until you click the eye,
-  or until the players gather 5 **insights** (boxes beside each).
+- **Hidden from players**: only the core sentence shows at first. Motivation, wants, attack
+  and damage type (and a creature's special ability) appear when you click the eye beside the
+  field, for instance once they have seen it fight. A creature's **strength** and
+  **weakness** and an NPC's **secret** also reveal when the players gather 5 **insights**
+  (boxes beside each). Hidden parts read as [?] in the sentence.
 - **Barter**: button on the NPC's Main tab. Pick the buyer; buying below your Wealth is free,
   at or above it needs a Wealth check (level 3 + the difference) and, on success, the player
   chooses to lose 1 Wealth or become **In debt**. Selling works the other way round. No Item

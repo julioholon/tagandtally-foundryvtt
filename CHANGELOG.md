@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.1 (unreleased)
+
+- NPC and creature details follow the SRD sentences: players (and a veiled solo GM) see only the core
+  sentence. Motivation, wants, attack and damage type on NPCs, plus special ability on creatures, are
+  hidden until revealed by the eye beside each field; strength and weakness belong to creatures and
+  the secret to NPCs, each with five insight boxes. The header sentence shows hidden parts as [?].
+- The "Hide creature strengths and weaknesses" setting is now "Hide NPC and creature details from
+  players" and covers all of the above.
+
 ## 0.7.0 (2026-11-23)
 
 - **Solo veil** (world setting, off by default): NPC strengths, weaknesses and secrets and faction

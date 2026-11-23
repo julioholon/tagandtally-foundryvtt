@@ -540,8 +540,8 @@
         "Hint": "Default table set for generators: fantasy, modern or monster hunter."
       },
       "HideSecrets": {
-        "Name": "Hide creature strengths and weaknesses",
-        "Hint": "Players see them only once revealed by the GM or learned through five insights."
+        "Name": "Hide NPC and creature details from players",
+        "Hint": "Players see only the core sentence (descriptor, species, type, specialty). Motivation, wants, attack, damage type, special ability, strength, weakness and secret appear once revealed by the GM or learned through five insights."
       },
       "BarBrawl": {
         "Name": "Bar Brawl default bars",
