@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.0 (unreleased)
+## 0.7.0 (2026-11-23)
 
 - **Solo veil** (world setting, off by default): NPC strengths, weaknesses and secrets and faction
   goals, secrets and headquarters are hidden from everyone, the GM included, until revealed by the
