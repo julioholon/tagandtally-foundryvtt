@@ -36,7 +36,7 @@ jobs:
       - name: Build zip
         run: |
           zip -r tagandtally.zip \
-            system.json tagandtally.mjs module templates styles lang data \
+            system.json tagandtally.mjs module templates styles lang data assets \
             README.md LICENSE.md CHANGELOG.md \
             -x "*.DS_Store"
 

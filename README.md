@@ -5,7 +5,7 @@ An unofficial [Foundry Virtual Tabletop](https://foundryvtt.com) game system for
 thing is "a sentence and a level", damage is a wound track, and characters grow through
 tallies instead of XP.
 
-Built for Foundry **v14** (v13 declared as minimum, untested). English and Brazilian Portuguese. Status: early, playable,
+Built for Foundry **v14**. English and Brazilian Portuguese. Status: early, playable,
 smoke-tested by hand. Issues and pull requests welcome.
 
 ## Install

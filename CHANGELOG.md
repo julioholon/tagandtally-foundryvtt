@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.2 (unreleased)
+
+- Manifest: Foundry v14 is now the minimum (v13 was never tested); cover and icon media for the
+  package listing.
+- GM manual (both languages) covers Relations and interactions, Downtime, Travel, the Workshop
+  and Factions; macro list and session checklist updated.
+
 ## 0.6.1 (2026-11-22)
 
 - Fix: the Workshop failed to open (it assigned a property ApplicationV2 reserves) and its tabs did
