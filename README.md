@@ -38,7 +38,7 @@ Or download the latest `tagandtally.zip` from the releases page and unzip it int
 | Relations | Factions, people and places the character knows, dropped from Augur Nexus journals, NPC actors or any journal; SRD disposition ladder and relationship tallies; Augur quests link to quest items; any chat card can be logged to a journal |
 | NPC interactions | Interact from a relation row or an NPC sheet: 2d6 Drift attitude per scene, approach pathways (1d10 / 1d6) with prompts, typed question, disposition modifier applied, SRD outcome consequences applied to the relation |
 | Downtime | Shared tracker: 4 downtime points a night per character, the SRD activities (sleep, research, study, workout, meditation, socializing, dinner, drinking, gambling, watch, crafting, repair) with their effects applied: next-day tags ([Refreshed], [Zen], [Well fed], [Liquid Courage]), tiered [Hangover] and [Sore Muscles], tallies on tags, quests and relationships, gambling against the wealth tally; GM starts a new day to fade yesterday's tags |
-| Travel | Shared tracker: wilderness / urban / dungeon, pace and transport set the day's points; hexes cost by their feature's difficulty; Enter hex rolls level (from the hex you leave), terrain or district, feature, landmark and event from the Sparks tables; rest rolls the SRD 2d6 encounter checks (fewer with watchers); fast pace exhausts the party, spent points recover hangovers |
+| Travel | Shared exploration tracker: move the party on the map by hand (Augur hexes or any scene), then Explore hex rolls what the SRD asks for the hex they stand on: level (from the hex they left), feature, landmark and event from the Sparks tables, each rerollable on its own; wilderness / urban / dungeon pick the tables; rest rolls the SRD 2d6 encounter checks (fewer with watchers) |
 | Crafting | Per-character Workshop (inventory tab, token controls, macro, or the Downtime crafting / repair hours): Harvest resources by source level and rarity, Craft gear from a base material and a magical component, Augment or Repair gear, Salvage a magical item's properties; every task is a Task Roll with the SRD retry hindrance, outcomes create, change or destroy items |
 | Factions | Faction actors with the SRD sentence, hidden goal / secret / headquarters, the six-phase goal timer (tally of 5 a phase, countdown of 10 once the goal is known), rival factions (insights fill their countdowns, a completed phase sabotages their tally), a log and chat cards; GM overview app; import from Augur Nexus faction journals |
 | Party | Built-in party overview: sentence, wounds, wealth, MAI, loadout, tags, quests; GM adds or removes members |
@@ -92,7 +92,7 @@ game.tagandtally.macros.openDowntime();              // shared downtime tracker
 game.tagandtally.macros.openWorkshop("craft");       // crafting workshop for the selected token's actor
 game.tagandtally.macros.openFactions();              // faction overview (GM)
 await game.tagandtally.factions.addInsight(game.actors.getName("The Cult"));
-await game.tagandtally.travel.rollHex({ mode: "wilderness", fromLevel: 4 });
+await game.tagandtally.travel.rollHex({ mode: "wilderness", fromLevel: 4 });   // level, feature, landmark, event
 game.tagandtally.macros.generateNPC();              // creates an NPC actor from Sparks
 game.tagandtally.macros.generateCreature({ values: { "creature-type": "Undead" } });
 game.tagandtally.macros.generateJournal("dungeon");
@@ -119,9 +119,8 @@ Dropping a tag, gear, spell or quest on the hotbar creates a macro that uses it.
   the SRD rest healing on its first hour. Next-day tags last through the following day and are
   removed when the GM starts the day after. Gambling: pick a number (+2 / -1) or even-odd
   (+1 / -1) on a d20 against a wealth tally; 5 marks climb a Wealth level, dropping below 0
-  loses one. [Hangover] and [Sore Muscles] lose a tier for every 2 travel points the party spends.
-- Travel points: wilderness 4 / 5 / 6, urban - / 4 / 5, dungeon 10, transport +1 / +2 / +3.
-  Hex level from the hex you leave: 1-2 -> 1d4+2, 3-4 -> 1d6+2, 5-6 -> 1d8+2, 7-10 -> 1d10+2
+  loses one.
+- Travel: movement is tracked on the map, not in points. Hex level from the hex you leave: 1-2 -> 1d4+2, 3-4 -> 1d6+2, 5-6 -> 1d8+2, 7-10 -> 1d10+2
   (capped at 10). Rest: 1 + party rounds, minus watchers, each a 2d6 check (wilderness: 6-10
   encounter, 11-12 discovery; safe zone: 2-5 encounter, 11-12 discovery).
 - Crafting: harvest DC = source level x 3; craft and augment DC = (level + rarity) x 3 with rarity

@@ -393,9 +393,8 @@ TAGANDTALLY.downtime = {
 };
 
 /**
- * Condition tags granted by downtime and travel. Next-day tags last through the
- * following day; `tiered` ones stack a tier per hour (max 4) and `recover` ones
- * lose a tier for every 2 travel points the party spends.
+ * Condition tags granted by downtime. Next-day tags last through the following
+ * day; `tiered` ones stack a tier per hour (max 4).
  */
 TAGANDTALLY.dayTags = {
   refreshed: { label: "TAGANDTALLY.DayTag.Refreshed", hinders: false, nextDay: true },
@@ -403,28 +402,18 @@ TAGANDTALLY.dayTags = {
   wellFed: { label: "TAGANDTALLY.DayTag.WellFed", hinders: false, nextDay: true },
   liquidCourage: { label: "TAGANDTALLY.DayTag.LiquidCourage", hinders: false, nextDay: true },
   exhausted: { label: "TAGANDTALLY.DayTag.Exhausted", hinders: true, nextDay: true, tiered: true },
-  hangover: { label: "TAGANDTALLY.DayTag.Hangover", hinders: true, tiered: true, recover: 2 },
-  soreMuscles: { label: "TAGANDTALLY.DayTag.SoreMuscles", hinders: true, tiered: true, recover: 2 }
+  hangover: { label: "TAGANDTALLY.DayTag.Hangover", hinders: true, tiered: true },
+  soreMuscles: { label: "TAGANDTALLY.DayTag.SoreMuscles", hinders: true, tiered: true }
 };
 TAGANDTALLY.dayTagMaxTier = 4;
 
 /* ------------------------------- Travel --------------------------------- */
 TAGANDTALLY.travel = {
+  /** Where the party explores: picks the Sparks tables an exploration rolls. Movement itself is done on the map. */
   modes: {
-    wilderness: { label: "TAGANDTALLY.Travel.Wilderness", icon: "fa-tree", points: { slow: 4, normal: 5, fast: 6 }, transport: true },
-    urban: { label: "TAGANDTALLY.Travel.Urban", icon: "fa-city", points: { slow: null, normal: 4, fast: 5 }, transport: true },
-    dungeon: { label: "TAGANDTALLY.Travel.Dungeon", icon: "fa-dungeon", points: { slow: null, normal: 10, fast: null }, transport: false }
-  },
-  paces: {
-    slow: { label: "TAGANDTALLY.Travel.Slow", transport: 1 },
-    normal: { label: "TAGANDTALLY.Travel.Normal", transport: 2 },
-    fast: { label: "TAGANDTALLY.Travel.Fast", transport: 3 }
-  },
-  /** Movement cost by the entered hex's feature difficulty. */
-  costs: {
-    easy: { label: "TAGANDTALLY.Travel.Easy", cost: 1 },
-    rough: { label: "TAGANDTALLY.Travel.Rough", cost: 2 },
-    dangerous: { label: "TAGANDTALLY.Travel.Dangerous", cost: 3 }
+    wilderness: { label: "TAGANDTALLY.Travel.Wilderness", icon: "fa-tree" },
+    urban: { label: "TAGANDTALLY.Travel.Urban", icon: "fa-city" },
+    dungeon: { label: "TAGANDTALLY.Travel.Dungeon", icon: "fa-dungeon" }
   },
   /** New hex level from the level of the hex being left (11-12 on 1d10+2 count as 10). */
   hexLevel: [

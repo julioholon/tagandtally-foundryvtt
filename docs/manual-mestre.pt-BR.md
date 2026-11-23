@@ -171,15 +171,18 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
 
 ## 12. Viagem
 
-- Abra a **Viagem** pelos controles de token ou pelo macro. Escolha **ermo, urbano ou
-  masmorra**, o ritmo e o transporte: juntos definem os pontos de viagem do dia.
-- **Entrar no hex** rola o próximo hex: nível (a partir do hex que você deixa), terreno ou
-  distrito, característica, marco e evento vêm das tabelas do Sparks. A dificuldade da
-  característica é o custo do hex. **Definir como nível da cena** copia o nível do hex para
-  a cena atual.
+- Abra a **Viagem** pelos controles de token ou pelo macro. Mova o grupo no mapa você mesmo
+  (hexes do Augur Hexlands, um mapa desenhado ou nada); o rastreador não conta movimento.
+- Quando estiverem num hex novo, aperte **Explorar hex**: nível (a partir do hex que
+  deixaram), característica, marco e evento vêm das tabelas do Sparks. O terreno é o que o
+  mapa mostra; digite-o na caixa se quiser que as descobertas do descanso combinem. Cada
+  resultado tem seu próprio dado de **rerolar**, então qualquer um pode pescar uma ideia
+  melhor. **Enviar ao chat** compartilha o hex com os jogadores; **Definir como nível da
+  cena** copia o nível para a cena atual.
+- **Ermo / urbano / masmorra** só escolhem as tabelas: urbano rola características de
+  distritos, masmorra rola tamanho, saídas e conteúdo da sala.
 - **Descansar** rola os testes de encontro 2d6 do SRD, um por rodada do grupo menos os
-  personagens que fizeram vigília. Ritmo rápido exaure o grupo; pontos gastos desgastam
-  [Ressaca] e [Músculos Doloridos] um nível a cada dois pontos.
+  personagens que fizeram vigília.
 
 ## 13. Ofício: a Oficina
 

@@ -68,6 +68,8 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     const hinders = [...this.fixedHinders];
     for (const [id, mode] of Object.entries(this.rollState.selection)) {
       if (!mode) continue;
+      const virtual = this.sentenceTags().find((t) => t.id === id);
+      if (virtual) { (mode === "hinder" ? hinders : eases).push({ name: virtual.name, steps: virtual.steps, source: "tag", itemId: id }); continue; }
       const it = this.itemActor?.items.get(id);
       if (!it) continue;
       const entry = { name: it.name, steps: it.system.steps ?? 1, source: it.type === "gear" ? "gear" : it.system.tagType === "scene" ? "scene" : "tag", itemId: id };
@@ -76,6 +78,29 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     if (this.rollState.manualEase > 0) eases.push({ name: game.i18n.localize("TAGANDTALLY.Roll.ManualEase"), steps: this.rollState.manualEase, source: "manual" });
     if (this.rollState.manualHinder > 0) hinders.push({ name: game.i18n.localize("TAGANDTALLY.Roll.ManualHinder"), steps: this.rollState.manualHinder, source: "manual" });
     return { eases, hinders };
+  }
+
+  /**
+   * NPC and creature sentence words are tags (SRD): offer every filled sentence
+   * field as a one-step tag. The weakness hinders by default.
+   */
+  sentenceTags() {
+    const actor = this.itemActor;
+    if (actor?.type !== "npc") return [];
+    const hidden = new Set(["secret"]);
+    return Object.entries(actor.system.sentence ?? {})
+      .filter(([key, value]) => String(value ?? "").trim() && !hidden.has(key))
+      .map(([key, value]) => ({
+        id: `sentence:${key}`, name: String(value).trim(), steps: 1, notation: "",
+        typeLabel: TaskRollDialog.#sentenceLabel(key),
+        hindersByDefault: key === "weakness"
+      }));
+  }
+
+  static #sentenceLabel(key) {
+    const cap = key.charAt(0).toUpperCase() + key.slice(1);
+    for (const k of [`TAGANDTALLY.Npc.${cap}`, `TAGANDTALLY.TagType.${cap}`, `TAGANDTALLY.Npc.${key}`, `TAGANDTALLY.Gear.${cap}`]) if (game.i18n.has(k)) return game.i18n.localize(k);
+    return cap.replace(/([A-Z])/g, " $1").trim();
   }
 
   async _prepareContext() {
@@ -87,7 +112,9 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
       id: i.id, name: i.name, notation: i.system.notation, steps: i.system.steps, img: i.img,
       typeLabel: game.i18n.localize(TAGANDTALLY.tagTypes[i.system.tagType] ?? ""),
       mode: this.rollState.selection[i.id] ?? "", ignored: ignoredIds.has(i.id), hindersByDefault: i.system.hinders
-    })).sort((a, b) => a.name.localeCompare(b.name));
+    }));
+    for (const t of this.sentenceTags()) tags.push({ ...t, mode: this.rollState.selection[t.id] ?? "", ignored: ignoredIds.has(t.id) });
+    tags.sort((a, b) => a.name.localeCompare(b.name));
     const gear = (this.itemActor?.items.filter((i) => i.type === "gear" && i.system.equipped) ?? []).map((i) => ({
       id: i.id, name: i.name, steps: i.system.steps, img: i.img,
       typeLabel: game.i18n.localize(TAGANDTALLY.gearTypes[i.system.gearType] ?? ""),
