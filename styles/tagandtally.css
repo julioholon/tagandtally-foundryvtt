@@ -303,7 +303,6 @@
 .tagandtally .tt-travel-rest { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin: 0.4rem 0; }
 .tagandtally .tt-travel-rest .tt-controls { margin-left: auto; }
 .tagandtally .tt-travel .tt-toolbar { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
-.tagandtally .tt-travel .tt-terrain { flex: 1 1 10em; min-width: 8em; }
 .tagandtally .tt-left { font-weight: 700; }
 .tagandtally .tt-travel-actions { display: flex; gap: 0.3rem; flex-wrap: wrap; margin: 0.4rem 0; }
 .tagandtally .tt-travel-actions .tt-roll-btn { flex: 1 1 auto; }

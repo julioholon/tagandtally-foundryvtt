@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.4 (unreleased)
+
+- Relation rows and the Interact dialog show the linked actor's current portrait, falling back to
+  its token art when the actor image is the default.
+- Travel: the terrain box is gone; the terrain is read off the map.
+
 ## 0.6.3 (2026-11-23)
 
 - Fix: NPC and creature sentence words (descriptor, type, motivation, attack, strength, weakness…)

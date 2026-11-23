@@ -104,13 +104,13 @@ const FIELD_ICONS = { level: "fa-layer-group", feature: "fa-signs-post", landmar
 
 /**
  * Shared exploration tracker: the party moves on the map by hand (Augur hexes
- * or any scene); Explore rolls what the SRD asks for the hex they stand on,
+ * or any scene) and reads the terrain off it; Explore rolls what the SRD asks for the hex they stand on,
  * each piece can be rerolled on its own, and a rest rolls the encounter checks.
  */
 export class TravelApp extends HandlebarsApplicationMixin(ApplicationV2) {
   static #instance;
   static state = new WorldState("travel", {
-    mode: "wilderness", terrain: "",
+    mode: "wilderness",
     hex: { fromLevel: null, level: null, levelDetail: "", feature: "", landmark: "", event: "", room: "", contents: "" },
     log: []
   }, { onChange: () => TravelApp.#instance?.render() });
@@ -161,21 +161,11 @@ export class TravelApp extends HandlebarsApplicationMixin(ApplicationV2) {
       state, modes, mode, fields, hasHex, isGM: game.user.isGM,
       exploreLabel: T(mode === "dungeon" ? "ExploreRoom" : mode === "urban" ? "ExploreDistrict" : "ExploreHex"),
       hint: T(mode === "dungeon" ? "HintDungeon" : "Hint"),
-      showTerrain: mode !== "dungeon",
       canApplyLevel: game.user.isGM && hasHex && state.hex.level !== sceneLevel(),
       watchers: DowntimeApp.watchers(), party: game.actors.filter((a) => PartyOverview.isMember(a)).length,
       safeZone: DowntimeApp.state.get().safeZone,
       log: [...state.log].reverse()
     };
-  }
-
-  _onRender(context, options) {
-    super._onRender?.(context, options);
-    this.element.querySelector("[name='terrain']")?.addEventListener("change", async (ev) => {
-      const state = TravelApp.state.get();
-      state.terrain = ev.target.value.trim();
-      await TravelApp.state.set(state);
-    });
   }
 
   /* -------------------------------- Actions -------------------------------- */
@@ -235,7 +225,6 @@ export class TravelApp extends HandlebarsApplicationMixin(ApplicationV2) {
       const text = key === "level" ? `${value} · ${game.i18n.localize(TAGANDTALLY.levels[value])}${state.hex.levelDetail ? ` <small>(${esc(state.hex.levelDetail)})</small>` : ""}` : esc(value);
       lines.push({ icon: FIELD_ICONS[key], label: T(`Field.${key}`), value: text });
     }
-    if (state.terrain && mode !== "dungeon") lines.unshift({ icon: "fa-mountain-sun", label: T("Terrain"), value: esc(state.terrain) });
     return TravelApp.postCard(title, lines, { gmOnly });
   }
 

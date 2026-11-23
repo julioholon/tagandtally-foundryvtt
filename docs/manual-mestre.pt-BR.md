@@ -175,8 +175,7 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
   (hexes do Augur Hexlands, um mapa desenhado ou nada); o rastreador não conta movimento.
 - Quando estiverem num hex novo, aperte **Explorar hex**: nível (a partir do hex que
   deixaram), característica, marco e evento vêm das tabelas do Sparks. O terreno é o que o
-  mapa mostra; digite-o na caixa se quiser que as descobertas do descanso combinem. Cada
-  resultado tem seu próprio dado de **rerolar**, então qualquer um pode pescar uma ideia
+  mapa mostra. Cada resultado tem seu próprio dado de **rerolar**, então qualquer um pode pescar uma ideia
   melhor. **Enviar ao chat** compartilha o hex com os jogadores; **Definir como nível da
   cena** copia o nível para a cena atual.
 - **Ermo / urbano / masmorra** só escolhem as tabelas: urbano rola características de

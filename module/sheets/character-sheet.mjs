@@ -1,6 +1,6 @@
 import BaseActorSheet from "./base-actor-sheet.mjs";
 import { TAGANDTALLY } from "../config.mjs";
-import { handleRelationDrop, openRelation, syncQuestFromAugur, augurQuestView } from "../relations.mjs";
+import { handleRelationDrop, openRelation, syncQuestFromAugur, augurQuestView, liveRelationImage } from "../relations.mjs";
 
 export default class CharacterSheet extends BaseActorSheet {
   static DEFAULT_OPTIONS = {
@@ -74,7 +74,7 @@ export default class CharacterSheet extends BaseActorSheet {
     context.relationLists = Object.entries(TAGANDTALLY.relationKinds).map(([kind, def]) => ({
       kind, label: def.label, icon: def.icon,
       hasDisposition: kind !== "places", hasTally: kind === "people", isPlace: kind === "places",
-      rows: s.relations[kind].map((row) => ({ ...row, img: row.img || "icons/svg/book.svg", steps: TAGANDTALLY.relationSteps.map((st) => ({ ...st, selected: st.value === row.disposition })) }))
+      rows: s.relations[kind].map((row) => ({ ...row, img: liveRelationImage(row, row.uuid ? fromUuidSync(row.uuid) : null), steps: TAGANDTALLY.relationSteps.map((st) => ({ ...st, selected: st.value === row.disposition })) }))
     }));
     context.questAugur = Object.fromEntries(context.items.quest.filter((q) => q.system.augurUuid).map((q) => [q.id, augurQuestView(q.system.augurUuid)]));
     return context;
