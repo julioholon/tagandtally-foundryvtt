@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.1 (unreleased)
+## 0.7.1 (2026-11-23)
 
 - NPC and creature details follow the SRD sentences: players (and a veiled solo GM) see only the core
   sentence. Motivation, wants, attack and damage type on NPCs, plus special ability on creatures, are
