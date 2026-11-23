@@ -113,7 +113,17 @@ export function relationImage(doc) {
   const entity = augurEntity(doc);
   if (doc.documentName === "Scene") return doc.thumb || doc.background?.src || "icons/svg/direction.svg";
   if (doc.documentName === "JournalEntryPage") return doc.flags?.[AUGUR]?.siteIconSrc || doc.src || "icons/svg/direction.svg";
+  if (doc.documentName === "Actor") {
+    const DEFAULT = CONST.DEFAULT_TOKEN;
+    const real = (src) => (src && src !== DEFAULT ? src : "");
+    return entity?.display?.imageSrc || real(doc.img) || real(doc.token?.texture?.src) || real(doc.prototypeToken?.texture?.src) || doc.img || DEFAULT;
+  }
   return entity?.display?.imageSrc || doc.img || doc.pages?.find((p) => p.type === "image")?.src || "icons/svg/book.svg";
+}
+
+/** Live thumbnail for a relation row: the linked document's current image, else what the row stored. */
+export function liveRelationImage(row, doc) {
+  return (doc ? relationImage(doc) : "") || row.img || "icons/svg/book.svg";
 }
 
 /** Append a relation row for `doc` to the actor's list, unless it is already there. */

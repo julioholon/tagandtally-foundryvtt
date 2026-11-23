@@ -183,8 +183,7 @@ would change the character or the situation.
   movement.
 - When they stand on a new hex, press **Explore hex**: level (from the hex they left),
   feature, landmark and event come from the Sparks tables. Terrain is whatever the map
-  shows; type it in the box if you want the rest discoveries to match it. Each result has
-  its own **reroll** die, so anyone can fish for a better idea. **Post to chat** shares the
+  shows. Each result has its own **reroll** die, so anyone can fish for a better idea. **Post to chat** shares the
   hex with the players; **Set as scene level** copies its level to the current scene.
 - **Wilderness / urban / dungeon** only pick the tables: urban rolls districts' features,
   dungeon rolls the room's size, exits and contents instead.

@@ -2,7 +2,7 @@ import { TAGANDTALLY, SYSTEM_ID } from "./config.mjs";
 import { sceneLevel } from "./rolls/resolution.mjs";
 import { TaskRollDialog } from "./rolls/task-roll-dialog.mjs";
 import { findAugurPerson } from "./integrations/augur.mjs";
-import { augurEntity, relationImage, currentSceneId, sceneAttitude } from "./relations.mjs";
+import { augurEntity, relationImage, liveRelationImage, currentSceneId, sceneAttitude } from "./relations.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -49,7 +49,7 @@ export async function ensureRelation(actor, target, kind) {
   kind ??= augurEntity(target)?.type === "faction" || target?.type === "faction" ? "factions" : "people";
   const base = baseActor(target);
   const rows = actor.system.relations[kind].map((r) => foundry.utils.deepClone(r));
-  rows.push({ ...actor.system.constructor.blankRelation(kind), uuid: base?.uuid ?? "", name: target.name ?? String(target), img: base ? relationImage(base) : "" });
+  rows.push({ ...actor.system.constructor.blankRelation(kind), uuid: base?.uuid ?? "", name: target.name ?? String(target), img: base ? relationImage(target?.documentName === "Actor" ? target : base) : "" });
   await actor.update({ [`system.relations.${kind}`]: rows });
   return { kind, index: rows.length - 1, row: actor.system.relations[kind].at(-1) };
 }
@@ -221,7 +221,7 @@ export class InteractDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     const pathways = pathwayList(this.talk.approach).map((p) => ({ ...p, selected: p.id === this.talk.pathway }));
     return {
       row, actor: this.actor, target: this.target, talk: this.talk,
-      img: this.target?.img || row.img || "icons/svg/mystery-man.svg",
+      img: liveRelationImage(row, this.target),
       steps: TAGANDTALLY.relationSteps.map((s) => ({ ...s, label: game.i18n.localize(s.label), modifier: signed(s.modifier), selected: s.value === row.disposition })),
       modifier: signed(modifier), modifierClass: modifier > 0 ? "ease" : modifier < 0 ? "hinder" : "",
       attitudeLabel: stepLabel(attitude), attitudeDrifted: row.attitudeActive,

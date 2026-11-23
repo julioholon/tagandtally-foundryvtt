@@ -3,7 +3,6 @@
     <span class="tt-segments">
       {{#each modes as |m|}}<a class="tt-segment {{#if m.active}}on{{/if}} {{#unless ../isGM}}readonly{{/unless}}" data-action="setMode" data-mode="{{m.id}}"><i class="fa-solid {{m.icon}}"></i> {{m.label}}</a>{{/each}}
     </span>
-    {{#if showTerrain}}<input type="text" name="terrain" class="tt-terrain" value="{{state.terrain}}" placeholder="{{localize 'TAGANDTALLY.Travel.TerrainPlaceholder'}}" title="{{localize 'TAGANDTALLY.Travel.TerrainHint'}}" />{{/if}}
   </div>
   <p class="hint">{{hint}}</p>
 
