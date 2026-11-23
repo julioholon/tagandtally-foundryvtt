@@ -137,6 +137,21 @@ Dropping a tag, gear, spell or quest on the hotbar creates a macro that uses it.
 
 Where the SRD contradicts itself the formula wins over the cheat sheet; see `PLAN.md`.
 
+## Release notes
+
+Full history in [`CHANGELOG.md`](CHANGELOG.md). Latest:
+
+- **0.6.1** (2026-11-22): the Workshop opens again and its tabs switch (two ApplicationV2
+  traps hit on the 0.6.0 build); the Augur Nexus faction import reads the real journal record
+  (profile type, drive, action, focus and ideology tenets); crafted weapons and armor are named
+  after the base material; the second salvaged property is prefilled from the item's
+  augmentations.
+- **0.6.0** (2026-11-22): Crafting Workshop (harvest, craft, augment, repair, salvage) and
+  Faction actors with the goal timer, rivals, log and Augur import. Gear gains rarity,
+  augmentations, broken and salvaged fields.
+- **0.5.x** (2026-11-22): Downtime tracker and Travel (hexes, encounters, rest checks).
+- **0.4.x**: NPC interactions. **0.3.x**: Relations tab.
+
 ## Development
 
 No build step. To cut a release, merge the PR and run `scripts/release.sh 0.3.0` from any
