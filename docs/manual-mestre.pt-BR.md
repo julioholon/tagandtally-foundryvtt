@@ -128,8 +128,11 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
   tipo, motivação, ataque, habilidade especial) ou deixe desmarcado para pessoas (descritor,
   espécie, tipo, motivação, o que quer, segredo).
 - A **varinha** no cabeçalho gera a frase inteira com o Sparks. O nível vem da cena.
-- **Oculto dos jogadores**: força, fraqueza e segredo ficam escondidos até você clicar no
-  olho, ou até os jogadores juntarem 5 **insights** (caixinhas ao lado).
+- **Oculto dos jogadores**: só a frase básica aparece no início. Motivação, desejo, ataque e
+  tipo de dano (e a habilidade especial de uma criatura) aparecem quando você clica no olho ao
+  lado do campo, por exemplo depois de vê-la lutar. A **força** e a **fraqueza** de uma
+  criatura e o **segredo** de um PdM também se revelam quando os jogadores juntam 5
+  **insights** (caixinhas ao lado). As partes ocultas aparecem como [?] na frase.
 - **Negociar**: botão na aba Principal do PdM. Escolha o comprador; comprar abaixo da
   riqueza é livre, no nível ou acima exige teste de Riqueza (nível 3 + diferença) e, em
   sucesso, o jogador escolhe perder 1 de Riqueza ou ficar **Endividado**. Vender funciona ao

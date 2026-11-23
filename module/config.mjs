@@ -331,6 +331,15 @@ TAGANDTALLY.sparkThemes = {
 };
 
 TAGANDTALLY.insightsPerTally = 5;
+/**
+ * What players (and a veiled solo GM) learn about an NPC or creature only through play. The core
+ * sentence (descriptor, species, type, specialty; disposition, descriptor, type for creatures) is
+ * always visible. `insight` keys also fill through the five insight boxes.
+ */
+TAGANDTALLY.npcHidden = {
+  npc: { keys: ["motivation", "quest", "attack", "damageType", "secret"], insight: ["secret"] },
+  creature: { keys: ["motivation", "attack", "damageType", "specialAbility", "strength", "weakness"], insight: ["strength", "weakness"] }
+};
 
 /** SRD NPC interactions: Drift roll, pathways and outcome bands (text keys under TAGANDTALLY.Interaction). */
 TAGANDTALLY.interaction = {

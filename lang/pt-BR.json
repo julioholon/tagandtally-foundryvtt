@@ -540,8 +540,8 @@
         "Hint": "Conjunto padrão de tabelas dos geradores: fantasia, moderno ou caçador de monstros."
       },
       "HideSecrets": {
-        "Name": "Ocultar forças e fraquezas das criaturas",
-        "Hint": "Jogadores só as veem quando reveladas pelo Mestre ou aprendidas com cinco insights."
+        "Name": "Esconder detalhes de PdMs e criaturas dos jogadores",
+        "Hint": "Os jogadores veem só a frase básica (descritor, espécie, tipo, especialidade). Motivação, desejo, ataque, tipo de dano, habilidade especial, força, fraqueza e segredo aparecem quando o Mestre revela ou após cinco insights."
       },
       "BarBrawl": {
         "Name": "Barras padrão do Bar Brawl",

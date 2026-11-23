@@ -30,15 +30,8 @@ export default class NpcData extends foundry.abstract.TypeDataModel {
         weakness: str()
       }),
       /** Hidden information revealed to players once true (or once insights fill a tally). */
-      revealed: new fields.SchemaField({
-        strength: new fields.BooleanField({ initial: false }),
-        weakness: new fields.BooleanField({ initial: false }),
-        secret: new fields.BooleanField({ initial: false })
-      }),
-      insights: new fields.SchemaField({
-        strength: new fields.NumberField({ required: true, integer: true, min: 0, max: 5, initial: 0 }),
-        weakness: new fields.NumberField({ required: true, integer: true, min: 0, max: 5, initial: 0 })
-      }),
+      revealed: new fields.SchemaField(Object.fromEntries(["motivation", "quest", "attack", "damageType", "specialAbility", "strength", "weakness", "secret"].map((k) => [k, new fields.BooleanField({ initial: false })]))),
+      insights: new fields.SchemaField(Object.fromEntries(["strength", "weakness", "secret"].map((k) => [k, new fields.NumberField({ required: true, integer: true, min: 0, max: 5, initial: 0 })]))),
       attitude: new fields.StringField({ required: true, initial: "indifferent", choices: Object.keys(TAGANDTALLY.dispositions) }),
       wounds: woundsSchema(),
       wealth: wealthSchema(),
@@ -58,30 +51,47 @@ export default class NpcData extends foundry.abstract.TypeDataModel {
     this.wealth.climbCost = TAGANDTALLY.coins.climbCost(this.wealth.value);
     this.wealth.cashOut = TAGANDTALLY.coins.cashOut(this.wealth.value);
     this.wealth.canClimb = this.wealth.value < 6 && this.wealth.coins >= this.wealth.climbCost;
-    for (const key of ["strength", "weakness"]) {
+    for (const key of this.hiddenDef.insight) {
       if (this.insights[key] >= TAGANDTALLY.insightsPerTally) this.revealed[key] = true;
     }
-    this.sentenceText = this.buildSentence(actor?.name);
+    this.sentenceText = this.buildSentence(actor?.name, { hide: this.hiddenKeys().filter((k) => !this.canSee(k)) });
   }
 
-  buildSentence(name = "") {
+  /** Hidden-field definition for this kind (creature or NPC). */
+  get hiddenDef() { return TAGANDTALLY.npcHidden[this.creature ? "creature" : "npc"]; }
+  hiddenKeys() { return this.hiddenDef.keys; }
+
+  /**
+   * Whether the current user sees a sentence field. Core fields always; hidden ones when revealed,
+   * when the world does not hide NPC details at all, or (no solo veil) for GMs and owners.
+   */
+  canSee(key) {
+    if (!this.hiddenKeys().includes(key)) return true;
+    const actor = this.parent;
+    let hide = true;
+    try { hide = game.settings.get("tagandtally", "hideCreatureSecrets") || actor?.constructor.veiled; } catch { hide = true; }
+    return !hide || Boolean(actor?.canSeeHidden?.(key));
+  }
+
+  buildSentence(name = "", { hide = [] } = {}) {
     const s = this.sentence;
-    const tag = (v) => (v ? `[${v}]` : null);
+    const hidden = new Set(hide);
+    const tag = (v, key) => (hidden.has(key) ? (v ? "[?]" : null) : v ? `[${v}]` : null);
     if (this.creature) {
-      const head = [s.disposition, s.descriptor, s.type].map(tag).filter(Boolean).join(" ");
+      const head = [tag(s.disposition, "disposition"), tag(s.descriptor, "descriptor"), tag(s.type, "type")].filter(Boolean).join(" ");
       let text = `${name || "?"}${head ? ` (${head})` : ""}:`;
-      if (s.motivation) text += ` ${word("ThisCreature", "This creature")} ${tag(s.motivation)}`;
-      if (s.attack) text += ` ${word("AndAttacksWith", "and attacks with")} ${tag(s.attack)}${s.damageType ? ` ${word("For", "for")} ${tag(s.damageType)} ${word("Damage", "damage")}` : ""}`;
+      if (s.motivation) text += ` ${word("ThisCreature", "This creature")} ${tag(s.motivation, "motivation")}`;
+      if (s.attack) text += ` ${word("AndAttacksWith", "and attacks with")} ${tag(s.attack, "attack")}${s.damageType ? ` ${word("For", "for")} ${tag(s.damageType, "damageType")} ${word("Damage", "damage")}` : ""}`;
       text += ".";
-      if (s.specialAbility) text += ` ${word("ItFeatures", "It features a unique ability to")} ${tag(s.specialAbility)}.`;
+      if (s.specialAbility) text += ` ${word("ItFeatures", "It features a unique ability to")} ${tag(s.specialAbility, "specialAbility")}.`;
       return tidy(text);
     }
-    const head = [s.descriptor, s.species, s.type].map(tag).filter(Boolean).join(" ");
+    const head = [tag(s.descriptor, "descriptor"), tag(s.species, "species"), tag(s.type, "type")].filter(Boolean).join(" ");
     let text = `${name || "?"} ${word("IsA", "is a")} ${head || "..."}`;
-    if (s.doesSomething) text += ` ${word("Who", "who")} ${tag(s.doesSomething)}`;
+    if (s.doesSomething) text += ` ${word("Who", "who")} ${tag(s.doesSomething, "doesSomething")}`;
     text += ".";
-    if (s.motivation) text += ` ${word("MotivatedBy", "They are motivated by")} ${tag(s.motivation)}`;
-    if (s.quest) text += `${s.motivation ? ` ${word("And", "and")}` : ` ${word("They", "They")}`} ${word("WantTo", "want to")} ${tag(s.quest)}`;
+    if (s.motivation) text += ` ${word("MotivatedBy", "They are motivated by")} ${tag(s.motivation, "motivation")}`;
+    if (s.quest) text += `${s.motivation ? ` ${word("And", "and")}` : ` ${word("They", "They")}`} ${word("WantTo", "want to")} ${tag(s.quest, "quest")}`;
     if (s.motivation || s.quest) text += ".";
     return tidy(text);
   }
