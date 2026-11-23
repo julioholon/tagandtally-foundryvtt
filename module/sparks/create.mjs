@@ -68,7 +68,8 @@ export function npcDataFromGeneration(r, { creature = false } = {}) {
   const tags = r.tags;
   const name = r.name ?? (creature ? "Creature" : "NPC");
   const level = Number(game.scenes?.active?.getFlag(SYSTEM_ID, "level")) || game.settings.get(SYSTEM_ID, "defaultLevel");
-  const system = { creature, level, biography: `<p>${r.html}</p>` };
+  // The generated text is the sentence itself (secret included); the sheet already renders it, so the biography starts empty.
+  const system = { creature, level, biography: "" };
   if (creature) {
     system.sentence = {
       disposition: plain(v["creature-disposition"]),
@@ -110,7 +111,7 @@ export async function createActorFromSpark(generatorId, options = {}) {
 export async function generateInto(actor, generatorId) {
   const r = await generate(generatorId, { theme: theme() });
   const data = npcDataFromGeneration(r, { creature: generatorId === "creature" });
-  return actor.update({ name: actor.name.startsWith("New") || !actor.name ? data.name : actor.name, system: { sentence: data.system.sentence, biography: data.system.biography } });
+  return actor.update({ name: actor.name.startsWith("New") || !actor.name ? data.name : actor.name, system: { sentence: data.system.sentence } });
 }
 
 /* ------------------------------ Items ----------------------------------- */

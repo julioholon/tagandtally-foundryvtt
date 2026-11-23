@@ -43,6 +43,7 @@ Or download the latest `tagandtally.zip` from the releases page and unzip it int
 | Factions | Faction actors with the SRD sentence, hidden goal / secret / headquarters, the six-phase goal timer (tally of 5 a phase, countdown of 10 once the goal is known), rival factions (insights fill their countdowns, a completed phase sabotages their tally), a log and chat cards; GM overview app; import from Augur Nexus faction journals (type, disposition and the Purpose / The World / Authority tenets fill the sentence, drive / action / theme / focus become tags); drop a place for the headquarters or a faction for a rival; relation and headquarters links open the Nexus dossier |
 | Party | Built-in party overview: sentence, wounds, wealth, MAI, loadout, tags, quests; GM adds or removes members |
 | GM tools | Scene level in Scene Config, world RollTable overrides for any Spark table, bulk import to RollTables |
+| Solo play | "Solo veil" world setting: NPC strengths, weaknesses and secrets and faction goals, secrets and headquarters stay hidden from everyone, the GM included, until revealed by the eye toggle or by insights; Sparks and Augur still fill them, so a solo GM discovers the world as a player would |
 
 ## GM manual
 

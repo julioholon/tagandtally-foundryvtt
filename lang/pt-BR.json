@@ -550,6 +550,10 @@
       "Coins": {
         "Name": "Modo moedas",
         "Hint": "Adiciona moedas como moeda corrente. Moedas são marcas rumo ao próximo nível de Riqueza: 10 moedas levam de Riqueza 0 a 1, 100 de 1 a 2, e assim por diante. Não faz parte do SRD."
+      },
+      "SoloVeil": {
+        "Name": "Véu solo: esconder segredos também do Mestre",
+        "Hint": "Jogo solo. Forças, fraquezas e segredos de PdMs e objetivos, segredos e quartéis-generais de facções ficam ocultos de todos, inclusive de você, até serem revelados pelo olho ou por insights. Sparks e Augur continuam preenchendo-os."
       }
     },
     "Welcome": {

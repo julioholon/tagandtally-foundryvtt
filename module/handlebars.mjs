@@ -7,6 +7,9 @@ export function registerHandlebarsHelpers() {
   Handlebars.registerHelper("tt-boxes", (value, max) => Array.from({ length: Number(max) || 0 }, (_, i) => i < Number(value)));
   Handlebars.registerHelper("tt-includes", (arr, v) => Array.isArray(arr) && arr.includes(v));
   Handlebars.registerHelper("tt-eq", (a, b) => a === b);
+  Handlebars.registerHelper("tt-and", (a, b) => Boolean(a) && Boolean(b));
+  Handlebars.registerHelper("tt-or", (a, b) => Boolean(a) || Boolean(b));
+  Handlebars.registerHelper("tt-not", (a) => !a);
   Handlebars.registerHelper("tt-gt", (a, b) => Number(a) > Number(b));
   Handlebars.registerHelper("tt-add", (a, b) => Number(a) + Number(b));
   Handlebars.registerHelper("tt-tags", (text) => {

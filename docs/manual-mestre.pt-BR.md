@@ -261,7 +261,22 @@ Fluxo sugerido para construir o mundo em conjunto:
    como tags, retrato e pronome); um ator sem vínculo pergunta qual pessoa do Augur ele é,
    depois vincula e importa.
 
-## 17. Jogando com vários Mestres
+## 17. Jogando solo
+
+O Foundry exige um usuário Mestre, então quem joga solo joga como Mestre. Ligue a
+configuração **Véu solo**: forças, fraquezas e segredos de PdMs e objetivos, segredos e
+quartéis-generais de facções ficam ocultos também para você, mostrados como *Desconhecido*
+até as cinco caixas de insight encherem, o botão de Insight da facção revelar o objetivo,
+ou você clicar no olho porque a ficção mereceu. A varinha do Sparks e os botões do Augur
+continuam preenchendo esses campos; você só não vê o que escreveram. A biografia gerada do
+PdM não repete mais a frase.
+
+Uma sessão solo na prática: gere uma **cena** no Sparks, faça a pergunta de abertura ao
+**Oráculo**, **Explore** o hex na Viagem, converse com **Interagir** (seus resultados dão
+insights), resolva lutas no **Fluxo de combate** rolando todas as fases, depois jogue a
+noite de **Descanso** e aperte **Novo dia**.
+
+## 18. Jogando com vários Mestres
 
 O sistema não impõe quem é "o" Mestre: qualquer usuário Mestre pode fazer tudo. O que
 funciona bem na prática:
@@ -285,7 +300,7 @@ funciona bem na prática:
   de tempo; o cartão de chat é o registro. Deixe as marcas automáticas ligadas e peça aos
   jogadores para rolarem eles mesmos, com título preenchido ("Escalo o muro").
 
-## 18. Atalhos e macros
+## 19. Atalhos e macros
 
 - Na primeira abertura o sistema cria a pasta de macros **Tag & Tally** com um macro para
   cada ferramenta: arraste-os para a barra de atalhos.
@@ -297,7 +312,7 @@ funciona bem na prática:
   `openFactions()`, `generateNPC()`, `generateCreature()`,
   `generateJournal("dungeon")`, `randomCharacter()`, `importSparkTables("creature")`.
 
-## 19. Checklist de sessão
+## 20. Checklist de sessão
 
 1. Nível da cena definido.
 2. Narrador da cena escolhido; Mestre de apoio com o Sparks aberto.

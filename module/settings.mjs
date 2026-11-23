@@ -18,6 +18,12 @@ export function registerSettings() {
     scope: "world", config: true, type: String, default: "fantasy",
     choices: { fantasy: "TAGANDTALLY.Theme.Fantasy", modern: "TAGANDTALLY.Theme.Modern", "monster-hunter": "TAGANDTALLY.Theme.MonsterHunter" }
   });
+  game.settings.register(SYSTEM_ID, "soloVeil", {
+    name: "TAGANDTALLY.Settings.SoloVeil.Name",
+    hint: "TAGANDTALLY.Settings.SoloVeil.Hint",
+    scope: "world", config: true, type: Boolean, default: false,
+    onChange: () => { for (const app of foundry.applications.instances.values()) if (app.document?.documentName === "Actor" || app.id === "tt-factions") app.render(); }
+  });
   game.settings.register(SYSTEM_ID, "hideCreatureSecrets", {
     name: "TAGANDTALLY.Settings.HideSecrets.Name",
     hint: "TAGANDTALLY.Settings.HideSecrets.Hint",

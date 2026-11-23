@@ -550,6 +550,10 @@
       "Coins": {
         "Name": "Coins mode",
         "Hint": "Adds coins as a currency. Coins are tallies toward the next Wealth level: 10 coins take you from Wealth 0 to 1, 100 from 1 to 2, and so on. Not part of the SRD."
+      },
+      "SoloVeil": {
+        "Name": "Solo veil: hide secrets from the GM too",
+        "Hint": "Solo play. NPC strengths, weaknesses and secrets and faction goals, secrets and headquarters stay hidden from everyone, you included, until revealed by the eye toggle or by insights. Sparks and Augur still fill them."
       }
     },
     "Welcome": {

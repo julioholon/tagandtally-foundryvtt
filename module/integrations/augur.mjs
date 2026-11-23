@@ -38,16 +38,24 @@ export function mapAugurPerson(actor, entity) {
   const keywords = (ce.tags ?? []).map(words).filter((k) => k && k !== words(species) && !["fantasy", "scifi", "modern"].includes(k));
   const specialty = drive ? `${game.i18n.localize("TAGANDTALLY.Augur.PursuesPrefix")} ${drive}` : "";
   const motivation = tenets[0] ? `${game.i18n.localize("TAGANDTALLY.Augur.BelievesPrefix")} ${tenets[0]}` : "";
+  // Sentence fields are only filled when blank: what is already on the sheet stays, and the Augur
+  // value that could not land there becomes a tag instead (nothing from the dossier is lost).
   const update = {};
-  if (actor.type === "character") {
-    update["system.sentence"] = { descriptor, species, type, specialty };
-  } else {
-    update["system.sentence.descriptor"] = descriptor;
-    update["system.sentence.species"] = species;
-    update["system.sentence.type"] = type;
-    update["system.sentence.doesSomething"] = specialty;
-    update["system.sentence.motivation"] = motivation;
-    if (ce.flavor?.action || ce.flavor?.focus) update["system.sentence.quest"] = words(`${ce.flavor.action ?? ""} ${ce.flavor.focus ?? ""}`);
+  const leftovers = [];
+  const current = actor.system.sentence ?? {};
+  const place = (key, value) => {
+    if (!value) return;
+    if (String(current[key] ?? "").trim()) { if (words(current[key]) !== words(value)) leftovers.push(value); return; }
+    update[`system.sentence.${key}`] = value;
+  };
+  place("descriptor", descriptor);
+  place("species", species);
+  place("type", type);
+  if (actor.type === "character") place("specialty", specialty);
+  else {
+    place("doesSomething", specialty);
+    place("motivation", motivation);
+    if (ce.flavor?.action || ce.flavor?.focus) place("quest", words(`${ce.flavor.action ?? ""} ${ce.flavor.focus ?? ""}`));
   }
   if (ce.identity?.gender) update["system.pronoun"] = game.i18n.localize(`TAGANDTALLY.Augur.Pronoun.${ce.identity.gender}`) ?? ce.identity.gender;
   if (ce.display?.imageSrc && (actor.img === Actor.DEFAULT_ICON || actor.img === "icons/svg/mystery-man.svg")) update.img = ce.display.imageSrc;
@@ -69,6 +77,7 @@ export function mapAugurPerson(actor, entity) {
   for (const t of traits) push(t, "trait");
   for (const t of tenets) push(`${game.i18n.localize("TAGANDTALLY.Augur.BelievesPrefix")} ${t}`, "trait");
   for (const k of keywords) push(title(k), "background");
+  for (const l of leftovers) push(l, actor.type === "character" ? "background" : "other", { category: "static" });
   return { update, tags, person: ce.display?.name ?? entity.name };
 }
 

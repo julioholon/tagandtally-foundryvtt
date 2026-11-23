@@ -172,14 +172,24 @@ export function mapAugurFaction(actor, journal, { tenetLabels = {} } = {}) {
   const selections = ce.ideology?.selections ?? [];
   const tenet = (topic) => { const sel = selections.find((x) => (x.topicId ?? String(x.tenetId ?? "").split(".")[0]) === topic); return sel ? tenetLabel(sel, tenetLabels) : ""; };
   const disposition = Object.values(ce.moduleData ?? {}).map((m) => m?.dispositionId ?? m?.disposition).find((v) => typeof v === "string" && v);
-  const update = {
-    "system.augurUuid": journal.uuid,
-    "system.sentence.descriptor": words(pick(disposition, profile.drive, flavor.descriptor, ce.descriptor)),
-    "system.sentence.organizationType": words(pick(profile.type, ce.role?.roleLabel, title(ce.role?.roleId), ce.organizationType, ce.subtype, ce.kind)),
-    "system.sentence.coreFunction": words(pick(tenet("purpose"), profile.method, profile.theme, flavor.focus, flavor.function, ce.purpose)),
-    "system.sentence.goal": words(pick(tenet("world"), profile.action && profile.focus ? `${profile.action} ${profile.focus}` : "", flavor.goal, ce.goal?.text, ce.goal)),
-    "system.sentence.secret": words(pick(tenet("authority"), flavor.secret, ce.secret?.text, ce.secret, selections.length ? tenetLabel(selections.at(-1), tenetLabels) : ""))
+  // Fields are filled only when blank (the goal and secret on the sheet are never overwritten:
+  // under the solo veil they may already be in play). Values that find no room become tags.
+  const update = { "system.augurUuid": journal.uuid };
+  const leftovers = [];
+  const current = actor.system.sentence ?? {};
+  const place = (key, value) => {
+    if (!value) return;
+    if (String(current[key] ?? "").trim()) { if (words(current[key]) !== words(value)) leftovers.push(value); return; }
+    update[`system.sentence.${key}`] = value;
   };
+  place("descriptor", words(pick(disposition, profile.drive, flavor.descriptor, ce.descriptor)));
+  place("organizationType", words(pick(profile.type, ce.role?.roleLabel, title(ce.role?.roleId), ce.organizationType, ce.subtype, ce.kind)));
+  place("coreFunction", words(pick(tenet("purpose"), profile.method, profile.theme, flavor.focus, flavor.function, ce.purpose)));
+  place("goal", words(pick(tenet("world"), profile.action && profile.focus ? `${profile.action} ${profile.focus}` : "", flavor.goal, ce.goal?.text, ce.goal)));
+  place("secret", words(pick(tenet("authority"), flavor.secret, ce.secret?.text, ce.secret, selections.length ? tenetLabel(selections.at(-1), tenetLabels) : "")));
+  // Every tenet is also a belief tag, so the ones that did not become goal / function / secret still show.
+  const beliefs = selections.map((sel) => tenetLabel(sel, tenetLabels));
+  update.__tags = [...leftovers.filter((l) => !beliefs.some((b) => words(b) === words(l))), ...beliefs.map((b) => `${game.i18n.localize("TAGANDTALLY.Augur.BelievesPrefix")} ${b}`)];
   const description = pick(flavor.description, ce.description, journal.pages?.find((p) => p.type === "text")?.text?.content);
   if (description && !actor.system.biography) update["system.biography"] = /<[a-z][\s\S]*>/i.test(description) ? description : `<p>${esc(description)}</p>`;
   const img = ce.display?.imageSrc ?? journal.pages?.find((p) => p.type === "image")?.src;
@@ -223,8 +233,9 @@ export async function importAugurFaction(actor, { journal } = {}) {
   journal ??= findAugurFaction(actor);
   if (!journal) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Augur.NotLinked"));
   const tenetLabels = await augurTenetLabels();
-  await actor.update(mapAugurFaction(actor, journal, { tenetLabels }), { ttSentenceSync: false });
-  await addFactionTags(actor, augurFactionTags(journal));
+  const { __tags: extraTags = [], ...update } = mapAugurFaction(actor, journal, { tenetLabels });
+  await actor.update(update, { ttSentenceSync: false });
+  await addFactionTags(actor, [...augurFactionTags(journal), ...extraTags]);
   ui.notifications.info(game.i18n.format("TAGANDTALLY.Faction.Imported", { name: actor.name, journal: journal.name }));
   return actor;
 }
