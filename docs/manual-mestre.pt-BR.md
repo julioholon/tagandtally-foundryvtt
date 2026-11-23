@@ -142,7 +142,80 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
 - Tokens de PdM não são vinculados por padrão: tags adicionadas ao ator do mundo depois de
   colocar o token são lidas automaticamente pelo diálogo de rolagem.
 
-## 10. Sparks: o motor de improviso
+## 10. Relações e conversas com PdMs
+
+- A aba **Relações** lista as facções, pessoas e lugares que o personagem conhece. Arraste
+  um ator PdM, um ator Facção, um diário do Augur Nexus ou qualquer entrada de diário para
+  a ficha. Cada linha guarda a **disposição** do SRD (Hostil a Devoto) e as marcas de
+  relação; cinco marcas movem a disposição um degrau.
+- **Interagir** (botão na linha da relação ou na ficha do PdM) conduz uma conversa do SRD: a
+  atitude **Drift** do PdM é rolada uma vez por cena (2d6), depois você escolhe uma
+  **abordagem** e uma pergunta. O modificador da disposição entra na rolagem e a faixa do
+  resultado grava a consequência na relação (marca, degrau de disposição ou favor devido).
+- Todo cartão de chat tem um botão **Registrar no diário** que o anexa ao diário "Sparks",
+  para os resultados da conversa ficarem com as notas da campanha.
+
+## 11. Descanso (tempo livre)
+
+- Abra o **Descanso** pelos controles de token, pela aba Ferimentos ou pelo macro. É
+  compartilhado: todos veem a mesma noite. Adicione os personagens uma vez; cada um recebe
+  **4 pontos** por noite.
+- Cada botão de atividade gasta uma hora e aplica o efeito do SRD: **dormir** dá
+  [Descansado] (e a cura de descanso em zona segura), **pesquisa / estudo / treino /
+  meditação** colocam marcas em tags e missões, **socializar** marca uma relação, **jantar /
+  beber** dão [Bem alimentado] / [Coragem Líquida] com [Ressaca] e [Músculos Doloridos] como
+  preço, **apostar** joga contra a marca de riqueza, **vigília** alimenta os testes de
+  encontro da viagem, **criar / reparar** abrem a Oficina.
+- As tags do dia seguinte somem ao apertar **Novo dia**, que também recarrega os pontos de
+  todos. Marque **Zona segura** quando o grupo dorme em lugar seguro.
+
+## 12. Viagem
+
+- Abra a **Viagem** pelos controles de token ou pelo macro. Escolha **ermo, urbano ou
+  masmorra**, o ritmo e o transporte: juntos definem os pontos de viagem do dia.
+- **Entrar no hex** rola o próximo hex: nível (a partir do hex que você deixa), terreno ou
+  distrito, característica, marco e evento vêm das tabelas do Sparks. A dificuldade da
+  característica é o custo do hex. **Definir como nível da cena** copia o nível do hex para
+  a cena atual.
+- **Descansar** rola os testes de encontro 2d6 do SRD, um por rodada do grupo menos os
+  personagens que fizeram vigília. Ritmo rápido exaure o grupo; pontos gastos desgastam
+  [Ressaca] e [Músculos Doloridos] um nível a cada dois pontos.
+
+## 13. Ofício: a Oficina
+
+- Abra a **Oficina** pela aba Inventário, pelos controles de token, pelo macro ou pelas horas
+  de criar / reparar do Descanso. Uma janela por personagem, quatro abas.
+- **Colher**: escolha o nível da fonte, o tipo de recurso (d8) e a raridade (d4). Sucesso
+  cria um item de recurso; a faixa sobe ou desce o nível.
+- **Fabricar**: escolha um material base do inventário e, opcionalmente, um componente
+  mágico. A tarefa é (nível + raridade) x 3. Sucesso pede a frase do item (pré-preenchida
+  pelas tabelas de equipamento do Sparks, com o material vindo da base) e cria equipamento
+  Nível 1 a Custo 3 (Nível 2 com componente raro ou lendário), consumindo os materiais.
+- **Aprimorar / Consertar**: adiciona uma tag ao item (+1 nível, +2 com material raro ou
+  lendário), limpa a marca **quebrado** ou aplica uma **propriedade recuperada** como tarefa
+  Nível 5. Um item aceita no máximo 9 aprimoramentos.
+- **Recuperar**: destrói um item mágico para guardar uma de suas propriedades (duas em
+  Sucesso-e) como recurso recuperado.
+- Cada nova tentativa no mesmo alvo é dificultada em 2, mostrado na linha da tarefa; a seta
+  de reiniciar limpa quando a fonte muda. Os resultados são anexados ao cartão da rolagem.
+
+## 14. Facções
+
+- Crie um ator **Facção**. A frase ("uma [descritor] [organização] que [função] e
+  [objetivo]; apesar da reputação, eles [segredo]") vem da **varinha** ou de um diário de
+  facção do Augur Nexus (**Importar** no cabeçalho). Objetivo, segredo e quartel-general
+  ficam ocultos até você clicar no olho.
+- O **relógio de fases**: sete fases, de Sombras a Fim. Cada **Insight** que os jogadores
+  ganham marca uma casa; cinco completam a fase e publicam um cartão (sussurrado aos
+  Mestres até o objetivo ser conhecido). Quando os jogadores conhecem o objetivo, a
+  **contagem** de 10 corre; se ela enche primeiro, a facção é frustrada e sua marca zera.
+- **Rivais**: um insight sobre a facção A também avança a contagem de cada rival, e quando A
+  completa uma fase a marca de cada rival é sabotada a zero.
+- A visão geral **Facções** (controles de token ou macro) lista todas as facções com botões
+  de Insight e Contagem, um **Tempo passa** que marca todas, e os diários do Augur ainda não
+  importados. Soltar uma facção na ficha de um personagem a adiciona às Relações.
+
+## 15. Sparks: o motor de improviso
 
 Botão **Sparks** nos controles de token. Três abas:
 
@@ -159,7 +232,7 @@ Botão **Sparks** nos controles de token. Três abas:
 Dica: gere uma **cena** no início de cada sessão e uma **facção** sempre que os jogadores
 perguntarem "quem manda aqui?".
 
-## 11. Sparks com o Augur
+## 16. Sparks com o Augur
 
 O Augur é agnóstico de sistema; a única parte que não funciona é a loja (Fantasy/Sci-Fi),
 que só conhece D&D 5e, PF2e, Shadowdark e OSE. Use a Negociação do sistema no lugar.
@@ -180,7 +253,7 @@ Fluxo sugerido para construir o mundo em conjunto:
    botão de importar no cabeçalho da ficha: a frase vem do descritor, ancestralidade,
    papel e impulso; traços e crenças viram tags; retrato e pronome são copiados.
 
-## 12. Jogando com vários Mestres
+## 17. Jogando com vários Mestres
 
 O sistema não impõe quem é "o" Mestre: qualquer usuário Mestre pode fazer tudo. O que
 funciona bem na prática:
@@ -204,7 +277,7 @@ funciona bem na prática:
   de tempo; o cartão de chat é o registro. Deixe as marcas automáticas ligadas e peça aos
   jogadores para rolarem eles mesmos, com título preenchido ("Escalo o muro").
 
-## 13. Atalhos e macros
+## 18. Atalhos e macros
 
 - Na primeira abertura o sistema cria a pasta de macros **Tag & Tally** com um macro para
   cada ferramenta: arraste-os para a barra de atalhos.
@@ -212,15 +285,18 @@ funciona bem na prática:
   a rolagem certa.
 - Para escrever os seus, o prefixo é sempre `game.tagandtally.macros.`: `rollTask()`,
   `quickRoll(5)`, `oracle(7, "Tem guardas?")`, `openSparks()`, `openCombatFlow()`,
-  `openParty()`, `openBarter()`, `generateNPC()`, `generateCreature()`,
+  `openParty()`, `openBarter()`, `openDowntime()`, `openTravel()`, `openWorkshop("craft")`,
+  `openFactions()`, `generateNPC()`, `generateCreature()`,
   `generateJournal("dungeon")`, `randomCharacter()`, `importSparkTables("creature")`.
 
-## 14. Checklist de sessão
+## 19. Checklist de sessão
 
 1. Nível da cena definido.
 2. Narrador da cena escolhido; Mestre de apoio com o Sparks aberto.
 3. PdMs da cena na pasta certa, segredos ocultos.
 4. Fluxo de combate limpo (lixeira) antes da primeira luta.
-5. No fim: descanso aplicado, missões atualizadas, parágrafo de passagem no diário.
+5. Facções marcadas (**Tempo passa**) se o dia avançou.
+6. No fim: descanso aplicado, noite de Descanso jogada, missões atualizadas, parágrafo
+   de passagem no diário.
 
 Boa sessão.

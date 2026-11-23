@@ -5,7 +5,7 @@ An unofficial [Foundry Virtual Tabletop](https://foundryvtt.com) game system for
 thing is "a sentence and a level", damage is a wound track, and characters grow through
 tallies instead of XP.
 
-Built for Foundry **v14** (v13 declared as minimum, untested). English and Brazilian Portuguese. Status: early, playable,
+Built for Foundry **v14**. English and Brazilian Portuguese. Status: early, playable,
 smoke-tested by hand. Issues and pull requests welcome.
 
 ## Install
@@ -136,6 +136,21 @@ Dropping a tag, gear, spell or quest on the hotbar creates a macro that uses it.
   rival's countdown; when A's phase completes, each rival's current tally is reset.
 
 Where the SRD contradicts itself the formula wins over the cheat sheet; see `PLAN.md`.
+
+## Release notes
+
+Full history in [`CHANGELOG.md`](CHANGELOG.md). Latest:
+
+- **0.6.1** (2026-11-22): the Workshop opens again and its tabs switch (two ApplicationV2
+  traps hit on the 0.6.0 build); the Augur Nexus faction import reads the real journal record
+  (profile type, drive, action, focus and ideology tenets); crafted weapons and armor are named
+  after the base material; the second salvaged property is prefilled from the item's
+  augmentations.
+- **0.6.0** (2026-11-22): Crafting Workshop (harvest, craft, augment, repair, salvage) and
+  Faction actors with the goal timer, rivals, log and Augur import. Gear gains rarity,
+  augmentations, broken and salvaged fields.
+- **0.5.x** (2026-11-22): Downtime tracker and Travel (hexes, encounters, rest checks).
+- **0.4.x**: NPC interactions. **0.3.x**: Relations tab.
 
 ## Development
 

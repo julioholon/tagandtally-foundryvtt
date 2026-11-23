@@ -148,7 +148,80 @@ would change the character or the situation.
 - NPC tokens are unlinked by default: tags added to the world actor after the token was
   placed are picked up automatically by the roll dialog.
 
-## 10. Sparks: the improvisation engine
+## 10. Relations and talking to NPCs
+
+- The **Relations** tab lists the factions, people and places the character knows. Drag an
+  NPC actor, a Faction actor, an Augur Nexus journal or any journal entry onto the sheet to
+  add it. Each row keeps the SRD **disposition** (Hostile to Devoted) and relationship
+  tallies; five tallies move the disposition one step.
+- **Interact** (button on a relation row or on the NPC sheet) runs an SRD conversation: the
+  NPC's **Drift** attitude is rolled once per scene (2d6), then you pick an **approach**
+  pathway and a question. The disposition modifier is applied to the task roll and the
+  outcome band writes its consequence back to the relation (tally, disposition step, or a
+  favor owed).
+- Any chat card has a **Log to journal** button that appends it to the "Sparks" journal, so
+  a conversation's outcomes stay with the campaign notes.
+
+## 11. Downtime
+
+- Open the **Downtime** tracker from the token controls, the Wounds tab or the macro. It is
+  shared: everyone sees the same night. Add the characters once; each gets **4 points** a
+  night.
+- Each activity button spends one hour and applies the SRD effect: **sleep** grants
+  [Refreshed] (and the rest healing in a safe zone), **research / study / workout /
+  meditation** put tallies on tags and quests, **socializing** tallies a relationship,
+  **dinner / drinking** grant [Well fed] / [Liquid Courage] with [Hangover] and [Sore
+  Muscles] as the price, **gambling** plays against the wealth tally, **watch** feeds the
+  travel encounter checks, **crafting / repair** open the Workshop.
+- Next-day tags fade when you press **New day**, which also refills everyone's points. Tick
+  **Safe zone** when the party sleeps somewhere safe.
+
+## 12. Travel
+
+- Open the **Travel** tracker from the token controls or the macro. Pick **wilderness, urban
+  or dungeon**, the pace and the transport: together they set the day's travel points.
+- **Enter hex** rolls the next hex: its level (from the hex you leave), terrain or district,
+  feature, landmark and event come from the Sparks tables. The feature's difficulty is what
+  the hex costs. **Set as scene level** copies the hex level to the current scene.
+- **Rest** rolls the SRD 2d6 encounter checks, one per party round minus the characters who
+  kept watch tonight. Fast pace exhausts the party; spent points wear down [Hangover] and
+  [Sore Muscles] one tier per two points.
+
+## 13. Crafting: the Workshop
+
+- Open the **Workshop** from the Inventory tab, the token controls, the macro or the
+  Downtime crafting / repair hours. One window per character, four tabs.
+- **Harvest**: choose the source level, the resource type (d8) and the rarity (d4). Success
+  creates a resource item; the band moves its level up or down.
+- **Craft**: pick a base material from the inventory and, optionally, a magical component.
+  The task is (level + rarity) x 3. Success asks for the item sentence (prefilled from the
+  Sparks gear tables, the material named after the base) and creates Level 1 gear at Cost 3
+  (Level 2 with a rare or legendary component), consuming the materials.
+- **Augment / Repair**: add a tag to an item (+1 level, +2 with rare or legendary material),
+  clear the **broken** flag, or apply a **salvaged property** as a Level 5 task. An item
+  takes at most 9 augmentations.
+- **Salvage**: destroy a magical item to keep one of its properties (two on a Success-and)
+  as a salvaged resource.
+- Every further attempt on the same target is hindered by 2, shown in the task line; the
+  reset arrow clears it when the source changes. Outcomes are appended to the roll card.
+
+## 14. Factions
+
+- Create a **Faction** actor. The sentence ("a [descriptor] [organization] that [function]
+  and [goal]; despite their reputation, they [secret]") comes from the **wand** or from an
+  Augur Nexus faction journal (**Import** in the header). Goal, secret and headquarters stay
+  hidden until you click the eye.
+- The **phase timer**: seven phases from Shadows to End. Each **Insight** the players gain
+  marks a tally; five complete the phase and post a card (whispered to the GMs until the
+  goal is known). Once the players know the goal the **countdown** of 10 runs; when it fills
+  first the faction is thwarted and its tally resets.
+- **Rivals**: an insight into faction A also advances each rival's countdown, and when A
+  completes a phase each rival's tally is sabotaged to zero.
+- The **Factions** overview (token controls or macro) lists every faction with Insight and
+  Countdown buttons, a **Time passes** tick that marks every faction, and the Augur journals
+  still to import. Dropping a faction on a character sheet adds it to their Relations.
+
+## 15. Sparks: the improvisation engine
 
 **Sparks** button in the token controls. Three tabs:
 
@@ -165,7 +238,7 @@ would change the character or the situation.
 Tip: generate a **scene** at the start of every session and a **faction** whenever the
 players ask "who runs this place?".
 
-## 11. Sparks with Augur
+## 16. Sparks with Augur
 
 Augur is system-agnostic; the only part that does not work is the shop (Fantasy/Sci-Fi),
 which only knows D&D 5e, PF2e, Shadowdark and OSE. Use the system's Barter instead.
@@ -186,7 +259,7 @@ Suggested workflow for building the world together:
    in the sheet header: the sentence comes from descriptor, ancestry, role and drive; traits
    and beliefs become tags; portrait and pronoun are copied.
 
-## 12. Playing with several GMs
+## 17. Playing with several GMs
 
 The system does not enforce who "the" GM is: any Gamemaster user can do everything. What
 works well in practice:
@@ -211,7 +284,7 @@ works well in practice:
   is the record. Keep automatic tallies on and ask players to roll themselves, with the
   title filled in ("I climb the wall").
 
-## 13. Shortcuts and macros
+## 18. Shortcuts and macros
 
 - On first load the system creates the **Tag & Tally** macro folder with one macro per tool:
   drag them to the hotbar.
@@ -219,16 +292,19 @@ works well in practice:
   roll.
 - To write your own, the prefix is always `game.tagandtally.macros.`: `rollTask()`,
   `quickRoll(5)`, `oracle(7, "Are there guards?")`, `openSparks()`, `openCombatFlow()`,
-  `openParty()`, `openBarter()`, `generateNPC()`, `generateCreature()`,
+  `openParty()`, `openBarter()`, `openDowntime()`, `openTravel()`, `openWorkshop("craft")`,
+  `openFactions()`, `generateNPC()`, `generateCreature()`,
   `generateJournal("dungeon")`, `randomCharacter()`, `importAugur()`,
   `importSparkTables("creature")`.
 
-## 14. Session checklist
+## 19. Session checklist
 
 1. Scene level set.
 2. Narrator chosen; support GM with Sparks open.
 3. The scene's NPCs in the right folder, secrets hidden.
 4. Combat flow cleared (trash icon) before the first fight.
-5. At the end: rest applied, quests updated, handover paragraph in the journal.
+5. Factions ticked (**Time passes**) if the day moved on.
+6. At the end: rest applied, Downtime night played, quests updated, handover paragraph in
+   the journal.
 
 Have a good session.
