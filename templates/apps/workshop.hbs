@@ -41,7 +41,7 @@
   {{#if (tt-eq tab "augment")}}
     <p class="hint">{{localize "TAGANDTALLY.Workshop.AugmentHint"}}</p>
     <div class="tt-grid two">
-      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.Mode"}}</label>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.ModeLabel"}}</label>
         <select name="augment.mode">{{#each augment.modes as |m|}}<option value="{{m.value}}" {{#if m.selected}}selected{{/if}}>{{m.label}}</option>{{/each}}</select></div>
       <div class="form-group"><label>{{localize "TAGANDTALLY.Workshop.TargetItem"}}</label>
         <select name="augment.itemId"><option value="">—</option>{{#each augment.items as |i|}}<option value="{{i.id}}" {{#if i.selected}}selected{{/if}}>{{i.name}}</option>{{/each}}</select></div>

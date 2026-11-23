@@ -3,45 +3,32 @@
     <span class="tt-segments">
       {{#each modes as |m|}}<a class="tt-segment {{#if m.active}}on{{/if}} {{#unless ../isGM}}readonly{{/unless}}" data-action="setMode" data-mode="{{m.id}}"><i class="fa-solid {{m.icon}}"></i> {{m.label}}</a>{{/each}}
     </span>
-    <span class="tt-segments">
-      {{#each paces as |p|}}<a class="tt-segment {{#if p.active}}on{{/if}} {{#if p.disabled}}disabled{{/if}} {{#unless ../isGM}}readonly{{/unless}}" data-action="setPace" data-pace="{{p.id}}">{{p.label}}</a>{{/each}}
-    </span>
-    {{#if canTransport}}<a class="tt-segment {{#if state.transport}}on{{/if}} {{#unless isGM}}readonly{{/unless}}" data-action="toggleTransport" title="{{localize 'TAGANDTALLY.Travel.TransportHint'}}"><i class="fa-solid fa-horse"></i> {{localize "TAGANDTALLY.Travel.Transport"}}</a>{{/if}}
+    {{#if showTerrain}}<input type="text" name="terrain" class="tt-terrain" value="{{state.terrain}}" placeholder="{{localize 'TAGANDTALLY.Travel.TerrainPlaceholder'}}" title="{{localize 'TAGANDTALLY.Travel.TerrainHint'}}" />{{/if}}
   </div>
-  <p class="hint">{{localize (tt-ternary isDungeon "TAGANDTALLY.Travel.HintDungeon" "TAGANDTALLY.Travel.Hint")}}</p>
-
-  <div class="tt-travel-points">
-    <strong>{{localize "TAGANDTALLY.Travel.Points"}}</strong>
-    {{#if max}}
-      <span class="tt-boxes">{{#each pips as |filled|}}<span class="tt-box {{#if filled}}filled{{/if}}"></span>{{/each}}</span>
-      <span class="tt-left">{{left}} / {{max}}</span>
-    {{else}}
-      <em>{{localize "TAGANDTALLY.Travel.PaceNotAllowed"}}</em>
-    {{/if}}
-    {{#if state.exhaustedApplied}}<span class="tt-tag warn"><i class="fa-solid fa-face-tired"></i> {{localize "TAGANDTALLY.DayTag.Exhausted"}}</span>{{/if}}
-    <span class="tt-controls">
-      {{#if isGM}}<a data-action="resetDay" title="{{localize 'TAGANDTALLY.Travel.ResetDayHint'}}"><i class="fa-solid fa-rotate-left"></i></a>{{/if}}
-    </span>
-  </div>
+  <p class="hint">{{hint}}</p>
 
   <div class="tt-travel-actions">
-    {{#if isDungeon}}
-      <button type="button" data-action="spend" data-cost="1" data-label="{{localize 'TAGANDTALLY.Travel.Room'}}"><i class="fa-solid fa-door-open"></i> {{localize "TAGANDTALLY.Travel.SpendRoom"}}</button>
-    {{else}}
-      {{#each costs as |c|}}<button type="button" data-action="spend" data-cost="{{c.cost}}" data-label="{{c.label}}"><i class="fa-solid fa-shoe-prints"></i> {{c.label}} <small>{{c.cost}}</small></button>{{/each}}
+    <button type="button" class="tt-roll-btn" data-action="explore"><i class="fa-solid fa-dice"></i> {{exploreLabel}}</button>
+    {{#if hasHex}}
+      <button type="button" data-action="postHex" title="{{localize 'TAGANDTALLY.Travel.PostHint'}}"><i class="fa-solid fa-comment"></i> {{localize "TAGANDTALLY.Travel.Post"}}</button>
+      {{#if canApplyLevel}}<button type="button" data-action="applyLevel" title="{{localize 'TAGANDTALLY.Travel.ApplyLevelHint'}}"><i class="fa-solid fa-arrow-right-to-bracket"></i> {{localize "TAGANDTALLY.Travel.ApplyLevel"}}</button>{{/if}}
+      {{#if isGM}}<a class="tt-clear-hex" data-action="clearHex" title="{{localize 'TAGANDTALLY.Travel.ClearHex'}}"><i class="fa-solid fa-xmark"></i></a>{{/if}}
     {{/if}}
-    {{#if isGM}}<button type="button" class="tt-roll-btn" data-action="enter"><i class="fa-solid fa-dice"></i> {{localize (tt-ternary isDungeon "TAGANDTALLY.Travel.EnterRoom" "TAGANDTALLY.Travel.EnterHex")}}</button>{{/if}}
   </div>
 
-  {{#if state.hex.level}}
-    <div class="tt-hex">
-      <strong><i class="fa-solid fa-hexagon"></i> {{localize "TAGANDTALLY.Travel.CurrentHex"}}</strong>
-      <span>{{localize "TAGANDTALLY.Travel.Level"}} {{state.hex.level}} · {{hexLevelLabel}}</span>
-      {{#if state.hex.terrain}}<span>{{state.hex.terrain}}</span>{{/if}}
-      {{#if state.hex.feature}}<span>{{state.hex.feature}}</span>{{/if}}
-      {{#if state.hex.landmark}}<span><i class="fa-solid fa-monument"></i> {{state.hex.landmark}}</span>{{/if}}
-      {{#if isGM}}{{#unless (tt-eq state.hex.level sceneLevel)}}<a data-action="applyLevel" title="{{localize 'TAGANDTALLY.Travel.ApplyLevelHint'}}"><i class="fa-solid fa-arrow-right-to-bracket"></i> {{localize "TAGANDTALLY.Travel.ApplyLevel"}}</a>{{/unless}}{{/if}}
-    </div>
+  {{#if hasHex}}
+    <ul class="tt-hex-fields">
+      {{#each fields as |f|}}
+        <li class="{{#if f.empty}}empty{{/if}}">
+          <i class="fa-solid {{f.icon}}"></i>
+          <strong>{{f.label}}</strong>
+          <span class="tt-hex-value">{{#if f.empty}}<em>—</em>{{else}}{{f.value}}{{/if}}{{#if f.detail}} <small class="dim">({{f.detail}})</small>{{/if}}</span>
+          <a data-action="reroll" data-field="{{f.key}}" title="{{localize 'TAGANDTALLY.Travel.Reroll'}}"><i class="fa-solid fa-dice"></i></a>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="tt-empty">{{localize "TAGANDTALLY.Travel.NoHex"}}</p>
   {{/if}}
 
   <div class="tt-travel-rest">

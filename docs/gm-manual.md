@@ -178,14 +178,18 @@ would change the character or the situation.
 
 ## 12. Travel
 
-- Open the **Travel** tracker from the token controls or the macro. Pick **wilderness, urban
-  or dungeon**, the pace and the transport: together they set the day's travel points.
-- **Enter hex** rolls the next hex: its level (from the hex you leave), terrain or district,
-  feature, landmark and event come from the Sparks tables. The feature's difficulty is what
-  the hex costs. **Set as scene level** copies the hex level to the current scene.
+- Open **Travel** from the token controls or the macro. Move the party on the map yourself
+  (Augur Hexlands hexes, a drawn map, or nothing at all); the tracker does not count
+  movement.
+- When they stand on a new hex, press **Explore hex**: level (from the hex they left),
+  feature, landmark and event come from the Sparks tables. Terrain is whatever the map
+  shows; type it in the box if you want the rest discoveries to match it. Each result has
+  its own **reroll** die, so anyone can fish for a better idea. **Post to chat** shares the
+  hex with the players; **Set as scene level** copies its level to the current scene.
+- **Wilderness / urban / dungeon** only pick the tables: urban rolls districts' features,
+  dungeon rolls the room's size, exits and contents instead.
 - **Rest** rolls the SRD 2d6 encounter checks, one per party round minus the characters who
-  kept watch tonight. Fast pace exhausts the party; spent points wear down [Hangover] and
-  [Sore Muscles] one tier per two points.
+  kept watch tonight.
 
 ## 13. Crafting: the Workshop
 

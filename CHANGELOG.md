@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.3 (unreleased)
+
+- Fix: NPC and creature sentence words (descriptor, type, motivation, attack, strength, weakness…)
+  are offered as tags in the Task Roll dialog, so a creature in the Combat flow can roll with them.
+- Fix: the Interact dialog's portrait was unstyled (huge) and showed the relation's stored image
+  instead of the NPC's current one.
+- Fix: missing "Mode" label in the Workshop's Augment tab.
+- Travel reworked around the map: movement points, pace and transport are gone. Explore hex rolls
+  level, feature, landmark and event for the hex the party stands on (terrain comes from the map),
+  each rerollable on its own by anyone, with Post to chat and Set as scene level. Rest checks
+  unchanged. Travel points no longer wear down [Hangover] / [Sore Muscles]. Inline dice in table rows
+  are rolled ("7 Room Dungeon") and a "Biome/District Event" expands into a verb-adjective-noun event
+  for the terrain or district typed in the Travel window.
+
 ## 0.6.2 (2026-11-22)
 
 - Manifest: Foundry v14 is now the minimum (v13 was never tested); cover and icon media for the

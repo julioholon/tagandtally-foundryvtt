@@ -221,7 +221,7 @@ export class InteractDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     const pathways = pathwayList(this.talk.approach).map((p) => ({ ...p, selected: p.id === this.talk.pathway }));
     return {
       row, actor: this.actor, target: this.target, talk: this.talk,
-      img: row.img || this.target?.img || "icons/svg/mystery-man.svg",
+      img: this.target?.img || row.img || "icons/svg/mystery-man.svg",
       steps: TAGANDTALLY.relationSteps.map((s) => ({ ...s, label: game.i18n.localize(s.label), modifier: signed(s.modifier), selected: s.value === row.disposition })),
       modifier: signed(modifier), modifierClass: modifier > 0 ? "ease" : modifier < 0 ? "hinder" : "",
       attitudeLabel: stepLabel(attitude), attitudeDrifted: row.attitudeActive,
