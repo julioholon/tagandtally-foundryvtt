@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.1 (unreleased)
+## 0.6.1 (2026-11-22)
 
 - Fix: the Workshop failed to open (it assigned a property ApplicationV2 reserves) and its tabs did
   not switch (the action name `tab` is handled by core).
