@@ -267,7 +267,21 @@ Suggested workflow for building the world together:
    sentence from descriptor, ancestry, role and drive, traits and beliefs as tags, portrait
    and pronoun); an unlinked actor asks which Augur person it is, then links and imports.
 
-## 17. Playing with several GMs
+## 17. Playing solo
+
+Foundry needs a Gamemaster user, so a solo player plays as the GM. Turn on the **Solo veil**
+system setting: NPC strengths, weaknesses and secrets and faction goals, secrets and
+headquarters are hidden from you as well, shown as *Unknown* until the five insight boxes
+fill, the faction's Insight button reveals the goal, or you click the eye because the
+fiction earned it. The Sparks wand and the Augur buttons still fill those fields; you just do
+not see what they wrote. The generated NPC biography no longer repeats the sentence.
+
+A solo session in practice: generate a **scene** in Sparks, ask the **Oracle** the opening
+question, **Explore** the hex in Travel, talk to people with **Interact** (its outcomes grant
+insights), run fights in the **Combat flow** with you rolling every phase, then play the
+**Downtime** night and press **New day**.
+
+## 18. Playing with several GMs
 
 The system does not enforce who "the" GM is: any Gamemaster user can do everything. What
 works well in practice:
@@ -292,7 +306,7 @@ works well in practice:
   is the record. Keep automatic tallies on and ask players to roll themselves, with the
   title filled in ("I climb the wall").
 
-## 18. Shortcuts and macros
+## 19. Shortcuts and macros
 
 - On first load the system creates the **Tag & Tally** macro folder with one macro per tool:
   drag them to the hotbar.
@@ -305,7 +319,7 @@ works well in practice:
   `generateJournal("dungeon")`, `randomCharacter()`, `importAugur()`,
   `importSparkTables("creature")`.
 
-## 19. Session checklist
+## 20. Session checklist
 
 1. Scene level set.
 2. Narrator chosen; support GM with Sparks open.

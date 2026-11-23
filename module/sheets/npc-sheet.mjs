@@ -44,7 +44,7 @@ export default class NpcSheet extends BaseActorSheet {
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
     const actor = this.actor;
-    const hide = game.settings.get(SYSTEM_ID, "hideCreatureSecrets");
+    const hide = game.settings.get(SYSTEM_ID, "hideCreatureSecrets") || actor.constructor.veiled;
     context.dispositions = TAGANDTALLY.dispositions;
     context.damageTypes = TAGANDTALLY.damageTypes;
     context.levels = TAGANDTALLY.levels;

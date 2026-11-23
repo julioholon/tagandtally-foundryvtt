@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.0 (unreleased)
+
+- **Solo veil** (world setting, off by default): NPC strengths, weaknesses and secrets and faction
+  goals, secrets and headquarters are hidden from everyone, the GM included, until revealed by the
+  eye toggle or by insights. Hidden strengths and weaknesses stay out of the creature's roll dialog.
+- Generated NPCs no longer copy the whole sentence (secret included) into the biography.
+- Augur imports (people and factions) fill only blank sentence fields; values that find no room
+  become tags, and every faction tenet becomes a "believes in" tag. Goal and secret on a faction are
+  never overwritten.
+
 ## 0.6.6 (2026-11-23)
 
 - Character, NPC and Faction sheets get an Augur button: linked actors open their Nexus dossier (the

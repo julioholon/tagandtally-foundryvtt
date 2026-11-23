@@ -226,9 +226,20 @@ export default class TagAndTallyActor extends Actor {
   }
 
   /** Whether the current user may see a hidden trait. */
+  /** Solo veil: the world setting that hides secrets from everyone, GM included, until revealed. */
+  static get veiled() {
+    try { return Boolean(game.settings.get(SYSTEM_ID, "soloVeil")); } catch { return false; }
+  }
+
+  /**
+   * Whether the current user may see a hidden field (NPC strength / weakness / secret, faction goal /
+   * secret / headquarters). GMs and owners see everything unless the solo veil is on; then only what
+   * was revealed (by the eye toggle or by insights) shows, for everyone.
+   */
   canSeeHidden(key) {
-    if (game.user.isGM || this.isOwner) return true;
-    return Boolean(this.system.revealed?.[key]);
+    if (this.system.revealed?.[key]) return true;
+    if (this.constructor.veiled) return false;
+    return game.user.isGM || this.isOwner;
   }
 
   /** Flags namespace helper. */

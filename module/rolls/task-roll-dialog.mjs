@@ -90,6 +90,7 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     const hidden = new Set(["secret"]);
     return Object.entries(actor.system.sentence ?? {})
       .filter(([key, value]) => String(value ?? "").trim() && !hidden.has(key))
+      .filter(([key]) => !["strength", "weakness"].includes(key) || actor.canSeeHidden(key))
       .map(([key, value]) => ({
         id: `sentence:${key}`, name: String(value).trim(), steps: 1, notation: "",
         typeLabel: TaskRollDialog.#sentenceLabel(key),
