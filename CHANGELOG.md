@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.3 (unreleased)
+## 0.6.3 (2026-11-23)
 
 - Fix: NPC and creature sentence words (descriptor, type, motivation, attack, strength, weakness…)
   are offered as tags in the Task Roll dialog, so a creature in the Combat flow can roll with them.
