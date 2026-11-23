@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.4 (unreleased)
+## 0.6.4 (2026-11-23)
 
 - Relation rows and the Interact dialog show the linked actor's current portrait, falling back to
   its token art when the actor image is the default.
