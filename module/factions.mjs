@@ -1,5 +1,5 @@
 import { TAGANDTALLY, SYSTEM_ID } from "./config.mjs";
-import { augurEntity } from "./relations.mjs";
+import { augurEntity, augurApiUrl } from "./relations.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const esc = (s) => foundry.utils.escapeHTML(String(s ?? ""));
@@ -142,21 +142,43 @@ export function findAugurFaction(actor) {
   return augurFactionJournals().find((j) => j.name === actor.name) ?? null;
 }
 
-/** Map an Augur faction entity onto the faction sentence (field names vary by Augur version; every read is defensive). */
-export function mapAugurFaction(actor, journal) {
+/** Tenet label from an ideology selection ("purpose.survival-above-principle" -> "Survival Above Principle"), or the catalog label when known. */
+function tenetLabel(sel, catalog = {}) {
+  const id = String(sel?.tenetId ?? "");
+  return catalog[id] ?? title(id.split(".").pop());
+}
+
+/** Augur's ideology catalog as { tenetId: label }, when the module exposes it. */
+export async function augurTenetLabels() {
+  try {
+    const api = await import(augurApiUrl("ideologies"));
+    const topics = await api.getIdeologyTopics?.();
+    const out = {};
+    for (const topic of Array.isArray(topics) ? topics : Object.values(topics ?? {})) for (const t of topic?.tenets ?? []) if (t?.id && t?.label) out[t.id] = t.label;
+    return out;
+  } catch { return {}; }
+}
+
+/**
+ * Map an Augur faction entity onto the faction sentence:
+ * Type -> organization type, Disposition -> descriptor, Purpose tenet -> core function,
+ * The World tenet -> goal, Authority tenet -> secret. Every read is defensive (fields vary by Augur version).
+ */
+export function mapAugurFaction(actor, journal, { tenetLabels = {} } = {}) {
   const ce = augurEntity(journal) ?? {};
-  // Augur stores factions as profile {type, method, drive, action, theme, focus} + ideology.selections[].tenetId.
   const profile = ce.profile ?? {};
   const flavor = ce.flavor ?? {};
   const pick = (...vals) => vals.find((v) => typeof v === "string" && v.trim()) ?? "";
-  const tenets = (ce.ideology?.selections ?? []).map((sel) => words(String(sel.tenetId ?? "").split(".").pop())).filter(Boolean);
+  const selections = ce.ideology?.selections ?? [];
+  const tenet = (topic) => { const sel = selections.find((x) => (x.topicId ?? String(x.tenetId ?? "").split(".")[0]) === topic); return sel ? tenetLabel(sel, tenetLabels) : ""; };
+  const disposition = Object.values(ce.moduleData ?? {}).map((m) => m?.dispositionId ?? m?.disposition).find((v) => typeof v === "string" && v);
   const update = {
     "system.augurUuid": journal.uuid,
-    "system.sentence.descriptor": words(pick(profile.drive, flavor.descriptor, ce.descriptor)),
+    "system.sentence.descriptor": words(pick(disposition, profile.drive, flavor.descriptor, ce.descriptor)),
     "system.sentence.organizationType": words(pick(profile.type, ce.role?.roleLabel, title(ce.role?.roleId), ce.organizationType, ce.subtype, ce.kind)),
-    "system.sentence.coreFunction": words(pick(profile.method, profile.theme, flavor.focus, flavor.function, ce.purpose)),
-    "system.sentence.goal": words(pick(profile.action && profile.focus ? `${profile.action} ${profile.focus}` : "", flavor.goal, ce.goal?.text, ce.goal)),
-    "system.sentence.secret": words(pick(flavor.secret, ce.secret?.text, ce.secret, tenets.at(-1)))
+    "system.sentence.coreFunction": words(pick(tenet("purpose"), profile.method, profile.theme, flavor.focus, flavor.function, ce.purpose)),
+    "system.sentence.goal": words(pick(tenet("world"), profile.action && profile.focus ? `${profile.action} ${profile.focus}` : "", flavor.goal, ce.goal?.text, ce.goal)),
+    "system.sentence.secret": words(pick(tenet("authority"), flavor.secret, ce.secret?.text, ce.secret, selections.length ? tenetLabel(selections.at(-1), tenetLabels) : ""))
   };
   const description = pick(flavor.description, ce.description, journal.pages?.find((p) => p.type === "text")?.text?.content);
   if (description && !actor.system.biography) update["system.biography"] = /<[a-z][\s\S]*>/i.test(description) ? description : `<p>${esc(description)}</p>`;
@@ -165,21 +187,55 @@ export function mapAugurFaction(actor, journal) {
   return update;
 }
 
+/** Drive, Action, Theme and Focus of an Augur faction become tags on the faction actor. */
+export function augurFactionTags(journal) {
+  const profile = augurEntity(journal)?.profile ?? {};
+  return ["drive", "action", "theme", "focus"].map((k) => String(profile[k] ?? "").trim()).filter(Boolean);
+}
+
+/** Add tag items by name to a faction, skipping names it already has. Returns the number created. */
+export async function addFactionTags(actor, names) {
+  const have = new Set(actor.items.filter((i) => i.type === "tag").map((i) => i.name.toLowerCase()));
+  const creates = [...new Set(names.map((n) => n.trim()).filter(Boolean))].filter((n) => !have.has(n.toLowerCase())).map((name) => ({ name, type: "tag", system: { tagType: "other", category: "static" } }));
+  if (creates.length) await actor.createEmbeddedDocuments("Item", creates);
+  return creates.length;
+}
+
+/** Add a rival (faction actor or uuid) to a faction, both ways are not implied: rivalry is directional in the SRD. */
+export async function addRival(actor, rival) {
+  const r = resolveFaction(rival);
+  if (!r || r.id === actor.id || actor.system.rivals.includes(r.uuid)) return false;
+  await actor.update({ "system.rivals": [...actor.system.rivals, r.uuid] });
+  ui.notifications.info(T("RivalAdded", { name: r.name, faction: actor.name }));
+  return true;
+}
+
+/** A place (Augur location journal, scene, site page) becomes the headquarters. */
+export async function setHeadquarters(actor, doc) {
+  const name = doc?.name ?? "";
+  if (!name) return false;
+  await actor.update({ "system.headquarters": name, "system.headquartersUuid": doc.uuid ?? "" });
+  ui.notifications.info(T("HeadquartersSet", { name, faction: actor.name }));
+  return true;
+}
+
 export async function importAugurFaction(actor, { journal } = {}) {
   journal ??= findAugurFaction(actor);
   if (!journal) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Augur.NotLinked"));
-  await actor.update(mapAugurFaction(actor, journal), { ttSentenceSync: false });
+  const tenetLabels = await augurTenetLabels();
+  await actor.update(mapAugurFaction(actor, journal, { tenetLabels }), { ttSentenceSync: false });
+  await addFactionTags(actor, augurFactionTags(journal));
   ui.notifications.info(game.i18n.format("TAGANDTALLY.Faction.Imported", { name: actor.name, journal: journal.name }));
   return actor;
 }
 
 /** Create a faction actor from an Augur faction journal (or focus the existing one). */
-export async function createFactionFromAugur(journal) {
+export async function createFactionFromAugur(journal, { render = true } = {}) {
   const existing = allFactions().find((a) => a.system.augurUuid === journal.uuid);
-  if (existing) return existing.sheet.render({ force: true });
+  if (existing) { if (render) existing.sheet.render({ force: true }); return existing; }
   const actor = await Actor.create({ name: journal.name, type: "faction", img: augurEntity(journal)?.display?.imageSrc || "icons/svg/tower.svg" });
   await importAugurFaction(actor, { journal });
-  actor.sheet.render({ force: true });
+  if (render) actor.sheet.render({ force: true });
   return actor;
 }
 

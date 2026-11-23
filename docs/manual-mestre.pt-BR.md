@@ -205,8 +205,12 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
 
 - Crie um ator **Facção**. A frase ("uma [descritor] [organização] que [função] e
   [objetivo]; apesar da reputação, eles [segredo]") vem da **varinha** ou de um diário de
-  facção do Augur Nexus (**Importar** no cabeçalho). Objetivo, segredo e quartel-general
-  ficam ocultos até você clicar no olho.
+  facção do Augur Nexus (**Importar** no cabeçalho, ou solte o diário na ficha): tipo e
+  disposição preenchem organização e descritor, os princípios de Propósito, O Mundo e
+  Autoridade preenchem função, objetivo e segredo, e impulso, ação, tema e foco viram
+  **tags**. Solte um local do Augur, uma cena ou página de site na ficha para definir o
+  **quartel-general**; solte outra facção para adicionar um **rival**. Objetivo, segredo e
+  quartel-general ficam ocultos até você clicar no olho.
 - O **relógio de fases**: sete fases, de Sombras a Fim. Cada **Insight** que os jogadores
   ganham marca uma casa; cinco completam a fase e publicam um cartão (sussurrado aos
   Mestres até o objetivo ser conhecido). Quando os jogadores conhecem o objetivo, a

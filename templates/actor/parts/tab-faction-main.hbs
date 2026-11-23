@@ -7,7 +7,7 @@
     <div class="form-group span2"><label>{{localize "TAGANDTALLY.Faction.CoreFunction"}}</label><input type="text" name="system.sentence.coreFunction" value="{{system.sentence.coreFunction}}" /></div>
     <div class="form-group span2"><label>{{localize "TAGANDTALLY.Faction.Goal"}}</label><div class="tt-inline"><input type="text" name="system.sentence.goal" value="{{system.sentence.goal}}" /><label class="tt-toggle" title="{{localize 'TAGANDTALLY.Faction.KnownHint'}}"><input type="checkbox" name="system.revealed.goal" {{checked system.revealed.goal}} /> <i class="fa-solid fa-eye"></i></label></div></div>
     <div class="form-group span2"><label>{{localize "TAGANDTALLY.Faction.Secret"}}</label><div class="tt-inline"><input type="text" name="system.sentence.secret" value="{{system.sentence.secret}}" /><label class="tt-toggle" title="{{localize 'TAGANDTALLY.Faction.KnownHint'}}"><input type="checkbox" name="system.revealed.secret" {{checked system.revealed.secret}} /> <i class="fa-solid fa-eye"></i></label></div></div>
-    <div class="form-group span2"><label>{{localize "TAGANDTALLY.Faction.Headquarters"}}</label><div class="tt-inline"><input type="text" name="system.headquarters" value="{{system.headquarters}}" /><label class="tt-toggle" title="{{localize 'TAGANDTALLY.Faction.KnownHint'}}"><input type="checkbox" name="system.revealed.headquarters" {{checked system.revealed.headquarters}} /> <i class="fa-solid fa-eye"></i></label></div></div>
+    <div class="form-group span2"><label>{{localize "TAGANDTALLY.Faction.Headquarters"}} <small class="hint">{{localize "TAGANDTALLY.Faction.DropHint"}}</small></label><div class="tt-inline"><input type="text" name="system.headquarters" value="{{system.headquarters}}" />{{#if headquartersLinked}}<a data-action="openHeadquarters" title="{{localize 'TAGANDTALLY.Faction.OpenHeadquarters'}}"><i class="fa-solid fa-location-dot"></i></a><a data-action="clearHeadquarters" title="{{localize 'TAGANDTALLY.Faction.UnlinkHeadquarters'}}"><i class="fa-solid fa-link-slash"></i></a>{{/if}}<label class="tt-toggle" title="{{localize 'TAGANDTALLY.Faction.KnownHint'}}"><input type="checkbox" name="system.revealed.headquarters" {{checked system.revealed.headquarters}} /> <i class="fa-solid fa-eye"></i></label></div></div>
   </div>
   {{else}}
   <dl class="tt-faction-known">
@@ -15,6 +15,13 @@
     <dt>{{localize "TAGANDTALLY.Faction.Secret"}}</dt><dd>{{#if canSee.secret}}{{system.sentence.secret}}{{else}}<em>{{localize "TAGANDTALLY.Faction.Unknown"}}</em>{{/if}}</dd>
     <dt>{{localize "TAGANDTALLY.Faction.Headquarters"}}</dt><dd>{{#if canSee.headquarters}}{{system.headquarters}}{{else}}<em>{{localize "TAGANDTALLY.Faction.Unknown"}}</em>{{/if}}</dd>
   </dl>
+  {{/if}}
+
+  {{#if showTags}}
+  <div class="tt-faction-tags">
+    {{#each tags as |t|}}<span class="tt-tag">{{t.name}}{{#if ../owner}} <a data-action="removeTag" data-item-id="{{t.id}}" title="{{localize 'TAGANDTALLY.Faction.RemoveTag'}}"><i class="fa-solid fa-xmark"></i></a>{{/if}}</span>{{/each}}
+    {{#if owner}}<a class="tt-add-tag" data-action="addTag" title="{{localize 'TAGANDTALLY.Faction.AddTag'}}"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Faction.AddTag"}}</a>{{/if}}
+  </div>
   {{/if}}
 
   <h3>{{localize "TAGANDTALLY.Faction.PhaseTimer"}}</h3>
@@ -39,7 +46,8 @@
     {{#each rivals as |r|}}<li><a data-action="openRival" data-uuid="{{r.uuid}}"><img src="{{r.img}}" alt="" /> {{r.name}}</a> <small>{{r.phaseLabel}}</small> <a data-action="removeRival" data-uuid="{{r.uuid}}" title="{{localize 'TAGANDTALLY.Relations.Remove'}}"><i class="fa-solid fa-xmark"></i></a></li>{{/each}}
     {{#unless rivals.length}}<li class="tt-empty">{{localize "TAGANDTALLY.Faction.NoRivals"}}</li>{{/unless}}
   </ul>
-  {{#if rivalOptions.length}}<div class="tt-inline"><select data-rival-pick><option value="">{{localize "TAGANDTALLY.Faction.AddRival"}}</option>{{#each rivalOptions as |o|}}<option value="{{o.uuid}}">{{o.name}}</option>{{/each}}</select></div>{{/if}}
+  {{#if rivalOptions.length}}<div class="tt-inline"><select data-rival-pick><option value="">{{localize "TAGANDTALLY.Faction.AddRival"}}</option>{{#each rivalOptions as |o|}}<option value="{{o.value}}">{{o.name}}</option>{{/each}}</select></div>
+  {{else}}<p class="hint">{{localize "TAGANDTALLY.Faction.NoRivalOptions"}}</p>{{/if}}
   {{/if}}
 
   {{#if log.length}}

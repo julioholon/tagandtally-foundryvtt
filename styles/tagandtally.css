@@ -356,3 +356,10 @@
 .tagandtally .tt-faction-log { margin: 0; padding-left: 1.2rem; font-size: 0.9em; }
 .tagandtally .tt-faction-main .tt-inline input[type="text"] { flex: 1; }
 .chat-message .tt-faction-card p { margin: 0.2rem 0; }
+
+/* Faction tags */
+.tagandtally.faction .tt-faction-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; margin: 0.3rem 0 0.6rem; }
+.tagandtally.faction .tt-faction-tags .tt-tag a { opacity: 0.6; margin-left: 0.2rem; cursor: pointer; }
+.tagandtally.faction .tt-faction-tags .tt-tag a:hover { opacity: 1; }
+.tagandtally.faction .tt-add-tag { font-size: 0.85em; opacity: 0.8; cursor: pointer; }
+.tagandtally.faction .form-group .tt-inline a { cursor: pointer; padding: 0 0.25rem; }

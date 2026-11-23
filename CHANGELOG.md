@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.5 (unreleased)
+
+- Relation rows (and the faction headquarters link) open the Augur Nexus dossier of NPCs, factions
+  and locations instead of the journal page, falling back to the journal when Augur cannot.
+- Faction sheet accepts drops: a place (Augur location, scene, site page or journal) becomes the
+  headquarters (with open / unlink icons), another faction becomes a rival, an Augur faction
+  journal is imported.
+- Augur faction import follows the dossier: Type -> organization type, Disposition -> descriptor,
+  Purpose tenet -> core function, The World tenet -> goal, Authority tenet -> secret; Drive, Action,
+  Theme and Focus become tags on the faction (tags are listed on the sheet and can be added or
+  removed by hand).
+- Rival picker also offers Augur factions not yet imported (imports on pick) and explains what
+  rivals are when there is nothing to pick.
+
 ## 0.6.4 (2026-11-23)
 
 - Relation rows and the Interact dialog show the linked actor's current portrait, falling back to
