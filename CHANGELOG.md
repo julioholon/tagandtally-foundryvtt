@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.6 (unreleased)
+## 0.6.6 (2026-11-23)
 
 - Character, NPC and Faction sheets get an Augur button: linked actors open their Nexus dossier (the
   import button stays beside it); unlinked characters and NPCs pick the Augur person they are, which
