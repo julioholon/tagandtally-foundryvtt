@@ -145,15 +145,18 @@ export function findAugurFaction(actor) {
 /** Map an Augur faction entity onto the faction sentence (field names vary by Augur version; every read is defensive). */
 export function mapAugurFaction(actor, journal) {
   const ce = augurEntity(journal) ?? {};
+  // Augur stores factions as profile {type, method, drive, action, theme, focus} + ideology.selections[].tenetId.
+  const profile = ce.profile ?? {};
   const flavor = ce.flavor ?? {};
   const pick = (...vals) => vals.find((v) => typeof v === "string" && v.trim()) ?? "";
+  const tenets = (ce.ideology?.selections ?? []).map((sel) => words(String(sel.tenetId ?? "").split(".").pop())).filter(Boolean);
   const update = {
     "system.augurUuid": journal.uuid,
-    "system.sentence.descriptor": words(pick(flavor.descriptor, ce.descriptor)),
-    "system.sentence.organizationType": words(pick(ce.role?.roleLabel, title(ce.role?.roleId), ce.organizationType, ce.subtype, ce.kind, ce.factionType)),
-    "system.sentence.coreFunction": words(pick(flavor.focus, flavor.function, flavor.drive, ce.purpose)),
-    "system.sentence.goal": words(pick(flavor.goal, ce.goal?.text, ce.goal, flavor.action && flavor.focus ? `${flavor.action} ${flavor.focus}` : "")),
-    "system.sentence.secret": words(pick(flavor.secret, ce.secret?.text, ce.secret))
+    "system.sentence.descriptor": words(pick(profile.drive, flavor.descriptor, ce.descriptor)),
+    "system.sentence.organizationType": words(pick(profile.type, ce.role?.roleLabel, title(ce.role?.roleId), ce.organizationType, ce.subtype, ce.kind)),
+    "system.sentence.coreFunction": words(pick(profile.method, profile.theme, flavor.focus, flavor.function, ce.purpose)),
+    "system.sentence.goal": words(pick(profile.action && profile.focus ? `${profile.action} ${profile.focus}` : "", flavor.goal, ce.goal?.text, ce.goal)),
+    "system.sentence.secret": words(pick(flavor.secret, ce.secret?.text, ce.secret, tenets.at(-1)))
   };
   const description = pick(flavor.description, ce.description, journal.pages?.find((p) => p.type === "text")?.text?.content);
   if (description && !actor.system.biography) update["system.biography"] = /<[a-z][\s\S]*>/i.test(description) ? description : `<p>${esc(description)}</p>`;
