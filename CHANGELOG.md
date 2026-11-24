@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.8.1 (unreleased)
+
+- Game loop: a scene action is spent when a roll resolves, wherever it was rolled (sheet, Workshop,
+  Interact, Combat flow's Resolution…); opening a tool costs nothing; combat phases before the
+  Resolution and yes / no rolls are free. A refund arrow gives back the last action.
+- Investigate asks what is investigated: a quest's Plan or Location, an NPC's strength / weakness /
+  secret, or a faction. The insights roll is level 5 (SRD); the band's tallies land on the target, a
+  Subject / Modifier insight is rolled onto the card, and a Fail-and marks the current quest's Countdown.
+- A + beside the quest picker creates a quest on a participant (Sparks-filled) and selects it.
+- Simple Calendar (Reborn): the loop shows the calendar date and Advance time moves it by the scope
+  (days, 4 hours for "a few hours", 10 minutes for "a fight").
+- Quest sheet: tallies are clickable boxes (5 / 5 / 10) with the max beside them.
+- The system now fires a `tagandtally.rollResolved` hook with every resolved roll.
+
 ## 0.8.0 (2026-11-24)
 
 - **Game loop** (solo and play-by-post): a shared scene with level (SRD formula from the last scene),

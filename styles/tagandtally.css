@@ -394,3 +394,12 @@
 .tagandtally .tt-loop-history { font-size: 0.85em; margin-top: 0.4rem; }
 .tagandtally .tt-loop-history ol { margin: 0.2rem 0 0 1.2rem; padding: 0; }
 .chat-message .tt-loop-card p { margin: 0.15rem 0; }
+
+.tagandtally .tt-tally-config .tt-inline { align-items: center; gap: 0.4rem; }
+.tagandtally .tt-tally-config .tt-tally-max { width: 3.2em; }
+.tagandtally .tt-tally-config .tt-box { cursor: pointer; }
+.tagandtally .tt-loop-row .tt-refund { cursor: pointer; opacity: 0.6; font-size: 0.85em; }
+.tagandtally .tt-loop-row .tt-refund:hover { opacity: 1; }
+.tagandtally .tt-loop .tt-calendar { opacity: 0.85; }
+.chat-message .tt-loop-outcome { border-top: 1px dashed var(--color-border-light-2, #999); margin-top: 0.3rem; padding-top: 0.3rem; }
+.chat-message .tt-loop-outcome p { margin: 0.15rem 0; }

@@ -178,10 +178,15 @@ would change the character or the situation.
   much world time passes when the scene closes, not how many actions it holds. Write the
   **intent** and the **stakes**, and pick the **quest** the scene serves (or none: time just
   passes).
-- Every character has **10 actions** in the scene. Investigate and Task open the roll dialog
-  at the scene level, Socialize picks an NPC and opens Interact, Oracle asks a question,
-  Travel, Combat, Workshop and Downtime open those tools. Actions inside a scene cost no
-  world time. The log under the scene keeps what each action produced.
+- Every character has **10 actions** in the scene, and an action is spent when a roll
+  resolves, wherever it was rolled: a Task from the sheet, a Workshop craft, an Interact
+  roll, the Combat flow's Resolution (the four phases before it are free). Opening a tool
+  costs nothing; the arrow beside the pips gives the last action back. **Investigate** asks
+  what you investigate (a quest's Plan or Location, an NPC's hidden trait, a faction), rolls
+  insights at level 5 and marks the target by the outcome. **Task** rolls at the scene level,
+  **Socialize** picks an NPC and opens Interact, **Oracle** asks a question, the rest open
+  their tools. The **+** beside the quest picker creates a quest on a character. With Simple
+  Calendar active, the date shows in the header and Advance time moves it by the scope.
 - When a player is done they click **Ready**. **Advance time** unlocks when everyone is ready
   (the GM can always advance). It writes the scene to the **Campaign Chronicle** journal
   (intent, stakes, quest, log), moves the day counter by the scope (next-day tags fade,

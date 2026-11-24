@@ -418,8 +418,13 @@ TAGANDTALLY.dayTagMaxTier = 4;
 
 /* ------------------------------ Game loop ------------------------------- */
 TAGANDTALLY.loop = {
-  /** Actions each party member gets in a scene, whatever its time scope. */
+  /** Actions each party member gets in a scene, whatever its time scope. A resolved roll spends one. */
   actionPoints: 10,
+  /** Insights rolls are always level 5 (SRD). */
+  insightLevel: 5,
+  /** Simple Calendar movement for the scopes that are shorter than a day. */
+  shiftHours: 4,
+  combatMinutes: 10,
   /** How much world time a scene covers: days moved and faction "time passes" marks when it closes. */
   scopes: {
     combat: { label: "TAGANDTALLY.Loop.Scopes.combat", days: 0, factionTicks: 0 },
@@ -431,7 +436,7 @@ TAGANDTALLY.loop = {
   },
   /** Scene actions: `roll` opens the Task Roll dialog with that roll type, the others open a tool. */
   actions: {
-    investigate: { label: "TAGANDTALLY.Loop.Action.investigate", hint: "TAGANDTALLY.Loop.ActionHint.investigate", icon: "fa-magnifying-glass", kind: "roll", rollType: "insights" },
+    investigate: { label: "TAGANDTALLY.Loop.Action.investigate", hint: "TAGANDTALLY.Loop.ActionHint.investigate", icon: "fa-magnifying-glass", kind: "investigate" },
     task: { label: "TAGANDTALLY.Loop.Action.task", hint: "TAGANDTALLY.Loop.ActionHint.task", icon: "fa-dice-d20", kind: "roll", rollType: "task" },
     socialize: { label: "TAGANDTALLY.Loop.Action.socialize", hint: "TAGANDTALLY.Loop.ActionHint.socialize", icon: "fa-comments", kind: "interact" },
     oracle: { label: "TAGANDTALLY.Loop.Action.oracle", hint: "TAGANDTALLY.Loop.ActionHint.oracle", icon: "fa-eye", kind: "oracle" },

@@ -108,7 +108,9 @@ export async function resolveRoll({ actor, tallyActor, level, eases = [], hinder
       }
     }
   });
-  return { roll, total, band, calc, tallies, message, wound };
+  const result = { roll, total, band, calc, tallies, message, wound, rollType, actor, item, title, context };
+  Hooks.callAll(`${SYSTEM_ID}.rollResolved`, result);
+  return result;
 }
 
 /** Oracle: likelihood as a level (5 = even odds). Even/odd yes-no helper too. */
