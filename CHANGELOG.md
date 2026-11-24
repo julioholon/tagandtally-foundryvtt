@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.8.0 (unreleased)
+## 0.8.0 (2026-11-24)
 
 - **Game loop** (solo and play-by-post): a shared scene with level (SRD formula from the last scene),
   Sparks sentence, time of day / weather / season, a time scope (fight, hours, day, week, month, year),
