@@ -138,7 +138,9 @@ would change the character or the situation.
   and damage type (and a creature's special ability) appear when you click the eye beside the
   field, for instance once they have seen it fight. A creature's **strength** and
   **weakness** and an NPC's **secret** also reveal when the players gather 5 **insights**
-  (boxes beside each). Hidden parts read as [?] in the sentence.
+  (boxes beside each). Hidden parts read as [?] in the sentence. What is revealed belongs to the
+  world actor: every wolf token on the map shares it, even though each token may carry its own
+  edited sentence.
 - **Barter**: button on the NPC's Main tab. Pick the buyer; buying below your Wealth is free,
   at or above it needs a Wealth check (level 3 + the difference) and, on success, the player
   chooses to lose 1 Wealth or become **In debt**. Selling works the other way round. No Item

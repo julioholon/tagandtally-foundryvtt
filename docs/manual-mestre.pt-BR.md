@@ -132,7 +132,9 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
   tipo de dano (e a habilidade especial de uma criatura) aparecem quando você clica no olho ao
   lado do campo, por exemplo depois de vê-la lutar. A **força** e a **fraqueza** de uma
   criatura e o **segredo** de um PdM também se revelam quando os jogadores juntam 5
-  **insights** (caixinhas ao lado). As partes ocultas aparecem como [?] na frase.
+  **insights** (caixinhas ao lado). As partes ocultas aparecem como [?] na frase. O que foi
+  revelado pertence ao ator do mundo: todos os tokens de lobo no mapa compartilham, mesmo que
+  cada token tenha a própria frase editada.
 - **Negociar**: botão na aba Principal do PdM. Escolha o comprador; comprar abaixo da
   riqueza é livre, no nível ou acima exige teste de Riqueza (nível 3 + diferença) e, em
   sucesso, o jogador escolhe perder 1 de Riqueza ou ficar **Endividado**. Vender funciona ao

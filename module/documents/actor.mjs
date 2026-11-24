@@ -213,7 +213,7 @@ export default class TagAndTallyActor extends Actor {
   /** Reveal (or hide) a hidden creature trait for players. */
   async reveal(key, value = true) {
     if (this.type !== "npc") return this;
-    return this.update({ [`system.revealed.${key}`]: value });
+    return this.knowledgeActor.update({ [`system.revealed.${key}`]: value });
   }
 
   /** Add an insight toward learning a creature's strength or weakness. */
@@ -236,10 +236,32 @@ export default class TagAndTallyActor extends Actor {
    * secret / headquarters). GMs and owners see everything unless the solo veil is on; then only what
    * was revealed (by the eye toggle or by insights) shows, for everyone.
    */
+  /**
+   * Where "what the players know" about this NPC or faction is stored: the world actor, so every
+   * unlinked token of the same creature shares its reveals and insights. Token copies keep their
+   * own sentence fields (three wolves can differ) but not their own knowledge state.
+   */
+  get knowledgeActor() {
+    if (!this.isToken || !["npc", "faction"].includes(this.type)) return this;
+    return game.actors.get(this.id) ?? this;
+  }
+
   canSeeHidden(key) {
-    if (this.system.revealed?.[key]) return true;
+    if (this.knowledgeActor.system.revealed?.[key]) return true;
     if (this.constructor.veiled) return false;
     return game.user.isGM || this.isOwner;
+  }
+
+  /** Re-prepare and re-render the unlinked tokens of a world NPC when its knowledge state changes. */
+  _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+    if (this.isToken || !["npc", "faction"].includes(this.type)) return;
+    if (!foundry.utils.hasProperty(changed, "system.revealed") && !foundry.utils.hasProperty(changed, "system.insights")) return;
+    for (const scene of game.scenes) for (const token of scene.tokens) {
+      if (token.actorId !== this.id || token.actorLink || !token.actor) continue;
+      token.actor.prepareData();
+      token.actor.sheet?.rendered && token.actor.sheet.render(false);
+    }
   }
 
   /** Flags namespace helper. */
