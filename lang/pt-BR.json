@@ -620,7 +620,9 @@
       "Downtime": "Descanso",
       "Workshop": "Oficina",
       "Factions": "Facções",
-      "GameLoop": "Ciclo de jogo"
+      "GameLoop": "Ciclo de jogo",
+      "Tarot": "Tarô",
+      "Campaign": "Nova campanha"
     },
     "Words": {
       "IsA": "é um(a)",
@@ -1255,6 +1257,90 @@
       "CountdownPressed": "Falha, e: a Contagem da missão enche {n}.",
       "QuestPressed": "Pressão do tempo: a Contagem de {quest} enche {n}."
     },
-    "And": "e"
+    "And": "e",
+    "Tarot": {
+      "Title": "Tarô",
+      "Hint": "O tarô do SRD: Arcanos Maiores são descritores, cartas da corte são tipos, cartas numeradas são o que o personagem faz. Tire três para uma frase de personagem, ou uma Cruz Celta para ler a campanha. Clique no dado para tirar outra carta, nas setas para virá-la.",
+      "Empty": "Nenhuma carta tirada ainda.",
+      "DrawSentence": "Frase de personagem",
+      "DrawCross": "Cruz Celta",
+      "Upright": "normal",
+      "Reversed": "invertida",
+      "Flip": "Virar a carta",
+      "Redraw": "Tirar outra carta",
+      "CharacterSentence": "Frase de personagem do tarô",
+      "CelticCross": "Leitura da Cruz Celta",
+      "JournalProphecy": "Registrar como profecia",
+      "JournalSentence": "Registrar",
+      "ApplySentence": "Aplicar a um personagem",
+      "GrandQuest": "Grande missão",
+      "Prophecy": "Profecia",
+      "ProphecyName": "Profecia de {word}",
+      "SentenceName": "Tarô: {sentence}",
+      "GrandQuestName": "A profecia de {word}",
+      "Applied": "A frase de {name} agora é a tiragem do tarô (espécie mantida).",
+      "ReadingLine": "No centro, {heart}; o desafio é {challenge}; o melhor desfecho, {crown}; termina em {outcome}.",
+      "Position": {
+        "descriptor": "Descritor",
+        "type": "Tipo",
+        "does": "Faz algo",
+        "heart": "1 · O centro",
+        "challenge": "2 · O desafio",
+        "foundation": "3 · A base",
+        "past": "4 · O passado recente",
+        "crown": "5 · A coroa",
+        "future": "6 · O futuro próximo",
+        "self": "7 · O eu",
+        "others": "8 · Os outros",
+        "hopes": "9 · Esperanças e medos",
+        "outcome": "10 · O desfecho"
+      },
+      "PositionHint": {
+        "heart": "Do que trata a campanha",
+        "challenge": "O que está no caminho",
+        "foundation": "De onde ela cresceu",
+        "past": "O que acabou de acontecer",
+        "crown": "O melhor que pode vir disso",
+        "future": "O que vem a seguir",
+        "self": "Quem os heróis são nisso",
+        "others": "Quem o mundo é nisso",
+        "hopes": "O que se espera, e se teme",
+        "outcome": "Para onde vai"
+      }
+    },
+    "Campaign": {
+      "Title": "Nova campanha",
+      "Name": "Nome da campanha",
+      "NamePlaceholder": "Uma pasta de diários com este nome é criada",
+      "Theme": "Tema do Sparks",
+      "Characters": "Personagens a rolar",
+      "StepChronicle": "Criar o diário Crônica da campanha",
+      "StepProphecy": "Tirar uma Cruz Celta como profecia (diário + grande missão no primeiro personagem)",
+      "StepScene": "Rolar a cena de abertura no Ciclo de jogo",
+      "StepQuest": "Rolar a primeira missão e quem a dá (adicionado às Relações dos personagens)",
+      "StepOracle": "Fazer ao Oráculo as quatro perguntas de abertura",
+      "AugurHint": "Os passos do Augur Nexus (região, facções, local inicial, pessoas) são feitos no Augur; a lista vai para o chat.",
+      "Start": "Começar a campanha",
+      "DoneCharacters": "{count} personagem(ns) rolado(s): {names}",
+      "DoneChronicle": "Crônica da campanha pronta",
+      "DoneProphecy": "Profecia tirada: {name}",
+      "DoneQuest": "Primeira missão: {quest}, dada por {giver}",
+      "DoneScene": "Cena de abertura: nível {level} — {sentence}",
+      "DoneOracle": "O Oráculo respondeu às perguntas de abertura",
+      "AugurChecklist": "Augur Nexus, à mão:",
+      "Augur": {
+        "Region": "Fantasia: uma cena Hexmap como região e Develop Fantasy Region para facções e história. Ficção científica: um sistema estelar, seus planetas e assentamentos, uma nave da campanha.",
+        "Factions": "Importe as facções do Augur pela visão geral de Facções (viram atores Facção com objetivos e segredos).",
+        "Location": "Escolha o local inicial, monte seu mapa, coloque as pessoas do Augur como tokens de PdM.",
+        "People": "Solte as pessoas do Augur em fichas de PdM ou vincule-as; solte locais e facções nas Relações dos personagens."
+      },
+      "Oracle": {
+        "Met": "Os personagens já se conhecem?",
+        "Settlement": "Os personagens estão em um assentamento?",
+        "Mission": "Eles têm uma missão?",
+        "Employer": "Trabalham para alguém?"
+      },
+      "NewCharacter": "Novo personagem"
+    }
   }
 }

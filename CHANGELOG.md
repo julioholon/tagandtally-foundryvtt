@@ -1,6 +1,19 @@
 # Changelog
 
-## 0.8.3 (2026-11-24)
+## 0.9.0 (unreleased)
+
+- **Campaign start** wizard (token controls, macro, `game.tagandtally.campaign.start()`): name and theme,
+  N random characters added to the party, a journal folder and the Campaign Chronicle, a Celtic Cross
+  prophecy journal plus a grand quest on each character, a first quest with its giver NPC already in
+  everyone's relations, the opening scene in the game loop and four Oracle opening questions, then a
+  chat card with the Augur Nexus checklist (region or star system, factions, starting location).
+- **Tarot** app (token controls, macro, `game.tagandtally.tarot.open()`): the SRD's three decks (major
+  arcana are descriptors, court cards are types, numbered cards are what the character does). Draw a
+  character sentence from three cards, or a ten-card Celtic Cross with the position meanings; flip or
+  redraw a card, send the reading to chat, journal it as a prophecy (optionally with a grand quest),
+  or apply the sentence to a character. Card text from the SRD tarot generator (CC BY-SA).
+
+## 0.8.3 (unreleased)
 
 - Quest sheet is wider and lists the three tallies one per row, so the Countdown's ten boxes fit.
 - Game loop shows the selected quest's tallies under the picker (click the name to open it).

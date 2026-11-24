@@ -22,6 +22,8 @@ import { TaskRollDialog } from "./module/rolls/task-roll-dialog.mjs";
 import { CombatFlow, registerCombatFlowSocket } from "./module/combat/combat-flow.mjs";
 import { WorldState } from "./module/world-state.mjs";
 import { GameLoopApp, registerGameLoop, rollScene } from "./module/game-loop.mjs";
+import { TarotApp } from "./module/tarot.mjs";
+import { startCampaign, runCampaignStart } from "./module/campaign-start.mjs";
 import { DowntimeApp, registerDowntime, grantDayTag, reduceDayTag, applyWealthTally } from "./module/downtime.mjs";
 import { TravelApp, registerTravel, rollHex, rollHexLevel, rollDiscovery } from "./module/travel.mjs";
 import { WorkshopApp, registerWorkshop } from "./module/workshop.mjs";
@@ -92,7 +94,7 @@ Hooks.once("init", () => {
     config: TAGANDTALLY,
     documents: { TagAndTallyActor, TagAndTallyItem },
     sheets: { CharacterSheet, NpcSheet, TagAndTallyItemSheet },
-    apps: { TaskRollDialog, GameLoopApp, CombatFlow, SparksApp, PartyOverview, BarterApp, InteractDialog, DowntimeApp, TravelApp, WorkshopApp, FactionsApp: factions.FactionsApp },
+    apps: { TaskRollDialog, GameLoopApp, TarotApp, CombatFlow, SparksApp, PartyOverview, BarterApp, InteractDialog, DowntimeApp, TravelApp, WorkshopApp, FactionsApp: factions.FactionsApp },
     rolls: { resolveRoll, rollOracle, rollYesNo, bandFor, computeEffectiveLevel, sceneLevel },
     sparks: { tables: sparkTables, generate, SparkGenerator, loadGeneratorDefs, ...create },
     spells: { computeSpell, maiCheck },
@@ -112,6 +114,8 @@ Hooks.once("init", () => {
       openParty: () => PartyOverview.open(),
       openDowntime: () => DowntimeApp.open(),
       openGameLoop: () => GameLoopApp.open(),
+      openTarot: () => TarotApp.open(),
+      startCampaign: () => startCampaign(),
       openTravel: () => TravelApp.open(),
       /** Crafting workshop for the selected token's actor or your character. */
       openWorkshop: (tab) => WorkshopApp.open({ tab }),
@@ -138,6 +142,8 @@ Hooks.once("init", () => {
     },
     interactions: { InteractDialog, rollDrift, rollInteraction },
     loop: { GameLoopApp, rollScene, advance: () => GameLoopApp.open() },
+    tarot: { TarotApp, open: () => TarotApp.open() },
+    campaign: { startCampaign, runCampaignStart },
     downtime: { DowntimeApp, grantDayTag, reduceDayTag, applyWealthTally, newDay: () => DowntimeApp.newDay() },
     travel: { TravelApp, rollHex, rollHexLevel, rollDiscovery, rest: () => TravelApp.rest() },
     crafting: { WorkshopApp },
@@ -195,6 +201,10 @@ Hooks.on("getSceneControlButtons", (controls) => {
   tokens.tools.ttWorkshop = {
     name: "ttWorkshop", title: "TAGANDTALLY.Workshop.Title", icon: "fa-solid fa-hammer", button: true, order: 95,
     onChange: () => WorkshopApp.open()
+  };
+  tokens.tools.ttTarot = {
+    name: "ttTarot", title: "TAGANDTALLY.Tarot.Title", icon: "fa-solid fa-layer-group", button: true, order: 89,
+    onChange: () => TarotApp.open()
   };
   tokens.tools.ttGameLoop = {
     name: "ttGameLoop", title: "TAGANDTALLY.Loop.Title", icon: "fa-solid fa-arrows-spin", button: true, order: 90,

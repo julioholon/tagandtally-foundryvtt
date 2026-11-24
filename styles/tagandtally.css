@@ -411,3 +411,27 @@
 .tagandtally .tt-loop-quest { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; font-size: 0.85em; margin: -0.2rem 0 0.4rem; }
 .tagandtally .tt-loop-quest .tt-boxes { flex-wrap: wrap; }
 .tagandtally .tt-loop-quest a { cursor: pointer; }
+
+/* Tarot */
+.tagandtally.tarot .tt-toolbar { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+.tagandtally.tarot .tt-toolbar .tt-controls { margin-left: auto; display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.tagandtally .tt-tarot-spread { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.5rem; }
+.tagandtally .tt-tarot-spread.cross { grid-template-columns: repeat(5, 1fr); }
+.tagandtally .tt-tarot-card { border: 1px solid var(--tt-border); border-radius: 8px; padding: 0.4rem 0.5rem; background: rgba(0,0,0,0.12); display: flex; flex-direction: column; gap: 0.25rem; min-height: 8em; border-top-width: 4px; }
+.tagandtally .tt-tarot-card.major { border-top-color: #b8860b; }
+.tagandtally .tt-tarot-card.wands { border-top-color: #c0392b; }
+.tagandtally .tt-tarot-card.cups { border-top-color: #2980b9; }
+.tagandtally .tt-tarot-card.swords { border-top-color: #7f8c8d; }
+.tagandtally .tt-tarot-card.pentacles { border-top-color: #27ae60; }
+.tagandtally .tt-tarot-card.reversed .tt-card-name { font-style: italic; }
+.tagandtally .tt-tarot-card header { display: flex; justify-content: space-between; align-items: center; font-size: 0.8em; opacity: 0.85; }
+.tagandtally .tt-tarot-card .tt-card-actions a { cursor: pointer; opacity: 0.6; margin-left: 0.3rem; }
+.tagandtally .tt-tarot-card .tt-card-actions a:hover { opacity: 1; }
+.tagandtally .tt-tarot-card .tt-card-name { font-weight: 600; }
+.tagandtally .tt-tarot-card .tt-card-name small { font-weight: normal; opacity: 0.7; }
+.tagandtally .tt-tarot-card .tt-card-text { font-size: 0.85em; margin: 0; }
+.tagandtally .tt-tarot-card .tt-card-hint { font-size: 0.75em; margin: auto 0 0; }
+.tagandtally .tt-tarot-sentence { font-size: 1.05em; margin: 0.4rem 0; }
+.chat-message .tt-tarot-card ol { margin: 0.2rem 0 0 1.2rem; padding: 0; }
+.tagandtally .tt-campaign-steps { display: flex; flex-direction: column; gap: 0.2rem; margin: 0.4rem 0; }
+.chat-message .tt-campaign-card ul, .chat-message .tt-campaign-card ol { margin: 0.2rem 0 0.3rem 1.2rem; padding: 0; }

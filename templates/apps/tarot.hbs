@@ -1,0 +1,29 @@
+<div class="tt-tarot-body">
+  <div class="tt-toolbar">
+    <button type="button" class="tt-roll-btn" data-action="drawSentence"><i class="fa-solid fa-user"></i> {{localize "TAGANDTALLY.Tarot.DrawSentence"}}</button>
+    <button type="button" class="tt-roll-btn" data-action="drawCross"><i class="fa-solid fa-cross"></i> {{localize "TAGANDTALLY.Tarot.DrawCross"}}</button>
+    {{#if kind}}
+    <span class="tt-controls">
+      <button type="button" data-action="toChat"><i class="fa-solid fa-comment"></i> {{localize "TAGANDTALLY.ToChat"}}</button>
+      <button type="button" data-action="journal"><i class="fa-solid fa-book"></i> {{localize (tt-ternary isCross "TAGANDTALLY.Tarot.JournalProphecy" "TAGANDTALLY.Tarot.JournalSentence")}}</button>
+      {{#if isSentence}}<button type="button" data-action="applySentence"><i class="fa-solid fa-user-pen"></i> {{localize "TAGANDTALLY.Tarot.ApplySentence"}}</button>{{/if}}
+      {{#if isCross}}<button type="button" data-action="grandQuest"><i class="fa-solid fa-scroll"></i> {{localize "TAGANDTALLY.Tarot.GrandQuest"}}</button>{{/if}}
+    </span>
+    {{/if}}
+  </div>
+  <p class="hint">{{localize "TAGANDTALLY.Tarot.Hint"}}</p>
+  {{#if sentence}}<p class="tt-sentence tt-tarot-sentence">{{tt-tags sentenceText}}</p>{{/if}}
+  {{#unless kind}}<p class="tt-empty">{{localize "TAGANDTALLY.Tarot.Empty"}}</p>{{/unless}}
+  <div class="tt-tarot-spread {{kind}}">
+    {{#each cards as |c|}}
+      <div class="tt-tarot-card {{c.suitClass}} {{#if c.reversed}}reversed{{/if}}" data-position="{{c.positionId}}">
+        <header><span class="tt-position">{{c.positionLabel}}</span>
+          <span class="tt-card-actions"><a data-action="flip" data-index="{{c.index}}" title="{{localize 'TAGANDTALLY.Tarot.Flip'}}"><i class="fa-solid fa-arrows-rotate"></i></a> <a data-action="redraw" data-index="{{c.index}}" title="{{localize 'TAGANDTALLY.Tarot.Redraw'}}"><i class="fa-solid fa-dice"></i></a></span></header>
+        <div class="tt-card-name">{{c.card.name}} <small>{{c.orientation}}</small></div>
+        <div class="tt-card-word"><span class="tt-tag">{{c.word}}</span></div>
+        {{#if c.text}}<p class="tt-card-text">{{c.text}}</p>{{/if}}
+        {{#if c.positionHint}}<p class="tt-card-hint hint">{{c.positionHint}}</p>{{/if}}
+      </div>
+    {{/each}}
+  </div>
+</div>

@@ -311,6 +311,21 @@ Uma sessão solo na prática roda no **Ciclo de jogo** (seção 11): role a cena
 intenção e riscos, gaste ações (Oráculo, Investigar, Socializar, Viagem, Combate), depois
 Avance o tempo. Todo o resto acontece pelas ferramentas que ele abre.
 
+**Começando uma campanha.** O controle de token *Campanha* (ou `startCampaign()`) abre um
+assistente curto: nome, tema do Sparks e quantos personagens rolar, mais o que preparar. Ele
+cria uma pasta de diários, a Crônica da campanha, um diário de **profecia** (Cruz Celta, com
+uma grande missão em cada personagem), uma primeira missão com seu PdM contratante já nas
+relações de todos, a cena de abertura no ciclo de jogo, e faz quatro perguntas de abertura ao
+Oráculo (já se conhecem, estão num povoado, têm uma missão, trabalham para alguém). O cartão
+final no chat lista o que o Augur Nexus ainda faz à mão: a região ou sistema estelar, as
+facções a importar, o local inicial e sua gente.
+
+**Tarô.** O controle de token *Tarô* abre os baralhos do SRD: arcanos maiores são descritores,
+cartas da corte são tipos, cartas numeradas são o que o personagem faz. *Frase de personagem*
+tira uma de cada; *Cruz Celta* abre dez cartas com o significado das posições (coração,
+desafio, base, passado, coroa, futuro, eu, os outros, esperanças, desfecho). Vire uma carta,
+tire outra, mande a leitura ao chat, registre como profecia ou aplique a frase a um personagem.
+
 ## 19. Jogando com vários Mestres
 
 O sistema não impõe quem é "o" Mestre: qualquer usuário Mestre pode fazer tudo. O que
@@ -343,7 +358,7 @@ funciona bem na prática:
   a rolagem certa.
 - Para escrever os seus, o prefixo é sempre `game.tagandtally.macros.`: `rollTask()`,
   `quickRoll(5)`, `oracle(7, "Tem guardas?")`, `openSparks()`, `openCombatFlow()`,
-  `openParty()`, `openBarter()`, `openGameLoop()`, `openDowntime()`, `openTravel()`, `openWorkshop("craft")`,
+  `openParty()`, `openBarter()`, `openGameLoop()`, `openTarot()`, `startCampaign()`, `openDowntime()`, `openTravel()`, `openWorkshop("craft")`,
   `openFactions()`, `generateNPC()`, `generateCreature()`,
   `generateJournal("dungeon")`, `randomCharacter()`, `importSparkTables("creature")`.
 
