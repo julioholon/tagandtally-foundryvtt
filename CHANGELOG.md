@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.0 (unreleased)
+## 0.9.0 (2026-11-24)
 
 - **Campaign start** wizard (token controls, macro, `game.tagandtally.campaign.start()`): name and theme,
   N random characters added to the party, a journal folder and the Campaign Chronicle, a Celtic Cross
