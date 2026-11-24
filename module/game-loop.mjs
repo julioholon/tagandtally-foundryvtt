@@ -67,6 +67,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       act: GameLoopApp.#onAct,
       refund: GameLoopApp.#onRefund,
       newQuest: GameLoopApp.#onNewQuest,
+      openQuest: GameLoopApp.#onOpenQuest,
       ready: GameLoopApp.#onReady,
       advance: GameLoopApp.#onAdvance,
       resetActions: GameLoopApp.#onResetActions,
@@ -121,9 +122,12 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       for (const q of actor.items.filter((i) => i.type === "quest" && i.system.status === "active")) quests.push({ uuid: q.uuid, name: `${q.name} (${actor.name})`, selected: q.uuid === scene.questUuid });
     }
     const allReady = participants.length > 0 && participants.every((p) => p.ready);
+    const quest = scene.questUuid ? fromUuidSync(scene.questUuid) : null;
+    const questTallies = quest ? Object.entries(quest.system.tallies).filter(([, t]) => t.enabled).map(([key, t]) => ({ key, label: game.i18n.localize(TAGANDTALLY.questTallies[key].label), boxes: t.boxes, value: t.value, max: t.max, small: t.max > 6 })) : [];
     const day = DowntimeApp.state.get().day;
     return {
       state, scene, scopes, participants, quests, isGM: game.user.isGM, day,
+      quest: quest ? { uuid: quest.uuid, name: quest.name, status: quest.system.status, ready: quest.system.readyToResolve } : null, questTallies,
       calendar: GameLoopApp.calendarDate(),
       hasScene: Boolean(scene.level),
       levelLabel: scene.level ? game.i18n.localize(TAGANDTALLY.levels[scene.level]) : "",
@@ -252,6 +256,10 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const title = result.title && result.title !== game.i18n.localize("TAGANDTALLY.Roll.Task") ? ` · ${result.title}` : "";
     state.scene.log.push({ icon: "fa-dice-d20", actor: base?.name ?? actor.name, text: `${label}${title} → ${GameLoopApp.bandLabel(result.band)}` });
     if (p.spent > GameLoopApp.maxActions) ui.notifications.warn(L("OverActions", { name: base?.name ?? actor.name }));
+    const bandId = result.band?.id ?? result.band;
+    if (bandId === "failAnd" && TAGANDTALLY.loop.countdownOnFailAnd && result.rollType !== "insights") {
+      if (await GameLoopApp.pressQuest(state.scene.questUuid, TAGANDTALLY.loop.countdownOnFailAnd)) state.scene.log.push({ icon: "fa-hourglass", text: L("CountdownPressed", { n: TAGANDTALLY.loop.countdownOnFailAnd }) });
+    }
     await GameLoopApp.state.set(state);
   }
 
@@ -384,6 +392,20 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     } catch (err) { console.warn(`${SYSTEM_ID} | Simple Calendar note failed`, err); return null; }
   }
 
+  static async #onOpenQuest() {
+    const quest = await fromUuid(GameLoopApp.state.get().scene.questUuid);
+    return quest?.sheet.render({ force: true });
+  }
+
+  /** World pressure on the scene's quest: its Countdown fills by `n` marks (SRD: events and failures). */
+  static async pressQuest(questUuid, n, reason) {
+    const quest = questUuid ? await fromUuid(questUuid) : null;
+    const t = quest?.system.tallies.countdown;
+    if (!quest || !t?.enabled || n <= 0 || t.value >= t.max) return false;
+    await quest.update({ "system.tallies.countdown.value": Math.min(t.max, t.value + n) });
+    return true;
+  }
+
   /** Simple Calendar (Reborn) date, when the module is active. */
   static calendarDate() {
     try { const d = globalThis.SimpleCalendar?.api?.currentDateTimeDisplay?.(); return d?.date ? `${d.date}${d.time ? ` ${d.time}` : ""}` : ""; } catch { return ""; }
@@ -457,6 +479,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     if (factionTicks > 0) {
       for (const faction of allFactions()) await addTally(faction, factionTicks, { reason: game.i18n.localize("TAGANDTALLY.Faction.TimePasses") });
       lines.push(L("FactionsTicked", { ticks: factionTicks }));
+      if (closed.questUuid && await GameLoopApp.pressQuest(closed.questUuid, factionTicks)) lines.push(L("QuestPressed", { n: factionTicks, quest: esc(fromUuidSync(closed.questUuid)?.name ?? "") }));
     }
     if (await GameLoopApp.calendarAdvance(scope, days)) lines.push(L("CalendarMoved", { date: GameLoopApp.calendarDate() }));
     const state = GameLoopApp.state.get();

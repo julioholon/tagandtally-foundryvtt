@@ -1251,7 +1251,9 @@
       "NewQuestNamePlaceholder": "Leave empty to use the generated sentence",
       "NewQuestSparks": "Fill it with Sparks (type and objective)",
       "CalendarHint": "Simple Calendar date; Advance time moves it by the scope",
-      "CalendarMoved": "The calendar now reads {date}."
+      "CalendarMoved": "The calendar now reads {date}.",
+      "CountdownPressed": "Fail, and: the quest's Countdown fills by {n}.",
+      "QuestPressed": "Time pressure: {quest}'s Countdown fills by {n}."
     },
     "And": "and"
   }

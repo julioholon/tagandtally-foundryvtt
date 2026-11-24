@@ -6,7 +6,7 @@ const { ItemSheetV2 } = foundry.applications.sheets;
 export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
   static DEFAULT_OPTIONS = {
     classes: ["tagandtally", "sheet", "item"],
-    position: { width: 560, height: 620 },
+    position: { width: 640, height: 680 },
     window: { resizable: true },
     form: { submitOnChange: true },
     actions: {

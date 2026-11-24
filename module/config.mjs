@@ -422,6 +422,8 @@ TAGANDTALLY.loop = {
   actionPoints: 10,
   /** Insights rolls are always level 5 (SRD). */
   insightLevel: 5,
+  /** Countdown marks the scene's quest takes from a Fail-and roll in the scene (0 to disable). Time pressure on Advance uses the scope's factionTicks. */
+  countdownOnFailAnd: 1,
   /** Simple Calendar movement for the scopes that are shorter than a day. */
   shiftHours: 4,
   combatMinutes: 10,

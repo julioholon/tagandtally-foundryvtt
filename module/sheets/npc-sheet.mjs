@@ -1,5 +1,7 @@
 import BaseActorSheet from "./base-actor-sheet.mjs";
 import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
+import { importAugurPerson } from "../integrations/augur.mjs";
+import { augurEntity, resolveAugurDrag } from "../relations.mjs";
 
 export default class NpcSheet extends BaseActorSheet {
   static DEFAULT_OPTIONS = {
@@ -57,6 +59,21 @@ export default class NpcSheet extends BaseActorSheet {
     context.revealed = knowledge.system.revealed;
     context.insightBoxes = Object.fromEntries(def.insight.map((k) => [k, Array.from({ length: TAGANDTALLY.insightsPerTally }, (_, i) => i < knowledge.system.insights[k])]));
     return context;
+  }
+
+  /** Dropping an Augur Nexus person on the sheet links the actor to it and imports the dossier. */
+  async _onDrop(event) {
+    if (this.isEditable) {
+      const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+      const doc = data?.type === "JournalEntry" ? await fromUuid(data.uuid) : await resolveAugurDrag(event, data);
+      if (doc && augurEntity(doc)?.type === "npc") {
+        await this.actor.setFlag("augur-nexus", "campaignEntityRef", { journalEntryUuid: doc.uuid });
+        await importAugurPerson(this.actor, { journal: doc });
+        if (/^New |^Nov[oa] /.test(this.actor.name)) await this.actor.update({ name: doc.name });
+        return;
+      }
+    }
+    return super._onDrop?.(event);
   }
 
   static async #onReveal(event, target) {

@@ -143,6 +143,10 @@
 .tagandtally .tt-steps li { display: flex; gap: 0.4rem; align-items: center; margin: 0.2rem 0; }
 .tagandtally .tt-steps li input[type="text"] { flex: 1; }
 .tagandtally .tt-tally-config .tt-inline input { width: 3.5em; }
+.tagandtally .tt-tally-list { display: flex; flex-direction: column; gap: 0.3rem; }
+.tagandtally .tt-tally-list .tt-tally-config { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.tagandtally .tt-tally-list .tt-tally-config > label { flex: 0 0 9em; }
+.tagandtally .tt-tally-list .tt-boxes { flex-wrap: wrap; }
 
 /* ----------------------------- Roll dialog ------------------------------ */
 .tagandtally.task-roll .tt-roll-body { display: flex; flex-direction: column; gap: 0.5rem; max-height: 70vh; overflow-y: auto; padding: 0.25rem; }
@@ -403,3 +407,7 @@
 .tagandtally .tt-loop .tt-calendar { opacity: 0.85; }
 .chat-message .tt-loop-outcome { border-top: 1px dashed var(--color-border-light-2, #999); margin-top: 0.3rem; padding-top: 0.3rem; }
 .chat-message .tt-loop-outcome p { margin: 0.15rem 0; }
+
+.tagandtally .tt-loop-quest { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; font-size: 0.85em; margin: -0.2rem 0 0.4rem; }
+.tagandtally .tt-loop-quest .tt-boxes { flex-wrap: wrap; }
+.tagandtally .tt-loop-quest a { cursor: pointer; }
