@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.8.3 (unreleased)
+## 0.8.3 (2026-11-24)
 
 - Quest sheet is wider and lists the three tallies one per row, so the Countdown's ten boxes fit.
 - Game loop shows the selected quest's tallies under the picker (click the name to open it).
