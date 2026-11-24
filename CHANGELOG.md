@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0 (unreleased)
+
+- **Game loop** (solo and play-by-post): a shared scene with level (SRD formula from the last scene),
+  Sparks sentence, time of day / weather / season, a time scope (fight, hours, day, week, month, year),
+  intent, stakes and the quest it serves. Each party member has 10 actions per scene (Investigate,
+  Task, Socialize, Oracle, Travel, Combat, Workshop, Downtime) and a Ready flag; Advance time writes
+  the scene to the Campaign Chronicle journal, moves the days, marks every faction's tally by the scope
+  and rolls the next scene. Setting "Game loop writes a Chronicle"; macro and token-control button.
+
 ## 0.7.3 (2026-11-23)
 
 - What the players know about an NPC or creature (revealed fields and insights) is kept on the world

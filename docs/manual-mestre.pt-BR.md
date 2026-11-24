@@ -160,7 +160,29 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
 - Todo cartão de chat tem um botão **Registrar no diário** que o anexa ao diário "Sparks",
   para os resultados da conversa ficarem com as notas da campanha.
 
-## 11. Descanso (tempo livre)
+## 11. O ciclo de jogo
+
+- Abra o **Ciclo de jogo** pelos controles de token ou pelo macro e **Adicionar grupo**. É
+  compartilhado, então uma mesa por postagem vê a mesma cena.
+- **Rolar a cena**: o nível vem da última cena pela fórmula do SRD, a frase do Sparks, e hora
+  do dia, clima e estação das tabelas; cada um tem seu próprio rerolar. **Definir como nível
+  da cena** copia o nível para a cena atual do Foundry.
+- Escolha o **escopo de tempo**: uma luta, algumas horas, um dia, uma semana, um mês ou um
+  ano. Ele diz quanto tempo do mundo passa quando a cena encerra, não quantas ações ela tem.
+  Escreva a **intenção** e os **riscos**, e escolha a **missão** que a cena serve (ou
+  nenhuma: o tempo só passa).
+- Cada personagem tem **10 ações** na cena. Investigar e Tarefa abrem o diálogo de rolagem
+  no nível da cena, Socializar escolhe um PdM e abre Interagir, Oráculo faz uma pergunta,
+  Viagem, Combate, Oficina e Descanso abrem essas ferramentas. Ações dentro da cena não
+  gastam tempo do mundo. O registro sob a cena guarda o que cada ação produziu.
+- Quando um jogador termina, clica em **Pronto**. **Avançar o tempo** libera quando todos
+  estão prontos (o Mestre sempre pode avançar). Isso escreve a cena no diário **Crônica da
+  campanha** (intenção, riscos, missão, registro), move o contador de dias pelo escopo (tags
+  do dia seguinte somem, pontos de descanso recarregam), marca a contagem de fase de cada
+  facção (uma marca para um dia ou uma semana, duas para um mês, três para um ano) e rola a
+  próxima cena. A missão continua.
+
+## 12. Descanso (tempo livre)
 
 - Abra o **Descanso** pelos controles de token, pela aba Ferimentos ou pelo macro. É
   compartilhado: todos veem a mesma noite. Adicione os personagens uma vez; cada um recebe
@@ -174,7 +196,7 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
 - As tags do dia seguinte somem ao apertar **Novo dia**, que também recarrega os pontos de
   todos. Marque **Zona segura** quando o grupo dorme em lugar seguro.
 
-## 12. Viagem
+## 13. Viagem
 
 - Abra a **Viagem** pelos controles de token ou pelo macro. Mova o grupo no mapa você mesmo
   (hexes do Augur Hexlands, um mapa desenhado ou nada); o rastreador não conta movimento.
@@ -188,7 +210,7 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
 - **Descansar** rola os testes de encontro 2d6 do SRD, um por rodada do grupo menos os
   personagens que fizeram vigília.
 
-## 13. Ofício: a Oficina
+## 14. Ofício: a Oficina
 
 - Abra a **Oficina** pela aba Inventário, pelos controles de token, pelo macro ou pelas horas
   de criar / reparar do Descanso. Uma janela por personagem, quatro abas.
@@ -206,7 +228,7 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
 - Cada nova tentativa no mesmo alvo é dificultada em 2, mostrado na linha da tarefa; a seta
   de reiniciar limpa quando a fonte muda. Os resultados são anexados ao cartão da rolagem.
 
-## 14. Facções
+## 15. Facções
 
 - Crie um ator **Facção**. A frase ("uma [descritor] [organização] que [função] e
   [objetivo]; apesar da reputação, eles [segredo]") vem da **varinha** ou de um diário de
@@ -226,7 +248,7 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
   de Insight e Contagem, um **Tempo passa** que marca todas, e os diários do Augur ainda não
   importados. Soltar uma facção na ficha de um personagem a adiciona às Relações.
 
-## 15. Sparks: o motor de improviso
+## 16. Sparks: o motor de improviso
 
 Botão **Sparks** nos controles de token. Três abas:
 
@@ -243,7 +265,7 @@ Botão **Sparks** nos controles de token. Três abas:
 Dica: gere uma **cena** no início de cada sessão e uma **facção** sempre que os jogadores
 perguntarem "quem manda aqui?".
 
-## 16. Sparks com o Augur
+## 17. Sparks com o Augur
 
 O Augur é agnóstico de sistema; a única parte que não funciona é a loja (Fantasy/Sci-Fi),
 que só conhece D&D 5e, PF2e, Shadowdark e OSE. Use a Negociação do sistema no lugar.
@@ -266,7 +288,7 @@ Fluxo sugerido para construir o mundo em conjunto:
    como tags, retrato e pronome); um ator sem vínculo pergunta qual pessoa do Augur ele é,
    depois vincula e importa.
 
-## 17. Jogando solo
+## 18. Jogando solo
 
 O Foundry exige um usuário Mestre, então quem joga solo joga como Mestre. Ligue a
 configuração **Véu solo**: forças, fraquezas e segredos de PdMs e objetivos, segredos e
@@ -276,12 +298,11 @@ ou você clicar no olho porque a ficção mereceu. A varinha do Sparks e os bot�
 continuam preenchendo esses campos; você só não vê o que escreveram. A biografia gerada do
 PdM não repete mais a frase.
 
-Uma sessão solo na prática: gere uma **cena** no Sparks, faça a pergunta de abertura ao
-**Oráculo**, **Explore** o hex na Viagem, converse com **Interagir** (seus resultados dão
-insights), resolva lutas no **Fluxo de combate** rolando todas as fases, depois jogue a
-noite de **Descanso** e aperte **Novo dia**.
+Uma sessão solo na prática roda no **Ciclo de jogo** (seção 11): role a cena, declare
+intenção e riscos, gaste ações (Oráculo, Investigar, Socializar, Viagem, Combate), depois
+Avance o tempo. Todo o resto acontece pelas ferramentas que ele abre.
 
-## 18. Jogando com vários Mestres
+## 19. Jogando com vários Mestres
 
 O sistema não impõe quem é "o" Mestre: qualquer usuário Mestre pode fazer tudo. O que
 funciona bem na prática:
@@ -305,7 +326,7 @@ funciona bem na prática:
   de tempo; o cartão de chat é o registro. Deixe as marcas automáticas ligadas e peça aos
   jogadores para rolarem eles mesmos, com título preenchido ("Escalo o muro").
 
-## 19. Atalhos e macros
+## 20. Atalhos e macros
 
 - Na primeira abertura o sistema cria a pasta de macros **Tag & Tally** com um macro para
   cada ferramenta: arraste-os para a barra de atalhos.
@@ -313,11 +334,11 @@ funciona bem na prática:
   a rolagem certa.
 - Para escrever os seus, o prefixo é sempre `game.tagandtally.macros.`: `rollTask()`,
   `quickRoll(5)`, `oracle(7, "Tem guardas?")`, `openSparks()`, `openCombatFlow()`,
-  `openParty()`, `openBarter()`, `openDowntime()`, `openTravel()`, `openWorkshop("craft")`,
+  `openParty()`, `openBarter()`, `openGameLoop()`, `openDowntime()`, `openTravel()`, `openWorkshop("craft")`,
   `openFactions()`, `generateNPC()`, `generateCreature()`,
   `generateJournal("dungeon")`, `randomCharacter()`, `importSparkTables("creature")`.
 
-## 20. Checklist de sessão
+## 21. Checklist de sessão
 
 1. Nível da cena definido.
 2. Narrador da cena escolhido; Mestre de apoio com o Sparks aberto.

@@ -554,6 +554,10 @@
       "SoloVeil": {
         "Name": "Véu solo: esconder segredos também do Mestre",
         "Hint": "Jogo solo. Forças, fraquezas e segredos de PdMs e objetivos, segredos e quartéis-generais de facções ficam ocultos de todos, inclusive de você, até serem revelados pelo olho ou por insights. Sparks e Augur continuam preenchendo-os."
+      },
+      "LoopChronicle": {
+        "Name": "O Ciclo de jogo escreve uma Crônica",
+        "Hint": "Cada cena encerrada vira uma página do diário Crônica da campanha (intenção, riscos, missão e as ações feitas)."
       }
     },
     "Welcome": {
@@ -612,7 +616,8 @@
       "Travel": "Viagem",
       "Downtime": "Descanso",
       "Workshop": "Oficina",
-      "Factions": "Facções"
+      "Factions": "Facções",
+      "GameLoop": "Ciclo de jogo"
     },
     "Words": {
       "IsA": "é um(a)",
@@ -1158,6 +1163,78 @@
         "encounter": "Encontro",
         "discovery": "Descoberta"
       }
+    },
+    "Loop": {
+      "Title": "Ciclo de jogo",
+      "Chronicle": "Crônica da campanha",
+      "ChronicleHint": "O diário em que cada cena encerrada é escrita",
+      "Hint": "Uma cena de cada vez. Defina o escopo de tempo, declare intenção e riscos, escolha a missão que ela serve. Cada personagem tem 10 ações na cena; ações dentro da cena não gastam tempo do mundo. Quando todos estiverem Prontos, Avançar o tempo encerra a cena na Crônica, move o mundo pelo escopo e rola a próxima cena.",
+      "SceneNumber": "Cena {number}",
+      "NoScene": "Nenhuma cena ainda.",
+      "RollScene": "Rolar a cena",
+      "SceneRolled": "Cena rolada: nível {level} — {sentence}",
+      "ScopeHint": "quanto tempo do mundo esta cena cobre",
+      "Modifier": {
+        "timeOfDay": "Hora do dia",
+        "weather": "Clima",
+        "season": "Estação"
+      },
+      "Intent": "Intenção",
+      "IntentPlaceholder": "O que os personagens tentam alcançar nesta cena?",
+      "Stakes": "Riscos",
+      "StakesPlaceholder": "Se der certo, o que se ganha? Se falhar, o que se perde ou complica?",
+      "NoQuest": "Sem missão (o tempo passa)",
+      "Actions": "Ações restantes nesta cena",
+      "NoActions": "Sem ações restantes nesta cena.",
+      "Ready": "Pronto",
+      "NotReadyYet": "Não pronto",
+      "AllReady": "Todos prontos: o tempo pode avançar.",
+      "WaitingReady": "Avance o tempo quando todos os personagens estiverem Prontos (o Mestre pode avançar a qualquer momento).",
+      "ResetActionsHint": "Recarregar as ações de todos e limpar Pronto sem avançar",
+      "Advance": "Avançar o tempo",
+      "AdvanceConfirm": "Encerrar esta cena como \"{scope}\" ({days} dia(s) passam), escrevê-la na Crônica, mover o mundo e rolar a próxima cena?",
+      "NotReady": "Nem todos os personagens estão prontos.",
+      "SceneClosed": "Cena {number} encerrada",
+      "DaysPassed": "{days} dia(s) passam: agora é o dia {day}.",
+      "FactionsTicked": "Cada facção marca {ticks} na sua contagem de fase.",
+      "NextScene": "Cena {number}: nível {level} — {sentence}",
+      "Day": "Dia",
+      "Log": "O que aconteceu",
+      "ScenePage": "Cena {number} — {sentence}",
+      "NoChronicle": "Ainda não há Crônica: encerre uma cena primeiro.",
+      "History": "Cenas anteriores",
+      "NoParticipants": "Adicione o grupo para começar.",
+      "NoNpc": "Nenhum PdM com quem falar.",
+      "OraclePlaceholder": "Faça ao Oráculo uma pergunta de sim / não",
+      "Action": {
+        "investigate": "Investigar",
+        "task": "Tarefa",
+        "socialize": "Socializar",
+        "oracle": "Oráculo",
+        "travel": "Viagem",
+        "combat": "Combate",
+        "workshop": "Oficina",
+        "downtime": "Descanso"
+      },
+      "ActionHint": {
+        "investigate": "Rolagem de insights contra o nível da cena",
+        "task": "Qualquer rolagem de tarefa contra o nível da cena",
+        "socialize": "Falar com um PdM (Interagir)",
+        "oracle": "Perguntar ao Oráculo no nível da cena",
+        "travel": "Abrir a Viagem",
+        "combat": "Abrir o Fluxo de combate com este personagem",
+        "workshop": "Abrir a Oficina",
+        "downtime": "Abrir o Descanso"
+      },
+      "Scopes": {
+        "combat": "Uma luta",
+        "shift": "Algumas horas",
+        "day": "Um dia",
+        "week": "Uma semana",
+        "month": "Um mês",
+        "year": "Um ano"
+      },
+      "Scope": "Escopo de tempo"
     }
   }
 }

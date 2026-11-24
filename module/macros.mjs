@@ -10,6 +10,7 @@ const MACROS = [
   { key: "Party", icon: "icons/svg/village.svg", command: "game.tagandtally.macros.openParty();" },
   { key: "Barter", icon: "icons/svg/coins.svg", command: "game.tagandtally.macros.openBarter();" },
   { key: "Travel", icon: "icons/svg/wing.svg", command: "game.tagandtally.macros.openTravel();" },
+  { key: "GameLoop", icon: "icons/svg/clockwork.svg", command: "game.tagandtally.macros.openGameLoop();" },
   { key: "Downtime", icon: "icons/svg/sleep.svg", command: "game.tagandtally.macros.openDowntime();" },
   { key: "Workshop", icon: "icons/svg/item-bag.svg", command: "game.tagandtally.macros.openWorkshop();" },
   { key: "Factions", icon: "icons/svg/tower.svg", command: "game.tagandtally.macros.openFactions();" },

@@ -369,3 +369,28 @@
 .tagandtally .tt-npc-main .form-group .tt-reveal { position: absolute; right: 0.4rem; top: 0; font-size: 0.85em; opacity: 0.6; cursor: pointer; }
 .tagandtally .tt-npc-main .form-group .tt-reveal:hover { opacity: 1; }
 .tagandtally .tt-npc-main .form-group .tt-secret { display: inline-block; padding: 0.35rem 0.2rem; opacity: 0.7; font-style: italic; }
+
+/* Game loop */
+.tagandtally.game-loop .tt-loop .tt-toolbar { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
+.tagandtally.game-loop .tt-loop .tt-toolbar .tt-controls { margin-left: auto; display: flex; gap: 0.3rem; }
+.tagandtally .tt-loop-scene { border: 1px solid var(--tt-border); border-radius: 6px; padding: 0.4rem 0.6rem; margin: 0.4rem 0; }
+.tagandtally .tt-loop-sentence { margin: 0 0 0.3rem; font-size: 1.05em; }
+.tagandtally .tt-loop-facts { display: flex; gap: 0.8rem; flex-wrap: wrap; font-size: 0.9em; margin-bottom: 0.4rem; }
+.tagandtally .tt-loop-facts a, .tagandtally .tt-loop-sentence a { cursor: pointer; opacity: 0.6; }
+.tagandtally .tt-loop-facts a:hover, .tagandtally .tt-loop-sentence a:hover { opacity: 1; }
+.tagandtally .tt-loop-scene textarea { width: 100%; resize: vertical; }
+.tagandtally .tt-loop-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.tagandtally .tt-loop-row { border: 1px solid var(--tt-border); border-radius: 6px; padding: 0.4rem 0.6rem; }
+.tagandtally .tt-loop-row.ready { border-color: rgba(80, 160, 90, 0.7); }
+.tagandtally .tt-loop-row header { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.tagandtally .tt-loop-row header img { width: 32px; height: 32px; border: none; border-radius: 4px; object-fit: cover; }
+.tagandtally .tt-loop-row header .tt-controls { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
+.tagandtally .tt-loop-row .tt-ready.on { background: rgba(80, 160, 90, 0.25); }
+.tagandtally .tt-loop-actions { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.4rem; }
+.tagandtally .tt-loop-actions button { font-size: 0.85em; padding: 0.15rem 0.45rem; }
+.tagandtally .tt-loop-advance { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0; }
+.tagandtally .tt-loop-advance .tt-controls { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; }
+.tagandtally .tt-loop-log { list-style: none; margin: 0; padding: 0.3rem 0 0; font-size: 0.85em; max-height: 10em; overflow-y: auto; border-top: 1px solid var(--tt-border); }
+.tagandtally .tt-loop-history { font-size: 0.85em; margin-top: 0.4rem; }
+.tagandtally .tt-loop-history ol { margin: 0.2rem 0 0 1.2rem; padding: 0; }
+.chat-message .tt-loop-card p { margin: 0.15rem 0; }

@@ -416,6 +416,32 @@ TAGANDTALLY.dayTags = {
 };
 TAGANDTALLY.dayTagMaxTier = 4;
 
+/* ------------------------------ Game loop ------------------------------- */
+TAGANDTALLY.loop = {
+  /** Actions each party member gets in a scene, whatever its time scope. */
+  actionPoints: 10,
+  /** How much world time a scene covers: days moved and faction "time passes" marks when it closes. */
+  scopes: {
+    combat: { label: "TAGANDTALLY.Loop.Scopes.combat", days: 0, factionTicks: 0 },
+    shift: { label: "TAGANDTALLY.Loop.Scopes.shift", days: 0, factionTicks: 0 },
+    day: { label: "TAGANDTALLY.Loop.Scopes.day", days: 1, factionTicks: 1 },
+    week: { label: "TAGANDTALLY.Loop.Scopes.week", days: 7, factionTicks: 1 },
+    month: { label: "TAGANDTALLY.Loop.Scopes.month", days: 30, factionTicks: 2 },
+    year: { label: "TAGANDTALLY.Loop.Scopes.year", days: 365, factionTicks: 3 }
+  },
+  /** Scene actions: `roll` opens the Task Roll dialog with that roll type, the others open a tool. */
+  actions: {
+    investigate: { label: "TAGANDTALLY.Loop.Action.investigate", hint: "TAGANDTALLY.Loop.ActionHint.investigate", icon: "fa-magnifying-glass", kind: "roll", rollType: "insights" },
+    task: { label: "TAGANDTALLY.Loop.Action.task", hint: "TAGANDTALLY.Loop.ActionHint.task", icon: "fa-dice-d20", kind: "roll", rollType: "task" },
+    socialize: { label: "TAGANDTALLY.Loop.Action.socialize", hint: "TAGANDTALLY.Loop.ActionHint.socialize", icon: "fa-comments", kind: "interact" },
+    oracle: { label: "TAGANDTALLY.Loop.Action.oracle", hint: "TAGANDTALLY.Loop.ActionHint.oracle", icon: "fa-eye", kind: "oracle" },
+    travel: { label: "TAGANDTALLY.Loop.Action.travel", hint: "TAGANDTALLY.Loop.ActionHint.travel", icon: "fa-route", kind: "travel" },
+    combat: { label: "TAGANDTALLY.Loop.Action.combat", hint: "TAGANDTALLY.Loop.ActionHint.combat", icon: "fa-swords", kind: "combat" },
+    workshop: { label: "TAGANDTALLY.Loop.Action.workshop", hint: "TAGANDTALLY.Loop.ActionHint.workshop", icon: "fa-hammer", kind: "workshop" },
+    downtime: { label: "TAGANDTALLY.Loop.Action.downtime", hint: "TAGANDTALLY.Loop.ActionHint.downtime", icon: "fa-bed", kind: "downtime" }
+  }
+};
+
 /* ------------------------------- Travel --------------------------------- */
 TAGANDTALLY.travel = {
   /** Where the party explores: picks the Sparks tables an exploration rolls. Movement itself is done on the map. */
