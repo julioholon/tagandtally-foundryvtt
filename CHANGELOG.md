@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.2 (unreleased)
+## 0.7.2 (2026-11-23)
 
 - Fix: traits revealed on an unlinked token (the usual case for a placed creature) were missing from its
   roll dialog, which read the world actor's copy. The dialog now uses the rolling actor's own sentence
