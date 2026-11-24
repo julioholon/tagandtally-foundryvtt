@@ -165,6 +165,7 @@ export function itemDataFromGeneration(r, generator) {
 export async function createItemFromSpark(generatorId, { actor, ...options } = {}) {
   const r = await generate(generatorId, { theme: theme(), ...options });
   const data = itemDataFromGeneration(r, r.generator);
+  if (data.type === "quest") await inspireQuest(data);
   if (actor) {
     const [item] = await actor.createEmbeddedDocuments("Item", [data]);
     return item;
@@ -172,6 +173,32 @@ export async function createItemFromSpark(generatorId, { actor, ...options } = {
   const item = await Item.create(data);
   item.sheet.render({ force: true });
   return item;
+}
+
+/** Roll a Sparks table, or "" when it is missing. */
+async function drawTable(name) {
+  if (!sparkTables.has(name) && !sparkTables.worldOverride(name)) return "";
+  const r = await sparkTables.roll(name);
+  return r ? plain(r.value) : "";
+}
+
+/**
+ * Quest details from the SRD inspiration tables: motivation -> goal, benefit -> reward,
+ * complication -> consequence; a verb / adjective / noun / emotion line goes to the
+ * description as the quest giver's angle. Fills only what is blank.
+ */
+export async function inspireQuest(data) {
+  const sys = data.system ?? (data.system = {});
+  const [motivation, benefit, complication, verb, adjective, noun, emotion] = await Promise.all(["inspiration-motivation", "inspiration-benefit", "inspiration-complication", "inspiration-verb", "inspiration-adjective", "inspiration-noun", "inspiration-emotion"].map(drawTable));
+  if (!sys.goal && motivation) sys.goal = motivation;
+  if (!sys.reward && benefit) sys.reward = benefit;
+  if (!sys.consequence && complication) sys.consequence = complication;
+  const spark = [verb, adjective, noun].filter(Boolean).join(" ");
+  if (spark || emotion) {
+    const line = `<p><strong>${game.i18n.localize("TAGANDTALLY.Quest.Inspiration")}:</strong> ${foundry.utils.escapeHTML(spark)}${emotion ? ` <em>(${foundry.utils.escapeHTML(emotion)})</em>` : ""}</p>`;
+    sys.description = `${sys.description ?? ""}${line}`;
+  }
+  return data;
 }
 
 /** Regenerate an existing item's sentence from the matching generator. */
@@ -183,6 +210,7 @@ export async function generateIntoItem(item) {
   const data = itemDataFromGeneration(r, r.generator);
   delete data.type;
   if (item.type === "wound") data.system.injuryType = item.system.injuryType;
+  if (item.type === "quest") { data.system.goal = ""; data.system.reward = ""; data.system.consequence = ""; await inspireQuest(data); }
   return item.update(data);
 }
 

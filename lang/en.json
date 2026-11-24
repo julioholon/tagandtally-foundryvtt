@@ -420,7 +420,8 @@
       "Sync": "Copy Augur objectives into the steps",
       "Synced": "{name}: {count} objectives copied.",
       "NoObjectives": "No visible objectives.",
-      "MaxHint": "Boxes in this tally"
+      "MaxHint": "Boxes in this tally",
+      "Inspiration": "Inspiration"
     },
     "Npc": {
       "Creature": "Creature",
@@ -585,7 +586,7 @@
       "CashedOutLevels": "{name} cashes out {levels} Wealth level(s) to pay."
     },
     "Augur": {
-      "Import": "Import this Augur person: sentence, traits, beliefs, portrait",
+      "Import": "Import this Augur person: sentence (role, ancestry, descriptor, traits, current thread), beliefs and portrait; the sentence fields are replaced, tags are added",
       "NotLinked": "This actor is not linked to an Augur Nexus person.",
       "Imported": "{name} imported from Augur person {person} ({count} new tags).",
       "PursuesPrefix": "pursues",
@@ -599,7 +600,8 @@
       "Open": "Open the Augur Nexus dossier",
       "Link": "Link to an Augur person",
       "LinkHint": "Which Augur Nexus person is {name}? The sentence, traits, beliefs and portrait are imported.",
-      "NoPeople": "No unlinked Augur Nexus people in this world."
+      "NoPeople": "No unlinked Augur Nexus people in this world.",
+      "IsPrefix": "is"
     },
     "Macros": {
       "Created": "{count} Tag & Tally macros created in the Macro folder.",
@@ -1250,6 +1252,7 @@
       "NewQuestSparks": "Fill it with Sparks (type and objective)",
       "CalendarHint": "Simple Calendar date; Advance time moves it by the scope",
       "CalendarMoved": "The calendar now reads {date}."
-    }
+    },
+    "And": "and"
   }
 }

@@ -360,16 +360,28 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     let itemData = { name: data.name || L("NewQuest"), type: "quest", system: { status: "active" } };
     if (data.sparks) {
       const { generate, findGenerator } = await import("./sparks/engine.mjs");
-      const { itemDataFromGeneration } = await import("./sparks/create.mjs");
+      const { itemDataFromGeneration, inspireQuest } = await import("./sparks/create.mjs");
       const r = await generate("quest", { theme: theme() });
       const g = findGenerator("quest");
-      if (r && g) { const d = itemDataFromGeneration(r, g); itemData = foundry.utils.mergeObject(d, { name: data.name || d.name, system: { status: "active" } }); }
+      if (r && g) { const d = await inspireQuest(itemDataFromGeneration(r, g)); itemData = foundry.utils.mergeObject(d, { name: data.name || d.name, system: { status: "active" } }); }
     }
     const [quest] = await owner.createEmbeddedDocuments("Item", [itemData]);
     const fresh = GameLoopApp.state.get();
     fresh.scene.questUuid = quest.uuid;
     await GameLoopApp.state.set(fresh);
     quest.sheet.render({ force: true });
+  }
+
+  /** A Simple Calendar note on the day the scene ran, linking its Chronicle page. */
+  static async calendarNote(scene, page) {
+    const api = globalThis.SimpleCalendar?.api;
+    if (typeof api?.addNote !== "function" || typeof api?.currentDateTime !== "function") return null;
+    try {
+      const now = api.currentDateTime();
+      const date = { year: now.year, month: now.month, day: now.day };
+      const content = `<p>@UUID[${page.uuid}]{${esc(page.name)}}</p>${scene.intent ? `<p>${esc(scene.intent)}</p>` : ""}`;
+      return await api.addNote(page.name, content, date, date, true);
+    } catch (err) { console.warn(`${SYSTEM_ID} | Simple Calendar note failed`, err); return null; }
   }
 
   /** Simple Calendar (Reborn) date, when the module is active. */
@@ -391,8 +403,10 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
 
   /** Who to talk to: the character's known people first, then every NPC actor. */
   static async pickNpc(actor) {
-    const known = (actor.system.relations?.people ?? []).filter((r) => r.uuid).map((r) => ({ uuid: r.uuid, name: r.name }));
-    const others = game.actors.filter((a) => a.type === "npc" && !a.system.creature && !known.some((k) => k.uuid === a.uuid)).map((a) => ({ uuid: a.uuid, name: a.name }));
+    // Only NPC actors can be talked to: known people first (when their relation points at an NPC actor), then the rest.
+    const isNpc = (doc) => doc?.documentName === "Actor" && doc.type === "npc" && !doc.system.creature;
+    const known = (actor.system.relations?.people ?? []).map((r) => (r.uuid ? fromUuidSync(r.uuid) : null)).filter(isNpc).map((a) => ({ uuid: a.uuid, name: a.name }));
+    const others = game.actors.filter((a) => isNpc(a) && !known.some((k) => k.uuid === a.uuid)).map((a) => ({ uuid: a.uuid, name: a.name }));
     const options = [...known, ...others];
     if (!options.length) return ui.notifications.warn(L("NoNpc")) && null;
     const uuid = await DialogV2.prompt({
@@ -428,6 +442,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
   static async applyAdvance({ closed, days = 0, factionTicks = 0, scope = "day" }) {
     const lines = [];
     const page = await GameLoopApp.chronicle(closed);
+    if (page) await GameLoopApp.calendarNote(closed, page);
     if (days > 0) {
       const dayBefore = DowntimeApp.state.get().day;
       await DowntimeApp.newDay();

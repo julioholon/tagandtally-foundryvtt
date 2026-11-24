@@ -4,6 +4,36 @@ import { maiCheck } from "../spells/spell-calc.mjs";
 import { TaskRollDialog } from "../rolls/task-roll-dialog.mjs";
 
 export default class TagAndTallyItem extends Item {
+  /**
+   * @override SRD quests: a completed step marks the Plan and clears one Countdown mark;
+   * completing the Plan or the Location clears one Countdown mark.
+   */
+  async _preUpdate(changed, options, user) {
+    const allowed = await super._preUpdate(changed, options, user);
+    if (allowed === false) return false;
+    if (this.type !== "quest" || options.ttNoQuestRules) return;
+    const get = (path, fallback) => { const v = foundry.utils.getProperty(changed, path); return v === undefined ? fallback : v; };
+    const t = this.system.tallies;
+    let plan = Number(get("system.tallies.plan.value", t.plan.value));
+    let countdown = Number(get("system.tallies.countdown.value", t.countdown.value));
+    const steps = foundry.utils.getProperty(changed, "system.steps");
+    if (Array.isArray(steps)) {
+      const doneNow = steps.filter((s) => s?.done).length;
+      const doneBefore = this.system.steps.filter((s) => s.done).length;
+      const delta = doneNow - doneBefore;
+      if (delta > 0) {
+        if (t.plan.enabled && plan < t.plan.max) plan = Math.min(t.plan.max, plan + delta);
+        if (t.countdown.enabled) countdown = Math.max(0, countdown - delta);
+      }
+    }
+    for (const key of ["plan", "location"]) {
+      const value = key === "plan" ? plan : Number(get("system.tallies.location.value", t.location.value));
+      if (t[key].enabled && t[key].max > 0 && value >= t[key].max && t[key].value < t[key].max && t.countdown.enabled) countdown = Math.max(0, countdown - 1);
+    }
+    if (plan !== Number(get("system.tallies.plan.value", t.plan.value))) foundry.utils.setProperty(changed, "system.tallies.plan.value", plan);
+    if (countdown !== Number(get("system.tallies.countdown.value", t.countdown.value))) foundry.utils.setProperty(changed, "system.tallies.countdown.value", countdown);
+  }
+
   /** @override */
   async _preCreate(data, options, user) {
     const allowed = await super._preCreate(data, options, user);
