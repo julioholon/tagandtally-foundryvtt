@@ -167,7 +167,28 @@ would change the character or the situation.
 - Any chat card has a **Log to journal** button that appends it to the "Sparks" journal, so
   a conversation's outcomes stay with the campaign notes.
 
-## 11. Downtime
+## 11. The game loop
+
+- Open the **Game loop** from the token controls or the macro and **Add party**. It is
+  shared, so a play-by-post table sees the same scene.
+- **Roll the scene**: the level comes from the last scene with the SRD formula, the sentence
+  from Sparks, and time of day, weather and season from the tables; each has its own reroll.
+  **Set as scene level** copies the level to the current Foundry scene.
+- Pick the **time scope**: a fight, a few hours, a day, a week, a month or a year. It says how
+  much world time passes when the scene closes, not how many actions it holds. Write the
+  **intent** and the **stakes**, and pick the **quest** the scene serves (or none: time just
+  passes).
+- Every character has **10 actions** in the scene. Investigate and Task open the roll dialog
+  at the scene level, Socialize picks an NPC and opens Interact, Oracle asks a question,
+  Travel, Combat, Workshop and Downtime open those tools. Actions inside a scene cost no
+  world time. The log under the scene keeps what each action produced.
+- When a player is done they click **Ready**. **Advance time** unlocks when everyone is ready
+  (the GM can always advance). It writes the scene to the **Campaign Chronicle** journal
+  (intent, stakes, quest, log), moves the day counter by the scope (next-day tags fade,
+  downtime points refill), marks every faction's phase tally (one mark for a day or a week,
+  two for a month, three for a year) and rolls the next scene. The quest carries over.
+
+## 12. Downtime
 
 - Open the **Downtime** tracker from the token controls, the Wounds tab or the macro. It is
   shared: everyone sees the same night. Add the characters once; each gets **4 points** a
@@ -181,7 +202,7 @@ would change the character or the situation.
 - Next-day tags fade when you press **New day**, which also refills everyone's points. Tick
   **Safe zone** when the party sleeps somewhere safe.
 
-## 12. Travel
+## 13. Travel
 
 - Open **Travel** from the token controls or the macro. Move the party on the map yourself
   (Augur Hexlands hexes, a drawn map, or nothing at all); the tracker does not count
@@ -195,7 +216,7 @@ would change the character or the situation.
 - **Rest** rolls the SRD 2d6 encounter checks, one per party round minus the characters who
   kept watch tonight.
 
-## 13. Crafting: the Workshop
+## 14. Crafting: the Workshop
 
 - Open the **Workshop** from the Inventory tab, the token controls, the macro or the
   Downtime crafting / repair hours. One window per character, four tabs.
@@ -213,7 +234,7 @@ would change the character or the situation.
 - Every further attempt on the same target is hindered by 2, shown in the task line; the
   reset arrow clears it when the source changes. Outcomes are appended to the roll card.
 
-## 14. Factions
+## 15. Factions
 
 - Create a **Faction** actor. The sentence ("a [descriptor] [organization] that [function]
   and [goal]; despite their reputation, they [secret]") comes from the **wand** or from an
@@ -233,7 +254,7 @@ would change the character or the situation.
   Countdown buttons, a **Time passes** tick that marks every faction, and the Augur journals
   still to import. Dropping a faction on a character sheet adds it to their Relations.
 
-## 15. Sparks: the improvisation engine
+## 16. Sparks: the improvisation engine
 
 **Sparks** button in the token controls. Three tabs:
 
@@ -250,7 +271,7 @@ would change the character or the situation.
 Tip: generate a **scene** at the start of every session and a **faction** whenever the
 players ask "who runs this place?".
 
-## 16. Sparks with Augur
+## 17. Sparks with Augur
 
 Augur is system-agnostic; the only part that does not work is the shop (Fantasy/Sci-Fi),
 which only knows D&D 5e, PF2e, Shadowdark and OSE. Use the system's Barter instead.
@@ -272,7 +293,7 @@ Suggested workflow for building the world together:
    sentence from descriptor, ancestry, role and drive, traits and beliefs as tags, portrait
    and pronoun); an unlinked actor asks which Augur person it is, then links and imports.
 
-## 17. Playing solo
+## 18. Playing solo
 
 Foundry needs a Gamemaster user, so a solo player plays as the GM. Turn on the **Solo veil**
 system setting: NPC strengths, weaknesses and secrets and faction goals, secrets and
@@ -281,12 +302,11 @@ fill, the faction's Insight button reveals the goal, or you click the eye becaus
 fiction earned it. The Sparks wand and the Augur buttons still fill those fields; you just do
 not see what they wrote. The generated NPC biography no longer repeats the sentence.
 
-A solo session in practice: generate a **scene** in Sparks, ask the **Oracle** the opening
-question, **Explore** the hex in Travel, talk to people with **Interact** (its outcomes grant
-insights), run fights in the **Combat flow** with you rolling every phase, then play the
-**Downtime** night and press **New day**.
+A solo session in practice runs in the **Game loop** (section 11): roll the scene, declare
+intent and stakes, spend actions (Oracle, Investigate, Socialize, Travel, Combat), then
+Advance time. Everything else happens through the tools it opens.
 
-## 18. Playing with several GMs
+## 19. Playing with several GMs
 
 The system does not enforce who "the" GM is: any Gamemaster user can do everything. What
 works well in practice:
@@ -311,7 +331,7 @@ works well in practice:
   is the record. Keep automatic tallies on and ask players to roll themselves, with the
   title filled in ("I climb the wall").
 
-## 19. Shortcuts and macros
+## 20. Shortcuts and macros
 
 - On first load the system creates the **Tag & Tally** macro folder with one macro per tool:
   drag them to the hotbar.
@@ -319,12 +339,12 @@ works well in practice:
   roll.
 - To write your own, the prefix is always `game.tagandtally.macros.`: `rollTask()`,
   `quickRoll(5)`, `oracle(7, "Are there guards?")`, `openSparks()`, `openCombatFlow()`,
-  `openParty()`, `openBarter()`, `openDowntime()`, `openTravel()`, `openWorkshop("craft")`,
+  `openParty()`, `openBarter()`, `openGameLoop()`, `openDowntime()`, `openTravel()`, `openWorkshop("craft")`,
   `openFactions()`, `generateNPC()`, `generateCreature()`,
   `generateJournal("dungeon")`, `randomCharacter()`, `importAugur()`,
   `importSparkTables("creature")`.
 
-## 20. Session checklist
+## 21. Session checklist
 
 1. Scene level set.
 2. Narrator chosen; support GM with Sparks open.

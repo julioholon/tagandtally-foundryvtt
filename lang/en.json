@@ -554,6 +554,10 @@
       "SoloVeil": {
         "Name": "Solo veil: hide secrets from the GM too",
         "Hint": "Solo play. NPC strengths, weaknesses and secrets and faction goals, secrets and headquarters stay hidden from everyone, you included, until revealed by the eye toggle or by insights. Sparks and Augur still fill them."
+      },
+      "LoopChronicle": {
+        "Name": "Game loop writes a Chronicle",
+        "Hint": "Every closed scene becomes a page of the Campaign Chronicle journal (intent, stakes, quest and the actions taken)."
       }
     },
     "Welcome": {
@@ -612,7 +616,8 @@
       "Travel": "Travel",
       "Downtime": "Downtime",
       "Workshop": "Workshop",
-      "Factions": "Factions"
+      "Factions": "Factions",
+      "GameLoop": "Game loop"
     },
     "Words": {
       "IsA": "is a",
@@ -1158,6 +1163,78 @@
         "encounter": "Encounter",
         "discovery": "Discovery"
       }
+    },
+    "Loop": {
+      "Title": "Game loop",
+      "Chronicle": "Campaign Chronicle",
+      "ChronicleHint": "The journal every closed scene is written to",
+      "Hint": "One scene at a time. Set its time scope, declare intent and stakes, pick the quest it serves. Every character has 10 actions in the scene; actions inside the scene are free of world time. When everyone is Ready, Advance time closes the scene into the Chronicle, moves the world by the scope and rolls the next scene.",
+      "SceneNumber": "Scene {number}",
+      "NoScene": "No scene yet.",
+      "RollScene": "Roll the scene",
+      "SceneRolled": "Scene rolled: level {level} — {sentence}",
+      "ScopeHint": "how much world time this scene covers",
+      "Modifier": {
+        "timeOfDay": "Time of day",
+        "weather": "Weather",
+        "season": "Season"
+      },
+      "Intent": "Intent",
+      "IntentPlaceholder": "What are the characters trying to achieve in this scene?",
+      "Stakes": "Stakes",
+      "StakesPlaceholder": "If it works, what is gained? If it fails, what is lost or complicated?",
+      "NoQuest": "No quest (time passes)",
+      "Actions": "Actions left in this scene",
+      "NoActions": "No actions left in this scene.",
+      "Ready": "Ready",
+      "NotReadyYet": "Not ready",
+      "AllReady": "Everyone is ready: time can advance.",
+      "WaitingReady": "Advance time when every character is Ready (the GM can advance at any time).",
+      "ResetActionsHint": "Refill everyone's actions and clear Ready without advancing",
+      "Advance": "Advance time",
+      "AdvanceConfirm": "Close this scene as \"{scope}\" ({days} day(s) pass), write it to the Chronicle, move the world and roll the next scene?",
+      "NotReady": "Not every character is ready.",
+      "SceneClosed": "Scene {number} closed",
+      "DaysPassed": "{days} day(s) pass: it is now day {day}.",
+      "FactionsTicked": "Every faction marks {ticks} on its phase tally.",
+      "NextScene": "Scene {number}: level {level} — {sentence}",
+      "Day": "Day",
+      "Log": "What happened",
+      "ScenePage": "Scene {number} — {sentence}",
+      "NoChronicle": "No Chronicle yet: close a scene first.",
+      "History": "Earlier scenes",
+      "NoParticipants": "Add the party to start.",
+      "NoNpc": "No NPC to talk to.",
+      "OraclePlaceholder": "Ask the Oracle a yes / no question",
+      "Action": {
+        "investigate": "Investigate",
+        "task": "Task",
+        "socialize": "Socialize",
+        "oracle": "Oracle",
+        "travel": "Travel",
+        "combat": "Combat",
+        "workshop": "Workshop",
+        "downtime": "Downtime"
+      },
+      "ActionHint": {
+        "investigate": "Insights roll against the scene level",
+        "task": "Any task roll against the scene level",
+        "socialize": "Talk to an NPC (Interact)",
+        "oracle": "Ask the Oracle a question at the scene level",
+        "travel": "Open the Travel tracker",
+        "combat": "Open the Combat flow with this character",
+        "workshop": "Open the Workshop",
+        "downtime": "Open the Downtime tracker"
+      },
+      "Scopes": {
+        "combat": "A fight",
+        "shift": "A few hours",
+        "day": "A day",
+        "week": "A week",
+        "month": "A month",
+        "year": "A year"
+      },
+      "Scope": "Time scope"
     }
   }
 }
