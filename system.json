@@ -2,7 +2,7 @@
   "id": "tagandtally",
   "title": "Tag & Tally",
   "description": "An unofficial Foundry VTT game system for the Tag & Tally tabletop RPG (https://tagandtally.quest). Tags, tallies, wounds, spells, quests, and the full Sparks procedural generators.",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "authors": [
     {
       "name": "Julio Monteiro",

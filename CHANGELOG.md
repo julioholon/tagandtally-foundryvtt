@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.3 (unreleased)
+## 0.7.3 (2026-11-23)
 
 - What the players know about an NPC or creature (revealed fields and insights) is kept on the world
   actor and shared by all of its unlinked tokens: revealing on a token sheet updates the actor and every
