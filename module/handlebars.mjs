@@ -54,6 +54,7 @@ export const TEMPLATES = [
   "templates/apps/interact.hbs",
   "templates/apps/downtime.hbs",
   "templates/apps/game-loop.hbs",
+  "templates/apps/tarot.hbs",
   "templates/apps/travel.hbs",
   "templates/apps/workshop.hbs",
   "templates/apps/factions.hbs",

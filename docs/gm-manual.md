@@ -315,6 +315,21 @@ A solo session in practice runs in the **Game loop** (section 11): roll the scen
 intent and stakes, spend actions (Oracle, Investigate, Socialize, Travel, Combat), then
 Advance time. Everything else happens through the tools it opens.
 
+**Starting a campaign.** The *Campaign* token control (or `startCampaign()`) opens a short
+wizard: a name, the Sparks theme and how many characters to roll, plus what to prepare. It
+creates a journal folder, the Campaign Chronicle, a Celtic Cross **prophecy** journal (and a
+grand quest on each character), a first quest with its giver NPC already in everyone's
+relations, the opening scene in the game loop, and asks the Oracle four opening questions
+(have they met, are they in a settlement, do they have a mission, do they work for anyone).
+The closing chat card lists what Augur Nexus still does by hand: the region or star system,
+the factions to import, the starting location and its people.
+
+**Tarot.** The *Tarot* token control opens the SRD decks: major arcana are descriptors, court
+cards are types, numbered cards are what the character does. *Character sentence* draws one
+of each; *Celtic Cross* lays ten cards with the position meanings (heart, challenge,
+foundation, past, crown, future, self, others, hopes, outcome). Flip a card, redraw one, send
+the reading to chat, journal it as a prophecy, or apply the sentence to a character.
+
 ## 19. Playing with several GMs
 
 The system does not enforce who "the" GM is: any Gamemaster user can do everything. What
@@ -348,7 +363,7 @@ works well in practice:
   roll.
 - To write your own, the prefix is always `game.tagandtally.macros.`: `rollTask()`,
   `quickRoll(5)`, `oracle(7, "Are there guards?")`, `openSparks()`, `openCombatFlow()`,
-  `openParty()`, `openBarter()`, `openGameLoop()`, `openDowntime()`, `openTravel()`, `openWorkshop("craft")`,
+  `openParty()`, `openBarter()`, `openGameLoop()`, `openTarot()`, `startCampaign()`, `openDowntime()`, `openTravel()`, `openWorkshop("craft")`,
   `openFactions()`, `generateNPC()`, `generateCreature()`,
   `generateJournal("dungeon")`, `randomCharacter()`, `importAugur()`,
   `importSparkTables("creature")`.

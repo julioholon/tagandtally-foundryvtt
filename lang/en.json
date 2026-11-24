@@ -620,7 +620,9 @@
       "Downtime": "Downtime",
       "Workshop": "Workshop",
       "Factions": "Factions",
-      "GameLoop": "Game loop"
+      "GameLoop": "Game loop",
+      "Tarot": "Tarot",
+      "Campaign": "New campaign"
     },
     "Words": {
       "IsA": "is a",
@@ -1255,6 +1257,90 @@
       "CountdownPressed": "Fail, and: the quest's Countdown fills by {n}.",
       "QuestPressed": "Time pressure: {quest}'s Countdown fills by {n}."
     },
-    "And": "and"
+    "And": "and",
+    "Tarot": {
+      "Title": "Tarot",
+      "Hint": "The SRD tarot: Major Arcana are descriptors, court cards are types, numbered cards are what a character does. Draw three for a character sentence, or a Celtic Cross to read the campaign. Click the dice to redraw one card, the arrows to flip it.",
+      "Empty": "No cards drawn yet.",
+      "DrawSentence": "Character sentence",
+      "DrawCross": "Celtic Cross",
+      "Upright": "upright",
+      "Reversed": "reversed",
+      "Flip": "Flip the card",
+      "Redraw": "Redraw this card",
+      "CharacterSentence": "Tarot character sentence",
+      "CelticCross": "Celtic Cross reading",
+      "JournalProphecy": "Journal as prophecy",
+      "JournalSentence": "Journal",
+      "ApplySentence": "Apply to a character",
+      "GrandQuest": "Grand quest",
+      "Prophecy": "Prophecy",
+      "ProphecyName": "Prophecy of the {word}",
+      "SentenceName": "Tarot: {sentence}",
+      "GrandQuestName": "The {word} prophecy",
+      "Applied": "{name}'s sentence is now the tarot draw (species kept).",
+      "ReadingLine": "At the heart, {heart}; the challenge is {challenge}; the best outcome, {crown}; it ends in {outcome}.",
+      "Position": {
+        "descriptor": "Descriptor",
+        "type": "Type",
+        "does": "Does something",
+        "heart": "1 · The heart",
+        "challenge": "2 · The challenge",
+        "foundation": "3 · The foundation",
+        "past": "4 · The recent past",
+        "crown": "5 · The crown",
+        "future": "6 · The near future",
+        "self": "7 · The self",
+        "others": "8 · Others",
+        "hopes": "9 · Hopes and fears",
+        "outcome": "10 · The outcome"
+      },
+      "PositionHint": {
+        "heart": "What the campaign is about",
+        "challenge": "What stands in the way",
+        "foundation": "What it grew from",
+        "past": "What just happened",
+        "crown": "The best that could come of it",
+        "future": "What comes next",
+        "self": "Who the heroes are in this",
+        "others": "Who the world is in this",
+        "hopes": "What is hoped for, and feared",
+        "outcome": "Where it is heading"
+      }
+    },
+    "Campaign": {
+      "Title": "New campaign",
+      "Name": "Campaign name",
+      "NamePlaceholder": "A journal folder with this name is created",
+      "Theme": "Sparks theme",
+      "Characters": "Characters to roll",
+      "StepChronicle": "Create the Campaign Chronicle journal",
+      "StepProphecy": "Draw a Celtic Cross as the prophecy (journal + grand quest on the first character)",
+      "StepScene": "Roll the opening scene into the Game loop",
+      "StepQuest": "Roll the first quest and its quest giver (added to the characters' Relations)",
+      "StepOracle": "Ask the Oracle the four opening questions",
+      "AugurHint": "Augur Nexus steps (region, factions, starting location, people) are done in Augur; the checklist is posted to chat.",
+      "Start": "Start the campaign",
+      "DoneCharacters": "{count} character(s) rolled: {names}",
+      "DoneChronicle": "Campaign Chronicle ready",
+      "DoneProphecy": "Prophecy drawn: {name}",
+      "DoneQuest": "First quest: {quest}, given by {giver}",
+      "DoneScene": "Opening scene: level {level} — {sentence}",
+      "DoneOracle": "The Oracle answered the opening questions",
+      "AugurChecklist": "Augur Nexus, by hand:",
+      "Augur": {
+        "Region": "Fantasy: a Hexmap scene as the region and Develop Fantasy Region for factions and history. Sci-fi: a star system, its planets and settlements, a campaign ship.",
+        "Factions": "Import the Augur factions from the Factions overview (they become Faction actors with goals and secrets).",
+        "Location": "Pick the starting location, build its map, place the Augur people as NPC tokens.",
+        "People": "Drop the Augur people on NPC sheets or link them; drop locations and factions on the characters' Relations."
+      },
+      "Oracle": {
+        "Met": "Have the characters already met?",
+        "Settlement": "Are the characters in a settlement?",
+        "Mission": "Do they have a mission?",
+        "Employer": "Do they work for anyone?"
+      },
+      "NewCharacter": "New character"
+    }
   }
 }
