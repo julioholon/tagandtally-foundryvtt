@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.8.1 (unreleased)
+## 0.8.1 (2026-11-24)
 
 - Game loop: a scene action is spent when a roll resolves, wherever it was rolled (sheet, Workshop,
   Interact, Combat flow's Resolution…); opening a tool costs nothing; combat phases before the
