@@ -127,6 +127,10 @@ complete Plan and hindered by each missing mark. Tick "Character arc" for the pe
 quest; resolving an arc earns a new tag. The GM decides when a quest starts: when the outcome
 would change the character or the situation.
 
+- **Steps and tallies follow the SRD**: ticking a step marks the Plan and clears one
+  Countdown mark; completing the Plan or the Location clears one Countdown mark. Sparks fills
+  goal, reward and consequence from the inspiration tables; edit them to taste.
+
 ## 9. NPCs, creatures and trade
 
 - Create an **NPC / Creature** actor. Tick **Creature** for monsters (disposition, type,

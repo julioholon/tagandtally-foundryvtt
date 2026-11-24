@@ -121,6 +121,9 @@ Completar Plano ou Local reduz a Contagem em 1. A rolagem de resolução (ícone
 facilitada com Plano completo e atrapalhada por cada marca faltante. Marque "Arco do
 personagem" para a missão pessoal; resolver um arco rende uma tag nova. O Mestre decide
 quando uma missão começa: quando o resultado mudaria o personagem ou a situação.
+- **Passos e marcas seguem o SRD**: marcar um passo preenche o Plano e limpa uma marca da
+  Contagem; completar o Plano ou o Local limpa uma marca da Contagem. O Sparks preenche
+  objetivo, recompensa e consequência pelas tabelas de inspiração; edite à vontade.
 
 ## 9. PdMs e criaturas
 

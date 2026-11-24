@@ -27,7 +27,7 @@ export function hasAugurPerson(actor) {
  * Build the sentence, tags and portrait from the person record.
  * Returns { update, tags } without applying anything.
  */
-export function mapAugurPerson(actor, entity) {
+export function mapAugurPerson(actor, entity, { overwrite = false } = {}) {
   const ce = entity;
   const descriptor = words(ce.flavor?.descriptor);
   const species = ce.identity?.ancestryLabel ?? title(ce.identity?.ancestryId);
@@ -36,8 +36,15 @@ export function mapAugurPerson(actor, entity) {
   const tenets = (ce.ideology?.selections ?? []).map((s) => words(String(s.tenetId ?? "").split(".").pop()));
   const traits = (ce.personality?.traitIds ?? []).map(title);
   const keywords = (ce.tags ?? []).map(words).filter((k) => k && k !== words(species) && !["fantasy", "scifi", "modern"].includes(k));
-  const specialty = drive ? `${game.i18n.localize("TAGANDTALLY.Augur.PursuesPrefix")} ${drive}` : "";
-  const motivation = tenets[0] ? `${game.i18n.localize("TAGANDTALLY.Augur.BelievesPrefix")} ${tenets[0]}` : "";
+  // The dossier's current thread (approach / wants) is the NPC's motivation and quest; traits are the specialty.
+  const thread = ce.currentThread ?? ce.thread ?? {};
+  const pickText = (...vals) => vals.map((v) => (typeof v === "string" ? v : v?.label ?? v?.text ?? v?.name ?? "")).find((v) => v && v.trim()) ?? "";
+  const approach = words(pickText(thread.approach, thread.approachLabel, thread.method));
+  const wants = words(pickText(thread.wants, thread.want, thread.goal, thread.objective));
+  const traitLine = traits.length ? `${game.i18n.localize("TAGANDTALLY.Augur.IsPrefix")} ${traits.map(words).slice(0, -1).join(", ")}${traits.length > 1 ? ` ${game.i18n.localize("TAGANDTALLY.And")} ` : ""}${words(traits.at(-1))}` : "";
+  const specialty = traitLine || (drive ? `${game.i18n.localize("TAGANDTALLY.Augur.PursuesPrefix")} ${drive}` : "");
+  const motivation = approach || (tenets[0] ? `${game.i18n.localize("TAGANDTALLY.Augur.BelievesPrefix")} ${tenets[0]}` : "");
+  const questText = wants || (ce.flavor?.action || ce.flavor?.focus ? words(`${ce.flavor.action ?? ""} ${ce.flavor.focus ?? ""}`) : "");
   // Sentence fields are only filled when blank: what is already on the sheet stays, and the Augur
   // value that could not land there becomes a tag instead (nothing from the dossier is lost).
   const update = {};
@@ -45,7 +52,7 @@ export function mapAugurPerson(actor, entity) {
   const current = actor.system.sentence ?? {};
   const place = (key, value) => {
     if (!value) return;
-    if (String(current[key] ?? "").trim()) { if (words(current[key]) !== words(value)) leftovers.push(value); return; }
+    if (!overwrite && String(current[key] ?? "").trim()) { if (words(current[key]) !== words(value)) leftovers.push(value); return; }
     update[`system.sentence.${key}`] = value;
   };
   place("descriptor", descriptor);
@@ -55,8 +62,9 @@ export function mapAugurPerson(actor, entity) {
   else {
     place("doesSomething", specialty);
     place("motivation", motivation);
-    if (ce.flavor?.action || ce.flavor?.focus) place("quest", words(`${ce.flavor.action ?? ""} ${ce.flavor.focus ?? ""}`));
+    place("quest", questText);
   }
+  const driveTag = drive ? `${game.i18n.localize("TAGANDTALLY.Augur.PursuesPrefix")} ${drive}` : "";
   if (ce.identity?.gender) update["system.pronoun"] = game.i18n.localize(`TAGANDTALLY.Augur.Pronoun.${ce.identity.gender}`) ?? ce.identity.gender;
   if (ce.display?.imageSrc && (actor.img === Actor.DEFAULT_ICON || actor.img === "icons/svg/mystery-man.svg")) update.img = ce.display.imageSrc;
   if (ce.flavor?.description) update["system.biography"] = `${actor.system.biography ?? ""}<p>${foundry.utils.escapeHTML(ce.flavor.description)}</p>`;
@@ -74,6 +82,7 @@ export function mapAugurPerson(actor, entity) {
     push(type, "type", { category: "umbrella" });
     push(specialty, "specialty", { category: "umbrella" });
   }
+  if (driveTag) push(driveTag, "trait");
   for (const t of traits) push(t, "trait");
   for (const t of tenets) push(`${game.i18n.localize("TAGANDTALLY.Augur.BelievesPrefix")} ${t}`, "trait");
   for (const k of keywords) push(title(k), "background");
@@ -82,10 +91,10 @@ export function mapAugurPerson(actor, entity) {
 }
 
 /** Apply the import to the actor. */
-export async function importAugurPerson(actor, { journal } = {}) {
+export async function importAugurPerson(actor, { journal, overwrite = true } = {}) {
   journal ??= findAugurPerson(actor);
   if (!journal) return ui.notifications.warn(game.i18n.localize("TAGANDTALLY.Augur.NotLinked"));
-  const { update, tags, person } = mapAugurPerson(actor, journal.flags["augur-nexus"].campaignEntity);
+  const { update, tags, person } = mapAugurPerson(actor, journal.flags["augur-nexus"].campaignEntity, { overwrite });
   await actor.update(update, { ttSentenceSync: false });
   if (tags.length) await actor.createEmbeddedDocuments("Item", tags);
   ui.notifications.info(game.i18n.format("TAGANDTALLY.Augur.Imported", { name: actor.name, person, count: tags.length }));

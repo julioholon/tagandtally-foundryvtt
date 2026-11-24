@@ -420,7 +420,8 @@
       "Sync": "Copiar os objetivos do Augur para as etapas",
       "Synced": "{name}: {count} objetivos copiados.",
       "NoObjectives": "Nenhum objetivo visível.",
-      "MaxHint": "Caixas desta marca"
+      "MaxHint": "Caixas desta marca",
+      "Inspiration": "Inspiração"
     },
     "Npc": {
       "Creature": "Criatura",
@@ -585,7 +586,7 @@
       "CashedOutLevels": "{name} saca {levels} nível(is) de Riqueza para pagar."
     },
     "Augur": {
-      "Import": "Importar esta pessoa do Augur: frase, traços, crenças, retrato",
+      "Import": "Importar esta pessoa do Augur: frase (papel, ancestralidade, descritor, traços, fio atual), crenças e retrato; os campos da frase são substituídos, as tags são adicionadas",
       "NotLinked": "Este ator não está vinculado a uma pessoa do Augur Nexus.",
       "Imported": "{name} importado da pessoa {person} do Augur ({count} tags novas).",
       "PursuesPrefix": "busca",
@@ -599,7 +600,8 @@
       "Open": "Abrir o dossiê do Augur Nexus",
       "Link": "Vincular a uma pessoa do Augur",
       "LinkHint": "Qual pessoa do Augur Nexus é {name}? Frase, traços, crenças e retrato são importados.",
-      "NoPeople": "Nenhuma pessoa do Augur Nexus sem vínculo neste mundo."
+      "NoPeople": "Nenhuma pessoa do Augur Nexus sem vínculo neste mundo.",
+      "IsPrefix": "é"
     },
     "Macros": {
       "Created": "{count} macros do Tag & Tally criados na pasta de Macros.",
@@ -1250,6 +1252,7 @@
       "NewQuestSparks": "Preencher com o Sparks (tipo e objetivo)",
       "CalendarHint": "Data do Simple Calendar; Avançar o tempo move pelo escopo",
       "CalendarMoved": "O calendário agora marca {date}."
-    }
+    },
+    "And": "e"
   }
 }
