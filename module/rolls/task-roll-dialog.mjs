@@ -85,12 +85,16 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
    * field as a one-step tag. The weakness hinders by default.
    */
   sentenceTags() {
-    const actor = this.itemActor;
+    // The rolling actor's own sentence: an unlinked token carries its own copy and its own reveals.
+    // A field counts as visible when either the token copy or the world actor has it revealed.
+    const actor = this.actor?.type === "npc" ? this.actor : this.itemActor;
     if (actor?.type !== "npc") return [];
+    const base = this.actor?.isToken ? game.actors.get(this.actor.id) : null;
+    const visible = (key) => [actor, base].some((a) => a?.system?.canSee?.(key) === true);
     const hidden = new Set(["secret"]);
     return Object.entries(actor.system.sentence ?? {})
       .filter(([key, value]) => String(value ?? "").trim() && !hidden.has(key))
-      .filter(([key]) => actor.system.canSee?.(key) !== false)
+      .filter(([key]) => visible(key))
       .map(([key, value]) => ({
         id: `sentence:${key}`, name: String(value).trim(), steps: 1, notation: "",
         typeLabel: TaskRollDialog.#sentenceLabel(key),

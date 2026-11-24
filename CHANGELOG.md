@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.2 (unreleased)
+
+- Fix: traits revealed on an unlinked token (the usual case for a placed creature) were missing from its
+  roll dialog, which read the world actor's copy. The dialog now uses the rolling actor's own sentence
+  and treats a field as visible when either copy has it revealed.
+
 ## 0.7.1 (2026-11-23)
 
 - NPC and creature details follow the SRD sentences: players (and a veiled solo GM) see only the core
