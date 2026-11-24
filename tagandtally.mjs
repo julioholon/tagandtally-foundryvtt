@@ -24,6 +24,7 @@ import { WorldState } from "./module/world-state.mjs";
 import { GameLoopApp, registerGameLoop, rollScene } from "./module/game-loop.mjs";
 import { TarotApp } from "./module/tarot.mjs";
 import { startCampaign, runCampaignStart } from "./module/campaign-start.mjs";
+import * as speciesTypes from "./module/species-types.mjs";
 import { DowntimeApp, registerDowntime, grantDayTag, reduceDayTag, applyWealthTally } from "./module/downtime.mjs";
 import { TravelApp, registerTravel, rollHex, rollHexLevel, rollDiscovery } from "./module/travel.mjs";
 import { WorkshopApp, registerWorkshop } from "./module/workshop.mjs";
@@ -144,6 +145,7 @@ Hooks.once("init", () => {
     loop: { GameLoopApp, rollScene, advance: () => GameLoopApp.open() },
     tarot: { TarotApp, open: () => TarotApp.open() },
     campaign: { startCampaign, runCampaignStart },
+    builders: speciesTypes,
     downtime: { DowntimeApp, grantDayTag, reduceDayTag, applyWealthTally, newDay: () => DowntimeApp.newDay() },
     travel: { TravelApp, rollHex, rollHexLevel, rollDiscovery, rest: () => TravelApp.rest() },
     crafting: { WorkshopApp },

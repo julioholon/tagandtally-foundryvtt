@@ -2,6 +2,14 @@
 
 ## 0.9.0 (unreleased)
 
+- **Species & type builders** (SRD guides): species and type umbrella tags carry the creation sheet: the
+  sentence (aged / descriptor / cultural trait / feature, or descriptor / type / specializes in), languages
+  or parent type, magic access with aspects and base MAI, one weakness and the abilities (two free, each
+  one beyond two needs a flaw; the sheet flags the missing ones). Every field rerolls from Sparks; the wand
+  regenerates the whole sheet. The Sparks Species and Type generators now create these items in a
+  "Species & Types" Items folder (the library). Drop one on a character, or use the sheet's Apply button:
+  the sentence slot and its old umbrella tag are replaced, the abilities become trait tags, the weakness
+  and the extra flaws become hindering flaw tags, and the base MAI is the higher of species and type.
 - **Campaign start** wizard (token controls, macro, `game.tagandtally.campaign.start()`): name and theme,
   N random characters added to the party, a journal folder and the Campaign Chronicle, a Celtic Cross
   prophecy journal plus a grand quest on each character, a first quest with its giver NPC already in

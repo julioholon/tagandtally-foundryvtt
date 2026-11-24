@@ -435,3 +435,15 @@
 .chat-message .tt-tarot-card ol { margin: 0.2rem 0 0 1.2rem; padding: 0; }
 .tagandtally .tt-campaign-steps { display: flex; flex-direction: column; gap: 0.2rem; margin: 0.4rem 0; }
 .chat-message .tt-campaign-card ul, .chat-message .tt-campaign-card ol { margin: 0.2rem 0 0.3rem 1.2rem; padding: 0; }
+
+/* Species & type builders */
+.tagandtally .tt-build { border: 1px solid var(--color-border-light-2, #999); border-radius: 4px; padding: 0.4rem 0.6rem; margin: 0.3rem 0; }
+.tagandtally .tt-build legend { font-weight: bold; padding: 0 0.3rem; }
+.tagandtally .tt-build .tt-inline { display: flex; align-items: center; gap: 0.3rem; }
+.tagandtally .tt-build .tt-inline input { flex: 1; }
+.tagandtally .tt-build .tt-toolbar { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.4rem; }
+.tagandtally .tt-build .tt-toolbar .hint { flex: 1; font-size: 0.8em; }
+.tagandtally .tt-build-abilities { list-style: decimal; margin: 0.2rem 0 0 1.2rem; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+.tagandtally .tt-build-abilities li { display: flex; flex-direction: column; gap: 0.15rem; }
+.tagandtally .tt-build-abilities li.missing-flaw .tt-flaw { border-color: #b33; }
+.tagandtally .tt-build-abilities .tt-flaw { font-style: italic; }
