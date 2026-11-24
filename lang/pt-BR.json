@@ -419,7 +419,8 @@
       "OpenAugur": "Abrir a missão no Augur",
       "Sync": "Copiar os objetivos do Augur para as etapas",
       "Synced": "{name}: {count} objetivos copiados.",
-      "NoObjectives": "Nenhum objetivo visível."
+      "NoObjectives": "Nenhum objetivo visível.",
+      "MaxHint": "Caixas desta marca"
     },
     "Npc": {
       "Creature": "Criatura",
@@ -1168,7 +1169,7 @@
       "Title": "Ciclo de jogo",
       "Chronicle": "Crônica da campanha",
       "ChronicleHint": "O diário em que cada cena encerrada é escrita",
-      "Hint": "Uma cena de cada vez. Defina o escopo de tempo, declare intenção e riscos, escolha a missão que ela serve. Cada personagem tem 10 ações na cena; ações dentro da cena não gastam tempo do mundo. Quando todos estiverem Prontos, Avançar o tempo encerra a cena na Crônica, move o mundo pelo escopo e rola a próxima cena.",
+      "Hint": "Uma cena de cada vez. Defina o escopo de tempo, declare intenção e riscos, escolha a missão que ela serve. Cada personagem tem 10 ações na cena: uma rolagem resolvida gasta uma, onde quer que seja rolada (as fases de combate antes da Resolução são livres); abrir uma ferramenta não custa nada. Quando todos estiverem Prontos, Avançar o tempo encerra a cena na Crônica, move o mundo pelo escopo e rola a próxima cena.",
       "SceneNumber": "Cena {number}",
       "NoScene": "Nenhuma cena ainda.",
       "RollScene": "Rolar a cena",
@@ -1217,8 +1218,8 @@
         "downtime": "Descanso"
       },
       "ActionHint": {
-        "investigate": "Rolagem de insights contra o nível da cena",
-        "task": "Qualquer rolagem de tarefa contra o nível da cena",
+        "investigate": "Investigar o Plano ou Local de uma missão, um PdM ou uma facção: rolagem de insights no nível 5, as marcas vão para o alvo",
+        "task": "Qualquer rolagem de tarefa contra o nível da cena (gasta uma ação ao resolver)",
         "socialize": "Falar com um PdM (Interagir)",
         "oracle": "Perguntar ao Oráculo no nível da cena",
         "travel": "Abrir a Viagem",
@@ -1234,7 +1235,21 @@
         "month": "Um mês",
         "year": "Um ano"
       },
-      "Scope": "Escopo de tempo"
+      "Scope": "Escopo de tempo",
+      "OverActions": "{name} passou das 10 ações desta cena.",
+      "RefundHint": "Devolver a última ação (clique errado ou rolagem que não deveria contar)",
+      "InvestigateHint": "O que você investiga? As marcas da faixa vão para o alvo e um insight de Assunto / Modificador é rolado.",
+      "NoTargets": "Nada para investigar: sem marcas de missão abertas, insights de PdM ou facções.",
+      "InsightMarked": "{n} marca(s) de insight em {target}.",
+      "CountdownMarked": "Falha, e: uma marca de Contagem em {quest}.",
+      "NewQuest": "Nova missão",
+      "NewQuestHint": "Criar uma missão em um personagem e torná-la a missão desta cena",
+      "NewQuestOwner": "Missão de quem",
+      "NewQuestName": "Nome",
+      "NewQuestNamePlaceholder": "Deixe vazio para usar a frase gerada",
+      "NewQuestSparks": "Preencher com o Sparks (tipo e objetivo)",
+      "CalendarHint": "Data do Simple Calendar; Avançar o tempo move pelo escopo",
+      "CalendarMoved": "O calendário agora marca {date}."
     }
   }
 }

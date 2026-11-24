@@ -6,7 +6,7 @@ import { sceneLevel, rollOracle } from "./rolls/resolution.mjs";
 import { TaskRollDialog } from "./rolls/task-roll-dialog.mjs";
 import { DowntimeApp, expireDayTags } from "./downtime.mjs";
 import { rollHexLevel } from "./travel.mjs";
-import { allFactions, addTally } from "./factions.mjs";
+import { allFactions, addTally, addInsight } from "./factions.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin, DialogV2 } = foundry.applications.api;
 
@@ -14,6 +14,10 @@ const L = (k, d) => (d ? game.i18n.format(`TAGANDTALLY.Loop.${k}`, d) : game.i18
 const esc = (s) => foundry.utils.escapeHTML(String(s ?? ""));
 const theme = () => game.settings.get(SYSTEM_ID, "sparkTheme");
 const CHRONICLE_FOLDER = "Tag & Tally Chronicles";
+/** Rolls that do not spend a scene action: the combat phases before the Resolution. */
+const FREE_ROLLS = new Set(["combat opening", "combat maneuver", "combat strike", "combat counter", "yes no"]);
+/** Insight tallies by outcome band (SRD insights table). */
+const INSIGHT_TALLIES = { successBut: 1, success: 2, successAnd: 3 };
 
 /** Roll a Sparks table, or "" when it is missing. */
 async function draw(name) {
@@ -61,6 +65,8 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       reroll: GameLoopApp.#onReroll,
       applyLevel: GameLoopApp.#onApplyLevel,
       act: GameLoopApp.#onAct,
+      refund: GameLoopApp.#onRefund,
+      newQuest: GameLoopApp.#onNewQuest,
       ready: GameLoopApp.#onReady,
       advance: GameLoopApp.#onAdvance,
       resetActions: GameLoopApp.#onResetActions,
@@ -110,7 +116,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       participants.push({
         uuid: p.uuid, name: actor.name, img: actor.img, canAct: actor.isOwner, ready: p.ready, left,
         pips: Array.from({ length: GameLoopApp.maxActions }, (_, i) => i < left),
-        actions: Object.entries(TAGANDTALLY.loop.actions).map(([id, a]) => ({ id, label: game.i18n.localize(a.label), icon: a.icon, hint: game.i18n.localize(a.hint), disabled: left <= 0 }))
+        actions: Object.entries(TAGANDTALLY.loop.actions).map(([id, a]) => ({ id, label: game.i18n.localize(a.label), icon: a.icon, hint: game.i18n.localize(a.hint) }))
       });
       for (const q of actor.items.filter((i) => i.type === "quest" && i.system.status === "active")) quests.push({ uuid: q.uuid, name: `${q.name} (${actor.name})`, selected: q.uuid === scene.questUuid });
     }
@@ -118,6 +124,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const day = DowntimeApp.state.get().day;
     return {
       state, scene, scopes, participants, quests, isGM: game.user.isGM, day,
+      calendar: GameLoopApp.calendarDate(),
       hasScene: Boolean(scene.level),
       levelLabel: scene.level ? game.i18n.localize(TAGANDTALLY.levels[scene.level]) : "",
       canApplyLevel: game.user.isGM && scene.level && scene.level !== sceneLevel(),
@@ -197,7 +204,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     return GameLoopApp.state.set(state);
   }
 
-  /** One action in the scene: spend a point, run the tool, log what happened. */
+  /** An action button runs its tool; the scene action is spent when a roll actually resolves (see `onRoll`). */
   static async #onAct(event, target) {
     const uuid = target.closest("[data-uuid]")?.dataset.uuid;
     const id = target.dataset.act;
@@ -206,15 +213,46 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const p = state.participants[uuid];
     const actor = await fromUuid(uuid);
     if (!def || !p || !actor?.isOwner) return;
-    if (p.spent >= GameLoopApp.maxActions) return ui.notifications.warn(L("NoActions"));
+    if (p.spent >= GameLoopApp.maxActions) ui.notifications.warn(L("NoActions"));
     const outcome = await GameLoopApp.perform(actor, id, def, state.scene);
-    if (outcome === null) return; // cancelled
+    if (outcome === null || outcome === "") return;
     const fresh = GameLoopApp.state.get();
-    const fp = fresh.participants[uuid];
-    if (!fp) return;
-    fp.spent += 1;
-    fresh.scene.log.push({ icon: def.icon, actor: actor.name, text: `${game.i18n.localize(def.label)}${outcome ? ` · ${outcome}` : ""}` });
+    fresh.scene.log.push({ icon: def.icon, actor: actor.name, text: `${game.i18n.localize(def.label)} · ${outcome}` });
     return GameLoopApp.state.set(fresh);
+  }
+
+  /** Give back the last action of a character (a misclick, a roll that should not count). */
+  static async #onRefund(event, target) {
+    const uuid = target.closest("[data-uuid]")?.dataset.uuid;
+    const state = GameLoopApp.state.get();
+    const p = state.participants[uuid];
+    const actor = await fromUuid(uuid);
+    if (!p || !actor?.isOwner || p.spent <= 0) return;
+    p.spent -= 1;
+    const idx = state.scene.log.map((l) => l.actor).lastIndexOf(actor.name);
+    if (idx >= 0) state.scene.log.splice(idx, 1);
+    return GameLoopApp.state.set(state);
+  }
+
+  /**
+   * Every resolved roll by a participant spends one scene action, wherever it was rolled from
+   * (the loop's buttons, a sheet, the Workshop, Interact, the Combat flow's Resolution…).
+   * The combat phases before the Resolution are free. Runs on the rolling client only.
+   */
+  static async onRoll(result) {
+    const actor = result?.actor;
+    if (!actor || FREE_ROLLS.has(result.rollType)) return;
+    const base = actor.isToken ? game.actors.get(actor.id) : actor;
+    const state = GameLoopApp.state.get();
+    if (!state.scene.level) return; // no scene in play: rolls are just rolls
+    const p = state.participants[base?.uuid] ?? state.participants[actor.uuid];
+    if (!p) return;
+    p.spent += 1;
+    const label = sparkTables.resolutionLabel(result.rollType) || result.rollType;
+    const title = result.title && result.title !== game.i18n.localize("TAGANDTALLY.Roll.Task") ? ` · ${result.title}` : "";
+    state.scene.log.push({ icon: "fa-dice-d20", actor: base?.name ?? actor.name, text: `${label}${title} → ${GameLoopApp.bandLabel(result.band)}` });
+    if (p.spent > GameLoopApp.maxActions) ui.notifications.warn(L("OverActions", { name: base?.name ?? actor.name }));
+    await GameLoopApp.state.set(state);
   }
 
   /** Localized outcome band, whether the roll returned a band id or a band definition. */
@@ -223,14 +261,14 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     return def?.label ? game.i18n.localize(def.label) : "";
   }
 
-  /** Run an action's tool. Returns a log text, "" for tools that open a window, null when cancelled. */
+  /** Run an action's tool. Returns a log text, "" when the roll hook will log it or a window opened, null when cancelled. */
   static async perform(actor, id, def, scene) {
     const level = scene.level ?? sceneLevel();
     switch (def.kind) {
+      case "investigate": return GameLoopApp.investigate(actor, scene);
       case "roll": {
         const result = await TaskRollDialog.prompt({ actor, level, rollType: def.rollType, title: scene.intent || undefined });
-        if (!result) return null;
-        return GameLoopApp.bandLabel(result.band);
+        return result ? "" : null;
       }
       case "oracle": {
         const question = await DialogV2.prompt({
@@ -240,15 +278,15 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
           rejectClose: false
         });
         if (question === null || question === undefined) return null;
-        const result = await rollOracle({ level, question, actor });
-        return `${esc(question)} → ${GameLoopApp.bandLabel(result?.band)}`;
+        await rollOracle({ level, question, actor });
+        return "";
       }
       case "interact": {
         const { InteractDialog } = await import("./interactions.mjs");
         const target = await GameLoopApp.pickNpc(actor);
         if (!target) return null;
         await InteractDialog.open({ actor, target });
-        return target.name;
+        return "";
       }
       case "travel": { const { TravelApp } = await import("./travel.mjs"); await TravelApp.open(); return ""; }
       case "combat": { const { CombatFlow } = await import("./combat/combat-flow.mjs"); await CombatFlow.open({ actors: [actor] }); return ""; }
@@ -256,6 +294,99 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       case "workshop": { const { WorkshopApp } = await import("./workshop.mjs"); WorkshopApp.open({ actor }); return ""; }
       default: return "";
     }
+  }
+
+  /**
+   * Investigate something: the current quest's Plan or Location, another active quest, an NPC
+   * (insight toward strength / weakness / secret) or a faction. An insights roll at level 5
+   * (SRD); the band's tallies land on the target and a Subject / Modifier insight is rolled.
+   */
+  static async investigate(actor, scene) {
+    const options = [];
+    const quests = [];
+    for (const a of game.actors.filter((x) => x.type === "character" && PartyOverview.isMember(x))) for (const q of a.items.filter((i) => i.type === "quest" && i.system.status === "active")) quests.push(q);
+    const current = scene.questUuid ? quests.find((q) => q.uuid === scene.questUuid) : null;
+    for (const q of [current, ...quests.filter((q) => q !== current)].filter(Boolean)) {
+      for (const key of ["plan", "location"]) if (q.system.tallies[key].enabled && !q.system.tallies[key].complete) options.push({ value: `quest:${q.uuid}:${key}`, label: `${q.name} · ${game.i18n.localize(TAGANDTALLY.questTallies[key].label)} (${q.system.tallies[key].value}/${q.system.tallies[key].max})` });
+    }
+    for (const n of game.actors.filter((x) => x.type === "npc")) for (const key of n.system.hiddenDef.insight) if (!n.system.revealed[key]) options.push({ value: `npc:${n.uuid}:${key}`, label: `${n.name} · ${game.i18n.localize(`TAGANDTALLY.Npc.${key}`)} (${n.system.insights[key]}/${TAGANDTALLY.insightsPerTally})` });
+    for (const f of allFactions()) if (!f.system.isEnd) options.push({ value: `faction:${f.uuid}`, label: `${f.name} · ${game.i18n.localize("TAGANDTALLY.Faction.Insight")} (${f.system.tally}/${TAGANDTALLY.faction.tallyMax})` });
+    if (!options.length) return ui.notifications.warn(L("NoTargets")) && null;
+    const pick = await DialogV2.prompt({
+      window: { title: L("Action.investigate") },
+      content: `<p class="hint">${L("InvestigateHint")}</p><select name="t" autofocus>${options.map((o) => `<option value="${o.value}">${esc(o.label)}</option>`).join("")}</select>`,
+      ok: { label: game.i18n.localize("TAGANDTALLY.Roll.Roll"), callback: (ev, button) => button.form.elements.t.value },
+      rejectClose: false
+    });
+    if (!pick) return null;
+    const [kind, uuid, key] = pick.split(":");
+    const target = await fromUuid(uuid);
+    if (!target) return null;
+    const label = options.find((o) => o.value === pick)?.label ?? target.name;
+    const result = await TaskRollDialog.prompt({ actor, level: TAGANDTALLY.loop.insightLevel, rollType: "insights", title: `${L("Action.investigate")}: ${label}` });
+    if (!result) return null;
+    const n = INSIGHT_TALLIES[result.band?.id ?? result.band] ?? 0;
+    const lines = [];
+    if (n > 0) {
+      if (kind === "quest") { const t = target.system.tallies[key]; await target.update({ [`system.tallies.${key}.value`]: Math.min(t.max, t.value + n) }); }
+      else if (kind === "npc") { const k = target.knowledgeActor; const v = Math.min(TAGANDTALLY.insightsPerTally, k.system.insights[key] + n); await k.update({ [`system.insights.${key}`]: v, ...(v >= TAGANDTALLY.insightsPerTally ? { [`system.revealed.${key}`]: true } : {}) }); }
+      else if (kind === "faction") for (let i = 0; i < n; i++) await addInsight(target, { reason: L("Action.investigate") });
+      lines.push(L("InsightMarked", { n, target: esc(label) }));
+      const { generate } = await import("./sparks/engine.mjs");
+      const insight = await generate("insight", { theme: theme() }).catch(() => null);
+      if (insight?.html) lines.push(insight.html);
+    } else if ((result.band?.id ?? result.band) === "failAnd" && current) {
+      const t = current.system.tallies.countdown;
+      if (t.enabled) { await current.update({ "system.tallies.countdown.value": Math.min(t.max, t.value + 1) }); lines.push(L("CountdownMarked", { quest: esc(current.name) })); }
+    }
+    if (lines.length && result.message) await result.message.update({ content: `${result.message.content}<div class="tagandtally tt-loop-outcome">${lines.map((l) => `<p>${l}</p>`).join("")}</div>` });
+    return "";
+  }
+
+  /** Create a quest on a participant (optionally filled by Sparks) and make it the scene's quest. */
+  static async #onNewQuest() {
+    const state = GameLoopApp.state.get();
+    const owners = [];
+    for (const p of Object.values(state.participants)) { const a = await fromUuid(p.uuid); if (a?.isOwner) owners.push(a); }
+    if (!owners.length) return ui.notifications.warn(L("NoParticipants"));
+    const data = await DialogV2.prompt({
+      window: { title: L("NewQuest") },
+      content: `<div class="form-group"><label>${L("NewQuestOwner")}</label><select name="owner">${owners.map((a) => `<option value="${a.uuid}">${esc(a.name)}</option>`).join("")}</select></div><div class="form-group"><label>${L("NewQuestName")}</label><input type="text" name="name" placeholder="${L("NewQuestNamePlaceholder")}" /></div><label class="tt-toggle"><input type="checkbox" name="sparks" checked /> ${L("NewQuestSparks")}</label>`,
+      ok: { label: L("NewQuest"), callback: (ev, button) => ({ owner: button.form.elements.owner.value, name: button.form.elements.name.value.trim(), sparks: button.form.elements.sparks.checked }) },
+      rejectClose: false
+    });
+    if (!data) return;
+    const owner = await fromUuid(data.owner);
+    let itemData = { name: data.name || L("NewQuest"), type: "quest", system: { status: "active" } };
+    if (data.sparks) {
+      const { generate, findGenerator } = await import("./sparks/engine.mjs");
+      const { itemDataFromGeneration } = await import("./sparks/create.mjs");
+      const r = await generate("quest", { theme: theme() });
+      const g = findGenerator("quest");
+      if (r && g) { const d = itemDataFromGeneration(r, g); itemData = foundry.utils.mergeObject(d, { name: data.name || d.name, system: { status: "active" } }); }
+    }
+    const [quest] = await owner.createEmbeddedDocuments("Item", [itemData]);
+    const fresh = GameLoopApp.state.get();
+    fresh.scene.questUuid = quest.uuid;
+    await GameLoopApp.state.set(fresh);
+    quest.sheet.render({ force: true });
+  }
+
+  /** Simple Calendar (Reborn) date, when the module is active. */
+  static calendarDate() {
+    try { const d = globalThis.SimpleCalendar?.api?.currentDateTimeDisplay?.(); return d?.date ? `${d.date}${d.time ? ` ${d.time}` : ""}` : ""; } catch { return ""; }
+  }
+
+  /** Move the calendar by a scope: days, or hours / minutes for the short scopes. */
+  static async calendarAdvance(scope, days) {
+    const api = globalThis.SimpleCalendar?.api;
+    if (!api?.changeDate) return false;
+    try {
+      const delta = days > 0 ? { day: days } : scope === "shift" ? { hour: TAGANDTALLY.loop.shiftHours } : scope === "combat" ? { minute: TAGANDTALLY.loop.combatMinutes } : null;
+      if (!delta) return false;
+      await api.changeDate(delta);
+      return true;
+    } catch (err) { console.warn(`${SYSTEM_ID} | Simple Calendar advance failed`, err); return false; }
   }
 
   /** Who to talk to: the character's known people first, then every NPC actor. */
@@ -294,7 +425,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   /** GM-side effects of advancing: chronicle the closed scene, move the days, tick the factions, roll the next scene. */
-  static async applyAdvance({ closed, days = 0, factionTicks = 0 }) {
+  static async applyAdvance({ closed, days = 0, factionTicks = 0, scope = "day" }) {
     const lines = [];
     const page = await GameLoopApp.chronicle(closed);
     if (days > 0) {
@@ -312,6 +443,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       for (const faction of allFactions()) await addTally(faction, factionTicks, { reason: game.i18n.localize("TAGANDTALLY.Faction.TimePasses") });
       lines.push(L("FactionsTicked", { ticks: factionTicks }));
     }
+    if (await GameLoopApp.calendarAdvance(scope, days)) lines.push(L("CalendarMoved", { date: GameLoopApp.calendarDate() }));
     const state = GameLoopApp.state.get();
     const rolled = await rollScene({ fromLevel: closed.level ?? sceneLevel() });
     Object.assign(state.scene, rolled);
@@ -374,6 +506,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
 }
 
 export function registerGameLoop() {
+  Hooks.on(`${SYSTEM_ID}.rollResolved`, (result) => GameLoopApp.onRoll(result));
   Hooks.on("canvasReady", () => GameLoopApp.state.onChange());
   Hooks.on("updateScene", (scene, changes) => { if (scene.id === canvas?.scene?.id && foundry.utils.hasProperty(changes, `flags.${SYSTEM_ID}`)) GameLoopApp.state.onChange(); });
   for (const hook of ["createItem", "updateItem", "deleteItem"]) Hooks.on(hook, (item) => { if (item.type === "quest") GameLoopApp.state.onChange(); });

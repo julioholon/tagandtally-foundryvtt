@@ -171,10 +171,16 @@ quando uma missão começa: quando o resultado mudaria o personagem ou a situaç
   ano. Ele diz quanto tempo do mundo passa quando a cena encerra, não quantas ações ela tem.
   Escreva a **intenção** e os **riscos**, e escolha a **missão** que a cena serve (ou
   nenhuma: o tempo só passa).
-- Cada personagem tem **10 ações** na cena. Investigar e Tarefa abrem o diálogo de rolagem
-  no nível da cena, Socializar escolhe um PdM e abre Interagir, Oráculo faz uma pergunta,
-  Viagem, Combate, Oficina e Descanso abrem essas ferramentas. Ações dentro da cena não
-  gastam tempo do mundo. O registro sob a cena guarda o que cada ação produziu.
+- Cada personagem tem **10 ações** na cena, e uma ação é gasta quando uma rolagem resolve,
+  onde quer que seja rolada: uma Tarefa na ficha, uma fabricação na Oficina, uma rolagem de
+  Interagir, a Resolução do Fluxo de combate (as quatro fases antes dela são livres). Abrir
+  uma ferramenta não custa nada; a seta ao lado das caixas devolve a última ação.
+  **Investigar** pergunta o que você investiga (Plano ou Local de uma missão, um traço oculto
+  de PdM, uma facção), rola insights no nível 5 e marca o alvo pelo resultado. **Tarefa**
+  rola no nível da cena, **Socializar** escolhe um PdM e abre Interagir, **Oráculo** faz uma
+  pergunta, o resto abre suas ferramentas. O **+** ao lado do seletor de missão cria uma
+  missão em um personagem. Com o Simple Calendar ativo, a data aparece no cabeçalho e Avançar
+  o tempo a move pelo escopo.
 - Quando um jogador termina, clica em **Pronto**. **Avançar o tempo** libera quando todos
   estão prontos (o Mestre sempre pode avançar). Isso escreve a cena no diário **Crônica da
   campanha** (intenção, riscos, missão, registro), move o contador de dias pelo escopo (tags

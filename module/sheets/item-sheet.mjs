@@ -15,7 +15,8 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
       toggleAxis: TagAndTallyItemSheet.#onToggleAxis,
       addStep: TagAndTallyItemSheet.#onAddStep,
       removeStep: TagAndTallyItemSheet.#onRemoveStep,
-      generateSentence: TagAndTallyItemSheet.#onGenerateSentence
+      generateSentence: TagAndTallyItemSheet.#onGenerateSentence,
+      setQuestTally: TagAndTallyItemSheet.#onSetQuestTally
     }
   };
 
@@ -126,6 +127,14 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
     const steps = [...this.item.system.steps];
     steps.splice(Number(target.dataset.index), 1);
     return this.item.update({ "system.steps": steps });
+  }
+
+  /** Click a box to set the tally; clicking the last filled box takes one back. */
+  static async #onSetQuestTally(event, target) {
+    const key = target.dataset.key;
+    const value = Number(target.dataset.value);
+    const current = this.item.system.tallies[key]?.value ?? 0;
+    return this.item.update({ [`system.tallies.${key}.value`]: value === current ? value - 1 : value });
   }
 
   static async #onGenerateSentence() {

@@ -419,7 +419,8 @@
       "OpenAugur": "Open the Augur quest",
       "Sync": "Copy Augur objectives into the steps",
       "Synced": "{name}: {count} objectives copied.",
-      "NoObjectives": "No visible objectives."
+      "NoObjectives": "No visible objectives.",
+      "MaxHint": "Boxes in this tally"
     },
     "Npc": {
       "Creature": "Creature",
@@ -1168,7 +1169,7 @@
       "Title": "Game loop",
       "Chronicle": "Campaign Chronicle",
       "ChronicleHint": "The journal every closed scene is written to",
-      "Hint": "One scene at a time. Set its time scope, declare intent and stakes, pick the quest it serves. Every character has 10 actions in the scene; actions inside the scene are free of world time. When everyone is Ready, Advance time closes the scene into the Chronicle, moves the world by the scope and rolls the next scene.",
+      "Hint": "One scene at a time. Set its time scope, declare intent and stakes, pick the quest it serves. Every character has 10 actions in the scene: a resolved roll spends one, wherever it was rolled (combat phases before the Resolution are free); opening a tool costs nothing. When everyone is Ready, Advance time closes the scene into the Chronicle, moves the world by the scope and rolls the next scene.",
       "SceneNumber": "Scene {number}",
       "NoScene": "No scene yet.",
       "RollScene": "Roll the scene",
@@ -1217,8 +1218,8 @@
         "downtime": "Downtime"
       },
       "ActionHint": {
-        "investigate": "Insights roll against the scene level",
-        "task": "Any task roll against the scene level",
+        "investigate": "Investigate a quest's Plan or Location, an NPC or a faction: insights roll at level 5, tallies land on the target",
+        "task": "Any task roll against the scene level (spends an action when it resolves)",
         "socialize": "Talk to an NPC (Interact)",
         "oracle": "Ask the Oracle a question at the scene level",
         "travel": "Open the Travel tracker",
@@ -1234,7 +1235,21 @@
         "month": "A month",
         "year": "A year"
       },
-      "Scope": "Time scope"
+      "Scope": "Time scope",
+      "OverActions": "{name} is past the 10 actions of this scene.",
+      "RefundHint": "Give back the last action (misclick or a roll that should not count)",
+      "InvestigateHint": "What are you investigating? The band's tallies land on it and a Subject / Modifier insight is rolled.",
+      "NoTargets": "Nothing to investigate: no open quest tallies, NPC insights or factions.",
+      "InsightMarked": "{n} insight mark(s) on {target}.",
+      "CountdownMarked": "Fail, and: one Countdown mark on {quest}.",
+      "NewQuest": "New quest",
+      "NewQuestHint": "Create a quest on a character and make it this scene's quest",
+      "NewQuestOwner": "Whose quest",
+      "NewQuestName": "Name",
+      "NewQuestNamePlaceholder": "Leave empty to use the generated sentence",
+      "NewQuestSparks": "Fill it with Sparks (type and objective)",
+      "CalendarHint": "Simple Calendar date; Advance time moves it by the scope",
+      "CalendarMoved": "The calendar now reads {date}."
     }
   }
 }
