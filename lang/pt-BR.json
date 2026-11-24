@@ -1251,7 +1251,9 @@
       "NewQuestNamePlaceholder": "Deixe vazio para usar a frase gerada",
       "NewQuestSparks": "Preencher com o Sparks (tipo e objetivo)",
       "CalendarHint": "Data do Simple Calendar; Avançar o tempo move pelo escopo",
-      "CalendarMoved": "O calendário agora marca {date}."
+      "CalendarMoved": "O calendário agora marca {date}.",
+      "CountdownPressed": "Falha, e: a Contagem da missão enche {n}.",
+      "QuestPressed": "Pressão do tempo: a Contagem de {quest} enche {n}."
     },
     "And": "e"
   }

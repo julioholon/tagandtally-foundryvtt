@@ -10,7 +10,7 @@
     {{#if system.augurUuid}}<div class="form-group span2"><label>{{localize "TAGANDTALLY.Quest.AugurQuest"}}</label><span>{{#if isGM}}<input type="text" name="system.augurUuid" value="{{system.augurUuid}}" />{{else}}<code>{{system.augurUuid}}</code>{{/if}}</span></div>{{/if}}
   </div>
   <h3>{{localize "TAGANDTALLY.Tally.Tallies"}}</h3>
-  <div class="tt-grid three">
+  <div class="tt-tally-list">
     {{#each system.tallies as |t key|}}
       <div class="form-group tt-tally-config">
         <label class="tt-toggle"><input type="checkbox" name="system.tallies.{{key}}.enabled" {{checked t.enabled}} /> {{localize t.label}}</label>
