@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.3 (unreleased)
+
+- What the players know about an NPC or creature (revealed fields and insights) is kept on the world
+  actor and shared by all of its unlinked tokens: revealing on a token sheet updates the actor and every
+  other token of it; token copies still keep their own sentence fields. Fixes reveals that showed on
+  one copy and not the other.
+
 ## 0.7.2 (2026-11-23)
 
 - Fix: traits revealed on an unlinked token (the usual case for a placed creature) were missing from its

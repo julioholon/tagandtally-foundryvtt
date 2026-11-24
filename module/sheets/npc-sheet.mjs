@@ -53,21 +53,24 @@ export default class NpcSheet extends BaseActorSheet {
     context.canSee = Object.fromEntries(Object.keys(actor.system.sentence).map((k) => [k, actor.system.canSee(k)]));
     context.hiddenKeys = def.keys;
     context.insightKeys = def.insight;
-    context.insightBoxes = Object.fromEntries(def.insight.map((k) => [k, Array.from({ length: TAGANDTALLY.insightsPerTally }, (_, i) => i < actor.system.insights[k])]));
+    const knowledge = actor.knowledgeActor;
+    context.revealed = knowledge.system.revealed;
+    context.insightBoxes = Object.fromEntries(def.insight.map((k) => [k, Array.from({ length: TAGANDTALLY.insightsPerTally }, (_, i) => i < knowledge.system.insights[k])]));
     return context;
   }
 
   static async #onReveal(event, target) {
     const key = target.dataset.key;
-    return this.actor.reveal(key, !this.actor.system.revealed[key]);
+    return this.actor.reveal(key, !this.actor.knowledgeActor.system.revealed[key]);
   }
 
   static async #onAddInsight(event, target) {
     const key = target.dataset.key;
     const index = Number(target.dataset.index);
-    const current = this.actor.system.insights[key];
+    const knowledge = this.actor.knowledgeActor;
+    const current = knowledge.system.insights[key];
     const value = index < current ? index : index + 1;
-    return this.actor.update({ [`system.insights.${key}`]: value, ...(value >= TAGANDTALLY.insightsPerTally ? { [`system.revealed.${key}`]: true } : {}) });
+    return knowledge.update({ [`system.insights.${key}`]: value, ...(value >= TAGANDTALLY.insightsPerTally ? { [`system.revealed.${key}`]: true } : {}) });
   }
 
   static async #onGenerateSentence() {

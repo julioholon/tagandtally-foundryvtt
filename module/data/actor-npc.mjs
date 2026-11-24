@@ -51,8 +51,10 @@ export default class NpcData extends foundry.abstract.TypeDataModel {
     this.wealth.climbCost = TAGANDTALLY.coins.climbCost(this.wealth.value);
     this.wealth.cashOut = TAGANDTALLY.coins.cashOut(this.wealth.value);
     this.wealth.canClimb = this.wealth.value < 6 && this.wealth.coins >= this.wealth.climbCost;
+    const knowledge = actor?.knowledgeActor;
+    const insights = knowledge && knowledge !== actor ? knowledge.system.insights : this.insights;
     for (const key of this.hiddenDef.insight) {
-      if (this.insights[key] >= TAGANDTALLY.insightsPerTally) this.revealed[key] = true;
+      if (insights[key] >= TAGANDTALLY.insightsPerTally) this.revealed[key] = true;
     }
     this.sentenceText = this.buildSentence(actor?.name, { hide: this.hiddenKeys().filter((k) => !this.canSee(k)) });
   }
