@@ -15,6 +15,10 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
       toggleAxis: TagAndTallyItemSheet.#onToggleAxis,
       addStep: TagAndTallyItemSheet.#onAddStep,
       removeStep: TagAndTallyItemSheet.#onRemoveStep,
+      rerollStep: TagAndTallyItemSheet.#onRerollStep,
+      rollStep: TagAndTallyItemSheet.#onRollStep,
+      revealLocation: TagAndTallyItemSheet.#onRevealLocation,
+      rerollLocation: TagAndTallyItemSheet.#onRerollLocation,
       generateSentence: TagAndTallyItemSheet.#onGenerateSentence,
       setQuestTally: TagAndTallyItemSheet.#onSetQuestTally,
       rerollBuild: TagAndTallyItemSheet.#onRerollBuild,
@@ -99,6 +103,7 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
     }
     if (item.type === "quest") {
       context.statuses = TAGANDTALLY.questStatus;
+      context.showLocation = game.user.isGM || system.locationRevealed;
     }
     return context;
   }
@@ -114,6 +119,9 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
     const data = super._processFormData(event, form, formData);
     const steps = foundry.utils.getProperty(data, "system.steps");
     if (steps && !Array.isArray(steps)) foundry.utils.setProperty(data, "system.steps", Object.values(steps));
+    // Only the GM ticks tasks by hand; players close them with a Task Roll (their disabled boxes are not submitted).
+    const list = foundry.utils.getProperty(data, "system.steps");
+    if (Array.isArray(list) && this.item.type === "quest" && !game.user.isGM) list.forEach((s, i) => { s.done = this.item.system.steps[i]?.done ?? false; });
     const abilities = foundry.utils.getProperty(data, "system.build.abilities");
     if (abilities && !Array.isArray(abilities)) foundry.utils.setProperty(data, "system.build.abilities", Object.values(abilities));
     return data;
@@ -138,9 +146,30 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
     return this.item.update({ [`system.${axis}`]: list });
   }
 
+  /** + rolls a Verb Adjective Noun task, editable and rerollable before it is added. */
   static async #onAddStep() {
-    const steps = [...this.item.system.steps, { text: "", done: false }];
-    return this.item.update({ "system.steps": steps });
+    const { addTaskInteractive } = await import("../quest-tasks.mjs");
+    return addTaskInteractive(this.item);
+  }
+
+  static async #onRerollStep(event, target) {
+    const { rerollTask } = await import("../quest-tasks.mjs");
+    return rerollTask(this.item, Number(target.dataset.index));
+  }
+
+  static async #onRollStep(event, target) {
+    const { rollTask } = await import("../quest-tasks.mjs");
+    return rollTask(this.item, Number(target.dataset.index));
+  }
+
+  static async #onRevealLocation() {
+    const { revealLocation } = await import("../quest-tasks.mjs");
+    return revealLocation(this.item);
+  }
+
+  static async #onRerollLocation() {
+    const { rollLocation } = await import("../quest-tasks.mjs");
+    return rollLocation(this.item);
   }
 
   static async #onRemoveStep(event, target) {

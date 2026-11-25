@@ -33,6 +33,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
       openDowntime: BaseActorSheet.#onOpenDowntime,
       openWorkshop: BaseActorSheet.#onOpenWorkshop,
       questTally: BaseActorSheet.#onQuestTally,
+      rollQuestStep: BaseActorSheet.#onRollQuestStep,
       toggleHealed: BaseActorSheet.#onToggleHealed,
       rollTemporary: BaseActorSheet.#onRollTemporary,
       generateAppearance: BaseActorSheet.#onGenerateAppearance,
@@ -260,6 +261,14 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
     const current = item.system.tallies[key].value;
     const value = index < current ? index : index + 1;
     return item.tickTally(key, value - current);
+  }
+
+  /** Attempt a quest task from the quest list. */
+  static async #onRollQuestStep(event, target) {
+    const item = this._getItem(target);
+    if (!item || item.type !== "quest") return;
+    const { rollTask } = await import("../quest-tasks.mjs");
+    return rollTask(item, Number(target.dataset.index), this.actor);
   }
 
   static async #onToggleHealed(event, target) {

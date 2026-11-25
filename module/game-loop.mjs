@@ -7,6 +7,7 @@ import { TaskRollDialog } from "./rolls/task-roll-dialog.mjs";
 import { DowntimeApp, expireDayTags } from "./downtime.mjs";
 import { rollHexLevel } from "./travel.mjs";
 import { allFactions, addTally, addInsight } from "./factions.mjs";
+import { planRoom, proposeTasks, addTasks } from "./quest-tasks.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin, DialogV2 } = foundry.applications.api;
 
@@ -315,7 +316,15 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     for (const a of game.actors.filter((x) => x.type === "character" && PartyOverview.isMember(x))) for (const q of a.items.filter((i) => i.type === "quest" && i.system.status === "active")) quests.push(q);
     const current = scene.questUuid ? quests.find((q) => q.uuid === scene.questUuid) : null;
     for (const q of [current, ...quests.filter((q) => q !== current)].filter(Boolean)) {
-      for (const key of ["plan", "location"]) if (q.system.tallies[key].enabled && !q.system.tallies[key].complete) options.push({ value: `quest:${q.uuid}:${key}`, label: `${q.name} · ${game.i18n.localize(TAGANDTALLY.questTallies[key].label)} (${q.system.tallies[key].value}/${q.system.tallies[key].max})` });
+      for (const key of ["plan", "location"]) {
+        const t = q.system.tallies[key];
+        if (!t.enabled || t.complete) continue;
+        if (key === "plan") {
+          // A Plan investigation yields open tasks, so it needs room for more of them.
+          if (!planRoom(q)) continue;
+          options.push({ value: `quest:${q.uuid}:plan`, label: `${q.name} · ${game.i18n.localize(TAGANDTALLY.questTallies.plan.label)}: ${L("PlanTasks")} (${t.value}/${t.max})` });
+        } else options.push({ value: `quest:${q.uuid}:${key}`, label: `${q.name} · ${game.i18n.localize(TAGANDTALLY.questTallies[key].label)} (${t.value}/${t.max})` });
+      }
     }
     for (const n of game.actors.filter((x) => x.type === "npc")) for (const key of n.system.hiddenDef.insight) if (!n.system.revealed[key]) options.push({ value: `npc:${n.uuid}:${key}`, label: `${n.name} · ${game.i18n.localize(`TAGANDTALLY.Npc.${key}`)} (${n.system.insights[key]}/${TAGANDTALLY.insightsPerTally})` });
     for (const f of allFactions()) if (!f.system.isEnd) options.push({ value: `faction:${f.uuid}`, label: `${f.name} · ${game.i18n.localize("TAGANDTALLY.Faction.Insight")} (${f.system.tally}/${TAGANDTALLY.faction.tallyMax})` });
@@ -336,10 +345,16 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const n = INSIGHT_TALLIES[result.band?.id ?? result.band] ?? 0;
     const lines = [];
     if (n > 0) {
-      if (kind === "quest") { const t = target.system.tallies[key]; await target.update({ [`system.tallies.${key}.value`]: Math.min(t.max, t.value + n) }); }
+      if (kind === "quest" && key === "plan") {
+        const count = Math.min(n, planRoom(target));
+        const texts = count > 0 ? await proposeTasks(target, { count, title: L("PlanTasksTitle", { quest: target.name }) }) : [];
+        await addTasks(target, texts);
+        lines.push(L("TasksAdded", { n: texts.length, quest: esc(target.name) }), ...texts.map((t) => `<em>${esc(t)}</em>`));
+      }
+      else if (kind === "quest") { const t = target.system.tallies[key]; await target.update({ [`system.tallies.${key}.value`]: Math.min(t.max, t.value + n) }); }
       else if (kind === "npc") { const k = target.knowledgeActor; const v = Math.min(TAGANDTALLY.insightsPerTally, k.system.insights[key] + n); await k.update({ [`system.insights.${key}`]: v, ...(v >= TAGANDTALLY.insightsPerTally ? { [`system.revealed.${key}`]: true } : {}) }); }
       else if (kind === "faction") for (let i = 0; i < n; i++) await addInsight(target, { reason: L("Action.investigate") });
-      lines.push(L("InsightMarked", { n, target: esc(label) }));
+      if (!(kind === "quest" && key === "plan")) lines.push(L("InsightMarked", { n, target: esc(label) }));
       const { generate } = await import("./sparks/engine.mjs");
       const insight = await generate("insight", { theme: theme() }).catch(() => null);
       if (insight?.html) lines.push(insight.html);

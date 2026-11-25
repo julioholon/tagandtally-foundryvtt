@@ -16,6 +16,14 @@
               {{#unless aq.objectives.length}}<li class="dim">{{localize "TAGANDTALLY.Quest.NoObjectives"}}</li>{{/unless}}
             </ul>
           {{/with}}
+          {{#if item.system.locationRevealed}}<span class="tt-item-sub"><i class="fa-solid fa-map-location-dot"></i> {{item.system.locationName}}</span>{{/if}}
+          {{#if item.system.steps.length}}
+            <ol class="tt-quest-steps">
+              {{#each item.system.steps as |step i|}}
+                <li class="{{#if step.done}}done{{/if}}"><i class="fa-regular {{#if step.done}}fa-square-check{{else}}fa-square{{/if}}"></i> <span>{{step.text}}</span>{{#unless step.done}} <a data-action="rollQuestStep" data-index="{{i}}" title="{{localize 'TAGANDTALLY.Quest.TaskRoll'}}"><i class="fa-solid fa-dice-d20"></i></a>{{/unless}}</li>
+              {{/each}}
+            </ol>
+          {{/if}}
           <div class="tt-quest-tallies">
             {{#each item.system.tallies as |t key|}}{{#if t.enabled}}
               <span class="tt-tally"><label>{{localize t.label}}</label>

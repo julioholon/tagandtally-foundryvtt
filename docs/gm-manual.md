@@ -137,6 +137,13 @@ complete Plan and hindered by each missing mark. Tick "Character arc" for the pe
 quest; resolving an arc earns a new tag. The GM decides when a quest starts: when the outcome
 would change the character or the situation.
 
+- **Tasks** (the steps): **+** rolls a Verb Adjective Noun from the inspiration tables, which you can
+  edit or reroll before adding. A successful Investigate on a Plan adds open tasks instead of marking the
+  tally. Closing a task takes a Task Roll (d20 beside it): success marks the Plan and clears a Countdown
+  mark, "Success, but" adds a complication, "Success, and" clears one more Countdown mark, "Fail, and"
+  presses the Countdown. Only the GM can tick a task by hand.
+- **Hidden Location**: each new quest rolls one. It stays hidden until the Location tally fills (or
+  the GM reveals it with the eye), then it is announced, journaled and added to the known places.
 - **Steps and tallies follow the SRD**: ticking a step marks the Plan and clears one
   Countdown mark; completing the Plan or the Location clears one Countdown mark. Sparks fills
   goal, reward and consequence from the inspiration tables; edit them to taste.

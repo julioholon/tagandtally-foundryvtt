@@ -461,3 +461,11 @@
 .tt-campaign-dialog .tt-campaign-steps { display: flex; flex-direction: column; gap: 0.3rem; margin: 0.4rem 0; border: 1px solid var(--color-border-light-2, #999); border-radius: 4px; padding: 0.3rem 0.6rem; }
 .tt-campaign-dialog .tt-campaign-steps label { display: flex; align-items: flex-start; gap: 0.4rem; }
 .tt-campaign-dialog .tt-campaign-steps input { flex: 0 0 auto; margin-top: 0.15rem; }
+
+/* 0.10 quest tasks and hidden Location */
+.tagandtally .tt-steps li.done input[type="text"] { text-decoration: line-through; opacity: 0.6; }
+.tagandtally .tt-task-row { display: flex; gap: 0.4rem; align-items: center; }
+.tagandtally .tt-task-row input { flex: 1; }
+.tagandtally .tt-quest-steps { list-style: none; margin: 0.2rem 0; padding: 0; font-size: 0.85em; }
+.tagandtally .tt-quest-steps li.done span { text-decoration: line-through; opacity: 0.6; }
+.tagandtally .tt-quest-location { align-items: center; }

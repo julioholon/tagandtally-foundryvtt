@@ -203,6 +203,14 @@ export async function inspireQuest(data) {
   if (!sys.goal && motivation) sys.goal = motivation;
   if (!sys.reward && benefit) sys.reward = benefit;
   if (!sys.consequence && complication) sys.consequence = complication;
+  if (!sys.locationText) {
+    try {
+      const r = await generate("location", { theme: theme() });
+      sys.locationName = plain(r.tags.slice(0, 2).join(" ")).toLowerCase().replace(/^./, (c) => c.toUpperCase());
+      sys.locationText = String(r.text).replace(/\*\*/g, "").replace(/[\[\]]/g, "").trim();
+      sys.locationRevealed = false;
+    } catch (err) { console.warn(`${SYSTEM_ID} | quest location not rolled`, err); }
+  }
   const spark = [verb, adjective, noun].filter(Boolean).join(" ");
   if (spark || emotion) {
     const line = `<p><strong>${game.i18n.localize("TAGANDTALLY.Quest.Inspiration")}:</strong> ${foundry.utils.escapeHTML(spark)}${emotion ? ` <em>(${foundry.utils.escapeHTML(emotion)})</em>` : ""}</p>`;
@@ -221,7 +229,12 @@ export async function generateIntoItem(item) {
   const data = itemDataFromGeneration(r, r.generator);
   delete data.type;
   if (item.type === "wound") data.system.injuryType = item.system.injuryType;
-  if (item.type === "quest") { data.system.goal = ""; data.system.reward = ""; data.system.consequence = ""; await inspireQuest(data); }
+  if (item.type === "quest") {
+    data.system.goal = ""; data.system.reward = ""; data.system.consequence = "";
+    // A revealed Location stays; a hidden one is rerolled along with the rest.
+    if (item.system.locationRevealed) Object.assign(data.system, { locationName: item.system.locationName, locationText: item.system.locationText, locationRevealed: true });
+    await inspireQuest(data);
+  }
   return item.update(data);
 }
 

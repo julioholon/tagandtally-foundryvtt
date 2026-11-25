@@ -19,10 +19,29 @@
     {{/each}}
   </div>
   <p class="hint">{{localize "TAGANDTALLY.Quest.TallyHint"}} {{#if system.readyToResolve}}<strong>{{localize "TAGANDTALLY.Quest.Ready"}}</strong>{{/if}} ({{localize "TAGANDTALLY.Quest.Modifier"}}: {{tt-signed system.resolutionModifier}})</p>
-  <h3>{{localize "TAGANDTALLY.Quest.Steps"}} <a data-action="addStep"><i class="fa-solid fa-plus"></i></a></h3>
+  {{#if showLocation}}
+    <div class="form-group tt-quest-location">
+      <label>{{localize "TAGANDTALLY.Quest.LocationLabel"}}</label>
+      {{#if system.locationRevealed}}
+        <span><strong>{{system.locationName}}</strong> {{system.locationText}}</span>
+      {{else}}
+        <span class="dim"><i class="fa-solid fa-eye-slash"></i> {{#if system.locationText}}{{system.locationName}}: {{system.locationText}}{{else}}{{localize "TAGANDTALLY.Quest.LocationUnrolled"}}{{/if}}</span>
+        <span class="tt-controls"><a data-action="rerollLocation" title="{{localize 'TAGANDTALLY.Quest.RerollLocation'}}"><i class="fa-solid fa-dice"></i></a> <a data-action="revealLocation" title="{{localize 'TAGANDTALLY.Quest.RevealLocation'}}"><i class="fa-solid fa-eye"></i></a></span>
+      {{/if}}
+    </div>
+  {{else}}
+    <p class="hint dim"><i class="fa-solid fa-eye-slash"></i> {{localize "TAGANDTALLY.Quest.LocationHidden"}}</p>
+  {{/if}}
+  <h3>{{localize "TAGANDTALLY.Quest.Steps"}} <a data-action="addStep" title="{{localize 'TAGANDTALLY.Quest.TaskAdd'}}"><i class="fa-solid fa-plus"></i></a></h3>
+  <p class="hint">{{localize "TAGANDTALLY.Quest.TaskHint"}}</p>
   <ol class="tt-steps">
     {{#each system.steps as |step i|}}
-      <li><input type="checkbox" name="system.steps.{{i}}.done" {{checked step.done}} /><input type="text" name="system.steps.{{i}}.text" value="{{step.text}}" /><a data-action="removeStep" data-index="{{i}}"><i class="fa-solid fa-trash"></i></a></li>
+      <li class="{{#if step.done}}done{{/if}}"><input type="checkbox" name="system.steps.{{i}}.done" {{checked step.done}} {{#unless ../isGM}}disabled{{/unless}} /><input type="text" name="system.steps.{{i}}.text" value="{{step.text}}" />
+        {{#unless step.done}}
+          <a data-action="rerollStep" data-index="{{i}}" title="{{localize 'TAGANDTALLY.Quest.TaskReroll'}}"><i class="fa-solid fa-dice"></i></a>
+          {{#if ../hasActor}}<a data-action="rollStep" data-index="{{i}}" title="{{localize 'TAGANDTALLY.Quest.TaskRoll'}}"><i class="fa-solid fa-dice-d20"></i></a>{{/if}}
+        {{/unless}}
+        <a data-action="removeStep" data-index="{{i}}"><i class="fa-solid fa-trash"></i></a></li>
     {{/each}}
   </ol>
 </section>
