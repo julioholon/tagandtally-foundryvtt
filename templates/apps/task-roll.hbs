@@ -16,7 +16,7 @@
   <div class="tt-roll-columns">
     <div>
       <h4>{{localize "TAGANDTALLY.Tag.Tags"}} <small>{{localize "TAGANDTALLY.Roll.ThresholdLabel"}} {{calc.threshold}}</small></h4>
-      <ul class="tt-pick-list">
+      <ul class="tt-pick-list tt-pick-tags">
         {{#each tags as |t|}}
           <li class="{{t.mode}} {{#if t.ignored}}ignored{{/if}}" title="{{t.typeLabel}}">
             <a class="tt-mode ease {{#if (tt-eq t.mode 'ease')}}on{{/if}}" data-action="toggle" data-item-id="{{t.id}}" data-mode="ease" title="{{localize 'TAGANDTALLY.Roll.Ease'}}"><i class="fa-solid fa-arrow-down"></i></a>
@@ -30,7 +30,7 @@
     </div>
     <div>
       <h4>{{localize "TAGANDTALLY.Gear.Gear"}} <small>{{localize "TAGANDTALLY.Roll.GearCap"}}</small></h4>
-      <ul class="tt-pick-list">
+      <ul class="tt-pick-list tt-pick-gear">
         {{#each gear as |g|}}
           <li class="{{g.mode}} {{#if g.ignored}}ignored{{/if}}" title="{{g.typeLabel}}">
             <a class="tt-mode ease {{#if (tt-eq g.mode 'ease')}}on{{/if}}" data-action="toggle" data-item-id="{{g.id}}" data-mode="ease"><i class="fa-solid fa-arrow-down"></i></a>

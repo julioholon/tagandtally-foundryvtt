@@ -51,7 +51,7 @@ export class TaskRollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   };
 
   static PARTS = {
-    form: { template: "systems/tagandtally/templates/apps/task-roll.hbs", scrollable: [".tt-roll-body"] }
+    form: { template: "systems/tagandtally/templates/apps/task-roll.hbs", scrollable: [".tt-roll-body", ".tt-pick-tags", ".tt-pick-gear"] }
   };
 
   /** Open the dialog and resolve with the roll result (or null when closed). */

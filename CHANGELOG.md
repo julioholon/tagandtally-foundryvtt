@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.4 (unreleased)
+
+- Campaign start also writes the Prophecy as the first page of the Campaign Chronicle (the separate
+  prophecy journal in the campaign folder stays).
+- Task roll dialog: toggling a tag or gear no longer scrolls the list back to the top.
+
 ## 0.9.3 (2026-11-24)
 
 - Species & type builders on a character sheet now grant as you edit: abilities become trait tags, the
