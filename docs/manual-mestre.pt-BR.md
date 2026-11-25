@@ -325,7 +325,7 @@ Avance o tempo. Todo o resto acontece pelas ferramentas que ele abre.
 formulário curto: nome, tema do Sparks, quantos personagens rolar, data e hora iniciais quando
 o Simple Calendar está ativo, mais o que preparar. Se já há uma campanha em andamento, ele
 pergunta antes de apagar os diários dela (Crônica, profecia) e zerar o Ciclo de jogo; os atores
-ficam. Ele cria uma pasta de diários, a Crônica da campanha (que abre com a profecia), o diário da
+ficam. Ele volta o dia para 1 e limpa o histórico de cenas, depois cria uma pasta de diários, a Crônica da campanha (que abre com a profecia), o diário da
 **Profecia** com quatro grandes missões no primeiro personagem, uma primeira missão com seu PdM contratante já
 nas relações de todos, e a cena de abertura no ciclo de jogo. O cartão final no chat lista o
 que o Augur Nexus ainda faz à mão: a região ou sistema estelar, as facções a importar, o local

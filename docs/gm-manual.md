@@ -329,7 +329,7 @@ Advance time. Everything else happens through the tools it opens.
 form: a name, the Sparks theme, how many characters to roll, the start date and time when
 Simple Calendar is active, plus what to prepare. If a campaign is already ongoing it asks before
 deleting that campaign's journals (Chronicle, prophecy) and resetting the Game loop; actors are
-kept. It creates a journal folder, the Campaign Chronicle (which opens on the prophecy), the
+kept. It rewinds the day to 1 and clears the scene history, then creates a journal folder, the Campaign Chronicle (which opens on the prophecy), the
 **Prophecy** journal with four grand quests on the first character, a first quest with its giver NPC already in everyone's
 relations, and the opening scene in the game loop. The closing chat card lists what Augur
 Nexus still does by hand: the region or star system, the factions to import, the starting
