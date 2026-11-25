@@ -142,6 +142,12 @@ would change the character or the situation.
   tally. Closing a task takes a Task Roll (d20 beside it): success marks the Plan and clears a Countdown
   mark, "Success, but" adds a complication, "Success, and" clears one more Countdown mark, "Fail, and"
   presses the Countdown. Only the GM can tick a task by hand.
+- **Resolving a quest**: the d20 on the quest rolls the resolution. A success completes it, Fail,
+  and fails it, and the **Aftermath** window opens with outcomes by band (two good, one good, one
+  good and one bad, one bad, two bad). Each line has a kind (item, coins, relationship, new lead,
+  information, or on the bad side coins lost, combat, gear lost, hazard...) and a recipient, so loot can
+  be split between characters. Reroll, change the kind, apply or skip each line; **Add** more if the
+  story calls for it. A task closed with "Success, and" offers one good outcome the same way.
 - **Hidden Location**: each new quest rolls one. It stays hidden until the Location tally fills (or
   the GM reveals it with the eye), then it is announced, journaled and added to the known places.
 - **Steps and tallies follow the SRD**: ticking a step marks the Plan and clears one

@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.11.0 (2026-11-25)
+
+- Aftermath tool: what a result sets in motion, as a list of outcomes, each rolled from a weighted pool,
+  rerollable, changeable (kind selector), given to one character (recipient selector) and applied one
+  by one or all at once. Each applied outcome posts a chat card.
+- Good outcomes: an item (gear generator at the scene level), coins (or a Wealth tally mark without coins
+  mode), a better relationship, a new lead (quest), an insight on a faction or an NPC secret.
+  Bad outcomes: coins or Wealth lost, a worse relationship, a lead with a catch (the quest starts with
+  3 Countdown marks), misleading information, combat (a creature of the scene level is created and
+  the Combat flow opens against it), gear lost, a hazard (a wound and its sentence).
+- Quest resolution now has a result: the roll sets the quest to completed (any success) or failed (Fail,
+  and), the chat card states the Reward or Consequence, and the Aftermath opens by band: Success, and =
+  two good, Success = one good, Success, but = one good and one bad, Fail, but = one bad, Fail, and =
+  two bad.
+- A task closed with Success, and offers one good outcome from a chat button.
+- Players can apply outcomes only to characters they own; creating the combat creature needs a GM.
+- Manual check list (not testable offline): resolve a quest at each band, split two outcomes between two
+  characters, reroll and change kinds, apply a combat outcome, task Success, and button.
+
 ## 0.10.0 (2026-11-25)
 
 - Quest tasks: the + on a quest's steps rolls a Verb Adjective Noun from the inspiration tables; edit the

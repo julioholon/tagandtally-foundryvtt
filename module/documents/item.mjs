@@ -130,7 +130,7 @@ export default class TagAndTallyItem extends Item {
     const fixed = { fixedEases: [], fixedHinders: [] };
     if (mod > 0) fixed.fixedEases.push({ name: game.i18n.localize("TAGANDTALLY.Quest.PlanComplete"), steps: mod, source: "quest" });
     if (mod < 0) fixed.fixedHinders.push({ name: game.i18n.localize("TAGANDTALLY.Quest.PlanMissing"), steps: -mod, source: "quest" });
-    return TaskRollDialog.prompt({
+    const result = await TaskRollDialog.prompt({
       actor,
       rollType: "quest",
       title: game.i18n.format("TAGANDTALLY.Quest.ResolveTitle", { name: this.name }),
@@ -138,6 +138,9 @@ export default class TagAndTallyItem extends Item {
       ...fixed,
       ...options
     });
+    // The result closes the quest and opens its Aftermath (rewards and complications by band).
+    if (result) { const { afterQuestResolution } = await import("../aftermath.mjs"); await afterQuestResolution(this, result); }
+    return result;
   }
 
   /** Quick roll without dialog (used by macros). */
