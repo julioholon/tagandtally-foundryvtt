@@ -248,7 +248,12 @@
       "WoundApplied": "Wound applied",
       "Empty": "No participants. Select tokens and add them.",
       "RollInjury": "Roll injury",
-      "InjuryTitle": "Injury: {name}"
+      "InjuryTitle": "Injury: {name}",
+      "Spoils": "Spoils",
+      "SpoilsHint": "Task Roll at the opponent's level; the Aftermath hands out coins, items, leads and trouble",
+      "SpoilsOf": "Spoils of {name}",
+      "Harvest": "Harvest",
+      "HarvestHint": "Open the Workshop's Harvest tab"
     },
     "Gear": {
       "Gear": "Gear",
@@ -749,7 +754,9 @@
         "infoFalse": "Misleading information",
         "combat": "Combat",
         "gearLost": "Gear lost",
-        "hazard": "Hazard"
+        "hazard": "Hazard",
+        "place": "New place to explore",
+        "npc": "New contact (NPC)"
       },
       "QuestStatus": {
         "completed": "The quest is completed.",
@@ -762,6 +769,19 @@
         "successBut": "At a cost: one good outcome and one bad.",
         "failBut": "A setback: one bad outcome.",
         "failAnd": "It goes wrong: two bad outcomes."
+      },
+      "GotPlace": "A place to explore: {name}",
+      "GotNpc": "New contact: {name}",
+      "Spoils": {
+        "combat": "Spoils",
+        "search": "Search"
+      },
+      "SpoilsNote": {
+        "failAnd": "Nothing worth taking, and trouble follows.",
+        "failBut": "Scraps: a little coin.",
+        "successBut": "A find, but something comes with it.",
+        "success": "A good haul.",
+        "successAnd": "A rich haul, and more: a lead or a contact."
       }
     },
     "Interaction": {
@@ -1295,7 +1315,8 @@
         "travel": "Travel",
         "combat": "Combat",
         "workshop": "Workshop",
-        "downtime": "Downtime"
+        "downtime": "Downtime",
+        "loot": "Loot / Search"
       },
       "ActionHint": {
         "investigate": "Investigate a quest's Plan or Location, an NPC or a faction: insights roll at level 5, tallies land on the target",
@@ -1305,7 +1326,8 @@
         "travel": "Open the Travel tracker",
         "combat": "Open the Combat flow with this character",
         "workshop": "Open the Workshop",
-        "downtime": "Open the Downtime tracker"
+        "downtime": "Open the Downtime tracker",
+        "loot": "Search an explored place or loot the fallen: a Task Roll at the scene level, then the Aftermath of the find"
       },
       "Scopes": {
         "combat": "A fight",
@@ -1334,7 +1356,10 @@
       "CalendarHint": "Simple Calendar date; Advance time moves it by the scope",
       "CalendarMoved": "The calendar now reads {date}.",
       "CountdownPressed": "Fail, and: the quest's Countdown fills by {n}.",
-      "QuestPressed": "Time pressure: {quest}'s Countdown fills by {n}."
+      "QuestPressed": "Time pressure: {quest}'s Countdown fills by {n}.",
+      "LootHint": "What are you looking through?",
+      "LootSearch": "Search the area",
+      "LootFallen": "Loot the fallen"
     },
     "And": "and",
     "Tarot": {

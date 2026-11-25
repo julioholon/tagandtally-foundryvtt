@@ -248,7 +248,12 @@
       "WoundApplied": "Ferimento aplicado",
       "Empty": "Nenhum participante. Selecione tokens e adicione-os.",
       "RollInjury": "Rolar ferimento",
-      "InjuryTitle": "Ferimento: {name}"
+      "InjuryTitle": "Ferimento: {name}",
+      "Spoils": "Espólios",
+      "SpoilsHint": "Teste de Tarefa no nível do oponente; as Consequências entregam moedas, itens, pistas e problemas",
+      "SpoilsOf": "Espólios de {name}",
+      "Harvest": "Colher",
+      "HarvestHint": "Abrir a aba Colher da Oficina"
     },
     "Gear": {
       "Gear": "Equipamento",
@@ -749,7 +754,9 @@
         "infoFalse": "Informação enganosa",
         "combat": "Combate",
         "gearLost": "Equipamento perdido",
-        "hazard": "Perigo"
+        "hazard": "Perigo",
+        "place": "Novo lugar para explorar",
+        "npc": "Novo contato (NPC)"
       },
       "QuestStatus": {
         "completed": "A missão está concluída.",
@@ -762,6 +769,19 @@
         "successBut": "Com um custo: um resultado bom e um ruim.",
         "failBut": "Um revés: um resultado ruim.",
         "failAnd": "Deu errado: dois resultados ruins."
+      },
+      "GotPlace": "Um lugar para explorar: {name}",
+      "GotNpc": "Novo contato: {name}",
+      "Spoils": {
+        "combat": "Espólios",
+        "search": "Busca"
+      },
+      "SpoilsNote": {
+        "failAnd": "Nada que valha pegar, e vem problema.",
+        "failBut": "Restos: um pouco de moeda.",
+        "successBut": "Um achado, mas algo vem junto.",
+        "success": "Um bom butim.",
+        "successAnd": "Um butim rico, e mais: uma pista ou um contato."
       }
     },
     "Interaction": {
@@ -1295,7 +1315,8 @@
         "travel": "Viagem",
         "combat": "Combate",
         "workshop": "Oficina",
-        "downtime": "Descanso"
+        "downtime": "Descanso",
+        "loot": "Saquear / Buscar"
       },
       "ActionHint": {
         "investigate": "Investigar o Plano ou Local de uma missão, um PdM ou uma facção: rolagem de insights no nível 5, as marcas vão para o alvo",
@@ -1305,7 +1326,8 @@
         "travel": "Abrir a Viagem",
         "combat": "Abrir o Fluxo de combate com este personagem",
         "workshop": "Abrir a Oficina",
-        "downtime": "Abrir o Descanso"
+        "downtime": "Abrir o Descanso",
+        "loot": "Buscar num lugar explorado ou saquear os caídos: Teste de Tarefa no nível da cena, depois as Consequências do achado"
       },
       "Scopes": {
         "combat": "Uma luta",
@@ -1334,7 +1356,10 @@
       "CalendarHint": "Data do Simple Calendar; Avançar o tempo move pelo escopo",
       "CalendarMoved": "O calendário agora marca {date}.",
       "CountdownPressed": "Falha, e: a Contagem da missão enche {n}.",
-      "QuestPressed": "Pressão do tempo: a Contagem de {quest} enche {n}."
+      "QuestPressed": "Pressão do tempo: a Contagem de {quest} enche {n}.",
+      "LootHint": "O que você vasculha?",
+      "LootSearch": "Buscar na área",
+      "LootFallen": "Saquear os caídos"
     },
     "And": "e",
     "Tarot": {

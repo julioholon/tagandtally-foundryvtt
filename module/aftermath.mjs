@@ -25,10 +25,16 @@ export const AFTERMATH = {
   /** A task closed with "Success, and" offers one good outcome. */
   task: { successAnd: ["+"] },
   pools: {
-    "+": { item: 4, coins: 3, relationUp: 2, lead: 2, info: 2 },
+    "+": { item: 4, coins: 3, relationUp: 2, lead: 2, info: 2, place: 1, npc: 1 },
     "-": { coinsLost: 2, relationDown: 2, leadCatch: 1, infoFalse: 1, combat: 2, gearLost: 2, hazard: 2 }
   },
-  icons: { item: "fa-gem", coins: "fa-coins", relationUp: "fa-handshake", lead: "fa-scroll", info: "fa-lightbulb", coinsLost: "fa-money-bill-transfer", relationDown: "fa-heart-crack", leadCatch: "fa-scroll", infoFalse: "fa-mask", combat: "fa-swords", gearLost: "fa-bag-shopping", hazard: "fa-skull-crossbones" },
+  icons: { place: "fa-map-location-dot", npc: "fa-user-plus", item: "fa-gem", coins: "fa-coins", relationUp: "fa-handshake", lead: "fa-scroll", info: "fa-lightbulb", coinsLost: "fa-money-bill-transfer", relationDown: "fa-heart-crack", leadCatch: "fa-scroll", infoFalse: "fa-mask", combat: "fa-swords", gearLost: "fa-bag-shopping", hazard: "fa-skull-crossbones" },
+  /** Spoils and looting (a Task Roll): a smaller, more material pool than a quest's. */
+  loot: {
+    good: { item: 4, coins: 4 },
+    extra: { lead: 2, info: 2, npc: 1, place: 1 },
+    bad: { combat: { hazard: 2, gearLost: 1 }, search: { hazard: 2, combat: 2, gearLost: 1 } }
+  },
   gearGenerators: ["item", "item", "weapon", "armor", "consumable", "resource"]
 };
 
@@ -98,6 +104,21 @@ const KINDS = {
   async infoFalse() {
     const text = await insightSentence();
     return text ? { html: `${text} <em>(${esc(T("MaybeFalse"))})</em>`, payload: { text } } : null;
+  },
+  async place() {
+    const { generate } = await import("./sparks/engine.mjs");
+    const r = await generate("location", { theme: theme() });
+    const name = plain(r.tags.slice(0, 2).join(" ")).toLowerCase().replace(/^./, (c) => c.toUpperCase());
+    const text = plain(r.text);
+    return { html: `<strong>${esc(name)}</strong> ${esc(text)}`, payload: { name, text } };
+  },
+  async npc({ level }) {
+    const { generate } = await import("./sparks/engine.mjs");
+    const { npcDataFromGeneration } = await import("./sparks/create.mjs");
+    const r = await generate("npc", { theme: theme() });
+    const data = npcDataFromGeneration(r, { creature: false });
+    data.system.level = Math.clamp(level, 1, 10);
+    return { html: `<strong>${esc(data.name)}</strong> ${r.html}`, payload: { data } };
   },
   async combat({ level }) {
     const { generate } = await import("./sparks/engine.mjs");
@@ -172,6 +193,18 @@ const APPLY = {
     return T("InsightOn", { name: esc(target.name) });
   },
   async infoFalse({ payload }) { return payload.text; },
+  async place({ actor, payload, ctx }) {
+    const { addKnownPlace } = await import("./quest-tasks.mjs");
+    await addKnownPlace(actor, payload.name, payload.text, ctx.title ?? "");
+    return T("GotPlace", { name: esc(payload.name) });
+  },
+  async npc({ actor, payload }) {
+    if (!game.user.can("ACTOR_CREATE")) { ui.notifications.warn(T("NeedGM")); return null; }
+    const npc = await Actor.create(payload.data);
+    const { ensureRelation } = await import("./interactions.mjs");
+    await ensureRelation(actor, npc, "people");
+    return T("GotNpc", { name: esc(npc.name) });
+  },
   async combat({ actor, payload, ctx }) {
     if (!game.user.can("ACTOR_CREATE")) { ui.notifications.warn(T("NeedGM")); return null; }
     const creature = await Actor.create(payload.data);
@@ -231,15 +264,16 @@ export class AftermathApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const app = new AftermathApp(ctx);
     const base = ctx.actor?.isToken ? game.actors.get(ctx.actor.id) ?? ctx.actor : ctx.actor;
     app.ctx.actor = base;
-    for (const pol of ctx.polarities ?? ["+"]) await app.addLine(pol);
+    const specs = ctx.lines ?? (ctx.polarities ?? ["+"]).map((pol) => ({ pol }));
+    for (const spec of specs) await app.addLine(spec.pol, { pool: spec.pool });
     await app.render({ force: true });
     return app;
   }
 
   /** Roll one line of a sign for `recipient` (default: the roller). */
-  async addLine(pol, { kind, recipient } = {}) {
+  async addLine(pol, { kind, recipient, pool } = {}) {
     const actor = recipient ?? this.ctx.actor;
-    const line = { id: nextLine++, pol, kind: null, recipient: actor?.uuid, html: "", payload: null, status: "pending" };
+    const line = { id: nextLine++, pol, pool, kind: null, recipient: actor?.uuid, html: "", payload: null, status: "pending" };
     this.lines.push(line);
     await this.fill(line, kind);
     return line;
@@ -248,7 +282,7 @@ export class AftermathApp extends HandlebarsApplicationMixin(ApplicationV2) {
   /** (Re)roll a line's content, either for `kind` or a fresh weighted pick. Returns false when nothing fits. */
   async fill(line, kind) {
     const actor = await fromUuid(line.recipient);
-    const pool = { ...AFTERMATH.pools[line.pol] };
+    const pool = { ...(line.pool ?? AFTERMATH.pools[line.pol]) };
     for (let i = 0; i < 8; i++) {
       const k = kind ?? weighted(pool);
       const result = await KINDS[k]?.({ actor, level: this.ctx.level, ctx: this.ctx }).catch((err) => { console.warn(`${SYSTEM_ID} | aftermath ${k}`, err); return null; });
@@ -357,6 +391,28 @@ export async function afterQuestResolution(quest, result) {
   lines.push(esc(T(`QuestStatus.${status ?? "open"}`)));
   if (result.message) await result.message.update({ content: `${result.message.content}<div class="tagandtally tt-loop-outcome">${lines.map((l) => `<p>${l}</p>`).join("")}</div>` });
   return AftermathApp.open({ actor: result.actor ?? quest.actor, polarities, title: quest.name, note: T(`QuestNote.${band}`) });
+}
+
+/**
+ * Spoils or a search: a Task Roll at `level`, then an Aftermath by band. `source` is "combat"
+ * (after a fight) or "search" (an explored place); it sets the bad side of the pool.
+ */
+export async function rollSpoils({ actor, level = sceneLevel(), source = "search", title = "" } = {}) {
+  const { TaskRollDialog } = await import("./rolls/task-roll-dialog.mjs");
+  const result = await TaskRollDialog.prompt({ actor, level, rollType: "task", title: title || T(`Spoils.${source}`) });
+  if (!result) return null;
+  const band = result.band?.id ?? result.band;
+  const good = { pol: "+", pool: AFTERMATH.loot.good };
+  const bad = { pol: "-", pool: AFTERMATH.loot.bad[source] ?? AFTERMATH.loot.bad.search };
+  const lines = {
+    failAnd: [bad],
+    failBut: [{ pol: "+", pool: { coins: 1 } }],
+    successBut: [good, bad],
+    success: [good, good],
+    successAnd: [good, good, { pol: "+", pool: AFTERMATH.loot.extra }]
+  }[band];
+  if (lines) await AftermathApp.open({ actor: result.actor ?? actor, lines, level, title: title || T(`Spoils.${source}`), note: T(`SpoilsNote.${band}`) });
+  return result;
 }
 
 /** A chat button that opens an Aftermath for a roll (set up with `offerAftermath`). */

@@ -31,7 +31,9 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
       reset: CombatFlow.#onReset,
       resetAll: CombatFlow.#onResetAll,
       setOpponent: CombatFlow.#onSetOpponent,
-      rollInjury: CombatFlow.#onRollInjuryAction
+      rollInjury: CombatFlow.#onRollInjuryAction,
+      spoils: CombatFlow.#onSpoils,
+      harvest: CombatFlow.#onHarvest
     }
   };
 
@@ -214,6 +216,24 @@ export class CombatFlow extends HandlebarsApplicationMixin(ApplicationV2) {
     // Opening "Success, but": ease by 1 but take a strain.
     if (phase.id === "opening" && result.band.id === "successBut" && actor?.isOwner) await actor.applyWound("strain");
     await CombatFlow.setState(fresh);
+  }
+
+  /** After a fight: a Task Roll at the opponent's level, then the Aftermath of the spoils. */
+  static async #onSpoils(event, target) {
+    const uuid = target.dataset.uuid;
+    const p = CombatFlow.state.participants[uuid];
+    const actor = await fromUuid(uuid);
+    if (!actor?.isOwner) return;
+    const { rollSpoils } = await import("../aftermath.mjs");
+    return rollSpoils({ actor, level: p?.opponentLevel, source: "combat", title: p?.opponentName ? game.i18n.format("TAGANDTALLY.Combat.SpoilsOf", { name: p.opponentName }) : undefined });
+  }
+
+  /** Harvest what the fallen creature offers: the Workshop's Harvest tab. */
+  static async #onHarvest(event, target) {
+    const actor = await fromUuid(target.dataset.uuid);
+    if (!actor?.isOwner) return;
+    const { WorkshopApp } = await import("../workshop.mjs");
+    return WorkshopApp.open({ actor, tab: "harvest" });
   }
 
   static async #onApplyWound(event, target) {

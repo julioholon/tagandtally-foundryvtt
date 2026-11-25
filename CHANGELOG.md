@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.12.0 (2026-11-25)
+
+- Spoils: once a fight is resolved, each character's row in the Combat flow gets a **Spoils** button
+  (a Task Roll at the opponent's level) and a **Harvest** button (opens the Workshop's Harvest tab).
+- Loot / Search: a new Game loop action (it spends a scene action like any roll) for an explored
+  place or the fallen: a Task Roll at the scene level.
+- Both open the Aftermath by band: Fail, and = trouble (hazard, a fight when searching, gear lost);
+  Fail, but = a little coin; Success, but = a find plus trouble; Success = two finds (items or coins);
+  Success, and = two finds plus a lead, information, a contact or a place to explore.
+- New Aftermath outcomes, also in quest results: a **new place to explore** (journal + known places)
+  and a **new contact** (NPC created, added to the character's people at Indifferent; GM only).
+- Release from GitHub: the Release workflow can be started from the Actions tab (Run workflow, type the
+  version). It creates the tag on the chosen branch, stamps the manifest and publishes the zip, so no
+  local git is needed. Pushing a `v*` tag still works.
+- Manual check list (not testable offline): Spoils and Harvest after a resolved combat, Loot / Search
+  from the Game loop with both sources, each band, a place and a contact outcome, Run workflow release.
+
 ## 0.11.0 (2026-11-25)
 
 - Aftermath tool: what a result sets in motion, as a list of outcomes, each rolled from a weighted pool,

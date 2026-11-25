@@ -143,8 +143,12 @@ export async function revealLocation(quest) {
     speaker: ChatMessage.getSpeaker({ actor: quest.actor }),
     content: `<div class="tagandtally tt-loop-outcome"><h3><i class="fa-solid fa-map-location-dot"></i> ${esc(L("LocationRevealed"))}</h3><p><strong>${esc(name)}</strong></p><p>${esc(text)}</p><p class="hint">${esc(quest.name)}</p></div>`
   });
-  const actor = quest.actor;
-  if (actor?.type !== "character") return quest;
+  if (quest.actor?.type === "character") await addKnownPlace(quest.actor, name, text, quest.name);
+  return quest;
+}
+
+/** A place journal (Sparks folder) plus a row in the character's known places; the row alone when journals cannot be made. */
+export async function addKnownPlace(actor, name, text, note = "") {
   try {
     const { addRelation } = await import("./relations.mjs");
     let entry = null;
@@ -153,16 +157,15 @@ export async function revealLocation(quest) {
       folder ??= await Folder.create({ name: "Sparks", type: "JournalEntry" });
       entry = await JournalEntry.create({
         name, folder: folder.id,
-        pages: [{ name: L("Location"), type: "text", text: { content: `<p>${esc(text)}</p><p><em>${esc(quest.name)}</em></p>` } }],
+        pages: [{ name: L("Location"), type: "text", text: { content: `<p>${esc(text)}</p>${note ? `<p><em>${esc(note)}</em></p>` : ""}` } }],
         ownership: { default: CONST.DOCUMENT_OWNERSHIP_OBSERVER }
       });
     } catch (err) { console.warn(`${SYSTEM_ID} | place journal not created`, err); }
     if (entry) await addRelation(actor, "places", entry);
     else if (!actor.system.relations.places.some((r) => r.name === name)) {
       const rows = actor.system.relations.places.map((r) => foundry.utils.deepClone(r));
-      rows.push({ ...actor.system.constructor.blankRelation("places"), name, notes: quest.name });
+      rows.push({ ...actor.system.constructor.blankRelation("places"), name, notes: note });
       await actor.update({ "system.relations.places": rows });
     }
   } catch (err) { console.warn(`${SYSTEM_ID} | place not added to known places`, err); }
-  return quest;
 }

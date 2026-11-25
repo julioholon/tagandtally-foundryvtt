@@ -97,6 +97,10 @@ retire or die.
   worst active wound. Health Estimate shows the same when hovering a token.
 - **Rest** (Wounds tab): a safe zone heals all strain, or 1 trauma, or downgrades 1 injury to
   trauma. Field and professional treatment are ordinary rolls (level 5 and 3).
+- **Spoils / Harvest**: on a finished participant, **Spoils** is a Task Roll at the opponent's
+  level whose result opens the Aftermath (coins, items, leads, contacts, or trouble); **Harvest**
+  opens the Workshop's Harvest tab. **Loot / Search** in the Game loop does the same for an explored
+  place or the fallen at the scene level, and spends a scene action.
 - **Roll injury**: one click resolves the wound of a confrontation without the combat flow.
   Use it when the scene calls for speed.
 
