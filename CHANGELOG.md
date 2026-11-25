@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.4 (unreleased)
+## 0.9.4 (2026-11-24)
 
 - Campaign start also writes the Prophecy as the first page of the Campaign Chronicle (the separate
   prophecy journal in the campaign folder stays).
