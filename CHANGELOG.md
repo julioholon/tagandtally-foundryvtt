@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.5 (unreleased)
+## 0.9.5 (2026-11-25)
 
 - Campaign start rewinds the day to 1 and clears the scene history, so the Game loop starts at scene 1, day 1.
 
