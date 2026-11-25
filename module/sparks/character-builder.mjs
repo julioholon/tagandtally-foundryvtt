@@ -75,8 +75,10 @@ export async function buildRandomCharacter(actor, { lifeStage = "adult", theme: 
   const stageIndex = LIFE_STAGE_ORDER.indexOf(lifeStage);
   const stages = LIFE_STAGE_ORDER.slice(0, stageIndex + 1);
 
-  // Wipe previous content.
-  await actor.deleteEmbeddedDocuments("Item", actor.items.map((i) => i.id));
+  // Wipe previous content, but keep quests the character was given (grand quests, first quest,
+  // Augur quests): only the previous generated character arc goes.
+  const keep = (i) => i.type === "quest" && !(i.system.isArc && i.system.source === "quest");
+  await actor.deleteEmbeddedDocuments("Item", actor.items.filter((i) => !keep(i)).map((i) => i.id));
 
   // Sentence.
   const sentence = {};

@@ -1409,7 +1409,10 @@
       "WeaknessOf": "Weakness of {name}.",
       "People": "people",
       "Library": "Species & Types",
-      "RerollFlaw": "Draw a flaw from the tarot"
+      "RerollFlaw": "Draw a flaw from the tarot",
+      "Grant": "Grant the abilities and weakness to the character now",
+      "GrantHint": "On a character the abilities and weakness become tags as you edit them.",
+      "Synced": "{name}: {count} tags granted to {actor}."
     }
   }
 }

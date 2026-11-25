@@ -35,6 +35,14 @@ export default class TagAndTallyItem extends Item {
   }
 
   /** @override */
+  /** @override Editing a species/type build on a character re-grants its abilities and weakness. */
+  _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+    if (userId !== game.user.id || !this.actor || this.actor.type !== "character" || !this.system.isBuilder) return;
+    if (!foundry.utils.hasProperty(changed, "system.build") && !("name" in changed)) return;
+    import("../species-types.mjs").then(({ syncBuilderGrants }) => syncBuilderGrants(this.actor, this, { silent: true }));
+  }
+
   async _preCreate(data, options, user) {
     const allowed = await super._preCreate(data, options, user);
     if (allowed === false) return false;

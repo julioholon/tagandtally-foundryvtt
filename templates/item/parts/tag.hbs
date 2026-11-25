@@ -13,8 +13,8 @@
   <div class="form-group"><label>{{localize "TAGANDTALLY.LifeStage.LifeStage"}}</label><select name="system.lifeStage">{{selectOptions lifeStages selected=system.lifeStage localize=true}}</select></div>
   {{#if build}}
   <fieldset class="span2 tt-build">
-    <legend>{{localize build.title}} <a data-action="generateSentence" title="{{localize 'TAGANDTALLY.Build.Generate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></a>{{#if build.canApply}} <a data-action="applyBuild" title="{{localize 'TAGANDTALLY.Build.Apply'}}"><i class="fa-solid fa-user-plus"></i></a>{{/if}}</legend>
-    <p class="hint">{{localize build.hint}}</p>
+    <legend>{{localize build.title}} <a data-action="generateSentence" title="{{localize 'TAGANDTALLY.Build.Generate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></a>{{#if build.canApply}} <a data-action="applyBuild" title="{{localize 'TAGANDTALLY.Build.Apply'}}"><i class="fa-solid fa-user-plus"></i></a>{{/if}}{{#if build.canGrant}} <a data-action="applyBuild" title="{{localize 'TAGANDTALLY.Build.Grant'}}"><i class="fa-solid fa-rotate"></i></a>{{/if}}</legend>
+    <p class="hint">{{localize build.hint}}{{#if build.canGrant}} {{localize "TAGANDTALLY.Build.GrantHint"}}{{/if}}</p>
     <div class="tt-grid two">
       {{#each build.fields as |f|}}
         <div class="form-group"><label>{{localize f.label}}</label><div class="tt-inline"><input type="text" name="system.build.{{f.key}}" value="{{f.value}}" /><a data-action="rerollBuild" data-key="{{f.key}}" title="{{localize 'TAGANDTALLY.Build.Reroll'}}"><i class="fa-solid fa-dice"></i></a></div></div>
