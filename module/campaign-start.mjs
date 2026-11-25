@@ -95,13 +95,16 @@ export async function runCampaignStart({ name = "", theme = "fantasy", character
   if (heroes.length) done.push(L("DoneCharacters", { count: heroes.length, names: heroes.map((h) => h.name).join(", ") }));
   const party = heroes.length ? heroes : game.actors.filter((a) => PartyOverview.isMember(a));
   // Chronicle
-  if (chronicle) { const j = await GameLoopApp.chronicleJournal(); if (j && j.folder?.id !== folder.id) await j.update({ folder: folder.id }); done.push(L("DoneChronicle")); }
+  let chronicleJournal = null;
+  if (chronicle) { chronicleJournal = await GameLoopApp.chronicleJournal(); if (chronicleJournal && chronicleJournal.folder?.id !== folder.id) await chronicleJournal.update({ folder: folder.id }); done.push(L("DoneChronicle")); }
   // Prophecy: four verses journaled, and the four grand quests on the first character
   let prophecyJournal = null;
   if (prophecy) {
     const { TarotApp } = await import("./tarot.mjs");
     const verses = await TarotApp.rollProphecy();
     prophecyJournal = await TarotApp.journalSpread({ kind: "prophecy", verses }, { folder: folder.id });
+    // The Chronicle opens on the prophecy too, so it is never out of sight.
+    if (chronicleJournal) await chronicleJournal.createEmbeddedDocuments("JournalEntryPage", [{ name: game.i18n.localize("TAGANDTALLY.Tarot.Prophecy"), type: "text", sort: 0, text: { content: TarotApp.prophecyHtml(verses), format: 1 } }]);
     if (party[0]) await party[0].createEmbeddedDocuments("Item", TarotApp.grandQuestData(verses, TarotApp.prophecyHtml(verses)));
     done.push(L("DoneProphecy", { name: prophecyJournal.name }));
   }
