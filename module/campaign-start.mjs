@@ -77,6 +77,12 @@ export async function runCampaignStart({ name = "", theme = "fantasy", character
   await game.settings.set(SYSTEM_ID, "sparkTheme", theme);
   const { GameLoopApp } = await import("./game-loop.mjs");
   const { PartyOverview } = await import("./integrations/party.mjs");
+  // A fresh start: day 1, no scene history (the loop's scene number restarts too).
+  const { DowntimeApp } = await import("./downtime.mjs");
+  const downtime = DowntimeApp.state.get();
+  if (downtime.day !== 1) { downtime.day = 1; await DowntimeApp.state.set(downtime); }
+  const loopState = GameLoopApp.state.get();
+  if (loopState.history.length || loopState.scene.number > 1) { loopState.history = []; loopState.scene.number = 1; await GameLoopApp.state.set(loopState); }
   const folderName = name || L("Title");
   const folder = game.folders.find((f) => f.type === "JournalEntry" && f.name === folderName) ?? await Folder.create({ name: folderName, type: "JournalEntry" });
   // Starting date and time (Simple Calendar)
@@ -125,7 +131,7 @@ export async function runCampaignStart({ name = "", theme = "fantasy", character
     await GameLoopApp.addActors(party);
     const state = GameLoopApp.state.get();
     const { rollScene } = await import("./game-loop.mjs");
-    Object.assign(state.scene, await rollScene({}), { number: state.scene.number || 1, questUuid: firstQuest?.uuid ?? state.scene.questUuid, log: [] });
+    Object.assign(state.scene, await rollScene({}), { number: 1, questUuid: firstQuest?.uuid ?? state.scene.questUuid, log: [] });
     for (const p of Object.values(state.participants)) { p.spent = 0; p.ready = false; }
     await GameLoopApp.state.set(state);
     done.push(L("DoneScene", { level: state.scene.level, sentence: state.scene.sentence }));

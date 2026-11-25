@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.5 (unreleased)
+
+- Campaign start rewinds the day to 1 and clears the scene history, so the Game loop starts at scene 1, day 1.
+
 ## 0.9.4 (2026-11-24)
 
 - Campaign start also writes the Prophecy as the first page of the Campaign Chronicle (the separate
