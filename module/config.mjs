@@ -416,6 +416,13 @@ TAGANDTALLY.dayTags = {
 };
 TAGANDTALLY.dayTagMaxTier = 4;
 
+/* -------------------------- Species & type builders ---------------------- */
+TAGANDTALLY.builder = {
+  /** Base MAI a Sparks-generated magical species or type starts with (SRD: 3 is a fair start). */
+  magicalBaseMai: 3,
+  icons: { species: "icons/svg/tree.svg", type: "icons/svg/sword.svg", ability: "icons/svg/upgrade.svg", flaw: "icons/svg/downgrade.svg" }
+};
+
 /* ------------------------------ Game loop ------------------------------- */
 TAGANDTALLY.loop = {
   /** Actions each party member gets in a scene, whatever its time scope. A resolved roll spends one. */

@@ -1,5 +1,6 @@
 import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
 import { generate, SparkGenerator, localizedLabel } from "./engine.mjs";
+import { builderItemData, libraryFolder, regenerateBuild } from "../species-types.mjs";
 import { sparkTables } from "./tables.mjs";
 
 function theme() { return game.settings.get(SYSTEM_ID, "sparkTheme") ?? "fantasy"; }
@@ -121,6 +122,14 @@ const GEAR_SUBTYPE_TABLES = { armor: "armor-type", item: "item-type", weapon: "w
 export function itemDataFromGeneration(r, generator) {
   const v = r.values;
   const g = generator;
+  if (g.id === "species" || g.id === "type") {
+    // Sync shape: the sentence fields only; the async path (createItemFromSpark / Sparks app) fills the rest.
+    const build = { kind: g.id, abilities: [] };
+    if (g.id === "species") Object.assign(build, { aged: plain(v["character-species-aged"]), descriptor: plain(v["character-species-descriptor"]), cultural: plain(v["character-species-cultural-trait"]), feature: plain(v["character-species-feature"]) });
+    else Object.assign(build, { descriptor: plain(v["descriptor"]), noun: plain(Object.entries(v).find(([k]) => /^type(-|$)/.test(k) && k !== "type-option")?.[1] ?? ""), specializes: plain(v["does-something"]) });
+    const name = g.id === "species" ? `${build.descriptor} ${game.i18n.localize("TAGANDTALLY.Build.People")}` : build.noun;
+    return { name: name.trim() || game.i18n.localize(TAGANDTALLY.tagTypes[g.id]), type: "tag", img: TAGANDTALLY.builder.icons[g.id], system: { tagType: g.id, category: "umbrella", source: g.id, build, description: `<p>${r.html}</p>` } };
+  }
   if (g.itemType === "quest") {
     return { name: plain(`${v["quest-type"]} ${Object.entries(v).find(([k]) => k.startsWith("quest-objective"))?.[1] ?? ""}`), type: "quest",
       system: { questType: plain(v["quest-type"]), objective: plain(Object.entries(v).find(([k]) => k.startsWith("quest-objective"))?.[1]), description: `<p>${r.html}</p>` } };
@@ -164,8 +173,9 @@ export function itemDataFromGeneration(r, generator) {
 
 export async function createItemFromSpark(generatorId, { actor, ...options } = {}) {
   const r = await generate(generatorId, { theme: theme(), ...options });
-  const data = itemDataFromGeneration(r, r.generator);
+  const data = r.generator.id === "species" || r.generator.id === "type" ? await builderItemData(r.generator.id, r, { theme: theme() }) : itemDataFromGeneration(r, r.generator);
   if (data.type === "quest") await inspireQuest(data);
+  if (data.system?.build && !actor) data.folder = (await libraryFolder()).id;
   if (actor) {
     const [item] = await actor.createEmbeddedDocuments("Item", [data]);
     return item;
@@ -203,6 +213,7 @@ export async function inspireQuest(data) {
 
 /** Regenerate an existing item's sentence from the matching generator. */
 export async function generateIntoItem(item) {
+  if (item.system.isBuilder) return regenerateBuild(item);
   const generatorId = item.type === "gear" ? item.system.gearType : item.type === "quest" ? "quest" : item.type === "wound" ? "wound" : item.type === "spell" ? "spell" : null;
   if (!generatorId) return item;
   const values = item.type === "wound" ? { "wound-injury-type": TAGANDTALLY.woundTrackSparkNames[item.system.injuryType] } : {};

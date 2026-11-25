@@ -112,6 +112,10 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
     const item = await Item.implementation.fromDropData(data);
     if (!item) return;
     if (item.parent === this.actor) return; // same sheet: ignore (no manual sorting on v13)
+    if (this.actor.type === "character") {
+      const { isBuilderTag, applyBuilderItem } = await import("../species-types.mjs");
+      if (isBuilderTag(item) && item.system.build.hasContent) return applyBuilderItem(this.actor, item);
+    }
     return this.actor.createEmbeddedDocuments("Item", [item.toObject()]);
   }
 

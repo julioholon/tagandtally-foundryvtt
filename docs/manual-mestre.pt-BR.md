@@ -54,6 +54,16 @@ Ferramentas: a aba **Fases da vida** mostra o que cada fase deu e permite sortea
 antecedentes, perícias, defeitos ou ocupações por fase. A **Visão do grupo** mostra todos
 os personagens dos jogadores numa tabela (frase, ferimentos, riqueza, IAM, carga).
 
+**Espécies e tipos.** Os geradores *Espécie* e *Tipo* do Sparks criam itens na pasta de Itens
+"Espécies e Tipos", cada um com a ficha de criação do SRD na sua tag: a frase, idiomas
+(espécies) ou tipo pai (tipos), acesso à magia com aspectos ou meios de conjuração e MAI base,
+uma fraqueza e as habilidades. Duas habilidades são gratuitas; cada uma além disso precisa
+de uma falha, e a ficha marca as que faltam. Todo campo rola de novo pelo Sparks; a varinha
+gera a ficha inteira outra vez. Solte uma espécie ou tipo num personagem (ou use o botão
+Aplicar da ficha): substitui aquele espaço da frase, as habilidades viram tags de traço, a
+fraqueza e as falhas extras viram tags de falha que atrapalham, e o MAI base passa a ser o
+maior entre espécie e tipo. Aplicar outro remove tudo o que o anterior concedeu.
+
 ## 4. Rolando tarefas
 
 Clique em **Rolar** no cabeçalho da ficha, ou no ícone de qualquer tag ou item. No diálogo:

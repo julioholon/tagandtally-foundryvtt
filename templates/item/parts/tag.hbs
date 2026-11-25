@@ -11,5 +11,35 @@
   <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.temporary" {{checked system.temporary}} /> {{localize "TAGANDTALLY.Tag.Temporary"}}</label></div>
   <div class="form-group"><label class="tt-toggle"><input type="checkbox" name="system.magical" {{checked system.magical}} /> {{localize "TAGANDTALLY.Tag.Magical"}}</label></div>
   <div class="form-group"><label>{{localize "TAGANDTALLY.LifeStage.LifeStage"}}</label><select name="system.lifeStage">{{selectOptions lifeStages selected=system.lifeStage localize=true}}</select></div>
+  {{#if build}}
+  <fieldset class="span2 tt-build">
+    <legend>{{localize build.title}} <a data-action="generateSentence" title="{{localize 'TAGANDTALLY.Build.Generate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></a>{{#if build.canApply}} <a data-action="applyBuild" title="{{localize 'TAGANDTALLY.Build.Apply'}}"><i class="fa-solid fa-user-plus"></i></a>{{/if}}</legend>
+    <p class="hint">{{localize build.hint}}</p>
+    <div class="tt-grid two">
+      {{#each build.fields as |f|}}
+        <div class="form-group"><label>{{localize f.label}}</label><div class="tt-inline"><input type="text" name="system.build.{{f.key}}" value="{{f.value}}" /><a data-action="rerollBuild" data-key="{{f.key}}" title="{{localize 'TAGANDTALLY.Build.Reroll'}}"><i class="fa-solid fa-dice"></i></a></div></div>
+      {{/each}}
+      {{#if (tt-eq build.kind "type")}}
+        <div class="form-group"><label>{{localize "TAGANDTALLY.Build.Parent"}}</label><input type="text" name="system.build.parent" value="{{system.build.parent}}" placeholder="{{localize 'TAGANDTALLY.Build.ParentHint'}}" /></div>
+      {{else}}
+        <div class="form-group"><label>{{localize "TAGANDTALLY.Build.Languages"}}</label><input type="text" name="system.build.languages" value="{{system.build.languages}}" /></div>
+      {{/if}}
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Build.Magic"}}</label><select name="system.build.magic">{{selectOptions build.magic selected=system.build.magic localize=true}}</select></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Build.MagicTypes"}}</label><input type="text" name="system.build.magicTypes" value="{{system.build.magicTypes}}" placeholder="{{localize 'TAGANDTALLY.Build.MagicTypesHint'}}" /></div>
+      <div class="form-group"><label>{{localize "TAGANDTALLY.Build.BaseMai"}}</label><input type="number" name="system.build.baseMai" value="{{system.build.baseMai}}" min="0" max="10" /></div>
+      <div class="form-group span2"><label>{{localize "TAGANDTALLY.Build.Weakness"}}</label><div class="tt-inline"><input type="text" name="system.build.weakness" value="{{system.build.weakness}}" /><a data-action="rerollBuild" data-key="weakness" title="{{localize 'TAGANDTALLY.Build.Reroll'}}"><i class="fa-solid fa-dice"></i></a></div></div>
+    </div>
+    <div class="tt-toolbar"><strong>{{localize "TAGANDTALLY.Build.Abilities"}}</strong><span class="hint">{{localize "TAGANDTALLY.Build.FlawRule"}}</span><a data-action="addAbility"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Build.AddAbility"}}</a></div>
+    <ol class="tt-build-abilities">
+      {{#each build.abilities as |a|}}
+        <li class="{{#if a.needsFlaw}}{{#unless a.flaw}}missing-flaw{{/unless}}{{/if}}">
+          <div class="tt-inline"><input type="text" name="system.build.abilities.{{a.index}}.name" value="{{a.name}}" placeholder="{{localize 'TAGANDTALLY.Build.Ability'}}" /><a data-action="rerollBuild" data-key="ability" data-index="{{a.index}}" title="{{localize 'TAGANDTALLY.Build.Reroll'}}"><i class="fa-solid fa-dice"></i></a><a data-action="removeAbility" data-index="{{a.index}}" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-trash"></i></a></div>
+          <input type="text" name="system.build.abilities.{{a.index}}.text" value="{{a.text}}" placeholder="{{localize 'TAGANDTALLY.Build.AbilityText'}}" />
+          {{#if a.needsFlaw}}<input type="text" class="tt-flaw" name="system.build.abilities.{{a.index}}.flaw" value="{{a.flaw}}" placeholder="{{localize 'TAGANDTALLY.Build.FlawFor2'}}" />{{/if}}
+        </li>
+      {{/each}}
+    </ol>
+  </fieldset>
+  {{/if}}
   <div class="form-group span2"><label>{{localize "TAGANDTALLY.Tag.Notation"}}</label><code>{{system.notation}}</code> <small>{{localize "TAGANDTALLY.Tag.Steps"}}: {{system.steps}}</small></div>
 </section>

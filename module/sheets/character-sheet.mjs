@@ -94,6 +94,15 @@ export default class CharacterSheet extends BaseActorSheet {
     return data;
   }
 
+  /** A species or type from the library replaces that sentence slot and grants its abilities and weakness. */
+  async _onDropItem(event, item) {
+    if (this.isEditable && item?.parent !== this.actor) {
+      const { isBuilderTag, applyBuilderItem } = await import("../species-types.mjs");
+      if (isBuilderTag(item) && item.system.build.hasContent) return applyBuilderItem(this.actor, item);
+    }
+    return super._onDropItem?.(event, item);
+  }
+
   /** Dropped journals and actors become relation rows; Augur quests become linked quest items. */
   async _onDrop(event) {
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);

@@ -30,7 +30,8 @@
           "label": "Species",
           "template": "This species is a {character-species-aged|tag} {character-species-descriptor|tag} people who {character-species-cultural-trait|tag} and {character-species-feature|tag}.",
           "template_pt-BR": "Esta espécie é um povo {character-species-aged|tag} {character-species-descriptor|tag} que {character-species-cultural-trait|tag} e {character-species-feature|tag}.",
-          "label_pt-BR": "Espécie"
+          "label_pt-BR": "Espécie",
+          "itemType": "tag"
         },
         {
           "id": "type",
@@ -49,7 +50,8 @@
           ],
           "template": "This type is a {descriptor|tag} {type-[type-option]|tag} who {does-something|tag}.",
           "template_pt-BR": "Este tipo é um(a) {descriptor|tag} {type-[type-option]|tag} que {does-something|tag}.",
-          "label_pt-BR": "Tipo"
+          "label_pt-BR": "Tipo",
+          "itemType": "tag"
         },
         {
           "id": "appearance",

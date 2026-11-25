@@ -1,5 +1,6 @@
 import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
-import { htmlField } from "./shared.mjs";
+import { htmlField, word } from "./shared.mjs";
+import { buildSentence, flawsNeeded, BUILDER_KINDS } from "../species-types.mjs";
 
 const fields = foundry.data.fields;
 
@@ -26,6 +27,29 @@ export default class TagData extends foundry.abstract.TypeDataModel {
       lifeStage: new fields.StringField({ required: true, blank: true, initial: "" }),
       /** Spark table this item was generated from (enables reroll). */
       source: new fields.StringField({ required: true, blank: true, initial: "" }),
+      /** Id of the species/type umbrella tag on the same actor that granted this tag. */
+      umbrella: new fields.StringField({ required: true, blank: true, initial: "" }),
+      /** Species / type builder sheet (SRD guides); only read on species and type umbrella tags. */
+      build: new fields.SchemaField({
+        kind: new fields.StringField({ required: true, blank: true, initial: "" }),
+        aged: new fields.StringField({ required: true, blank: true, initial: "" }),
+        descriptor: new fields.StringField({ required: true, blank: true, initial: "" }),
+        noun: new fields.StringField({ required: true, blank: true, initial: "" }),
+        cultural: new fields.StringField({ required: true, blank: true, initial: "" }),
+        feature: new fields.StringField({ required: true, blank: true, initial: "" }),
+        specializes: new fields.StringField({ required: true, blank: true, initial: "" }),
+        parent: new fields.StringField({ required: true, blank: true, initial: "" }),
+        languages: new fields.StringField({ required: true, blank: true, initial: "" }),
+        magic: new fields.StringField({ required: true, initial: "none", choices: ["none", "learn", "use"] }),
+        magicTypes: new fields.StringField({ required: true, blank: true, initial: "" }),
+        baseMai: new fields.NumberField({ required: true, integer: true, min: 0, max: 10, initial: 0 }),
+        weakness: new fields.StringField({ required: true, blank: true, initial: "" }),
+        abilities: new fields.ArrayField(new fields.SchemaField({
+          name: new fields.StringField({ required: true, blank: true, initial: "" }),
+          text: new fields.StringField({ required: true, blank: true, initial: "" }),
+          flaw: new fields.StringField({ required: true, blank: true, initial: "" })
+        }))
+      }),
       description: htmlField()
     };
   }
@@ -43,6 +67,16 @@ export default class TagData extends foundry.abstract.TypeDataModel {
     this.talliesMax = TAGANDTALLY.talliesPerTier;
     this.tallyBoxes = Array.from({ length: TAGANDTALLY.talliesPerTier }, (_, i) => i < this.tallies);
     this.notation = this.buildNotation();
+    /** Species and type umbrella tags carry the SRD builder sheet. */
+    this.isBuilder = this.isUmbrella && BUILDER_KINDS.includes(this.tagType);
+    if (this.isBuilder) {
+      const b = this.build;
+      b.kind = this.tagType;
+      b.flawsNeeded = flawsNeeded(b);
+      b.flawsMissing = b.abilities.slice(2).filter((a) => !a.flaw).length;
+      b.hasContent = Boolean(b.descriptor || b.noun || b.aged || b.weakness || b.abilities.length);
+      this.sentenceText = b.hasContent ? buildSentence(b, { word }) : "";
+    }
   }
 
   buildNotation() {
