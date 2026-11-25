@@ -34,8 +34,7 @@
       {{#each build.abilities as |a|}}
         <li class="{{#if a.needsFlaw}}{{#unless a.flaw}}missing-flaw{{/unless}}{{/if}}">
           <div class="tt-inline"><input type="text" name="system.build.abilities.{{a.index}}.name" value="{{a.name}}" placeholder="{{localize 'TAGANDTALLY.Build.Ability'}}" /><a data-action="rerollBuild" data-key="ability" data-index="{{a.index}}" title="{{localize 'TAGANDTALLY.Build.Reroll'}}"><i class="fa-solid fa-dice"></i></a><a data-action="removeAbility" data-index="{{a.index}}" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-trash"></i></a></div>
-          <input type="text" name="system.build.abilities.{{a.index}}.text" value="{{a.text}}" placeholder="{{localize 'TAGANDTALLY.Build.AbilityText'}}" />
-          {{#if a.needsFlaw}}<input type="text" class="tt-flaw" name="system.build.abilities.{{a.index}}.flaw" value="{{a.flaw}}" placeholder="{{localize 'TAGANDTALLY.Build.FlawFor2'}}" />{{/if}}
+          {{#if a.needsFlaw}}<div class="tt-inline"><input type="text" class="tt-flaw" name="system.build.abilities.{{a.index}}.flaw" value="{{a.flaw}}" placeholder="{{localize 'TAGANDTALLY.Build.FlawFor2'}}" /><a data-action="rerollBuild" data-key="flaw" data-index="{{a.index}}" title="{{localize 'TAGANDTALLY.Build.RerollFlaw'}}"><i class="fa-solid fa-dice"></i></a></div>{{/if}}
         </li>
       {{/each}}
     </ol>

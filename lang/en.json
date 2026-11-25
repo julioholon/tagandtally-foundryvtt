@@ -1264,52 +1264,76 @@
     "And": "and",
     "Tarot": {
       "Title": "Tarot",
-      "Hint": "The SRD tarot: Major Arcana are descriptors, court cards are types, numbered cards are what a character does. Draw three for a character sentence, or a Celtic Cross to read the campaign. Click the dice to redraw one card, the arrows to flip it.",
-      "Empty": "No cards drawn yet.",
+      "Hint": "The SRD tarot: Major Arcana are descriptors, court cards are types, numbered cards are what a character does, and every card names a flaw. Draw three for a character sentence. Click the dice to redraw one card, the arrows to flip it.",
+      "ProphecyHint": "The Prophecy is four verses rolled from the Sparks tables: who opposes the heroes, how it escalates, what triggers the end, and the finale. Click a dice to reroll one bit. Journal it, or turn it into four grand quests.",
+      "Empty": "Nothing drawn yet.",
       "DrawSentence": "Character sentence",
-      "DrawCross": "Celtic Cross",
+      "DrawProphecy": "Prophecy",
       "Upright": "upright",
       "Reversed": "reversed",
       "Flip": "Flip the card",
       "Redraw": "Redraw this card",
+      "RerollBit": "Reroll this bit",
+      "FlawLabel": "Flaw",
       "CharacterSentence": "Tarot character sentence",
-      "CelticCross": "Celtic Cross reading",
+      "Prophecy": "Prophecy",
       "JournalProphecy": "Journal as prophecy",
       "JournalSentence": "Journal",
       "ApplySentence": "Apply to a character",
-      "GrandQuest": "Grand quest",
-      "Prophecy": "Prophecy",
+      "ApplyConfirm": "Replace the descriptor, type and specialty of the chosen character or NPC with {sentence}? The species stays. There is no undo.",
+      "GrandQuests": "Four grand quests",
+      "GrandQuestsConfirm": "Create the four grand quests of this prophecy (opposition, escalation, trigger, finale) on the chosen character?",
+      "GrandQuestsCreated": "{count} grand quests created on {name}.",
       "ProphecyName": "Prophecy of the {word}",
       "SentenceName": "Tarot: {sentence}",
-      "GrandQuestName": "The {word} prophecy",
       "Applied": "{name}'s sentence is now the tarot draw (species kept).",
-      "ReadingLine": "At the heart, {heart}; the challenge is {challenge}; the best outcome, {crown}; it ends in {outcome}.",
       "Position": {
         "descriptor": "Descriptor",
         "type": "Type",
-        "does": "Does something",
-        "heart": "1 · The heart",
-        "challenge": "2 · The challenge",
-        "foundation": "3 · The foundation",
-        "past": "4 · The recent past",
-        "crown": "5 · The crown",
-        "future": "6 · The near future",
-        "self": "7 · The self",
-        "others": "8 · Others",
-        "hopes": "9 · Hopes and fears",
-        "outcome": "10 · The outcome"
+        "does": "Does something"
       },
-      "PositionHint": {
-        "heart": "What the campaign is about",
-        "challenge": "What stands in the way",
-        "foundation": "What it grew from",
-        "past": "What just happened",
-        "crown": "The best that could come of it",
-        "future": "What comes next",
-        "self": "Who the heroes are in this",
-        "others": "Who the world is in this",
-        "hopes": "What is hoped for, and feared",
-        "outcome": "Where it is heading"
+      "Verse": {
+        "opposition": "Opposition",
+        "escalation": "Escalation",
+        "trigger": "Trigger",
+        "finale": "Finale"
+      },
+      "VerseHint": {
+        "opposition": "Who stands against the heroes",
+        "escalation": "How their reach grows",
+        "trigger": "What sets the end in motion",
+        "finale": "How it all ends"
+      },
+      "VerseLine": {
+        "opposition": "A {descriptor} {type} who {does} rises against you.",
+        "escalation": "{emotion} and {motivation}, their shadow spreads.",
+        "trigger": "When {environment}, {complication}.",
+        "finale": "{verb} the {adjective} {noun} to achieve {benefit}."
+      },
+      "Bit": {
+        "descriptor": "Descriptor",
+        "type": "Type",
+        "does": "Does",
+        "emotion": "Emotion",
+        "motivation": "Motivation",
+        "environment": "Environment",
+        "complication": "Complication",
+        "verb": "Verb",
+        "adjective": "Adjective",
+        "noun": "Noun",
+        "benefit": "Benefit"
+      },
+      "VerseQuest": {
+        "opposition": "Unmask the {descriptor} {type}",
+        "escalation": "Prevent the escalation",
+        "trigger": "Stop the trigger",
+        "finale": "Achieve the finale"
+      },
+      "QuestGoal": {
+        "opposition": "Locate or identify the grand opposing faction or NPC",
+        "escalation": "Prevent the escalation",
+        "trigger": "Stop the trigger",
+        "finale": "Achieve the finale"
       }
     },
     "Campaign": {
@@ -1319,10 +1343,9 @@
       "Theme": "Sparks theme",
       "Characters": "Characters to roll",
       "StepChronicle": "Create the Campaign Chronicle journal",
-      "StepProphecy": "Draw a Celtic Cross as the prophecy (journal + grand quest on the first character)",
+      "StepProphecy": "Roll the Prophecy (journal + four grand quests on the first character)",
       "StepScene": "Roll the opening scene into the Game loop",
       "StepQuest": "Roll the first quest and its quest giver (added to the characters' Relations)",
-      "StepOracle": "Ask the Oracle the four opening questions",
       "AugurHint": "Augur Nexus steps (region, factions, starting location, people) are done in Augur; the checklist is posted to chat.",
       "Start": "Start the campaign",
       "DoneCharacters": "{count} character(s) rolled: {names}",
@@ -1330,7 +1353,6 @@
       "DoneProphecy": "Prophecy drawn: {name}",
       "DoneQuest": "First quest: {quest}, given by {giver}",
       "DoneScene": "Opening scene: level {level} — {sentence}",
-      "DoneOracle": "The Oracle answered the opening questions",
       "AugurChecklist": "Augur Nexus, by hand:",
       "Augur": {
         "Region": "Fantasy: a Hexmap scene as the region and Develop Fantasy Region for factions and history. Sci-fi: a star system, its planets and settlements, a campaign ship.",
@@ -1338,13 +1360,16 @@
         "Location": "Pick the starting location, build its map, place the Augur people as NPC tokens.",
         "People": "Drop the Augur people on NPC sheets or link them; drop locations and factions on the characters' Relations."
       },
-      "Oracle": {
-        "Met": "Have the characters already met?",
-        "Settlement": "Are the characters in a settlement?",
-        "Mission": "Do they have a mission?",
-        "Employer": "Do they work for anyone?"
-      },
-      "NewCharacter": "New character"
+      "NewCharacter": "New character",
+      "Steps": "What to prepare",
+      "StartDate": "Start date and time",
+      "Year": "Year",
+      "Month": "Month",
+      "Day": "Day",
+      "Hour": "Hour",
+      "OngoingWarning": "A campaign is ongoing: {name}. Starting a new one deletes its journals (Chronicle, prophecy) and resets the Game loop. Actors are kept.",
+      "CleanupConfirm": "Delete the journals of \"{name}\" and reset the Game loop before starting? Actors are not removed.",
+      "DoneDate": "Calendar set to {date}"
     },
     "Build": {
       "Species": "Species builder",
@@ -1370,7 +1395,6 @@
       "Weakness": "Weakness",
       "Abilities": "Abilities",
       "Ability": "Ability",
-      "AbilityText": "What it does (optional)",
       "FlawRule": "Two abilities are free; each one beyond two needs a flaw.",
       "FlawFor2": "Flaw that pays for this ability",
       "AddAbility": "Ability",
@@ -1384,7 +1408,8 @@
       "FlawFor": "Flaw paying for {ability} ({name}).",
       "WeaknessOf": "Weakness of {name}.",
       "People": "people",
-      "Library": "Species & Types"
+      "Library": "Species & Types",
+      "RerollFlaw": "Draw a flaw from the tarot"
     }
   }
 }

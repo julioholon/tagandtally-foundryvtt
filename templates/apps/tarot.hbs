@@ -1,20 +1,21 @@
 <div class="tt-tarot-body">
   <div class="tt-toolbar">
     <button type="button" class="tt-roll-btn" data-action="drawSentence"><i class="fa-solid fa-user"></i> {{localize "TAGANDTALLY.Tarot.DrawSentence"}}</button>
-    <button type="button" class="tt-roll-btn" data-action="drawCross"><i class="fa-solid fa-cross"></i> {{localize "TAGANDTALLY.Tarot.DrawCross"}}</button>
+    <button type="button" class="tt-roll-btn" data-action="drawProphecy"><i class="fa-solid fa-scroll"></i> {{localize "TAGANDTALLY.Tarot.DrawProphecy"}}</button>
     {{#if kind}}
     <span class="tt-controls">
       <button type="button" data-action="toChat"><i class="fa-solid fa-comment"></i> {{localize "TAGANDTALLY.ToChat"}}</button>
-      <button type="button" data-action="journal"><i class="fa-solid fa-book"></i> {{localize (tt-ternary isCross "TAGANDTALLY.Tarot.JournalProphecy" "TAGANDTALLY.Tarot.JournalSentence")}}</button>
+      <button type="button" data-action="journal"><i class="fa-solid fa-book"></i> {{localize (tt-ternary isProphecy "TAGANDTALLY.Tarot.JournalProphecy" "TAGANDTALLY.Tarot.JournalSentence")}}</button>
       {{#if isSentence}}<button type="button" data-action="applySentence"><i class="fa-solid fa-user-pen"></i> {{localize "TAGANDTALLY.Tarot.ApplySentence"}}</button>{{/if}}
-      {{#if isCross}}<button type="button" data-action="grandQuest"><i class="fa-solid fa-scroll"></i> {{localize "TAGANDTALLY.Tarot.GrandQuest"}}</button>{{/if}}
+      {{#if isProphecy}}<button type="button" data-action="grandQuests"><i class="fa-solid fa-scroll"></i> {{localize "TAGANDTALLY.Tarot.GrandQuests"}}</button>{{/if}}
     </span>
     {{/if}}
   </div>
-  <p class="hint">{{localize "TAGANDTALLY.Tarot.Hint"}}</p>
+  <p class="hint">{{localize (tt-ternary isProphecy "TAGANDTALLY.Tarot.ProphecyHint" "TAGANDTALLY.Tarot.Hint")}}</p>
   {{#if sentence}}<p class="tt-sentence tt-tarot-sentence">{{tt-tags sentenceText}}</p>{{/if}}
   {{#unless kind}}<p class="tt-empty">{{localize "TAGANDTALLY.Tarot.Empty"}}</p>{{/unless}}
-  <div class="tt-tarot-spread {{kind}}">
+  {{#if isSentence}}
+  <div class="tt-tarot-spread">
     {{#each cards as |c|}}
       <div class="tt-tarot-card {{c.suitClass}} {{#if c.reversed}}reversed{{/if}}" data-position="{{c.positionId}}">
         <header><span class="tt-position">{{c.positionLabel}}</span>
@@ -22,8 +23,22 @@
         <div class="tt-card-name">{{c.card.name}} <small>{{c.orientation}}</small></div>
         <div class="tt-card-word"><span class="tt-tag">{{c.word}}</span></div>
         {{#if c.text}}<p class="tt-card-text">{{c.text}}</p>{{/if}}
-        {{#if c.positionHint}}<p class="tt-card-hint hint">{{c.positionHint}}</p>{{/if}}
+        {{#if c.flaw}}<p class="tt-card-hint hint">{{localize "TAGANDTALLY.Tarot.FlawLabel"}}: {{c.flaw}}</p>{{/if}}
       </div>
     {{/each}}
   </div>
+  {{/if}}
+  {{#if isProphecy}}
+  <ol class="tt-prophecy">
+    {{#each verses as |v|}}
+      <li class="tt-verse">
+        <header><strong>{{v.label}}</strong> <small class="hint">{{v.hint}}</small></header>
+        <p class="tt-sentence">{{tt-tags v.line}}</p>
+        <div class="tt-verse-bits">
+          {{#each v.bits as |b|}}<span class="tt-bit"><small>{{b.label}}</small> <span class="tt-tag">{{b.value}}</span> <a data-action="rerollBit" data-verse="{{v.index}}" data-key="{{b.key}}" title="{{localize 'TAGANDTALLY.Tarot.RerollBit'}}"><i class="fa-solid fa-dice"></i></a></span>{{/each}}
+        </div>
+      </li>
+    {{/each}}
+  </ol>
+  {{/if}}
 </div>

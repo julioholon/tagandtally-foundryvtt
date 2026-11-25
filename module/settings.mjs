@@ -24,6 +24,7 @@ export function registerSettings() {
     scope: "world", config: true, type: Boolean, default: false,
     onChange: () => { for (const a of game.actors) a.prepareData(); for (const app of foundry.applications.instances.values()) if (app.document?.documentName === "Actor" || app.id === "tt-factions") app.render(); }
   });
+  game.settings.register(SYSTEM_ID, "campaign", { scope: "world", config: false, type: Object, default: {} });
   game.settings.register(SYSTEM_ID, "loopChronicle", {
     name: "TAGANDTALLY.Settings.LoopChronicle.Name",
     hint: "TAGANDTALLY.Settings.LoopChronicle.Hint",

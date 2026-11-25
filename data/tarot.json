@@ -1,1097 +1,1253 @@
 {
- "_comment": "Tarot decks from the Tag & Tally SRD (https://srd.tagandtally.quest/generators/tarot/character-sentence/), CC BY-SA 4.0. Major Arcana = descriptors, court cards = types, numbered cards = what the character does.",
- "cards": [
-  {
-   "id": "0-the-fool",
-   "name": "0 The Fool",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Carefree",
-    "text": "A character unburdened by worry or consequence."
-   },
-   "reversed": {
-    "word": "Reckless",
-    "text": "A character who ignores all red flags."
-   }
-  },
-  {
-   "id": "i-the-magician",
-   "name": "I The Magician",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Resourceful",
-    "text": "A character who can make a tool out of anything."
-   },
-   "reversed": {
-    "word": "Manipulative",
-    "text": "A character who views people as instruments."
-   }
-  },
-  {
-   "id": "ii-the-high-priestess",
-   "name": "II The High Priestess",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Enigmatic",
-    "text": "A character who is a deep, quiet mystery."
-   },
-   "reversed": {
-    "word": "Secretive",
-    "text": "A character who hides things even when it's unnecessary."
-   }
-  },
-  {
-   "id": "iii-the-empress",
-   "name": "III The Empress",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Nurturing",
-    "text": "A character who naturally grows and protects life."
-   },
-   "reversed": {
-    "word": "Smothering",
-    "text": "A character whose \"care\" is a form of control."
-   }
-  },
-  {
-   "id": "iv-the-emperor",
-   "name": "IV The Emperor",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Disciplined",
-    "text": "A character defined by structure and order."
-   },
-   "reversed": {
-    "word": "Tyrannical",
-    "text": "A character who demands absolute obedience."
-   }
-  },
-  {
-   "id": "v-the-hierophant",
-   "name": "V The Hierophant",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Traditional",
-    "text": "A character who is a pillar of their community."
-   },
-   "reversed": {
-    "word": "Subversive",
-    "text": "A character who actively challenges the status quo."
-   }
-  },
-  {
-   "id": "vi-the-lovers",
-   "name": "VI The Lovers",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Devoted",
-    "text": "A character defined by their intense loyalty."
-   },
-   "reversed": {
-    "word": "Indecisive",
-    "text": "A character torn between two worldviews."
-   }
-  },
-  {
-   "id": "vii-the-chariot",
-   "name": "VII The Chariot",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Driven",
-    "text": "A character with an unshakeable sense of purpose."
-   },
-   "reversed": {
-    "word": "Aggressive",
-    "text": "A character who forces their way through every problem."
-   }
-  },
-  {
-   "id": "viii-strength",
-   "name": "VIII Strength",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Resilient",
-    "text": "A character with a quiet, inner toughness."
-   },
-   "reversed": {
-    "word": "Volatile",
-    "text": "A character struggling to keep their temper in check."
-   }
-  },
-  {
-   "id": "ix-the-hermit",
-   "name": "IX The Hermit",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Introspective",
-    "text": "A character who seeks their own truth in silence."
-   },
-   "reversed": {
-    "word": "Isolated",
-    "text": "A character who has cut themselves off from society."
-   }
-  },
-  {
-   "id": "x-wheel-of-fortune",
-   "name": "X Wheel of Fortune",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Adaptable",
-    "text": "A character who flows with the changes of life."
-   },
-   "reversed": {
-    "word": "Fatalistic",
-    "text": "A character who believes they are doomed by luck."
-   }
-  },
-  {
-   "id": "xi-justice",
-   "name": "XI Justice",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Objective",
-    "text": "A character who values fairness over personal feelings."
-   },
-   "reversed": {
-    "word": "Judgmental",
-    "text": "A character quick to condemn others."
-   }
-  },
-  {
-   "id": "xii-the-hanged-man",
-   "name": "XII The Hanged Man",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Patient",
-    "text": "A character willing to wait for the right moment."
-   },
-   "reversed": {
-    "word": "Self-Sacrificing",
-    "text": "A character who habitually martyrs themselves."
-   }
-  },
-  {
-   "id": "xiii-death",
-   "name": "XIII Death",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Transformative",
-    "text": "A character who is constantly reinventing themselves."
-   },
-   "reversed": {
-    "word": "Morbid",
-    "text": "A character obsessed with endings and the past."
-   }
-  },
-  {
-   "id": "xiv-temperance",
-   "name": "XIV Temperance",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Harmonious",
-    "text": "A character who seeks balance in all things."
-   },
-   "reversed": {
-    "word": "Immoderate",
-    "text": "A character who lives in a state of constant excess."
-   }
-  },
-  {
-   "id": "xv-the-devil",
-   "name": "XV The Devil",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Ambitious",
-    "text": "A character driven by worldly power or desire."
-   },
-   "reversed": {
-    "word": "Obsessive",
-    "text": "A character \"chained\" to a single dark habit or idea."
-   }
-  },
-  {
-   "id": "xvi-the-tower",
-   "name": "XVI The Tower",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Disruptive",
-    "text": "A character who breaks down stagnant systems."
-   },
-   "reversed": {
-    "word": "Fractured",
-    "text": "A character who has survived a total collapse."
-   }
-  },
-  {
-   "id": "xvii-the-star",
-   "name": "XVII The Star",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Optimistic",
-    "text": "A character who radiates hope even in the dark."
-   },
-   "reversed": {
-    "word": "Disillusioned",
-    "text": "A character who has lost their faith in the world."
-   }
-  },
-  {
-   "id": "xviii-the-moon",
-   "name": "XVIII The Moon",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Imaginative",
-    "text": "A character who lives in a world of dreams and symbols."
-   },
-   "reversed": {
-    "word": "Paranoid",
-    "text": "A character who sees shadows and lies everywhere."
-   }
-  },
-  {
-   "id": "xix-the-sun",
-   "name": "XIX The Sun",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Radiant",
-    "text": "A character whose presence brings clarity and joy."
-   },
-   "reversed": {
-    "word": "Conceited",
-    "text": "A character blinded by their own self-importance."
-   }
-  },
-  {
-   "id": "xx-judgement",
-   "name": "XX Judgement",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Decisive",
-    "text": "A character driven by a clear, high calling."
-   },
-   "reversed": {
-    "word": "Self-Critical",
-    "text": "A character paralyzed by their own mistakes."
-   }
-  },
-  {
-   "id": "xxi-the-world",
-   "name": "XXI The World",
-   "group": "major",
-   "suit": null,
-   "upright": {
-    "word": "Accomplished",
-    "text": "A character who has seen and mastered much."
-   },
-   "reversed": {
-    "word": "Insular",
-    "text": "A character whose world is very small and rigid."
-   }
-  },
-  {
-   "id": "wands-page",
-   "name": "Page of Wands",
-   "group": "court",
-   "suit": "Wands",
-   "upright": {
-    "word": "Trailblazer",
-    "text": "One who finds new paths or starts new trends."
-   },
-   "reversed": {
-    "word": "Firebrand",
-    "text": "One who agitates and stirs up trouble for its own sake."
-   }
-  },
-  {
-   "id": "wands-knight",
-   "name": "Knight of Wands",
-   "group": "court",
-   "suit": "Wands",
-   "upright": {
-    "word": "Daredevil",
-    "text": "One who takes high-speed risks to achieve glory."
-   },
-   "reversed": {
-    "word": "Mercenary",
-    "text": "One who fights only for the thrill or the payout."
-   }
-  },
-  {
-   "id": "wands-queen",
-   "name": "Queen of Wands",
-   "group": "court",
-   "suit": "Wands",
-   "upright": {
-    "word": "Icon",
-    "text": "One who leads through charisma and sheer force of personality."
-   },
-   "reversed": {
-    "word": "Rival",
-    "text": "One who seeks to outshine or sabotage all competition."
-   }
-  },
-  {
-   "id": "wands-king",
-   "name": "King of Wands",
-   "group": "court",
-   "suit": "Wands",
-   "upright": {
-    "word": "Commander",
-    "text": "One who directs others toward a grand, singular vision."
-   },
-   "reversed": {
-    "word": "Autocrat",
-    "text": "One who demands total control over every subordinate."
-   }
-  },
-  {
-   "id": "cups-page",
-   "name": "Page of Cups",
-   "group": "court",
-   "suit": "Cups",
-   "upright": {
-    "word": "Idealist",
-    "text": "One who sees the beauty and potential in everything."
-   },
-   "reversed": {
-    "word": "Escapist",
-    "text": "One who hides from reality in dreams or substances."
-   }
-  },
-  {
-   "id": "cups-knight",
-   "name": "Knight of Cups",
-   "group": "court",
-   "suit": "Cups",
-   "upright": {
-    "word": "Envoy",
-    "text": "One who carries messages of peace, love, or alliance."
-   },
-   "reversed": {
-    "word": "Heartbreaker",
-    "text": "One who manipulates the emotions of others for sport."
-   }
-  },
-  {
-   "id": "cups-queen",
-   "name": "Queen of Cups",
-   "group": "court",
-   "suit": "Cups",
-   "upright": {
-    "word": "Confidant",
-    "text": "One who provides a safe harbor and deep counsel."
-   },
-   "reversed": {
-    "word": "Martyr",
-    "text": "One who drains others by constantly playing the victim."
-   }
-  },
-  {
-   "id": "cups-king",
-   "name": "King of Cups",
-   "group": "court",
-   "suit": "Cups",
-   "upright": {
-    "word": "Mediator",
-    "text": "One who balances warring factions and keeps the peace."
-   },
-   "reversed": {
-    "word": "Puppeteer",
-    "text": "One who uses emotional intelligence to pull strings."
-   }
-  },
-  {
-   "id": "swords-page",
-   "name": "Page of Swords",
-   "group": "court",
-   "suit": "Swords",
-   "upright": {
-    "word": "Informant",
-    "text": "One who watches, listens, and gathers vital data."
-   },
-   "reversed": {
-    "word": "Slanderer",
-    "text": "One who weaponizes secrets to destroy enemies."
-   }
-  },
-  {
-   "id": "swords-knight",
-   "name": "Knight of Swords",
-   "group": "court",
-   "suit": "Swords",
-   "upright": {
-    "word": "Zealot",
-    "text": "One who pursues a truth or cause with absolute focus."
-   },
-   "reversed": {
-    "word": "Iconoclast",
-    "text": "One who seeks to destroy all established beliefs."
-   }
-  },
-  {
-   "id": "swords-queen",
-   "name": "Queen of Swords",
-   "group": "court",
-   "suit": "Swords",
-   "upright": {
-    "word": "Arbitrator",
-    "text": "One who cuts through lies to find the objective truth."
-   },
-   "reversed": {
-    "word": "Cynic",
-    "text": "One who believes everything is inherently broken or corrupt."
-   }
-  },
-  {
-   "id": "swords-king",
-   "name": "King of Swords",
-   "group": "court",
-   "suit": "Swords",
-   "upright": {
-    "word": "Strategist",
-    "text": "One who masters the rules of the game to win."
-   },
-   "reversed": {
-    "word": "Executioner",
-    "text": "One who delivers cold, final judgment without mercy."
-   }
-  },
-  {
-   "id": "pentacles-page",
-   "name": "Page of Pentacles",
-   "group": "court",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "Scholar",
-    "text": "One who is dedicated to learning a specific, practical trade."
-   },
-   "reversed": {
-    "word": "Scavenger",
-    "text": "One who survives on the scraps and leavings of others."
-   }
-  },
-  {
-   "id": "pentacles-knight",
-   "name": "Knight of Pentacles",
-   "group": "court",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "Warden",
-    "text": "One who protects resources and ensures everything runs on time."
-   },
-   "reversed": {
-    "word": "Drifter",
-    "text": "One who lacks a home, a trade, or a steady purpose."
-   }
-  },
-  {
-   "id": "pentacles-queen",
-   "name": "Queen of Pentacles",
-   "group": "court",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "Provider",
-    "text": "One who builds a community and ensures its material comfort."
-   },
-   "reversed": {
-    "word": "Socialite",
-    "text": "One who values status symbols and wealth above all else."
-   }
-  },
-  {
-   "id": "pentacles-king",
-   "name": "King of Pentacles",
-   "group": "court",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "Magnate",
-    "text": "One who has built a physical empire or massive estate."
-   },
-   "reversed": {
-    "word": "Hoarder",
-    "text": "One who accumulates wealth but refuses to use or share it."
-   }
-  },
-  {
-   "id": "wands-ace",
-   "name": "Ace of Wands",
-   "group": "numbered",
-   "suit": "Wands",
-   "upright": {
-    "word": "ignites new movements",
-    "text": ""
-   },
-   "reversed": {
-    "word": "extinguishes the sparks of others",
-    "text": ""
-   }
-  },
-  {
-   "id": "wands-two",
-   "name": "Two of Wands",
-   "group": "numbered",
-   "suit": "Wands",
-   "upright": {
-    "word": "charts unknown horizons",
-    "text": ""
-   },
-   "reversed": {
-    "word": "hesitates at the finish line",
-    "text": ""
-   }
-  },
-  {
-   "id": "wands-three",
-   "name": "Three of Wands",
-   "group": "numbered",
-   "suit": "Wands",
-   "upright": {
-    "word": "commands distant ventures",
-    "text": ""
-   },
-   "reversed": {
-    "word": "ignores the warnings of the sea",
-    "text": ""
-   }
-  },
-  {
-   "id": "wands-four",
-   "name": "Four of Wands",
-   "group": "numbered",
-   "suit": "Wands",
-   "upright": {
-    "word": "fosters safe havens",
-    "text": ""
-   },
-   "reversed": {
-    "word": "disrupts the peace of home",
-    "text": ""
-   }
-  },
-  {
-   "id": "wands-five",
-   "name": "Five of Wands",
-   "group": "numbered",
-   "suit": "Wands",
-   "upright": {
-    "word": "thrives in chaotic competition",
-    "text": ""
-   },
-   "reversed": {
-    "word": "incites needless brawls",
-    "text": ""
-   }
-  },
-  {
-   "id": "wands-six",
-   "name": "Six of Wands",
-   "group": "numbered",
-   "suit": "Wands",
-   "upright": {
-    "word": "inspires public victory",
-    "text": ""
-   },
-   "reversed": {
-    "word": "fakes a legendary reputation",
-    "text": ""
-   }
-  },
-  {
-   "id": "wands-seven",
-   "name": "Seven of Wands",
-   "group": "numbered",
-   "suit": "Wands",
-   "upright": {
-    "word": "defends the impossible high-ground",
-    "text": ""
-   },
-   "reversed": {
-    "word": "surrenders to the smallest pressure",
-    "text": ""
-   }
-  },
-  {
-   "id": "wands-eight",
-   "name": "Eight of Wands",
-   "group": "numbered",
-   "suit": "Wands",
-   "upright": {
-    "word": "delivers messages at blurring speeds",
-    "text": ""
-   },
-   "reversed": {
-    "word": "stagnates in a fast world",
-    "text": ""
-   }
-  },
-  {
-   "id": "wands-nine",
-   "name": "Nine of Wands",
-   "group": "numbered",
-   "suit": "Wands",
-   "upright": {
-    "word": "guards the final threshold",
-    "text": ""
-   },
-   "reversed": {
-    "word": "leaves the gate wide open",
-    "text": ""
-   }
-  },
-  {
-   "id": "wands-ten",
-   "name": "Ten of Wands",
-   "group": "numbered",
-   "suit": "Wands",
-   "upright": {
-    "word": "shoulders the burdens of others",
-    "text": ""
-   },
-   "reversed": {
-    "word": "collapses under a self-made burden",
-    "text": ""
-   }
-  },
-  {
-   "id": "cups-ace",
-   "name": "Ace of Cups",
-   "group": "numbered",
-   "suit": "Cups",
-   "upright": {
-    "word": "channels emotional power",
-    "text": ""
-   },
-   "reversed": {
-    "word": "repels all emotional connection",
-    "text": ""
-   }
-  },
-  {
-   "id": "cups-two",
-   "name": "Two of Cups",
-   "group": "numbered",
-   "suit": "Cups",
-   "upright": {
-    "word": "forges unbreakable bonds",
-    "text": ""
-   },
-   "reversed": {
-    "word": "breaks every promise they make",
-    "text": ""
-   }
-  },
-  {
-   "id": "cups-three",
-   "name": "Three of Cups",
-   "group": "numbered",
-   "suit": "Cups",
-   "upright": {
-    "word": "unites disparate groups",
-    "text": ""
-   },
-   "reversed": {
-    "word": "isolates themselves from the group",
-    "text": ""
-   }
-  },
-  {
-   "id": "cups-four",
-   "name": "Four of Cups",
-   "group": "numbered",
-   "suit": "Cups",
-   "upright": {
-    "word": "finds clarity in silence",
-    "text": ""
-   },
-   "reversed": {
-    "word": "discards perfectly good chances",
-    "text": ""
-   }
-  },
-  {
-   "id": "cups-five",
-   "name": "Five of Cups",
-   "group": "numbered",
-   "suit": "Cups",
-   "upright": {
-    "word": "reclaims beauty from loss",
-    "text": ""
-   },
-   "reversed": {
-    "word": "wallows in ancient heartbreaks",
-    "text": ""
-   }
-  },
-  {
-   "id": "cups-six",
-   "name": "Six of Cups",
-   "group": "numbered",
-   "suit": "Cups",
-   "upright": {
-    "word": "restores forgotten memories",
-    "text": ""
-   },
-   "reversed": {
-    "word": "clings to a dead past",
-    "text": ""
-   }
-  },
-  {
-   "id": "cups-seven",
-   "name": "Seven of Cups",
-   "group": "numbered",
-   "suit": "Cups",
-   "upright": {
-    "word": "conjures vivid illusions",
-    "text": ""
-   },
-   "reversed": {
-    "word": "confuses dreams for reality",
-    "text": ""
-   }
-  },
-  {
-   "id": "cups-eight",
-   "name": "Eight of Cups",
-   "group": "numbered",
-   "suit": "Cups",
-   "upright": {
-    "word": "walks away from everything",
-    "text": ""
-   },
-   "reversed": {
-    "word": "returns to a toxic life",
-    "text": ""
-   }
-  },
-  {
-   "id": "cups-nine",
-   "name": "Nine of Cups",
-   "group": "numbered",
-   "suit": "Cups",
-   "upright": {
-    "word": "grants the wishes of others",
-    "text": ""
-   },
-   "reversed": {
-    "word": "denies themselves any joy",
-    "text": ""
-   }
-  },
-  {
-   "id": "cups-ten",
-   "name": "Ten of Cups",
-   "group": "numbered",
-   "suit": "Cups",
-   "upright": {
-    "word": "creates lasting harmony",
-    "text": ""
-   },
-   "reversed": {
-    "word": "shatters a family’s peace",
-    "text": ""
-   }
-  },
-  {
-   "id": "swords-ace",
-   "name": "Ace of Swords",
-   "group": "numbered",
-   "suit": "Swords",
-   "upright": {
-    "word": "strikes with mental clarity",
-    "text": ""
-   },
-   "reversed": {
-    "word": "muddles the truth with lies",
-    "text": ""
-   }
-  },
-  {
-   "id": "swords-two",
-   "name": "Two of Swords",
-   "group": "numbered",
-   "suit": "Swords",
-   "upright": {
-    "word": "balances on the edge of indecision",
-    "text": ""
-   },
-   "reversed": {
-    "word": "refuses to see the obvious",
-    "text": ""
-   }
-  },
-  {
-   "id": "swords-three",
-   "name": "Three of Swords",
-   "group": "numbered",
-   "suit": "Swords",
-   "upright": {
-    "word": "heals through painful truths",
-    "text": ""
-   },
-   "reversed": {
-    "word": "weaponizes their old wounds",
-    "text": ""
-   }
-  },
-  {
-   "id": "swords-four",
-   "name": "Four of Swords",
-   "group": "numbered",
-   "suit": "Swords",
-   "upright": {
-    "word": "recovers in the midst of battle",
-    "text": ""
-   },
-   "reversed": {
-    "word": "burns out at the worst moment",
-    "text": ""
-   }
-  },
-  {
-   "id": "swords-five",
-   "name": "Five of Swords",
-   "group": "numbered",
-   "suit": "Swords",
-   "upright": {
-    "word": "wins at any cost",
-    "text": ""
-   },
-   "reversed": {
-    "word": "loses with zero dignity",
-    "text": ""
-   }
-  },
-  {
-   "id": "swords-six",
-   "name": "Six of Swords",
-   "group": "numbered",
-   "suit": "Swords",
-   "upright": {
-    "word": "guides others through stormy waters",
-    "text": ""
-   },
-   "reversed": {
-    "word": "drifts into dangerous territory",
-    "text": ""
-   }
-  },
-  {
-   "id": "swords-seven",
-   "name": "Seven of Swords",
-   "group": "numbered",
-   "suit": "Swords",
-   "upright": {
-    "word": "steals from the shadows",
-    "text": ""
-   },
-   "reversed": {
-    "word": "gets caught in their own web",
-    "text": ""
-   }
-  },
-  {
-   "id": "swords-eight",
-   "name": "Eight of Swords",
-   "group": "numbered",
-   "suit": "Swords",
-   "upright": {
-    "word": "escapes every cage",
-    "text": ""
-   },
-   "reversed": {
-    "word": "traps themselves in a mental cage",
-    "text": ""
-   }
-  },
-  {
-   "id": "swords-nine",
-   "name": "Nine of Swords",
-   "group": "numbered",
-   "suit": "Swords",
-   "upright": {
-    "word": "weaponizes the fears of others",
-    "text": ""
-   },
-   "reversed": {
-    "word": "succumbs to their own nightmares",
-    "text": ""
-   }
-  },
-  {
-   "id": "swords-ten",
-   "name": "Ten of Swords",
-   "group": "numbered",
-   "suit": "Swords",
-   "upright": {
-    "word": "survives total betrayal",
-    "text": ""
-   },
-   "reversed": {
-    "word": "invites their own betrayal",
-    "text": ""
-   }
-  },
-  {
-   "id": "pentacles-ace",
-   "name": "Ace of Pentacles",
-   "group": "numbered",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "discovers hidden wealth",
-    "text": ""
-   },
-   "reversed": {
-    "word": "squanders a golden opportunity",
-    "text": ""
-   }
-  },
-  {
-   "id": "pentacles-two",
-   "name": "Two of Pentacles",
-   "group": "numbered",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "juggles impossible demands",
-    "text": ""
-   },
-   "reversed": {
-    "word": "fumbles a delicate balance",
-    "text": ""
-   }
-  },
-  {
-   "id": "pentacles-three",
-   "name": "Three of Pentacles",
-   "group": "numbered",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "builds lasting monuments",
-    "text": ""
-   },
-   "reversed": {
-    "word": "sabotages the work of masters",
-    "text": ""
-   }
-  },
-  {
-   "id": "pentacles-four",
-   "name": "Four of Pentacles",
-   "group": "numbered",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "secures vital resources",
-    "text": ""
-   },
-   "reversed": {
-    "word": "hoards what they cannot use",
-    "text": ""
-   }
-  },
-  {
-   "id": "pentacles-five",
-   "name": "Five of Pentacles",
-   "group": "numbered",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "endures extreme hardship",
-    "text": ""
-   },
-   "reversed": {
-    "word": "begs for what they should earn",
-    "text": ""
-   }
-  },
-  {
-   "id": "pentacles-six",
-   "name": "Six of Pentacles",
-   "group": "numbered",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "distributes wealth and favors",
-    "text": ""
-   },
-   "reversed": {
-    "word": "uses charity to control others",
-    "text": ""
-   }
-  },
-  {
-   "id": "pentacles-seven",
-   "name": "Seven of Pentacles",
-   "group": "numbered",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "waits for the long harvest",
-    "text": ""
-   },
-   "reversed": {
-    "word": "abandons the harvest too early",
-    "text": ""
-   }
-  },
-  {
-   "id": "pentacles-eight",
-   "name": "Eight of Pentacles",
-   "group": "numbered",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "masters complex crafts",
-    "text": ""
-   },
-   "reversed": {
-    "word": "shortcuts a complex process",
-    "text": ""
-   }
-  },
-  {
-   "id": "pentacles-nine",
-   "name": "Nine of Pentacles",
-   "group": "numbered",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "tames the wild world",
-    "text": ""
-   },
-   "reversed": {
-    "word": "pretends to be self-made",
-    "text": ""
-   }
-  },
-  {
-   "id": "pentacles-ten",
-   "name": "Ten of Pentacles",
-   "group": "numbered",
-   "suit": "Pentacles",
-   "upright": {
-    "word": "upholds a massive legacy",
-    "text": ""
-   },
-   "reversed": {
-    "word": "dishonors a family name",
-    "text": ""
-   }
-  }
- ]
+  "_comment": "Tarot decks from the Tag & Tally SRD (https://srd.tagandtally.quest/generators/tarot/character-sentence/), CC BY-SA 4.0. Major Arcana = descriptors, court cards = types, numbered cards = what the character does. Flaws per card from srd.tagandtally.quest/generators/tarot/flaws (CC BY-SA 4.0).",
+  "cards": [
+    {
+      "id": "0-the-fool",
+      "name": "0 The Fool",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Carefree",
+        "text": "A character unburdened by worry or consequence.",
+        "flaw": "Recklessness"
+      },
+      "reversed": {
+        "word": "Reckless",
+        "text": "A character who ignores all red flags.",
+        "flaw": "Stagnation"
+      }
+    },
+    {
+      "id": "i-the-magician",
+      "name": "I The Magician",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Resourceful",
+        "text": "A character who can make a tool out of anything.",
+        "flaw": "Manipulation"
+      },
+      "reversed": {
+        "word": "Manipulative",
+        "text": "A character who views people as instruments.",
+        "flaw": "Creative Blockage"
+      }
+    },
+    {
+      "id": "ii-the-high-priestess",
+      "name": "II The High Priestess",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Enigmatic",
+        "text": "A character who is a deep, quiet mystery.",
+        "flaw": "Secretiveness"
+      },
+      "reversed": {
+        "word": "Secretive",
+        "text": "A character who hides things even when it's unnecessary.",
+        "flaw": "Superficiality"
+      }
+    },
+    {
+      "id": "iii-the-empress",
+      "name": "III The Empress",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Nurturing",
+        "text": "A character who naturally grows and protects life.",
+        "flaw": "Smothering"
+      },
+      "reversed": {
+        "word": "Smothering",
+        "text": "A character whose \"care\" is a form of control.",
+        "flaw": "Negligence"
+      }
+    },
+    {
+      "id": "iv-the-emperor",
+      "name": "IV The Emperor",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Disciplined",
+        "text": "A character defined by structure and order.",
+        "flaw": "Tyranny"
+      },
+      "reversed": {
+        "word": "Tyrannical",
+        "text": "A character who demands absolute obedience.",
+        "flaw": "Incompetence"
+      }
+    },
+    {
+      "id": "v-the-hierophant",
+      "name": "V The Hierophant",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Traditional",
+        "text": "A character who is a pillar of their community.",
+        "flaw": "Dogmatism"
+      },
+      "reversed": {
+        "word": "Subversive",
+        "text": "A character who actively challenges the status quo.",
+        "flaw": "Rebellion"
+      }
+    },
+    {
+      "id": "vi-the-lovers",
+      "name": "VI The Lovers",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Devoted",
+        "text": "A character defined by their intense loyalty.",
+        "flaw": "Indecision"
+      },
+      "reversed": {
+        "word": "Indecisive",
+        "text": "A character torn between two worldviews.",
+        "flaw": "Disharmony"
+      }
+    },
+    {
+      "id": "vii-the-chariot",
+      "name": "VII The Chariot",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Driven",
+        "text": "A character with an unshakeable sense of purpose.",
+        "flaw": "Aggression"
+      },
+      "reversed": {
+        "word": "Aggressive",
+        "text": "A character who forces their way through every problem.",
+        "flaw": "Directionless"
+      }
+    },
+    {
+      "id": "viii-strength",
+      "name": "VIII Strength",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Resilient",
+        "text": "A character with a quiet, inner toughness.",
+        "flaw": "Vanity"
+      },
+      "reversed": {
+        "word": "Volatile",
+        "text": "A character struggling to keep their temper in check.",
+        "flaw": "Hedonism"
+      }
+    },
+    {
+      "id": "ix-the-hermit",
+      "name": "IX The Hermit",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Introspective",
+        "text": "A character who seeks their own truth in silence.",
+        "flaw": "Isolationism"
+      },
+      "reversed": {
+        "word": "Isolated",
+        "text": "A character who has cut themselves off from society.",
+        "flaw": "Loneliness"
+      }
+    },
+    {
+      "id": "x-wheel-of-fortune",
+      "name": "X Wheel of Fortune",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Adaptable",
+        "text": "A character who flows with the changes of life.",
+        "flaw": "Fatalism"
+      },
+      "reversed": {
+        "word": "Fatalistic",
+        "text": "A character who believes they are doomed by luck.",
+        "flaw": "Resistance"
+      }
+    },
+    {
+      "id": "xi-justice",
+      "name": "XI Justice",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Objective",
+        "text": "A character who values fairness over personal feelings.",
+        "flaw": "Judgmentalism"
+      },
+      "reversed": {
+        "word": "Judgmental",
+        "text": "A character quick to condemn others.",
+        "flaw": "Unfairness"
+      }
+    },
+    {
+      "id": "xii-the-hanged-man",
+      "name": "XII The Hanged Man",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Patient",
+        "text": "A character willing to wait for the right moment.",
+        "flaw": "Martyrdom"
+      },
+      "reversed": {
+        "word": "Self-Sacrificing",
+        "text": "A character who habitually martyrs themselves.",
+        "flaw": "Selfishness"
+      }
+    },
+    {
+      "id": "xiii-death",
+      "name": "XIII Death",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Transformative",
+        "text": "A character who is constantly reinventing themselves.",
+        "flaw": "Obsession"
+      },
+      "reversed": {
+        "word": "Morbid",
+        "text": "A character obsessed with endings and the past.",
+        "flaw": "Decay"
+      }
+    },
+    {
+      "id": "xiv-temperance",
+      "name": "XIV Temperance",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Harmonious",
+        "text": "A character who seeks balance in all things.",
+        "flaw": "Blandness"
+      },
+      "reversed": {
+        "word": "Immoderate",
+        "text": "A character who lives in a state of constant excess.",
+        "flaw": "Excess"
+      }
+    },
+    {
+      "id": "xv-the-devil",
+      "name": "XV The Devil",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Ambitious",
+        "text": "A character driven by worldly power or desire.",
+        "flaw": "Addiction"
+      },
+      "reversed": {
+        "word": "Obsessive",
+        "text": "A character \"chained\" to a single dark habit or idea.",
+        "flaw": "Denial"
+      }
+    },
+    {
+      "id": "xvi-the-tower",
+      "name": "XVI The Tower",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Disruptive",
+        "text": "A character who breaks down stagnant systems.",
+        "flaw": "Volatility"
+      },
+      "reversed": {
+        "word": "Fractured",
+        "text": "A character who has survived a total collapse.",
+        "flaw": "Fragility"
+      }
+    },
+    {
+      "id": "xvii-the-star",
+      "name": "XVII The Star",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Optimistic",
+        "text": "A character who radiates hope even in the dark.",
+        "flaw": "Naivety"
+      },
+      "reversed": {
+        "word": "Disillusioned",
+        "text": "A character who has lost their faith in the world.",
+        "flaw": "Pessimism"
+      }
+    },
+    {
+      "id": "xviii-the-moon",
+      "name": "XVIII The Moon",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Imaginative",
+        "text": "A character who lives in a world of dreams and symbols.",
+        "flaw": "Paranoia"
+      },
+      "reversed": {
+        "word": "Paranoid",
+        "text": "A character who sees shadows and lies everywhere.",
+        "flaw": "Confusion"
+      }
+    },
+    {
+      "id": "xix-the-sun",
+      "name": "XIX The Sun",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Radiant",
+        "text": "A character whose presence brings clarity and joy.",
+        "flaw": "Arrogance"
+      },
+      "reversed": {
+        "word": "Conceited",
+        "text": "A character blinded by their own self-importance.",
+        "flaw": "Depression"
+      }
+    },
+    {
+      "id": "xx-judgement",
+      "name": "XX Judgement",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Decisive",
+        "text": "A character driven by a clear, high calling.",
+        "flaw": "Self-Righteousness"
+      },
+      "reversed": {
+        "word": "Self-Critical",
+        "text": "A character paralyzed by their own mistakes.",
+        "flaw": "Self-Doubt"
+      }
+    },
+    {
+      "id": "xxi-the-world",
+      "name": "XXI The World",
+      "group": "major",
+      "suit": null,
+      "upright": {
+        "word": "Accomplished",
+        "text": "A character who has seen and mastered much.",
+        "flaw": "Perfectionism"
+      },
+      "reversed": {
+        "word": "Insular",
+        "text": "A character whose world is very small and rigid.",
+        "flaw": "Incompleteness"
+      }
+    },
+    {
+      "id": "wands-page",
+      "name": "Page of Wands",
+      "group": "court",
+      "suit": "Wands",
+      "upright": {
+        "word": "Trailblazer",
+        "text": "One who finds new paths or starts new trends.",
+        "flaw": "Faddism"
+      },
+      "reversed": {
+        "word": "Firebrand",
+        "text": "One who agitates and stirs up trouble for its own sake.",
+        "flaw": "Indecisiveness"
+      }
+    },
+    {
+      "id": "wands-knight",
+      "name": "Knight of Wands",
+      "group": "court",
+      "suit": "Wands",
+      "upright": {
+        "word": "Daredevil",
+        "text": "One who takes high-speed risks to achieve glory.",
+        "flaw": "Impulsivity"
+      },
+      "reversed": {
+        "word": "Mercenary",
+        "text": "One who fights only for the thrill or the payout.",
+        "flaw": "Short-Temperedness"
+      }
+    },
+    {
+      "id": "wands-queen",
+      "name": "Queen of Wands",
+      "group": "court",
+      "suit": "Wands",
+      "upright": {
+        "word": "Icon",
+        "text": "One who leads through charisma and sheer force of personality.",
+        "flaw": "Domineering"
+      },
+      "reversed": {
+        "word": "Rival",
+        "text": "One who seeks to outshine or sabotage all competition.",
+        "flaw": "Jealousy"
+      }
+    },
+    {
+      "id": "wands-king",
+      "name": "King of Wands",
+      "group": "court",
+      "suit": "Wands",
+      "upright": {
+        "word": "Commander",
+        "text": "One who directs others toward a grand, singular vision.",
+        "flaw": "Intolerance"
+      },
+      "reversed": {
+        "word": "Autocrat",
+        "text": "One who demands total control over every subordinate.",
+        "flaw": "Abrasiveness"
+      }
+    },
+    {
+      "id": "cups-page",
+      "name": "Page of Cups",
+      "group": "court",
+      "suit": "Cups",
+      "upright": {
+        "word": "Idealist",
+        "text": "One who sees the beauty and potential in everything.",
+        "flaw": "Sensitivity"
+      },
+      "reversed": {
+        "word": "Escapist",
+        "text": "One who hides from reality in dreams or substances.",
+        "flaw": "Escapism"
+      }
+    },
+    {
+      "id": "cups-knight",
+      "name": "Knight of Cups",
+      "group": "court",
+      "suit": "Cups",
+      "upright": {
+        "word": "Envoy",
+        "text": "One who carries messages of peace, love, or alliance.",
+        "flaw": "Unrealistic"
+      },
+      "reversed": {
+        "word": "Heartbreaker",
+        "text": "One who manipulates the emotions of others for sport.",
+        "flaw": "Melodrama"
+      }
+    },
+    {
+      "id": "cups-queen",
+      "name": "Queen of Cups",
+      "group": "court",
+      "suit": "Cups",
+      "upright": {
+        "word": "Confidant",
+        "text": "One who provides a safe harbor and deep counsel.",
+        "flaw": "Smothering"
+      },
+      "reversed": {
+        "word": "Martyr",
+        "text": "One who drains others by constantly playing the victim.",
+        "flaw": "Instability"
+      }
+    },
+    {
+      "id": "cups-king",
+      "name": "King of Cups",
+      "group": "court",
+      "suit": "Cups",
+      "upright": {
+        "word": "Mediator",
+        "text": "One who balances warring factions and keeps the peace.",
+        "flaw": "Stoicism"
+      },
+      "reversed": {
+        "word": "Puppeteer",
+        "text": "One who uses emotional intelligence to pull strings.",
+        "flaw": "Coldness"
+      }
+    },
+    {
+      "id": "swords-page",
+      "name": "Page of Swords",
+      "group": "court",
+      "suit": "Swords",
+      "upright": {
+        "word": "Informant",
+        "text": "One who watches, listens, and gathers vital data.",
+        "flaw": "Snoopiness"
+      },
+      "reversed": {
+        "word": "Slanderer",
+        "text": "One who weaponizes secrets to destroy enemies.",
+        "flaw": "Deceit"
+      }
+    },
+    {
+      "id": "swords-knight",
+      "name": "Knight of Swords",
+      "group": "court",
+      "suit": "Swords",
+      "upright": {
+        "word": "Zealot",
+        "text": "One who pursues a truth or cause with absolute focus.",
+        "flaw": "Fanaticism"
+      },
+      "reversed": {
+        "word": "Iconoclast",
+        "text": "One who seeks to destroy all established beliefs.",
+        "flaw": "Insolence"
+      }
+    },
+    {
+      "id": "swords-queen",
+      "name": "Queen of Swords",
+      "group": "court",
+      "suit": "Swords",
+      "upright": {
+        "word": "Arbitrator",
+        "text": "One who cuts through lies to find the objective truth.",
+        "flaw": "Cynicism"
+      },
+      "reversed": {
+        "word": "Cynic",
+        "text": "One who believes everything is inherently broken or corrupt.",
+        "flaw": "Bitterness"
+      }
+    },
+    {
+      "id": "swords-king",
+      "name": "King of Swords",
+      "group": "court",
+      "suit": "Swords",
+      "upright": {
+        "word": "Strategist",
+        "text": "One who masters the rules of the game to win.",
+        "flaw": "Judgment"
+      },
+      "reversed": {
+        "word": "Executioner",
+        "text": "One who delivers cold, final judgment without mercy.",
+        "flaw": "Cruelty"
+      }
+    },
+    {
+      "id": "pentacles-page",
+      "name": "Page of Pentacles",
+      "group": "court",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "Scholar",
+        "text": "One who is dedicated to learning a specific, practical trade.",
+        "flaw": "Dilettante"
+      },
+      "reversed": {
+        "word": "Scavenger",
+        "text": "One who survives on the scraps and leavings of others.",
+        "flaw": "Laziness"
+      }
+    },
+    {
+      "id": "pentacles-knight",
+      "name": "Knight of Pentacles",
+      "group": "court",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "Warden",
+        "text": "One who protects resources and ensures everything runs on time.",
+        "flaw": "Stagnation"
+      },
+      "reversed": {
+        "word": "Drifter",
+        "text": "One who lacks a home, a trade, or a steady purpose.",
+        "flaw": "Boredom"
+      }
+    },
+    {
+      "id": "pentacles-queen",
+      "name": "Queen of Pentacles",
+      "group": "court",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "Provider",
+        "text": "One who builds a community and ensures its material comfort.",
+        "flaw": "Possessiveness"
+      },
+      "reversed": {
+        "word": "Socialite",
+        "text": "One who values status symbols and wealth above all else.",
+        "flaw": "Insecurity"
+      }
+    },
+    {
+      "id": "pentacles-king",
+      "name": "King of Pentacles",
+      "group": "court",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "Magnate",
+        "text": "One who has built a physical empire or massive estate.",
+        "flaw": "Greed"
+      },
+      "reversed": {
+        "word": "Hoarder",
+        "text": "One who accumulates wealth but refuses to use or share it.",
+        "flaw": "Materialism"
+      }
+    },
+    {
+      "id": "wands-ace",
+      "name": "Ace of Wands",
+      "group": "numbered",
+      "suit": "Wands",
+      "upright": {
+        "word": "ignites new movements",
+        "text": "",
+        "flaw": "Hyperactivity"
+      },
+      "reversed": {
+        "word": "extinguishes the sparks of others",
+        "text": "",
+        "flaw": "Lack of Initiative"
+      }
+    },
+    {
+      "id": "wands-two",
+      "name": "Two of Wands",
+      "group": "numbered",
+      "suit": "Wands",
+      "upright": {
+        "word": "charts unknown horizons",
+        "text": "",
+        "flaw": "Arrogance"
+      },
+      "reversed": {
+        "word": "hesitates at the finish line",
+        "text": "",
+        "flaw": "Fear of the Unknown"
+      }
+    },
+    {
+      "id": "wands-three",
+      "name": "Three of Wands",
+      "group": "numbered",
+      "suit": "Wands",
+      "upright": {
+        "word": "commands distant ventures",
+        "text": "",
+        "flaw": "Detachment"
+      },
+      "reversed": {
+        "word": "ignores the warnings of the sea",
+        "text": "",
+        "flaw": "Short-sightedness"
+      }
+    },
+    {
+      "id": "wands-four",
+      "name": "Four of Wands",
+      "group": "numbered",
+      "suit": "Wands",
+      "upright": {
+        "word": "fosters safe havens",
+        "text": "",
+        "flaw": "Complacency"
+      },
+      "reversed": {
+        "word": "disrupts the peace of home",
+        "text": "",
+        "flaw": "Unsettledness"
+      }
+    },
+    {
+      "id": "wands-five",
+      "name": "Five of Wands",
+      "group": "numbered",
+      "suit": "Wands",
+      "upright": {
+        "word": "thrives in chaotic competition",
+        "text": "",
+        "flaw": "Contradictoriness"
+      },
+      "reversed": {
+        "word": "incites needless brawls",
+        "text": "",
+        "flaw": "Conflict Avoidance"
+      }
+    },
+    {
+      "id": "wands-six",
+      "name": "Six of Wands",
+      "group": "numbered",
+      "suit": "Wands",
+      "upright": {
+        "word": "inspires public victory",
+        "text": "",
+        "flaw": "Narcissism"
+      },
+      "reversed": {
+        "word": "fakes a legendary reputation",
+        "text": "",
+        "flaw": "Disrepute"
+      }
+    },
+    {
+      "id": "wands-seven",
+      "name": "Seven of Wands",
+      "group": "numbered",
+      "suit": "Wands",
+      "upright": {
+        "word": "defends the impossible high-ground",
+        "text": "",
+        "flaw": "Defensiveness"
+      },
+      "reversed": {
+        "word": "surrenders to the smallest pressure",
+        "text": "",
+        "flaw": "Cowardice"
+      }
+    },
+    {
+      "id": "wands-eight",
+      "name": "Eight of Wands",
+      "group": "numbered",
+      "suit": "Wands",
+      "upright": {
+        "word": "delivers messages at blurring speeds",
+        "text": "",
+        "flaw": "Impatience"
+      },
+      "reversed": {
+        "word": "stagnates in a fast world",
+        "text": "",
+        "flaw": "Sluggishness"
+      }
+    },
+    {
+      "id": "wands-nine",
+      "name": "Nine of Wands",
+      "group": "numbered",
+      "suit": "Wands",
+      "upright": {
+        "word": "guards the final threshold",
+        "text": "",
+        "flaw": "Paranoia"
+      },
+      "reversed": {
+        "word": "leaves the gate wide open",
+        "text": "",
+        "flaw": "Defensive Exhaustion"
+      }
+    },
+    {
+      "id": "wands-ten",
+      "name": "Ten of Wands",
+      "group": "numbered",
+      "suit": "Wands",
+      "upright": {
+        "word": "shoulders the burdens of others",
+        "text": "",
+        "flaw": "Over-extension"
+      },
+      "reversed": {
+        "word": "collapses under a self-made burden",
+        "text": "",
+        "flaw": "Irresponsibility"
+      }
+    },
+    {
+      "id": "cups-ace",
+      "name": "Ace of Cups",
+      "group": "numbered",
+      "suit": "Cups",
+      "upright": {
+        "word": "channels emotional power",
+        "text": "",
+        "flaw": "Emotional Volatility"
+      },
+      "reversed": {
+        "word": "repels all emotional connection",
+        "text": "",
+        "flaw": "Emotional Blockage"
+      }
+    },
+    {
+      "id": "cups-two",
+      "name": "Two of Cups",
+      "group": "numbered",
+      "suit": "Cups",
+      "upright": {
+        "word": "forges unbreakable bonds",
+        "text": "",
+        "flaw": "Codependency"
+      },
+      "reversed": {
+        "word": "breaks every promise they make",
+        "text": "",
+        "flaw": "Social Friction"
+      }
+    },
+    {
+      "id": "cups-three",
+      "name": "Three of Cups",
+      "group": "numbered",
+      "suit": "Cups",
+      "upright": {
+        "word": "unites disparate groups",
+        "text": "",
+        "flaw": "Over-indulgence"
+      },
+      "reversed": {
+        "word": "isolates themselves from the group",
+        "text": "",
+        "flaw": "Hedonism"
+      }
+    },
+    {
+      "id": "cups-four",
+      "name": "Four of Cups",
+      "group": "numbered",
+      "suit": "Cups",
+      "upright": {
+        "word": "finds clarity in silence",
+        "text": "",
+        "flaw": "Apathy"
+      },
+      "reversed": {
+        "word": "discards perfectly good chances",
+        "text": "",
+        "flaw": "Restlessness"
+      }
+    },
+    {
+      "id": "cups-five",
+      "name": "Five of Cups",
+      "group": "numbered",
+      "suit": "Cups",
+      "upright": {
+        "word": "reclaims beauty from loss",
+        "text": "",
+        "flaw": "Melancholy"
+      },
+      "reversed": {
+        "word": "wallows in ancient heartbreaks",
+        "text": "",
+        "flaw": "Self-Pity"
+      }
+    },
+    {
+      "id": "cups-six",
+      "name": "Six of Cups",
+      "group": "numbered",
+      "suit": "Cups",
+      "upright": {
+        "word": "restores forgotten memories",
+        "text": "",
+        "flaw": "Nostalgia"
+      },
+      "reversed": {
+        "word": "clings to a dead past",
+        "text": "",
+        "flaw": "Arrested Development"
+      }
+    },
+    {
+      "id": "cups-seven",
+      "name": "Seven of Cups",
+      "group": "numbered",
+      "suit": "Cups",
+      "upright": {
+        "word": "conjures vivid illusions",
+        "text": "",
+        "flaw": "Escapism"
+      },
+      "reversed": {
+        "word": "confuses dreams for reality",
+        "text": "",
+        "flaw": "Delusion"
+      }
+    },
+    {
+      "id": "cups-eight",
+      "name": "Eight of Cups",
+      "group": "numbered",
+      "suit": "Cups",
+      "upright": {
+        "word": "walks away from everything",
+        "text": "",
+        "flaw": "Abandonment"
+      },
+      "reversed": {
+        "word": "returns to a toxic life",
+        "text": "",
+        "flaw": "Aimlessness"
+      }
+    },
+    {
+      "id": "cups-nine",
+      "name": "Nine of Cups",
+      "group": "numbered",
+      "suit": "Cups",
+      "upright": {
+        "word": "grants the wishes of others",
+        "text": "",
+        "flaw": "Smugness"
+      },
+      "reversed": {
+        "word": "denies themselves any joy",
+        "text": "",
+        "flaw": "Over-consumption"
+      }
+    },
+    {
+      "id": "cups-ten",
+      "name": "Ten of Cups",
+      "group": "numbered",
+      "suit": "Cups",
+      "upright": {
+        "word": "creates lasting harmony",
+        "text": "",
+        "flaw": "Idealism"
+      },
+      "reversed": {
+        "word": "shatters a family’s peace",
+        "text": "",
+        "flaw": "Sabotage"
+      }
+    },
+    {
+      "id": "swords-ace",
+      "name": "Ace of Swords",
+      "group": "numbered",
+      "suit": "Swords",
+      "upright": {
+        "word": "strikes with mental clarity",
+        "text": "",
+        "flaw": "Brutality"
+      },
+      "reversed": {
+        "word": "muddles the truth with lies",
+        "text": "",
+        "flaw": "Confusion"
+      }
+    },
+    {
+      "id": "swords-two",
+      "name": "Two of Swords",
+      "group": "numbered",
+      "suit": "Swords",
+      "upright": {
+        "word": "balances on the edge of indecision",
+        "text": "",
+        "flaw": "Avoidance"
+      },
+      "reversed": {
+        "word": "refuses to see the obvious",
+        "text": "",
+        "flaw": "Information Overload"
+      }
+    },
+    {
+      "id": "swords-three",
+      "name": "Three of Swords",
+      "group": "numbered",
+      "suit": "Swords",
+      "upright": {
+        "word": "heals through painful truths",
+        "text": "",
+        "flaw": "Self-Sabotage"
+      },
+      "reversed": {
+        "word": "weaponizes their old wounds",
+        "text": "",
+        "flaw": "Repression"
+      }
+    },
+    {
+      "id": "swords-four",
+      "name": "Four of Swords",
+      "group": "numbered",
+      "suit": "Swords",
+      "upright": {
+        "word": "recovers in the midst of battle",
+        "text": "",
+        "flaw": "Withdrawal"
+      },
+      "reversed": {
+        "word": "burns out at the worst moment",
+        "text": "",
+        "flaw": "Burnout"
+      }
+    },
+    {
+      "id": "swords-five",
+      "name": "Five of Swords",
+      "group": "numbered",
+      "suit": "Swords",
+      "upright": {
+        "word": "wins at any cost",
+        "text": "",
+        "flaw": "Ruthlessness"
+      },
+      "reversed": {
+        "word": "loses with zero dignity",
+        "text": "",
+        "flaw": "Humiliation"
+      }
+    },
+    {
+      "id": "swords-six",
+      "name": "Six of Swords",
+      "group": "numbered",
+      "suit": "Swords",
+      "upright": {
+        "word": "guides others through stormy waters",
+        "text": "",
+        "flaw": "Baggage"
+      },
+      "reversed": {
+        "word": "drifts into dangerous territory",
+        "text": "",
+        "flaw": "Stagnation"
+      }
+    },
+    {
+      "id": "swords-seven",
+      "name": "Seven of Swords",
+      "group": "numbered",
+      "suit": "Swords",
+      "upright": {
+        "word": "steals from the shadows",
+        "text": "",
+        "flaw": "Deceit"
+      },
+      "reversed": {
+        "word": "gets caught in their own web",
+        "text": "",
+        "flaw": "Self-Deception"
+      }
+    },
+    {
+      "id": "swords-eight",
+      "name": "Eight of Swords",
+      "group": "numbered",
+      "suit": "Swords",
+      "upright": {
+        "word": "escapes every cage",
+        "text": "",
+        "flaw": "Victimhood"
+      },
+      "reversed": {
+        "word": "traps themselves in a mental cage",
+        "text": "",
+        "flaw": "Mental Prison"
+      }
+    },
+    {
+      "id": "swords-nine",
+      "name": "Nine of Swords",
+      "group": "numbered",
+      "suit": "Swords",
+      "upright": {
+        "word": "weaponizes the fears of others",
+        "text": "",
+        "flaw": "Anxiety"
+      },
+      "reversed": {
+        "word": "succumbs to their own nightmares",
+        "text": "",
+        "flaw": "Despair"
+      }
+    },
+    {
+      "id": "swords-ten",
+      "name": "Ten of Swords",
+      "group": "numbered",
+      "suit": "Swords",
+      "upright": {
+        "word": "survives total betrayal",
+        "text": "",
+        "flaw": "Dramatics"
+      },
+      "reversed": {
+        "word": "invites their own betrayal",
+        "text": "",
+        "flaw": "Victim Mentality"
+      }
+    },
+    {
+      "id": "pentacles-ace",
+      "name": "Ace of Pentacles",
+      "group": "numbered",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "discovers hidden wealth",
+        "text": "",
+        "flaw": "Materialism"
+      },
+      "reversed": {
+        "word": "squanders a golden opportunity",
+        "text": "",
+        "flaw": "Greed"
+      }
+    },
+    {
+      "id": "pentacles-two",
+      "name": "Two of Pentacles",
+      "group": "numbered",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "juggles impossible demands",
+        "text": "",
+        "flaw": "Unreliability"
+      },
+      "reversed": {
+        "word": "fumbles a delicate balance",
+        "text": "",
+        "flaw": "Disorganization"
+      }
+    },
+    {
+      "id": "pentacles-three",
+      "name": "Three of Pentacles",
+      "group": "numbered",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "builds lasting monuments",
+        "text": "",
+        "flaw": "Elitism"
+      },
+      "reversed": {
+        "word": "sabotages the work of masters",
+        "text": "",
+        "flaw": "Fraudulence"
+      }
+    },
+    {
+      "id": "pentacles-four",
+      "name": "Four of Pentacles",
+      "group": "numbered",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "secures vital resources",
+        "text": "",
+        "flaw": "Stinginess"
+      },
+      "reversed": {
+        "word": "hoards what they cannot use",
+        "text": "",
+        "flaw": "Possessiveness"
+      }
+    },
+    {
+      "id": "pentacles-five",
+      "name": "Five of Pentacles",
+      "group": "numbered",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "endures extreme hardship",
+        "text": "",
+        "flaw": "Poverty Mindset"
+      },
+      "reversed": {
+        "word": "begs for what they should earn",
+        "text": "",
+        "flaw": "Spiritual Poverty"
+      }
+    },
+    {
+      "id": "pentacles-six",
+      "name": "Six of Pentacles",
+      "group": "numbered",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "distributes wealth and favors",
+        "text": "",
+        "flaw": "Power-Tripping"
+      },
+      "reversed": {
+        "word": "uses charity to control others",
+        "text": "",
+        "flaw": "Debt"
+      }
+    },
+    {
+      "id": "pentacles-seven",
+      "name": "Seven of Pentacles",
+      "group": "numbered",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "waits for the long harvest",
+        "text": "",
+        "flaw": "Discontent"
+      },
+      "reversed": {
+        "word": "abandons the harvest too early",
+        "text": "",
+        "flaw": "Impatience"
+      }
+    },
+    {
+      "id": "pentacles-eight",
+      "name": "Eight of Pentacles",
+      "group": "numbered",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "masters complex crafts",
+        "text": "",
+        "flaw": "Workaholism"
+      },
+      "reversed": {
+        "word": "shortcuts a complex process",
+        "text": "",
+        "flaw": "Perfectionism"
+      }
+    },
+    {
+      "id": "pentacles-nine",
+      "name": "Nine of Pentacles",
+      "group": "numbered",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "tames the wild world",
+        "text": "",
+        "flaw": "Isolation"
+      },
+      "reversed": {
+        "word": "pretends to be self-made",
+        "text": "",
+        "flaw": "False Success"
+      }
+    },
+    {
+      "id": "pentacles-ten",
+      "name": "Ten of Pentacles",
+      "group": "numbered",
+      "suit": "Pentacles",
+      "upright": {
+        "word": "upholds a massive legacy",
+        "text": "",
+        "flaw": "Nepotism"
+      },
+      "reversed": {
+        "word": "dishonors a family name",
+        "text": "",
+        "flaw": "Trapped"
+      }
+    }
+  ]
 }

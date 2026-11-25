@@ -416,7 +416,6 @@
 .tagandtally.tarot .tt-toolbar { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
 .tagandtally.tarot .tt-toolbar .tt-controls { margin-left: auto; display: flex; gap: 0.3rem; flex-wrap: wrap; }
 .tagandtally .tt-tarot-spread { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.5rem; }
-.tagandtally .tt-tarot-spread.cross { grid-template-columns: repeat(5, 1fr); }
 .tagandtally .tt-tarot-card { border: 1px solid var(--tt-border); border-radius: 8px; padding: 0.4rem 0.5rem; background: rgba(0,0,0,0.12); display: flex; flex-direction: column; gap: 0.25rem; min-height: 8em; border-top-width: 4px; }
 .tagandtally .tt-tarot-card.major { border-top-color: #b8860b; }
 .tagandtally .tt-tarot-card.wands { border-top-color: #c0392b; }
@@ -447,3 +446,18 @@
 .tagandtally .tt-build-abilities li { display: flex; flex-direction: column; gap: 0.15rem; }
 .tagandtally .tt-build-abilities li.missing-flaw .tt-flaw { border-color: #b33; }
 .tagandtally .tt-build-abilities .tt-flaw { font-style: italic; }
+
+/* Prophecy verses */
+.tagandtally .tt-prophecy { list-style: none; margin: 0.5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.tagandtally .tt-verse { border: 1px solid var(--tt-border); border-radius: 8px; padding: 0.4rem 0.6rem; background: rgba(0,0,0,0.12); }
+.tagandtally .tt-verse header { display: flex; gap: 0.5rem; align-items: baseline; }
+.tagandtally .tt-verse .tt-sentence { margin: 0.2rem 0; }
+.tagandtally .tt-verse-bits { display: flex; flex-wrap: wrap; gap: 0.3rem 0.8rem; font-size: 0.85em; }
+.tagandtally .tt-verse-bits .tt-bit a { cursor: pointer; opacity: 0.6; }
+.tagandtally .tt-verse-bits .tt-bit a:hover { opacity: 1; }
+/* Campaign dialog */
+.tt-campaign-dialog .form-group { align-items: center; }
+.tt-campaign-dialog .form-fields { display: flex; gap: 0.3rem; }
+.tt-campaign-dialog .tt-campaign-steps { display: flex; flex-direction: column; gap: 0.3rem; margin: 0.4rem 0; border: 1px solid var(--color-border-light-2, #999); border-radius: 4px; padding: 0.3rem 0.6rem; }
+.tt-campaign-dialog .tt-campaign-steps label { display: flex; align-items: flex-start; gap: 0.4rem; }
+.tt-campaign-dialog .tt-campaign-steps input { flex: 0 0 auto; margin-top: 0.15rem; }

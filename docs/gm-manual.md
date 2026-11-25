@@ -63,7 +63,7 @@ player character in one table (sentence, wounds, wealth, MAI, loadout).
 "Species & Types" Items folder, each with the SRD creation sheet on its tag: the sentence,
 languages (species) or parent type (types), magic access with aspects or casting means and a
 base MAI, one weakness and the abilities. Two abilities are free; each one beyond two needs
-a flaw, and the sheet marks the ones still missing. Every field rerolls from Sparks, the wand
+a flaw drawn from the SRD tarot flaws (the dice beside it draws another), and the sheet marks the ones still missing. Every field rerolls from Sparks, the wand
 regenerates the whole sheet. Drop a species or type on a character (or use the sheet's Apply
 button): it replaces that sentence slot, the abilities become trait tags, the weakness and
 extra flaws become hindering flaw tags, and the base MAI becomes the higher of species and
@@ -326,19 +326,24 @@ intent and stakes, spend actions (Oracle, Investigate, Socialize, Travel, Combat
 Advance time. Everything else happens through the tools it opens.
 
 **Starting a campaign.** The *Campaign* token control (or `startCampaign()`) opens a short
-wizard: a name, the Sparks theme and how many characters to roll, plus what to prepare. It
-creates a journal folder, the Campaign Chronicle, a Celtic Cross **prophecy** journal (and a
-grand quest on each character), a first quest with its giver NPC already in everyone's
-relations, the opening scene in the game loop, and asks the Oracle four opening questions
-(have they met, are they in a settlement, do they have a mission, do they work for anyone).
-The closing chat card lists what Augur Nexus still does by hand: the region or star system,
-the factions to import, the starting location and its people.
+form: a name, the Sparks theme, how many characters to roll, the start date and time when
+Simple Calendar is active, plus what to prepare. If a campaign is already ongoing it asks before
+deleting that campaign's journals (Chronicle, prophecy) and resetting the Game loop; actors are
+kept. It creates a journal folder, the Campaign Chronicle, the **Prophecy** journal with four
+grand quests on the first character, a first quest with its giver NPC already in everyone's
+relations, and the opening scene in the game loop. The closing chat card lists what Augur
+Nexus still does by hand: the region or star system, the factions to import, the starting
+location and its people.
 
-**Tarot.** The *Tarot* token control opens the SRD decks: major arcana are descriptors, court
-cards are types, numbered cards are what the character does. *Character sentence* draws one
-of each; *Celtic Cross* lays ten cards with the position meanings (heart, challenge,
-foundation, past, crown, future, self, others, hopes, outcome). Flip a card, redraw one, send
-the reading to chat, journal it as a prophecy, or apply the sentence to a character.
+**Tarot and Prophecy.** The *Tarot* token control opens the SRD decks: major arcana are
+descriptors, court cards are types, numbered cards are what the character does, and every
+card names a flaw. *Character sentence* draws one of each; flip a card, redraw one, send it to
+chat, journal it, or apply it to a character or NPC (it asks which and confirms). *Prophecy*
+rolls four verses from the Sparks tables: the opposition (a descriptor, type and what they do),
+the escalation (an emotion and a motivation), the trigger (an environment and a complication)
+and the finale (verb, adjective, noun and the benefit). Reroll any bit, journal it as the
+prophecy, or turn it into four grand quests on a character: unmask the opposition, prevent
+the escalation, stop the trigger, achieve the finale.
 
 ## 19. Playing with several GMs
 

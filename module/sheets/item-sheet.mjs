@@ -162,7 +162,10 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
   }
 
   static async #onAddAbility() {
-    const abilities = [...this.item.system.build.abilities, { name: "", text: "", flaw: "" }];
+    const { drawFlaw } = await import("../species-types.mjs");
+    const build = this.item.system.build;
+    const flaw = build.abilities.length >= 2 ? await drawFlaw(build) : "";
+    const abilities = [...build.abilities, { name: "", text: "", flaw }];
     return this.item.update({ "system.build.abilities": abilities });
   }
 
