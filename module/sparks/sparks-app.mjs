@@ -1,6 +1,7 @@
 import { TAGANDTALLY, SYSTEM_ID } from "../config.mjs";
 import { sparkTables } from "./tables.mjs";
 import { generate, loadGeneratorDefs, SparkGenerator, localizedLabel } from "./engine.mjs";
+import { builderItemData, libraryFolder } from "../species-types.mjs";
 import { createActorFromSpark, createItemFromSpark, createJournalFromSpark, postSparkToChat, postTableRoll, npcDataFromGeneration, itemDataFromGeneration } from "./create.mjs";
 import { rollOracle, rollYesNo } from "../rolls/resolution.mjs";
 
@@ -133,8 +134,14 @@ export class SparksApp extends HandlebarsApplicationMixin(ApplicationV2) {
   static async #onCreateItem(event, target) {
     const r = this.#result(target);
     if (!r) return;
-    const data = itemDataFromGeneration(r, r.generator);
-    if (this.actor) {
+    const builder = r.generator.id === "species" || r.generator.id === "type";
+    const data = builder ? await builderItemData(r.generator.id, r, { theme: this.theme }) : itemDataFromGeneration(r, r.generator);
+    if (builder && !this.actor) data.folder = (await libraryFolder()).id;
+    if (this.actor && builder) {
+      const { applyBuilderItem } = await import("../species-types.mjs");
+      const [tmp] = await Item.createDocuments([{ ...data, folder: (await libraryFolder()).id }]);
+      await applyBuilderItem(this.actor, tmp);
+    } else if (this.actor) {
       await this.actor.createEmbeddedDocuments("Item", [data]);
       ui.notifications.info(game.i18n.format("TAGANDTALLY.Sparks.ItemAdded", { name: data.name, actor: this.actor.name }));
     } else {

@@ -59,6 +59,16 @@ Tools: the **Life stages** tab shows what each stage granted and lets you roll m
 backgrounds, skills, flaws or occupations per stage. **Party overview** lists every
 player character in one table (sentence, wounds, wealth, MAI, loadout).
 
+**Species and types.** The Sparks *Species* and *Type* generators create items in the
+"Species & Types" Items folder, each with the SRD creation sheet on its tag: the sentence,
+languages (species) or parent type (types), magic access with aspects or casting means and a
+base MAI, one weakness and the abilities. Two abilities are free; each one beyond two needs
+a flaw, and the sheet marks the ones still missing. Every field rerolls from Sparks, the wand
+regenerates the whole sheet. Drop a species or type on a character (or use the sheet's Apply
+button): it replaces that sentence slot, the abilities become trait tags, the weakness and
+extra flaws become hindering flaw tags, and the base MAI becomes the higher of species and
+type. Applying another one removes everything the old one granted.
+
 ## 4. Rolling tasks
 
 Click **Roll** in the sheet header, or the icon of any tag or item. In the dialog:

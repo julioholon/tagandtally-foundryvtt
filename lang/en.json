@@ -640,7 +640,11 @@
       "ItFeatures": "It features a unique ability to",
       "Spell": "spell",
       "This": "This",
-      "LocatedOn": "located on"
+      "LocatedOn": "located on",
+      "SpeciesIsA": "This species is a",
+      "PeopleWho": "people who",
+      "TypeIsA": "This type is a",
+      "TypeKindOf": "a kind of"
     },
     "Relation": {
       "Loathing": "Loathing",
@@ -1341,6 +1345,46 @@
         "Employer": "Do they work for anyone?"
       },
       "NewCharacter": "New character"
+    },
+    "Build": {
+      "Species": "Species builder",
+      "Type": "Type builder",
+      "HintSpecies": "SRD species creation: the sentence, languages, innate magic and base MAI, one weakness and two abilities. Each ability beyond two adds a flaw. Drop the species on a character to apply it.",
+      "HintType": "SRD type creation: the sentence (the specialization starts with a verb), an optional parent type, magic access and base MAI, one weakness and two abilities. Each ability beyond two adds a flaw. Drop the type on a character to apply it.",
+      "Aged": "Aged",
+      "Descriptor": "Descriptor",
+      "Noun": "Type name",
+      "Cultural": "Cultural trait or motivation",
+      "Feature": "Physical or biological feature",
+      "Specializes": "Specializes in (verb first)",
+      "Parent": "Parent type",
+      "ParentHint": "The type it hails from (no grandparents)",
+      "Languages": "Languages",
+      "Magic": "Magic access",
+      "MagicNone": "None",
+      "MagicLearn": "Can learn magic",
+      "MagicUse": "Can use magic",
+      "MagicTypes": "Aspects or casting means",
+      "MagicTypesHint": "Fire, Water, Earth, Air; runes, tech, verbal",
+      "BaseMai": "Base MAI",
+      "Weakness": "Weakness",
+      "Abilities": "Abilities",
+      "Ability": "Ability",
+      "AbilityText": "What it does (optional)",
+      "FlawRule": "Two abilities are free; each one beyond two needs a flaw.",
+      "FlawFor2": "Flaw that pays for this ability",
+      "AddAbility": "Ability",
+      "Reroll": "Reroll with Sparks",
+      "Generate": "Regenerate the whole sheet with Sparks",
+      "Apply": "Apply to a character",
+      "ApplyHint": "Which character takes {name}? Its abilities become trait tags, the weakness and extra flaws become hindering flaw tags, and the base MAI is the higher of species and type.",
+      "Applied": "{name} applied to {actor} ({count} tags granted).",
+      "NoCharacters": "No character sheet to apply this to.",
+      "GrantedBy": "Granted by {name}.",
+      "FlawFor": "Flaw paying for {ability} ({name}).",
+      "WeaknessOf": "Weakness of {name}.",
+      "People": "people",
+      "Library": "Species & Types"
     }
   }
 }

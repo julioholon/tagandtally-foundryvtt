@@ -16,7 +16,11 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
       addStep: TagAndTallyItemSheet.#onAddStep,
       removeStep: TagAndTallyItemSheet.#onRemoveStep,
       generateSentence: TagAndTallyItemSheet.#onGenerateSentence,
-      setQuestTally: TagAndTallyItemSheet.#onSetQuestTally
+      setQuestTally: TagAndTallyItemSheet.#onSetQuestTally,
+      rerollBuild: TagAndTallyItemSheet.#onRerollBuild,
+      addAbility: TagAndTallyItemSheet.#onAddAbility,
+      removeAbility: TagAndTallyItemSheet.#onRemoveAbility,
+      applyBuild: TagAndTallyItemSheet.#onApplyBuild
     }
   };
 
@@ -74,6 +78,19 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
       context.tagTypes = TAGANDTALLY.tagTypes;
       context.tiers = TAGANDTALLY.tiers;
       context.lifeStages = { "": "", ...TAGANDTALLY.lifeStages };
+      if (system.isBuilder) {
+        const { BUILD_FIELDS } = await import("../species-types.mjs");
+        const Kind = `${system.tagType.charAt(0).toUpperCase()}${system.tagType.slice(1)}`;
+        context.build = {
+          kind: system.tagType,
+          title: `TAGANDTALLY.Build.${Kind}`,
+          hint: `TAGANDTALLY.Build.Hint${Kind}`,
+          fields: BUILD_FIELDS[system.tagType].map((f) => ({ key: f.key, label: `TAGANDTALLY.Build.${f.key.charAt(0).toUpperCase()}${f.key.slice(1)}`, value: system.build[f.key] })),
+          magic: { none: "TAGANDTALLY.Build.MagicNone", learn: "TAGANDTALLY.Build.MagicLearn", use: "TAGANDTALLY.Build.MagicUse" },
+          abilities: system.build.abilities.map((a, i) => ({ ...a, index: i, needsFlaw: i >= 2 })),
+          canApply: !item.actor && game.actors.some((a) => a.type === "character" && a.isOwner)
+        };
+      }
     }
     if (item.type === "wound") {
       context.tracks = Object.fromEntries(Object.entries(TAGANDTALLY.woundTracks).map(([k, v]) => [k, v.label]));
@@ -96,6 +113,8 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
     const data = super._processFormData(event, form, formData);
     const steps = foundry.utils.getProperty(data, "system.steps");
     if (steps && !Array.isArray(steps)) foundry.utils.setProperty(data, "system.steps", Object.values(steps));
+    const abilities = foundry.utils.getProperty(data, "system.build.abilities");
+    if (abilities && !Array.isArray(abilities)) foundry.utils.setProperty(data, "system.build.abilities", Object.values(abilities));
     return data;
   }
 
@@ -135,6 +154,27 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
     const value = Number(target.dataset.value);
     const current = this.item.system.tallies[key]?.value ?? 0;
     return this.item.update({ [`system.tallies.${key}.value`]: value === current ? value - 1 : value });
+  }
+
+  static async #onRerollBuild(event, target) {
+    const { rerollBuildField } = await import("../species-types.mjs");
+    return rerollBuildField(this.item, target.dataset.key, Number(target.dataset.index));
+  }
+
+  static async #onAddAbility() {
+    const abilities = [...this.item.system.build.abilities, { name: "", text: "", flaw: "" }];
+    return this.item.update({ "system.build.abilities": abilities });
+  }
+
+  static async #onRemoveAbility(event, target) {
+    const abilities = [...this.item.system.build.abilities];
+    abilities.splice(Number(target.dataset.index), 1);
+    return this.item.update({ "system.build.abilities": abilities });
+  }
+
+  static async #onApplyBuild() {
+    const { applyBuilderItemDialog } = await import("../species-types.mjs");
+    return applyBuilderItemDialog(this.item);
   }
 
   static async #onGenerateSentence() {

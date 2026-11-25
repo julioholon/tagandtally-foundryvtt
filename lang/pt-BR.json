@@ -640,7 +640,11 @@
       "ItFeatures": "Tem a habilidade única de",
       "Spell": "magia",
       "This": "Este(a)",
-      "LocatedOn": "em"
+      "LocatedOn": "em",
+      "SpeciesIsA": "Esta espécie é um povo",
+      "PeopleWho": "que",
+      "TypeIsA": "Este tipo é um(a)",
+      "TypeKindOf": "uma variante de"
     },
     "Relation": {
       "Loathing": "Repulsa",
@@ -1341,6 +1345,46 @@
         "Employer": "Trabalham para alguém?"
       },
       "NewCharacter": "Novo personagem"
+    },
+    "Build": {
+      "Species": "Construtor de espécie",
+      "Type": "Construtor de tipo",
+      "HintSpecies": "Criação de espécie do SRD: a frase, idiomas, magia inata e MAI base, uma fraqueza e duas habilidades. Cada habilidade além de duas adiciona uma falha. Solte a espécie num personagem para aplicá-la.",
+      "HintType": "Criação de tipo do SRD: a frase (a especialização começa com um verbo), um tipo pai opcional, acesso à magia e MAI base, uma fraqueza e duas habilidades. Cada habilidade além de duas adiciona uma falha. Solte o tipo num personagem para aplicá-lo.",
+      "Aged": "Idade",
+      "Descriptor": "Descritor",
+      "Noun": "Nome do tipo",
+      "Cultural": "Traço cultural ou motivação",
+      "Feature": "Traço físico ou biológico",
+      "Specializes": "Especializa-se em (verbo primeiro)",
+      "Parent": "Tipo pai",
+      "ParentHint": "O tipo de onde vem (sem avós)",
+      "Languages": "Idiomas",
+      "Magic": "Acesso à magia",
+      "MagicNone": "Nenhum",
+      "MagicLearn": "Pode aprender magia",
+      "MagicUse": "Pode usar magia",
+      "MagicTypes": "Aspectos ou meios de conjuração",
+      "MagicTypesHint": "Fogo, Água, Terra, Ar; runas, tecnologia, verbal",
+      "BaseMai": "MAI base",
+      "Weakness": "Fraqueza",
+      "Abilities": "Habilidades",
+      "Ability": "Habilidade",
+      "AbilityText": "O que faz (opcional)",
+      "FlawRule": "Duas habilidades são gratuitas; cada uma além de duas precisa de uma falha.",
+      "FlawFor2": "Falha que paga por esta habilidade",
+      "AddAbility": "Habilidade",
+      "Reroll": "Rolar de novo com o Sparks",
+      "Generate": "Gerar a ficha inteira de novo com o Sparks",
+      "Apply": "Aplicar a um personagem",
+      "ApplyHint": "Qual personagem recebe {name}? As habilidades viram tags de traço, a fraqueza e as falhas extras viram tags de falha que atrapalham, e o MAI base é o maior entre espécie e tipo.",
+      "Applied": "{name} aplicado a {actor} ({count} tags concedidas).",
+      "NoCharacters": "Nenhuma ficha de personagem para aplicar isto.",
+      "GrantedBy": "Concedido por {name}.",
+      "FlawFor": "Falha que paga por {ability} ({name}).",
+      "WeaknessOf": "Fraqueza de {name}.",
+      "People": "povo",
+      "Library": "Espécies e Tipos"
     }
   }
 }
