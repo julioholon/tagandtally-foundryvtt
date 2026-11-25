@@ -45,8 +45,8 @@ Or download the latest `tagandtally.zip` from the releases page and unzip it int
 | Party | Built-in party overview: sentence, wounds, wealth, MAI, loadout, tags, quests; GM adds or removes members |
 | GM tools | Scene level in Scene Config, world RollTable overrides for any Spark table, bulk import to RollTables |
 | Species & types | SRD species and type creation on umbrella tag items (sentence, languages / parent type, magic access, base MAI, weakness, abilities with a flaw per extra); Sparks generators fill the "Species & Types" library; drop one on a character to apply it (abilities as traits, weakness as a flaw, base MAI = the higher of the two) |
-| Campaign start | Wizard that sets the Sparks theme, rolls the party, creates the journal folder and Chronicle, draws a Celtic Cross prophecy (with a grand quest), rolls the first quest and its giver NPC, sets the opening scene and asks the Oracle four opening questions; ends with the Augur Nexus checklist |
-| Tarot | The SRD's three decks: draw a character sentence from three cards or a ten-card Celtic Cross reading with position meanings; flip, redraw, send to chat, journal as a prophecy or apply the sentence to a character |
+| Campaign start | Wizard that sets the Sparks theme and calendar date, rolls the party, creates the journal folder and Chronicle, rolls the Prophecy (journal + four grand quests), rolls the first quest and its giver NPC and sets the opening scene; cleans up an ongoing campaign's journals first; ends with the Augur Nexus checklist |
+| Tarot | The SRD's three decks with their flaws: draw a character sentence from three cards and apply it to a character or NPC after confirming; the Prophecy rolls four verses (opposition, escalation, trigger, finale) from the Sparks tables, rerollable bit by bit, journaled or turned into four grand quests |
 | Solo play | "Solo veil" world setting: NPC strengths, weaknesses and secrets and faction goals, secrets and headquarters stay hidden from everyone, the GM included, until revealed by the eye toggle or by insights; Sparks and Augur still fill them, so a solo GM discovers the world as a player would |
 
 ## GM manual

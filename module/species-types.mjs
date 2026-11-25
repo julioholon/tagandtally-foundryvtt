@@ -104,10 +104,22 @@ export async function regenerateBuild(item) {
   return item.update({ name: data.name, "system.build": data.system.build, "system.magical": data.system.magical, "system.description": data.system.description });
 }
 
-/** Reroll one sentence field, the weakness, or one ability. */
+/** A flaw from the SRD tarot flaws (one per card and orientation), avoiding ones already used. */
+export async function drawFlaw(build) {
+  const { TarotApp } = await import("./tarot.mjs");
+  return TarotApp.drawFlaw([build?.weakness, ...(build?.abilities ?? []).map((a) => a.flaw)].filter(Boolean));
+}
+
+/** Reroll one sentence field, the weakness, one ability, or the flaw paying for an ability. */
 export async function rerollBuildField(item, key, index) {
   const kind = item.system.tagType;
   if (key === "weakness") return item.update({ "system.build.weakness": await rollField(WEAKNESS_TABLE) });
+  if (key === "flaw") {
+    const abilities = foundry.utils.deepClone(item.system.build.abilities);
+    if (!abilities[index]) return item;
+    abilities[index].flaw = await drawFlaw(item.system.build);
+    return item.update({ "system.build.abilities": abilities });
+  }
   if (key === "ability") {
     const abilities = foundry.utils.deepClone(item.system.build.abilities);
     if (!abilities[index]) return item;

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.9.2 (unreleased)
+
+- Campaign start dialog laid out as a proper form (one row per field, the steps in a box). Starts by
+  setting the Simple Calendar date and time when the module is active. If a campaign is ongoing it asks
+  before deleting that campaign's journals (Chronicle, prophecy) and resetting the Game loop; actors stay.
+  The four Oracle opening questions are gone.
+- The Celtic Cross is replaced by the **Prophecy**: four verses rolled from the Sparks tables (an
+  opposition, an escalation, a trigger, a finale), every bit rerollable, journaled as the prophecy, and
+  turned into four grand quests (unmask the opposition, prevent the escalation, stop the trigger,
+  achieve the finale) on a chosen character.
+- Tarot "Apply to a character" now asks which character or NPC and confirms before replacing the
+  sentence (it used to pick the character on its own). Every card also shows its SRD flaw.
+- Species & type builders: the ability description field is gone; the flaw paying for a third or later
+  ability is drawn from the SRD tarot flaws (dice beside it draws another).
+
 ## 0.9.1 (2026-11-24)
 
 - 

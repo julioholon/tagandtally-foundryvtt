@@ -1264,52 +1264,76 @@
     "And": "e",
     "Tarot": {
       "Title": "Tarô",
-      "Hint": "O tarô do SRD: Arcanos Maiores são descritores, cartas da corte são tipos, cartas numeradas são o que o personagem faz. Tire três para uma frase de personagem, ou uma Cruz Celta para ler a campanha. Clique no dado para tirar outra carta, nas setas para virá-la.",
-      "Empty": "Nenhuma carta tirada ainda.",
+      "Hint": "O tarô do SRD: arcanos maiores são descritores, cartas da corte são tipos, cartas numeradas são o que o personagem faz, e cada carta nomeia uma falha. Tire três para uma frase de personagem. Clique no dado para tirar outra carta, nas setas para virá-la.",
+      "ProphecyHint": "A Profecia são quatro versos rolados das tabelas do Sparks: quem se opõe aos heróis, como escala, o que dispara o fim, e o desfecho. Clique num dado para rolar de novo um pedaço. Registre no diário, ou transforme em quatro grandes missões.",
+      "Empty": "Nada tirado ainda.",
       "DrawSentence": "Frase de personagem",
-      "DrawCross": "Cruz Celta",
+      "DrawProphecy": "Profecia",
       "Upright": "normal",
       "Reversed": "invertida",
       "Flip": "Virar a carta",
       "Redraw": "Tirar outra carta",
+      "RerollBit": "Rolar este pedaço de novo",
+      "FlawLabel": "Falha",
       "CharacterSentence": "Frase de personagem do tarô",
-      "CelticCross": "Leitura da Cruz Celta",
-      "JournalProphecy": "Registrar como profecia",
-      "JournalSentence": "Registrar",
-      "ApplySentence": "Aplicar a um personagem",
-      "GrandQuest": "Grande missão",
       "Prophecy": "Profecia",
-      "ProphecyName": "Profecia de {word}",
+      "JournalProphecy": "Registrar como profecia",
+      "JournalSentence": "Registrar no diário",
+      "ApplySentence": "Aplicar a um personagem",
+      "ApplyConfirm": "Substituir descritor, tipo e especialidade do personagem ou PdM escolhido por {sentence}? A espécie fica. Não há desfazer.",
+      "GrandQuests": "Quatro grandes missões",
+      "GrandQuestsConfirm": "Criar as quatro grandes missões desta profecia (oposição, escalada, gatilho, desfecho) no personagem escolhido?",
+      "GrandQuestsCreated": "{count} grandes missões criadas em {name}.",
+      "ProphecyName": "Profecia do {word}",
       "SentenceName": "Tarô: {sentence}",
-      "GrandQuestName": "A profecia de {word}",
-      "Applied": "A frase de {name} agora é a tiragem do tarô (espécie mantida).",
-      "ReadingLine": "No centro, {heart}; o desafio é {challenge}; o melhor desfecho, {crown}; termina em {outcome}.",
+      "Applied": "A frase de {name} agora é a tirada do tarô (espécie mantida).",
       "Position": {
         "descriptor": "Descritor",
         "type": "Tipo",
-        "does": "Faz algo",
-        "heart": "1 · O centro",
-        "challenge": "2 · O desafio",
-        "foundation": "3 · A base",
-        "past": "4 · O passado recente",
-        "crown": "5 · A coroa",
-        "future": "6 · O futuro próximo",
-        "self": "7 · O eu",
-        "others": "8 · Os outros",
-        "hopes": "9 · Esperanças e medos",
-        "outcome": "10 · O desfecho"
+        "does": "Faz algo"
       },
-      "PositionHint": {
-        "heart": "Do que trata a campanha",
-        "challenge": "O que está no caminho",
-        "foundation": "De onde ela cresceu",
-        "past": "O que acabou de acontecer",
-        "crown": "O melhor que pode vir disso",
-        "future": "O que vem a seguir",
-        "self": "Quem os heróis são nisso",
-        "others": "Quem o mundo é nisso",
-        "hopes": "O que se espera, e se teme",
-        "outcome": "Para onde vai"
+      "Verse": {
+        "opposition": "Oposição",
+        "escalation": "Escalada",
+        "trigger": "Gatilho",
+        "finale": "Desfecho"
+      },
+      "VerseHint": {
+        "opposition": "Quem se opõe aos heróis",
+        "escalation": "Como o alcance deles cresce",
+        "trigger": "O que põe o fim em movimento",
+        "finale": "Como tudo termina"
+      },
+      "VerseLine": {
+        "opposition": "Um(a) {descriptor} {type} que {does} se ergue contra vocês.",
+        "escalation": "{emotion} e {motivation}, sua sombra se espalha.",
+        "trigger": "Quando {environment}, {complication}.",
+        "finale": "{verb} o(a) {adjective} {noun} para alcançar {benefit}."
+      },
+      "Bit": {
+        "descriptor": "Descritor",
+        "type": "Tipo",
+        "does": "Faz",
+        "emotion": "Emoção",
+        "motivation": "Motivação",
+        "environment": "Ambiente",
+        "complication": "Complicação",
+        "verb": "Verbo",
+        "adjective": "Adjetivo",
+        "noun": "Substantivo",
+        "benefit": "Benefício"
+      },
+      "VerseQuest": {
+        "opposition": "Desmascarar o(a) {descriptor} {type}",
+        "escalation": "Impedir a escalada",
+        "trigger": "Deter o gatilho",
+        "finale": "Alcançar o desfecho"
+      },
+      "QuestGoal": {
+        "opposition": "Localizar ou identificar a grande facção ou PdM opositor",
+        "escalation": "Impedir a escalada",
+        "trigger": "Deter o gatilho",
+        "finale": "Alcançar o desfecho"
       }
     },
     "Campaign": {
@@ -1319,10 +1343,9 @@
       "Theme": "Tema do Sparks",
       "Characters": "Personagens a rolar",
       "StepChronicle": "Criar o diário Crônica da campanha",
-      "StepProphecy": "Tirar uma Cruz Celta como profecia (diário + grande missão no primeiro personagem)",
+      "StepProphecy": "Rolar a Profecia (diário + quatro grandes missões no primeiro personagem)",
       "StepScene": "Rolar a cena de abertura no Ciclo de jogo",
       "StepQuest": "Rolar a primeira missão e quem a dá (adicionado às Relações dos personagens)",
-      "StepOracle": "Fazer ao Oráculo as quatro perguntas de abertura",
       "AugurHint": "Os passos do Augur Nexus (região, facções, local inicial, pessoas) são feitos no Augur; a lista vai para o chat.",
       "Start": "Começar a campanha",
       "DoneCharacters": "{count} personagem(ns) rolado(s): {names}",
@@ -1330,7 +1353,6 @@
       "DoneProphecy": "Profecia tirada: {name}",
       "DoneQuest": "Primeira missão: {quest}, dada por {giver}",
       "DoneScene": "Cena de abertura: nível {level} — {sentence}",
-      "DoneOracle": "O Oráculo respondeu às perguntas de abertura",
       "AugurChecklist": "Augur Nexus, à mão:",
       "Augur": {
         "Region": "Fantasia: uma cena Hexmap como região e Develop Fantasy Region para facções e história. Ficção científica: um sistema estelar, seus planetas e assentamentos, uma nave da campanha.",
@@ -1338,13 +1360,16 @@
         "Location": "Escolha o local inicial, monte seu mapa, coloque as pessoas do Augur como tokens de PdM.",
         "People": "Solte as pessoas do Augur em fichas de PdM ou vincule-as; solte locais e facções nas Relações dos personagens."
       },
-      "Oracle": {
-        "Met": "Os personagens já se conhecem?",
-        "Settlement": "Os personagens estão em um assentamento?",
-        "Mission": "Eles têm uma missão?",
-        "Employer": "Trabalham para alguém?"
-      },
-      "NewCharacter": "Novo personagem"
+      "NewCharacter": "Novo personagem",
+      "Steps": "O que preparar",
+      "StartDate": "Data e hora iniciais",
+      "Year": "Ano",
+      "Month": "Mês",
+      "Day": "Dia",
+      "Hour": "Hora",
+      "OngoingWarning": "Há uma campanha em andamento: {name}. Começar outra apaga os diários dela (Crônica, profecia) e zera o Ciclo de jogo. Os atores ficam.",
+      "CleanupConfirm": "Apagar os diários de \"{name}\" e zerar o Ciclo de jogo antes de começar? Os atores não são removidos.",
+      "DoneDate": "Calendário ajustado para {date}"
     },
     "Build": {
       "Species": "Construtor de espécie",
@@ -1370,7 +1395,6 @@
       "Weakness": "Fraqueza",
       "Abilities": "Habilidades",
       "Ability": "Habilidade",
-      "AbilityText": "O que faz (opcional)",
       "FlawRule": "Duas habilidades são gratuitas; cada uma além de duas precisa de uma falha.",
       "FlawFor2": "Falha que paga por esta habilidade",
       "AddAbility": "Habilidade",
@@ -1384,7 +1408,8 @@
       "FlawFor": "Falha que paga por {ability} ({name}).",
       "WeaknessOf": "Fraqueza de {name}.",
       "People": "povo",
-      "Library": "Espécies e Tipos"
+      "Library": "Espécies e Tipos",
+      "RerollFlaw": "Tirar uma falha do tarô"
     }
   }
 }

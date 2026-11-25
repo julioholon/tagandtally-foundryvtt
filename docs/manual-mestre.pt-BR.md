@@ -58,7 +58,7 @@ os personagens dos jogadores numa tabela (frase, ferimentos, riqueza, IAM, carga
 "Espécies e Tipos", cada um com a ficha de criação do SRD na sua tag: a frase, idiomas
 (espécies) ou tipo pai (tipos), acesso à magia com aspectos ou meios de conjuração e MAI base,
 uma fraqueza e as habilidades. Duas habilidades são gratuitas; cada uma além disso precisa
-de uma falha, e a ficha marca as que faltam. Todo campo rola de novo pelo Sparks; a varinha
+de uma falha tirada das falhas do tarô do SRD (o dado ao lado tira outra), e a ficha marca as que faltam. Todo campo rola de novo pelo Sparks; a varinha
 gera a ficha inteira outra vez. Solte uma espécie ou tipo num personagem (ou use o botão
 Aplicar da ficha): substitui aquele espaço da frase, as habilidades viram tags de traço, a
 fraqueza e as falhas extras viram tags de falha que atrapalham, e o MAI base passa a ser o
@@ -322,19 +322,24 @@ intenção e riscos, gaste ações (Oráculo, Investigar, Socializar, Viagem, Co
 Avance o tempo. Todo o resto acontece pelas ferramentas que ele abre.
 
 **Começando uma campanha.** O controle de token *Campanha* (ou `startCampaign()`) abre um
-assistente curto: nome, tema do Sparks e quantos personagens rolar, mais o que preparar. Ele
-cria uma pasta de diários, a Crônica da campanha, um diário de **profecia** (Cruz Celta, com
-uma grande missão em cada personagem), uma primeira missão com seu PdM contratante já nas
-relações de todos, a cena de abertura no ciclo de jogo, e faz quatro perguntas de abertura ao
-Oráculo (já se conhecem, estão num povoado, têm uma missão, trabalham para alguém). O cartão
-final no chat lista o que o Augur Nexus ainda faz à mão: a região ou sistema estelar, as
-facções a importar, o local inicial e sua gente.
+formulário curto: nome, tema do Sparks, quantos personagens rolar, data e hora iniciais quando
+o Simple Calendar está ativo, mais o que preparar. Se já há uma campanha em andamento, ele
+pergunta antes de apagar os diários dela (Crônica, profecia) e zerar o Ciclo de jogo; os atores
+ficam. Ele cria uma pasta de diários, a Crônica da campanha, o diário da **Profecia** com
+quatro grandes missões no primeiro personagem, uma primeira missão com seu PdM contratante já
+nas relações de todos, e a cena de abertura no ciclo de jogo. O cartão final no chat lista o
+que o Augur Nexus ainda faz à mão: a região ou sistema estelar, as facções a importar, o local
+inicial e sua gente.
 
-**Tarô.** O controle de token *Tarô* abre os baralhos do SRD: arcanos maiores são descritores,
-cartas da corte são tipos, cartas numeradas são o que o personagem faz. *Frase de personagem*
-tira uma de cada; *Cruz Celta* abre dez cartas com o significado das posições (coração,
-desafio, base, passado, coroa, futuro, eu, os outros, esperanças, desfecho). Vire uma carta,
-tire outra, mande a leitura ao chat, registre como profecia ou aplique a frase a um personagem.
+**Tarô e Profecia.** O controle de token *Tarô* abre os baralhos do SRD: arcanos maiores são
+descritores, cartas da corte são tipos, cartas numeradas são o que o personagem faz, e cada
+carta nomeia uma falha. *Frase de personagem* tira uma de cada; vire uma carta, tire outra,
+mande ao chat, registre no diário, ou aplique a um personagem ou PdM (ele pergunta qual e
+confirma). *Profecia* rola quatro versos das tabelas do Sparks: a oposição (descritor, tipo e o
+que faz), a escalada (emoção e motivação), o gatilho (ambiente e complicação) e o desfecho
+(verbo, adjetivo, substantivo e o benefício). Role qualquer pedaço de novo, registre como
+profecia, ou transforme em quatro grandes missões num personagem: desmascarar a oposição,
+impedir a escalada, deter o gatilho, alcançar o desfecho.
 
 ## 19. Jogando com vários Mestres
 
