@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.2 (unreleased)
+## 0.9.2 (2026-11-24)
 
 - Campaign start dialog laid out as a proper form (one row per field, the steps in a box). Starts by
   setting the Simple Calendar date and time when the module is active. If a campaign is ongoing it asks
