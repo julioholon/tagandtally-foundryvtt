@@ -97,6 +97,10 @@ retire or die.
   worst active wound. Health Estimate shows the same when hovering a token.
 - **Rest** (Wounds tab): a safe zone heals all strain, or 1 trauma, or downgrades 1 injury to
   trauma. Field and professional treatment are ordinary rolls (level 5 and 3).
+- **Spoils / Harvest**: on a finished participant, **Spoils** is a Task Roll at the opponent's
+  level whose result opens the Aftermath (coins, items, leads, contacts, or trouble); **Harvest**
+  opens the Workshop's Harvest tab. **Loot / Search** in the Game loop does the same for an explored
+  place or the fallen at the scene level, and spends a scene action.
 - **Roll injury**: one click resolves the wound of a confrontation without the combat flow.
   Use it when the scene calls for speed.
 
@@ -146,7 +150,7 @@ would change the character or the situation.
   and fails it, and the **Aftermath** window opens with outcomes by band (two good, one good, one
   good and one bad, one bad, two bad). Each line has a kind (item, coins, relationship, new lead,
   information, or on the bad side coins lost, combat, gear lost, hazard...) and a recipient, so loot can
-  be split between characters. Reroll, change the kind, apply or skip each line; **Add** more if the
+  be split between characters. Outcomes include new tags: a skill, trait or good reputation, or on the bad side a flaw or bad reputation. Reroll, change the kind, apply or skip each line; **Add** more if the
   story calls for it. A task closed with "Success, and" offers one good outcome the same way.
 - **Hidden Location**: each new quest rolls one. It stays hidden until the Location tally fills (or
   the GM reveals it with the eye), then it is announced, journaled and added to the known places.

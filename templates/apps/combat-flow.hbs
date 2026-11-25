@@ -37,6 +37,7 @@
         {{#if p.finished}}
           <footer class="tt-flow-outcome">
             <strong>{{p.woundLabel}}</strong>
+            {{#if p.canRoll}}<button type="button" data-action="spoils" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Combat.SpoilsHint'}}"><i class="fa-solid fa-sack-dollar"></i> {{localize "TAGANDTALLY.Combat.Spoils"}}</button><button type="button" data-action="harvest" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Combat.HarvestHint'}}"><i class="fa-solid fa-hammer"></i> {{localize "TAGANDTALLY.Combat.Harvest"}}</button>{{/if}}
             {{#if p.wound}}{{#unless p.woundApplied}}<button type="button" data-action="applyWound" data-uuid="{{p.uuid}}"><i class="fa-solid fa-heart-crack"></i> {{localize "TAGANDTALLY.Chat.ApplyWound"}}</button>{{else}}<em>{{localize "TAGANDTALLY.Combat.WoundApplied"}}</em>{{/unless}}{{/if}}
           </footer>
         {{else}}

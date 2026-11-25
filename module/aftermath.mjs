@@ -3,6 +3,7 @@ import { sceneLevel } from "./rolls/resolution.mjs";
 import { PartyOverview } from "./integrations/party.mjs";
 import { allFactions, addInsight } from "./factions.mjs";
 import { applyWealthTally } from "./downtime.mjs";
+import { sparkTables } from "./sparks/tables.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -25,10 +26,24 @@ export const AFTERMATH = {
   /** A task closed with "Success, and" offers one good outcome. */
   task: { successAnd: ["+"] },
   pools: {
-    "+": { item: 4, coins: 3, relationUp: 2, lead: 2, info: 2 },
-    "-": { coinsLost: 2, relationDown: 2, leadCatch: 1, infoFalse: 1, combat: 2, gearLost: 2, hazard: 2 }
+    "+": { item: 4, coins: 3, relationUp: 2, lead: 2, info: 2, place: 1, npc: 1, tagSkill: 3, tagTrait: 2, tagRep: 1 },
+    "-": { coinsLost: 2, relationDown: 2, leadCatch: 1, infoFalse: 1, combat: 2, gearLost: 2, hazard: 2, tagFlaw: 3, tagBadRep: 1 }
   },
-  icons: { item: "fa-gem", coins: "fa-coins", relationUp: "fa-handshake", lead: "fa-scroll", info: "fa-lightbulb", coinsLost: "fa-money-bill-transfer", relationDown: "fa-heart-crack", leadCatch: "fa-scroll", infoFalse: "fa-mask", combat: "fa-swords", gearLost: "fa-bag-shopping", hazard: "fa-skull-crossbones" },
+  /** New tags: kind -> Sparks table (reputations are made from the inspiration tables), tag type, and whether it hinders. */
+  tags: {
+    tagSkill: { table: "life-skill", tagType: "skill", hinders: false },
+    tagTrait: { table: "life-trait", tagType: "trait", hinders: false },
+    tagRep: { table: null, tagType: "reputation", hinders: false },
+    tagFlaw: { table: "life-flaw", tagType: "flaw", hinders: true },
+    tagBadRep: { table: null, tagType: "reputation", hinders: true }
+  },
+  icons: { tagSkill: "fa-graduation-cap", tagTrait: "fa-fingerprint", tagRep: "fa-star", tagFlaw: "fa-link-slash", tagBadRep: "fa-thumbs-down", place: "fa-map-location-dot", npc: "fa-user-plus", item: "fa-gem", coins: "fa-coins", relationUp: "fa-handshake", lead: "fa-scroll", info: "fa-lightbulb", coinsLost: "fa-money-bill-transfer", relationDown: "fa-heart-crack", leadCatch: "fa-scroll", infoFalse: "fa-mask", combat: "fa-swords", gearLost: "fa-bag-shopping", hazard: "fa-skull-crossbones" },
+  /** Spoils and looting (a Task Roll): a smaller, more material pool than a quest's. */
+  loot: {
+    good: { item: 4, coins: 4 },
+    extra: { lead: 2, info: 2, npc: 1, place: 1, tagSkill: 1, tagTrait: 1 },
+    bad: { combat: { hazard: 2, gearLost: 1, tagFlaw: 1 }, search: { hazard: 2, combat: 2, gearLost: 1, tagFlaw: 1 } }
+  },
   gearGenerators: ["item", "item", "weapon", "armor", "consumable", "resource"]
 };
 
@@ -99,6 +114,21 @@ const KINDS = {
     const text = await insightSentence();
     return text ? { html: `${text} <em>(${esc(T("MaybeFalse"))})</em>`, payload: { text } } : null;
   },
+  async place() {
+    const { generate } = await import("./sparks/engine.mjs");
+    const r = await generate("location", { theme: theme() });
+    const name = plain(r.tags.slice(0, 2).join(" ")).toLowerCase().replace(/^./, (c) => c.toUpperCase());
+    const text = plain(r.text);
+    return { html: `<strong>${esc(name)}</strong> ${esc(text)}`, payload: { name, text } };
+  },
+  async npc({ level }) {
+    const { generate } = await import("./sparks/engine.mjs");
+    const { npcDataFromGeneration } = await import("./sparks/create.mjs");
+    const r = await generate("npc", { theme: theme() });
+    const data = npcDataFromGeneration(r, { creature: false });
+    data.system.level = Math.clamp(level, 1, 10);
+    return { html: `<strong>${esc(data.name)}</strong> ${r.html}`, payload: { data } };
+  },
   async combat({ level }) {
     const { generate } = await import("./sparks/engine.mjs");
     const { npcDataFromGeneration } = await import("./sparks/create.mjs");
@@ -117,6 +147,29 @@ const KINDS = {
     return { html: T("Hazard", { track: game.i18n.localize(TAGANDTALLY.woundTracks[injuryType].label) }), payload: { injuryType } };
   }
 };
+
+/** A new tag for the recipient: a skill, trait, flaw or reputation drawn from the Sparks tables. A skill they already have gains a tally instead. */
+async function tagKind(kind, actor) {
+  const def = AFTERMATH.tags[kind];
+  for (let i = 0; i < 4; i++) {
+    let name;
+    if (def.table) name = plain((await sparkTables.roll(def.table))?.value);
+    else {
+      const [adjective, noun] = await Promise.all(["inspiration-adjective", "inspiration-noun"].map(async (t) => plain((await sparkTables.roll(t))?.value)));
+      name = `${adjective} ${noun}`.trim().toLowerCase().replace(/^./, (c) => c.toUpperCase());
+    }
+    if (!name) continue;
+    const existing = actor.items.find((x) => x.type === "tag" && x.system.tagType === def.tagType && x.name.toLowerCase() === name.toLowerCase());
+    const label = game.i18n.localize(TAGANDTALLY.tagTypes[def.tagType]);
+    if (existing) {
+      if (!existing.system.canTier) continue;
+      return { html: `<strong>${esc(existing.name)}</strong> <small>${esc(label)} · ${esc(T("TagTally"))}</small>`, payload: { tallyId: existing.id } };
+    }
+    return { html: `<strong>${esc(name)}</strong> <small>${esc(label)}${def.hinders ? ` · ${esc(T("Hinders"))}` : ""}</small>`, payload: { name, tagType: def.tagType, source: def.table ?? "", hinders: def.hinders } };
+  }
+  return null;
+}
+for (const kind of Object.keys(AFTERMATH.tags)) KINDS[kind] = ({ actor }) => tagKind(kind, actor);
 
 async function relationChange(actor, dir) {
   const rows = [];
@@ -172,6 +225,28 @@ const APPLY = {
     return T("InsightOn", { name: esc(target.name) });
   },
   async infoFalse({ payload }) { return payload.text; },
+  async tag({ actor, payload }) {
+    if (payload.tallyId) {
+      const existing = actor.items.get(payload.tallyId);
+      if (!existing) return null;
+      await actor.addTallies([existing.id]);
+      return T("TagTally2", { name: esc(existing.name) });
+    }
+    const [tag] = await actor.createEmbeddedDocuments("Item", [{ name: payload.name, type: "tag", system: { tagType: payload.tagType, source: payload.source, tier: 1, hinders: payload.hinders } }]);
+    return T(payload.hinders ? "GotFlaw" : "GotTag", { name: esc(tag.name), type: esc(game.i18n.localize(TAGANDTALLY.tagTypes[payload.tagType])) });
+  },
+  async place({ actor, payload, ctx }) {
+    const { addKnownPlace } = await import("./quest-tasks.mjs");
+    await addKnownPlace(actor, payload.name, payload.text, ctx.title ?? "");
+    return T("GotPlace", { name: esc(payload.name) });
+  },
+  async npc({ actor, payload }) {
+    if (!game.user.can("ACTOR_CREATE")) { ui.notifications.warn(T("NeedGM")); return null; }
+    const npc = await Actor.create(payload.data);
+    const { ensureRelation } = await import("./interactions.mjs");
+    await ensureRelation(actor, npc, "people");
+    return T("GotNpc", { name: esc(npc.name) });
+  },
   async combat({ actor, payload, ctx }) {
     if (!game.user.can("ACTOR_CREATE")) { ui.notifications.warn(T("NeedGM")); return null; }
     const creature = await Actor.create(payload.data);
@@ -199,6 +274,7 @@ const APPLY = {
     return T("Hazard", { track: game.i18n.localize(TAGANDTALLY.woundTracks[payload.injuryType].label) });
   }
 };
+for (const kind of Object.keys(AFTERMATH.tags)) APPLY[kind] = APPLY.tag;
 APPLY.relationUp = APPLY.relation;
 APPLY.relationDown = APPLY.relation;
 APPLY.leadCatch = APPLY.lead;
@@ -231,15 +307,16 @@ export class AftermathApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const app = new AftermathApp(ctx);
     const base = ctx.actor?.isToken ? game.actors.get(ctx.actor.id) ?? ctx.actor : ctx.actor;
     app.ctx.actor = base;
-    for (const pol of ctx.polarities ?? ["+"]) await app.addLine(pol);
+    const specs = ctx.lines ?? (ctx.polarities ?? ["+"]).map((pol) => ({ pol }));
+    for (const spec of specs) await app.addLine(spec.pol, { pool: spec.pool });
     await app.render({ force: true });
     return app;
   }
 
   /** Roll one line of a sign for `recipient` (default: the roller). */
-  async addLine(pol, { kind, recipient } = {}) {
+  async addLine(pol, { kind, recipient, pool } = {}) {
     const actor = recipient ?? this.ctx.actor;
-    const line = { id: nextLine++, pol, kind: null, recipient: actor?.uuid, html: "", payload: null, status: "pending" };
+    const line = { id: nextLine++, pol, pool, kind: null, recipient: actor?.uuid, html: "", payload: null, status: "pending" };
     this.lines.push(line);
     await this.fill(line, kind);
     return line;
@@ -248,7 +325,7 @@ export class AftermathApp extends HandlebarsApplicationMixin(ApplicationV2) {
   /** (Re)roll a line's content, either for `kind` or a fresh weighted pick. Returns false when nothing fits. */
   async fill(line, kind) {
     const actor = await fromUuid(line.recipient);
-    const pool = { ...AFTERMATH.pools[line.pol] };
+    const pool = { ...(line.pool ?? AFTERMATH.pools[line.pol]) };
     for (let i = 0; i < 8; i++) {
       const k = kind ?? weighted(pool);
       const result = await KINDS[k]?.({ actor, level: this.ctx.level, ctx: this.ctx }).catch((err) => { console.warn(`${SYSTEM_ID} | aftermath ${k}`, err); return null; });
@@ -357,6 +434,28 @@ export async function afterQuestResolution(quest, result) {
   lines.push(esc(T(`QuestStatus.${status ?? "open"}`)));
   if (result.message) await result.message.update({ content: `${result.message.content}<div class="tagandtally tt-loop-outcome">${lines.map((l) => `<p>${l}</p>`).join("")}</div>` });
   return AftermathApp.open({ actor: result.actor ?? quest.actor, polarities, title: quest.name, note: T(`QuestNote.${band}`) });
+}
+
+/**
+ * Spoils or a search: a Task Roll at `level`, then an Aftermath by band. `source` is "combat"
+ * (after a fight) or "search" (an explored place); it sets the bad side of the pool.
+ */
+export async function rollSpoils({ actor, level = sceneLevel(), source = "search", title = "" } = {}) {
+  const { TaskRollDialog } = await import("./rolls/task-roll-dialog.mjs");
+  const result = await TaskRollDialog.prompt({ actor, level, rollType: "task", title: title || T(`Spoils.${source}`) });
+  if (!result) return null;
+  const band = result.band?.id ?? result.band;
+  const good = { pol: "+", pool: AFTERMATH.loot.good };
+  const bad = { pol: "-", pool: AFTERMATH.loot.bad[source] ?? AFTERMATH.loot.bad.search };
+  const lines = {
+    failAnd: [bad],
+    failBut: [{ pol: "+", pool: { coins: 1 } }],
+    successBut: [good, bad],
+    success: [good, good],
+    successAnd: [good, good, { pol: "+", pool: AFTERMATH.loot.extra }]
+  }[band];
+  if (lines) await AftermathApp.open({ actor: result.actor ?? actor, lines, level, title: title || T(`Spoils.${source}`), note: T(`SpoilsNote.${band}`) });
+  return result;
 }
 
 /** A chat button that opens an Aftermath for a roll (set up with `offerAftermath`). */

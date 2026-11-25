@@ -279,6 +279,21 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
         const result = await TaskRollDialog.prompt({ actor, level, rollType: def.rollType, title: scene.intent || undefined });
         return result ? "" : null;
       }
+      case "loot": {
+        const source = await DialogV2.wait({
+          window: { title: L("Action.loot") },
+          content: `<p class="hint">${L("LootHint")}</p>`,
+          buttons: [
+            { action: "search", label: L("LootSearch"), icon: "fa-solid fa-magnifying-glass-location", default: true },
+            { action: "combat", label: L("LootFallen"), icon: "fa-solid fa-skull" }
+          ],
+          rejectClose: false
+        });
+        if (!source) return null;
+        const { rollSpoils } = await import("./aftermath.mjs");
+        const result = await rollSpoils({ actor, level, source, title: scene.intent || undefined });
+        return result ? "" : null;
+      }
       case "oracle": {
         const question = await DialogV2.prompt({
           window: { title: game.i18n.localize("TAGANDTALLY.Roll.Oracle") },

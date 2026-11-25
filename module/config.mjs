@@ -451,6 +451,7 @@ TAGANDTALLY.loop = {
     oracle: { label: "TAGANDTALLY.Loop.Action.oracle", hint: "TAGANDTALLY.Loop.ActionHint.oracle", icon: "fa-eye", kind: "oracle" },
     travel: { label: "TAGANDTALLY.Loop.Action.travel", hint: "TAGANDTALLY.Loop.ActionHint.travel", icon: "fa-route", kind: "travel" },
     combat: { label: "TAGANDTALLY.Loop.Action.combat", hint: "TAGANDTALLY.Loop.ActionHint.combat", icon: "fa-swords", kind: "combat" },
+    loot: { label: "TAGANDTALLY.Loop.Action.loot", hint: "TAGANDTALLY.Loop.ActionHint.loot", icon: "fa-sack-dollar", kind: "loot" },
     workshop: { label: "TAGANDTALLY.Loop.Action.workshop", hint: "TAGANDTALLY.Loop.ActionHint.workshop", icon: "fa-hammer", kind: "workshop" },
     downtime: { label: "TAGANDTALLY.Loop.Action.downtime", hint: "TAGANDTALLY.Loop.ActionHint.downtime", icon: "fa-bed", kind: "downtime" }
   }
