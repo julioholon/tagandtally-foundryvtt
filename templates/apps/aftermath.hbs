@@ -1,0 +1,32 @@
+<section class="tt-aftermath">
+  {{#if title}}<h3>{{title}}</h3>{{/if}}
+  {{#if note}}<p class="hint">{{note}}</p>{{/if}}
+  <ol class="tt-aftermath-lines">
+    {{#each lines as |l|}}
+      <li class="tt-aftermath-line {{l.sign}} {{#if l.done}}done{{/if}} {{#if l.skipped}}skipped{{/if}}" data-line="{{l.id}}">
+        <i class="fa-solid {{l.icon}} tt-aftermath-icon"></i>
+        <div class="tt-aftermath-body">
+          <div class="tt-aftermath-pick">
+            <select data-kind="{{l.id}}" {{#unless l.canApply}}disabled{{/unless}}>{{#each l.kinds as |k|}}<option value="{{k.value}}" {{#if k.selected}}selected{{/if}}>{{k.label}}</option>{{/each}}</select>
+            <span class="dim">{{localize "TAGANDTALLY.Aftermath.To"}}</span>
+            <select data-recipient="{{l.id}}" {{#unless l.canApply}}disabled{{/unless}}>{{#each l.recipients as |r|}}<option value="{{r.value}}" {{#if r.selected}}selected{{/if}}>{{r.label}}</option>{{/each}}</select>
+          </div>
+          <div class="tt-aftermath-text">{{{l.html}}}</div>
+        </div>
+        <span class="tt-controls">
+          {{#if l.canApply}}
+            <a data-action="reroll" title="{{localize 'TAGANDTALLY.Aftermath.Reroll'}}"><i class="fa-solid fa-dice"></i></a>
+            <a data-action="apply" title="{{localize 'TAGANDTALLY.Aftermath.Apply'}}"><i class="fa-solid fa-check"></i></a>
+            <a data-action="skip" title="{{localize 'TAGANDTALLY.Aftermath.Skip'}}"><i class="fa-solid fa-xmark"></i></a>
+          {{else if l.done}}<i class="fa-solid fa-circle-check" title="{{localize 'TAGANDTALLY.Aftermath.Applied'}}"></i>
+          {{else if l.skipped}}<i class="fa-solid fa-ban dim"></i>{{/if}}
+        </span>
+      </li>
+    {{/each}}
+  </ol>
+  <footer class="tt-aftermath-footer">
+    <a data-action="add" data-pol="+"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Aftermath.AddGood"}}</a>
+    <a data-action="add" data-pol="-"><i class="fa-solid fa-minus"></i> {{localize "TAGANDTALLY.Aftermath.AddBad"}}</a>
+    {{#if pending}}<button type="button" data-action="applyAll"><i class="fa-solid fa-check-double"></i> {{localize "TAGANDTALLY.Aftermath.ApplyAll"}}</button>{{/if}}
+  </footer>
+</section>

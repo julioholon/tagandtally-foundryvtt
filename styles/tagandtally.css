@@ -469,3 +469,19 @@
 .tagandtally .tt-quest-steps { list-style: none; margin: 0.2rem 0; padding: 0; font-size: 0.85em; }
 .tagandtally .tt-quest-steps li.done span { text-decoration: line-through; opacity: 0.6; }
 .tagandtally .tt-quest-location { align-items: center; }
+
+/* 0.11 Aftermath */
+.tagandtally .tt-aftermath-lines { list-style: none; margin: 0; padding: 0; }
+.tagandtally .tt-aftermath-line { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.4rem; margin: 0.25rem 0; border-left: 3px solid var(--color-border-light-tertiary, #888); }
+.tagandtally .tt-aftermath-line.pos { border-left-color: #4a8; }
+.tagandtally .tt-aftermath-line.neg { border-left-color: #c55; }
+.tagandtally .tt-aftermath-line.done { opacity: 0.65; }
+.tagandtally .tt-aftermath-line.skipped { opacity: 0.4; text-decoration: line-through; }
+.tagandtally .tt-aftermath-icon { margin-top: 0.3rem; width: 1.4em; text-align: center; }
+.tagandtally .tt-aftermath-body { flex: 1; }
+.tagandtally .tt-aftermath-pick { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+.tagandtally .tt-aftermath-text { margin-top: 0.2rem; }
+.tagandtally .tt-aftermath-footer { display: flex; gap: 1rem; align-items: center; margin-top: 0.5rem; }
+.tagandtally .tt-aftermath-footer button { margin-left: auto; width: auto; }
+.tagandtally.tt-aftermath-card.pos h3 { color: #4a8; }
+.tagandtally.tt-aftermath-card.neg h3 { color: #c55; }

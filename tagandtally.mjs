@@ -14,6 +14,7 @@ import { registerSettings } from "./module/settings.mjs";
 import { registerMigrationSetting, migrateWorld } from "./module/migration.mjs";
 import { registerHandlebarsHelpers, preloadTemplates } from "./module/handlebars.mjs";
 import { registerChatHooks } from "./module/rolls/chat.mjs";
+import { registerAftermath } from "./module/aftermath.mjs";
 import { InteractDialog, rollDrift, rollInteraction, registerInteractions } from "./module/interactions.mjs";
 import { registerJournalLog, logMessageToJournal } from "./module/journal-log.mjs";
 import * as relations from "./module/relations.mjs";
@@ -80,6 +81,7 @@ Hooks.once("init", () => {
   registerChatHooks();
   registerJournalLog();
   registerInteractions();
+  registerAftermath();
   registerDowntime();
   registerGameLoop();
   registerTravel();

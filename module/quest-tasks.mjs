@@ -112,6 +112,11 @@ export async function rollTask(quest, index, actor = quest.actor) {
     if (!covered && await GameLoopApp.pressQuest(quest.uuid, 1)) lines.push(L("TaskPressed"));
   }
   if (lines.length && result.message) await result.message.update({ content: `${result.message.content}<div class="tagandtally tt-loop-outcome">${lines.map((l) => `<p>${l}</p>`).join("")}</div>` });
+  // "Success, and" also sets something good in motion.
+  if (band === "successAnd") {
+    const { offerAftermath, AFTERMATH } = await import("./aftermath.mjs");
+    await offerAftermath(result.message, { polarities: AFTERMATH.task.successAnd, title: quest.name });
+  }
   return result;
 }
 
