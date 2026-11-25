@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.3 (unreleased)
+## 0.9.3 (2026-11-24)
 
 - Species & type builders on a character sheet now grant as you edit: abilities become trait tags, the
   weakness and extra-ability flaws become hindering flaw tags, renaming the tag renames the sentence
