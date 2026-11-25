@@ -756,7 +756,12 @@
         "gearLost": "Equipamento perdido",
         "hazard": "Perigo",
         "place": "Novo lugar para explorar",
-        "npc": "Novo contato (NPC)"
+        "npc": "Novo contato (NPC)",
+        "tagSkill": "Nova habilidade",
+        "tagTrait": "Novo traço",
+        "tagRep": "Boa reputação",
+        "tagFlaw": "Novo defeito",
+        "tagBadRep": "Má reputação"
       },
       "QuestStatus": {
         "completed": "A missão está concluída.",
@@ -782,7 +787,12 @@
         "successBut": "Um achado, mas algo vem junto.",
         "success": "Um bom butim.",
         "successAnd": "Um butim rico, e mais: uma pista ou um contato."
-      }
+      },
+      "TagTally": "já conhecida: +1 tally",
+      "TagTally2": "{name} ganha um tally",
+      "Hinders": "atrapalha",
+      "GotTag": "Novo {type}: {name}",
+      "GotFlaw": "Novo {type}: {name} (atrapalha)"
     },
     "Interaction": {
       "Title": "Interação com PNJ",

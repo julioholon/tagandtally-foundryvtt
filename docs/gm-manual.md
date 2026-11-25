@@ -150,7 +150,7 @@ would change the character or the situation.
   and fails it, and the **Aftermath** window opens with outcomes by band (two good, one good, one
   good and one bad, one bad, two bad). Each line has a kind (item, coins, relationship, new lead,
   information, or on the bad side coins lost, combat, gear lost, hazard...) and a recipient, so loot can
-  be split between characters. Reroll, change the kind, apply or skip each line; **Add** more if the
+  be split between characters. Outcomes include new tags: a skill, trait or good reputation, or on the bad side a flaw or bad reputation. Reroll, change the kind, apply or skip each line; **Add** more if the
   story calls for it. A task closed with "Success, and" offers one good outcome the same way.
 - **Hidden Location**: each new quest rolls one. It stays hidden until the Location tally fills (or
   the GM reveals it with the eye), then it is announced, journaled and added to the known places.

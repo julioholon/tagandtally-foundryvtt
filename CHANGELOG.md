@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.1 (2026-11-25)
+
+- Aftermath can grant new tags. Good: a new skill, a new trait, a good reputation. Bad: a new flaw
+  (hindering) or a bad reputation (hindering). Skills, traits and flaws come from the Sparks life
+  tables, reputations from the inspiration tables. A skill the character already has gains a tally
+  instead. They appear in quest results and in spoils (a flaw as trouble, a skill or trait with a rich
+  haul), and each line can be rerolled or switched like any other.
+
 ## 0.12.0 (2026-11-25)
 
 - Spoils: once a fight is resolved, each character's row in the Combat flow gets a **Spoils** button

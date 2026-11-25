@@ -756,7 +756,12 @@
         "gearLost": "Gear lost",
         "hazard": "Hazard",
         "place": "New place to explore",
-        "npc": "New contact (NPC)"
+        "npc": "New contact (NPC)",
+        "tagSkill": "New skill",
+        "tagTrait": "New trait",
+        "tagRep": "Good reputation",
+        "tagFlaw": "New flaw",
+        "tagBadRep": "Bad reputation"
       },
       "QuestStatus": {
         "completed": "The quest is completed.",
@@ -782,7 +787,12 @@
         "successBut": "A find, but something comes with it.",
         "success": "A good haul.",
         "successAnd": "A rich haul, and more: a lead or a contact."
-      }
+      },
+      "TagTally": "already known: +1 tally",
+      "TagTally2": "{name} gains a tally",
+      "Hinders": "hinders",
+      "GotTag": "New {type}: {name}",
+      "GotFlaw": "New {type}: {name} (hinders)"
     },
     "Interaction": {
       "Title": "NPC interaction",

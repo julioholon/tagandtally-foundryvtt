@@ -3,6 +3,7 @@ import { sceneLevel } from "./rolls/resolution.mjs";
 import { PartyOverview } from "./integrations/party.mjs";
 import { allFactions, addInsight } from "./factions.mjs";
 import { applyWealthTally } from "./downtime.mjs";
+import { sparkTables } from "./sparks/tables.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -25,15 +26,23 @@ export const AFTERMATH = {
   /** A task closed with "Success, and" offers one good outcome. */
   task: { successAnd: ["+"] },
   pools: {
-    "+": { item: 4, coins: 3, relationUp: 2, lead: 2, info: 2, place: 1, npc: 1 },
-    "-": { coinsLost: 2, relationDown: 2, leadCatch: 1, infoFalse: 1, combat: 2, gearLost: 2, hazard: 2 }
+    "+": { item: 4, coins: 3, relationUp: 2, lead: 2, info: 2, place: 1, npc: 1, tagSkill: 3, tagTrait: 2, tagRep: 1 },
+    "-": { coinsLost: 2, relationDown: 2, leadCatch: 1, infoFalse: 1, combat: 2, gearLost: 2, hazard: 2, tagFlaw: 3, tagBadRep: 1 }
   },
-  icons: { place: "fa-map-location-dot", npc: "fa-user-plus", item: "fa-gem", coins: "fa-coins", relationUp: "fa-handshake", lead: "fa-scroll", info: "fa-lightbulb", coinsLost: "fa-money-bill-transfer", relationDown: "fa-heart-crack", leadCatch: "fa-scroll", infoFalse: "fa-mask", combat: "fa-swords", gearLost: "fa-bag-shopping", hazard: "fa-skull-crossbones" },
+  /** New tags: kind -> Sparks table (reputations are made from the inspiration tables), tag type, and whether it hinders. */
+  tags: {
+    tagSkill: { table: "life-skill", tagType: "skill", hinders: false },
+    tagTrait: { table: "life-trait", tagType: "trait", hinders: false },
+    tagRep: { table: null, tagType: "reputation", hinders: false },
+    tagFlaw: { table: "life-flaw", tagType: "flaw", hinders: true },
+    tagBadRep: { table: null, tagType: "reputation", hinders: true }
+  },
+  icons: { tagSkill: "fa-graduation-cap", tagTrait: "fa-fingerprint", tagRep: "fa-star", tagFlaw: "fa-link-slash", tagBadRep: "fa-thumbs-down", place: "fa-map-location-dot", npc: "fa-user-plus", item: "fa-gem", coins: "fa-coins", relationUp: "fa-handshake", lead: "fa-scroll", info: "fa-lightbulb", coinsLost: "fa-money-bill-transfer", relationDown: "fa-heart-crack", leadCatch: "fa-scroll", infoFalse: "fa-mask", combat: "fa-swords", gearLost: "fa-bag-shopping", hazard: "fa-skull-crossbones" },
   /** Spoils and looting (a Task Roll): a smaller, more material pool than a quest's. */
   loot: {
     good: { item: 4, coins: 4 },
-    extra: { lead: 2, info: 2, npc: 1, place: 1 },
-    bad: { combat: { hazard: 2, gearLost: 1 }, search: { hazard: 2, combat: 2, gearLost: 1 } }
+    extra: { lead: 2, info: 2, npc: 1, place: 1, tagSkill: 1, tagTrait: 1 },
+    bad: { combat: { hazard: 2, gearLost: 1, tagFlaw: 1 }, search: { hazard: 2, combat: 2, gearLost: 1, tagFlaw: 1 } }
   },
   gearGenerators: ["item", "item", "weapon", "armor", "consumable", "resource"]
 };
@@ -139,6 +148,29 @@ const KINDS = {
   }
 };
 
+/** A new tag for the recipient: a skill, trait, flaw or reputation drawn from the Sparks tables. A skill they already have gains a tally instead. */
+async function tagKind(kind, actor) {
+  const def = AFTERMATH.tags[kind];
+  for (let i = 0; i < 4; i++) {
+    let name;
+    if (def.table) name = plain((await sparkTables.roll(def.table))?.value);
+    else {
+      const [adjective, noun] = await Promise.all(["inspiration-adjective", "inspiration-noun"].map(async (t) => plain((await sparkTables.roll(t))?.value)));
+      name = `${adjective} ${noun}`.trim().toLowerCase().replace(/^./, (c) => c.toUpperCase());
+    }
+    if (!name) continue;
+    const existing = actor.items.find((x) => x.type === "tag" && x.system.tagType === def.tagType && x.name.toLowerCase() === name.toLowerCase());
+    const label = game.i18n.localize(TAGANDTALLY.tagTypes[def.tagType]);
+    if (existing) {
+      if (!existing.system.canTier) continue;
+      return { html: `<strong>${esc(existing.name)}</strong> <small>${esc(label)} · ${esc(T("TagTally"))}</small>`, payload: { tallyId: existing.id } };
+    }
+    return { html: `<strong>${esc(name)}</strong> <small>${esc(label)}${def.hinders ? ` · ${esc(T("Hinders"))}` : ""}</small>`, payload: { name, tagType: def.tagType, source: def.table ?? "", hinders: def.hinders } };
+  }
+  return null;
+}
+for (const kind of Object.keys(AFTERMATH.tags)) KINDS[kind] = ({ actor }) => tagKind(kind, actor);
+
 async function relationChange(actor, dir) {
   const rows = [];
   for (const kind of ["people", "factions"]) actor.system.relations[kind].forEach((row, index) => {
@@ -193,6 +225,16 @@ const APPLY = {
     return T("InsightOn", { name: esc(target.name) });
   },
   async infoFalse({ payload }) { return payload.text; },
+  async tag({ actor, payload }) {
+    if (payload.tallyId) {
+      const existing = actor.items.get(payload.tallyId);
+      if (!existing) return null;
+      await actor.addTallies([existing.id]);
+      return T("TagTally2", { name: esc(existing.name) });
+    }
+    const [tag] = await actor.createEmbeddedDocuments("Item", [{ name: payload.name, type: "tag", system: { tagType: payload.tagType, source: payload.source, tier: 1, hinders: payload.hinders } }]);
+    return T(payload.hinders ? "GotFlaw" : "GotTag", { name: esc(tag.name), type: esc(game.i18n.localize(TAGANDTALLY.tagTypes[payload.tagType])) });
+  },
   async place({ actor, payload, ctx }) {
     const { addKnownPlace } = await import("./quest-tasks.mjs");
     await addKnownPlace(actor, payload.name, payload.text, ctx.title ?? "");
@@ -232,6 +274,7 @@ const APPLY = {
     return T("Hazard", { track: game.i18n.localize(TAGANDTALLY.woundTracks[payload.injuryType].label) });
   }
 };
+for (const kind of Object.keys(AFTERMATH.tags)) APPLY[kind] = APPLY.tag;
 APPLY.relationUp = APPLY.relation;
 APPLY.relationDown = APPLY.relation;
 APPLY.leadCatch = APPLY.lead;
