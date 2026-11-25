@@ -62,7 +62,7 @@ de uma falha tirada das falhas do tarô do SRD (o dado ao lado tira outra), e a 
 gera a ficha inteira outra vez. Solte uma espécie ou tipo num personagem (ou use o botão
 Aplicar da ficha): substitui aquele espaço da frase, as habilidades viram tags de traço, a
 fraqueza e as falhas extras viram tags de falha que atrapalham, e o MAI base passa a ser o
-maior entre espécie e tipo. Aplicar outro remove tudo o que o anterior concedeu.
+maior entre espécie e tipo. Aplicar outro remove tudo o que o anterior concedeu. Preencher o construtor numa tag que já está num personagem concede do mesmo jeito conforme você edita (o botão de atualizar no construtor concede a ficha atual de uma vez).
 
 ## 4. Rolando tarefas
 

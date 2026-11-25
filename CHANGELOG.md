@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.3 (unreleased)
+
+- Species & type builders on a character sheet now grant as you edit: abilities become trait tags, the
+  weakness and extra-ability flaws become hindering flaw tags, renaming the tag renames the sentence
+  slot, base MAI follows. A refresh button on the builder grants the current sheet at once (for species
+  or types filled in before this release).
+- Randomize character keeps the quests the character was given (grand quests, first quest, Augur
+  quests); only the previous generated character arc is replaced.
+
 ## 0.9.2 (2026-11-24)
 
 - Campaign start dialog laid out as a proper form (one row per field, the steps in a box). Starts by

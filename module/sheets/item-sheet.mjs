@@ -88,7 +88,8 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
           fields: BUILD_FIELDS[system.tagType].map((f) => ({ key: f.key, label: `TAGANDTALLY.Build.${f.key.charAt(0).toUpperCase()}${f.key.slice(1)}`, value: system.build[f.key] })),
           magic: { none: "TAGANDTALLY.Build.MagicNone", learn: "TAGANDTALLY.Build.MagicLearn", use: "TAGANDTALLY.Build.MagicUse" },
           abilities: system.build.abilities.map((a, i) => ({ ...a, index: i, needsFlaw: i >= 2 })),
-          canApply: !item.actor && game.actors.some((a) => a.type === "character" && a.isOwner)
+          canApply: !item.actor && game.actors.some((a) => a.type === "character" && a.isOwner),
+          canGrant: item.actor?.type === "character"
         };
       }
     }
@@ -176,7 +177,8 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
   }
 
   static async #onApplyBuild() {
-    const { applyBuilderItemDialog } = await import("../species-types.mjs");
+    const { applyBuilderItemDialog, syncBuilderGrants } = await import("../species-types.mjs");
+    if (this.item.actor) return syncBuilderGrants(this.item.actor, this.item);
     return applyBuilderItemDialog(this.item);
   }
 

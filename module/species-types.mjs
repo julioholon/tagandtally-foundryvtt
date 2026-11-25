@@ -166,7 +166,6 @@ export async function createBuilderItem(kind, { render = true } = {}) {
 export async function applyBuilderItem(actor, item) {
   if (actor.type !== "character" || !isBuilderTag(item)) return null;
   const kind = item.system.tagType;
-  const build = foundry.utils.deepClone(item.system.build);
   const source = item.toObject();
   delete source._id;
   delete source.folder;
@@ -177,22 +176,46 @@ export async function applyBuilderItem(actor, item) {
   const ids = [...old, ...granted].map((i) => i.id);
   if (ids.length) await actor.deleteEmbeddedDocuments("Item", ids);
   const [umbrella] = await actor.createEmbeddedDocuments("Item", [source]);
-  const subs = [];
-  const L = (k, d) => game.i18n.format(`TAGANDTALLY.Build.${k}`, d);
-  for (const a of build.abilities ?? []) {
-    if (!a.name) continue;
-    subs.push({ name: a.name, type: "tag", img: TAGANDTALLY.builder.icons.ability, system: { tagType: "trait", category: "static", umbrella: umbrella.id, magical: build.magic === "use" && MAGICAL_RE.test(a.name), description: a.text ? `<p>${foundry.utils.escapeHTML(a.text)}</p>` : `<p>${L("GrantedBy", { name: umbrella.name })}</p>` } });
-    if (a.flaw) subs.push({ name: a.flaw, type: "tag", img: TAGANDTALLY.builder.icons.flaw, system: { tagType: "flaw", category: "static", hinders: true, umbrella: umbrella.id, description: `<p>${L("FlawFor", { ability: a.name, name: umbrella.name })}</p>` } });
-  }
-  if (build.weakness) subs.push({ name: build.weakness, type: "tag", img: TAGANDTALLY.builder.icons.flaw, system: { tagType: "flaw", category: "static", hinders: true, umbrella: umbrella.id, description: `<p>${L("WeaknessOf", { name: umbrella.name })}</p>` } });
-  if (subs.length) await actor.createEmbeddedDocuments("Item", subs);
-  // Sentence slot and base MAI (the higher of species and type, never the sum).
-  const update = { [`system.sentence.${kind}`]: umbrella.name };
-  const bases = actor.items.filter((i) => isBuilderTag(i) && i.system.build?.hasContent).map((i) => Number(i.system.build.baseMai) || 0);
-  if (bases.length) update["system.mai.base"] = Math.max(...bases);
-  await actor.update(update, { ttSentenceSync: false });
-  ui.notifications.info(L("Applied", { name: umbrella.name, actor: actor.name, count: subs.length }));
+  const count = await syncBuilderGrants(actor, umbrella, { silent: true });
+  ui.notifications.info(game.i18n.format("TAGANDTALLY.Build.Applied", { name: umbrella.name, actor: actor.name, count }));
   return umbrella;
+}
+
+/**
+ * Make the actor's tags match a species/type build: abilities as trait tags, the weakness
+ * and the flaws paying for extra abilities as hindering flaw tags (all marked with the
+ * umbrella id), the sentence slot named after the umbrella, base MAI = max(species, type).
+ * Runs on drop / Apply and whenever an embedded build is edited.
+ * @returns {number} tags the umbrella grants now
+ */
+export async function syncBuilderGrants(actor, umbrella, { silent = false } = {}) {
+  if (!actor || actor.type !== "character" || !isBuilderTag(umbrella)) return 0;
+  const build = umbrella.system.build;
+  const kind = umbrella.system.tagType;
+  const L = (k, d) => game.i18n.format(`TAGANDTALLY.Build.${k}`, d);
+  const wanted = [];
+  for (const a of build.abilities ?? []) {
+    if (a.name) wanted.push({ key: `ability:${a.name}`, name: a.name, type: "tag", img: TAGANDTALLY.builder.icons.ability, system: { tagType: "trait", category: "static", umbrella: umbrella.id, magical: build.magic === "use" && MAGICAL_RE.test(a.name), description: `<p>${L("GrantedBy", { name: umbrella.name })}</p>` } });
+    if (a.flaw) wanted.push({ key: `flaw:${a.flaw}`, name: a.flaw, type: "tag", img: TAGANDTALLY.builder.icons.flaw, system: { tagType: "flaw", category: "static", hinders: true, umbrella: umbrella.id, description: `<p>${L("FlawFor", { ability: a.name, name: umbrella.name })}</p>` } });
+  }
+  if (build.weakness) wanted.push({ key: `weakness:${build.weakness}`, name: build.weakness, type: "tag", img: TAGANDTALLY.builder.icons.flaw, system: { tagType: "flaw", category: "static", hinders: true, umbrella: umbrella.id, description: `<p>${L("WeaknessOf", { name: umbrella.name })}</p>` } });
+  const existing = actor.items.filter((i) => i.type === "tag" && i.system.umbrella === umbrella.id);
+  const keyOf = (i) => `${i.system.tagType === "trait" ? "ability" : i.system.hinders && i.name === build.weakness ? "weakness" : "flaw"}:${i.name}`;
+  const have = new Map(existing.map((i) => [keyOf(i), i]));
+  const creates = wanted.filter((w) => !have.has(w.key)).map(({ key, ...data }) => data);
+  const keep = new Set(wanted.map((w) => w.key));
+  const deletes = existing.filter((i) => !keep.has(keyOf(i))).map((i) => i.id);
+  if (deletes.length) await actor.deleteEmbeddedDocuments("Item", deletes);
+  if (creates.length) await actor.createEmbeddedDocuments("Item", creates);
+  // Sentence slot and base MAI (the higher of species and type, never the sum).
+  const update = {};
+  if (actor.system.sentence[kind] !== umbrella.name) update[`system.sentence.${kind}`] = umbrella.name;
+  const bases = actor.items.filter((i) => isBuilderTag(i) && i.system.build?.hasContent).map((i) => Number(i.system.build.baseMai) || 0);
+  if (bases.length && actor.system.mai.base !== Math.max(...bases)) update["system.mai.base"] = Math.max(...bases);
+  if (Object.keys(update).length) await actor.update(update, { ttSentenceSync: false });
+  const count = wanted.length;
+  if (!silent) ui.notifications.info(L("Synced", { name: umbrella.name, actor: actor.name, count }));
+  return count;
 }
 
 /** Pick a character and apply the item to it. */

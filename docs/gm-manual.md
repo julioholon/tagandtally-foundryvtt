@@ -67,7 +67,7 @@ a flaw drawn from the SRD tarot flaws (the dice beside it draws another), and th
 regenerates the whole sheet. Drop a species or type on a character (or use the sheet's Apply
 button): it replaces that sentence slot, the abilities become trait tags, the weakness and
 extra flaws become hindering flaw tags, and the base MAI becomes the higher of species and
-type. Applying another one removes everything the old one granted.
+type. Applying another one removes everything the old one granted. Filling the builder on a tag that already sits on a character grants the same way as you edit (the refresh button on the builder grants the current sheet at once).
 
 ## 4. Rolling tasks
 

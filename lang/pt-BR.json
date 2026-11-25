@@ -1409,7 +1409,10 @@
       "WeaknessOf": "Fraqueza de {name}.",
       "People": "povo",
       "Library": "Espécies e Tipos",
-      "RerollFlaw": "Tirar uma falha do tarô"
+      "RerollFlaw": "Tirar uma falha do tarô",
+      "Grant": "Conceder as habilidades e a fraqueza ao personagem agora",
+      "GrantHint": "Num personagem, habilidades e fraqueza viram tags conforme você edita.",
+      "Synced": "{name}: {count} tags concedidas a {actor}."
     }
   }
 }
