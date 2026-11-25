@@ -28,16 +28,19 @@ export default class TagAndTallyItem extends Item {
     }
     for (const key of ["plan", "location"]) {
       const value = key === "plan" ? plan : Number(get("system.tallies.location.value", t.location.value));
-      if (t[key].enabled && t[key].max > 0 && value >= t[key].max && t[key].value < t[key].max && t.countdown.enabled) countdown = Math.max(0, countdown - 1);
+      const crossed = t[key].enabled && t[key].max > 0 && value >= t[key].max && t[key].value < t[key].max;
+      if (crossed && t.countdown.enabled) countdown = Math.max(0, countdown - 1);
+      if (crossed && key === "location" && !this.system.locationRevealed) options.ttRevealLocation = true;
     }
     if (plan !== Number(get("system.tallies.plan.value", t.plan.value))) foundry.utils.setProperty(changed, "system.tallies.plan.value", plan);
     if (countdown !== Number(get("system.tallies.countdown.value", t.countdown.value))) foundry.utils.setProperty(changed, "system.tallies.countdown.value", countdown);
   }
 
-  /** @override */
   /** @override Editing a species/type build on a character re-grants its abilities and weakness. */
   _onUpdate(changed, options, userId) {
     super._onUpdate(changed, options, userId);
+    // A quest whose Location tally just filled reveals its Location (on the client that made the change).
+    if (userId === game.user.id && this.type === "quest" && options.ttRevealLocation) import("../quest-tasks.mjs").then(({ revealLocation }) => revealLocation(this));
     if (userId !== game.user.id || !this.actor || this.actor.type !== "character" || !this.system.isBuilder) return;
     if (!foundry.utils.hasProperty(changed, "system.build") && !("name" in changed)) return;
     import("../species-types.mjs").then(({ syncBuilderGrants }) => syncBuilderGrants(this.actor, this, { silent: true }));

@@ -26,6 +26,10 @@ export default class QuestData extends foundry.abstract.TypeDataModel {
       augurUuid: str(),
       /** Spark table this item was generated from (enables reroll). */
       source: new fields.StringField({ required: true, blank: true, initial: "" }),
+      /** The quest's hidden Location (a Sparks sentence), shown once the Location tally fills or the GM reveals it. */
+      locationName: str(),
+      locationText: str(),
+      locationRevealed: new fields.BooleanField({ initial: false }),
       tallies: new fields.SchemaField({
         plan: tally(TAGANDTALLY.questTallies.plan.max),
         location: tally(TAGANDTALLY.questTallies.location.max),

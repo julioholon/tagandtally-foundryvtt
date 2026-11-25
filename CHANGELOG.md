@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.10.0 (2026-11-25)
+
+- Quest tasks: the + on a quest's steps rolls a Verb Adjective Noun from the inspiration tables; edit the
+  line or reroll it before adding, and reroll any open task later (dice icon).
+- Investigating a quest's Plan no longer marks the tally: a success adds open tasks (1, 2 or 3 by band,
+  capped by the Plan boxes still free). Location investigations still mark the Location tally.
+- Closing a task takes a Task Roll (d20 on the task, in the quest sheet or the Quests tab). Success closes
+  it, which marks the Plan and clears a Countdown mark (SRD); Success, but adds a complication from the
+  inspiration table; Success, and clears one more Countdown mark; Fail, and presses the Countdown (once,
+  also when the Game loop scene already serves the quest). Players can no longer tick tasks by hand.
+- Hidden Location: every new quest rolls a Location (Sparks) kept out of sight. When the Location tally
+  fills it is revealed: a chat card, a place journal and a row in the character's known places. The GM can
+  reroll or reveal it earlier from the quest sheet.
+- Manual check list (not testable offline): + on a quest, Investigate > Plan, rolling a task from the
+  Quests tab, filling the Location tally, reveal as player and GM.
+
 ## 0.9.5 (2026-11-25)
 
 - Campaign start rewinds the day to 1 and clears the scene history, so the Game loop starts at scene 1, day 1.
