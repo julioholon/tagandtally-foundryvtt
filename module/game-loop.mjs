@@ -46,6 +46,7 @@ function blankScene(number = 1) {
 }
 
 const VERDICTS = ["good", "mixed", "bad"];
+const VERDICT_ICONS = { good: "fa-thumbs-up", mixed: "fa-scale-balanced", bad: "fa-thumbs-down" };
 
 /** The scene's verdict by vote: the plurality, "mixed" on a tie, "" with no votes. */
 function majority(votes) {
@@ -70,7 +71,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
     id: "tt-game-loop",
     classes: ["tagandtally", "game-loop"],
-    position: { width: 720, height: 780 },
+    position: { width: 760, height: 780 },
     window: { title: "TAGANDTALLY.Loop.Title", icon: "fa-solid fa-arrows-spin", resizable: true },
     actions: {
       addParty: GameLoopApp.#onAddParty,
@@ -136,7 +137,8 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       const left = Math.max(0, GameLoopApp.maxActions - p.spent);
       participants.push({
         uuid: p.uuid, name: actor.name, img: actor.img, canAct: actor.isOwner, ready: p.ready, left,
-        votes: VERDICTS.map((id) => ({ id, label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: p.vote === id })),
+        votes: VERDICTS.map((id) => ({ id, icon: VERDICT_ICONS[id], label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: p.ready && p.vote === id })),
+        voteLabel: p.vote ? game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${p.vote}`) : "",
         pips: Array.from({ length: GameLoopApp.maxActions }, (_, i) => i < left),
         actions: Object.entries(TAGANDTALLY.loop.actions).map(([id, a]) => ({ id, label: game.i18n.localize(a.label), icon: a.icon, hint: game.i18n.localize(a.hint) }))
       });
@@ -154,7 +156,9 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const votes = Object.values(state.participants).map((p) => p.vote).filter(Boolean);
     return {
       stakeLines, votesText: votesLabel(votes),
-      verdicts: VERDICTS.map((id) => ({ id, label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: scene.verdict === id })),
+      verdicts: VERDICTS.map((id) => ({ id, icon: VERDICT_ICONS[id], label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: scene.verdict === id, byVote: !scene.verdict && majority(votes) === id })),
+      verdictLabel: scene.verdict ? game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${scene.verdict}`) : majority(votes) ? `${game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${majority(votes)}`)} (${L("ByVote")})` : L("NoVerdict"),
+      readyCount: participants.filter((p) => p.ready).length,
       state, scene, scopes, participants, quests, isGM: game.user.isGM, day,
       quest: quest ? { uuid: quest.uuid, name: quest.name, status: quest.system.status, ready: quest.system.readyToResolve } : null, questTallies,
       calendar: GameLoopApp.calendarDate(),
@@ -240,7 +244,10 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const p = state.participants[target.closest("[data-uuid]")?.dataset.uuid];
     const actor = p ? await fromUuid(p.uuid) : null;
     if (!actor?.isOwner) return;
-    p.vote = p.vote === target.dataset.vote ? "" : target.dataset.vote;
+    // Ready is the vote: picking Good / Mixed / Bad marks the character ready; picking it again un-readies.
+    const same = p.ready && p.vote === target.dataset.vote;
+    p.vote = same ? "" : target.dataset.vote;
+    p.ready = !same;
     return GameLoopApp.state.set(state);
   }
 

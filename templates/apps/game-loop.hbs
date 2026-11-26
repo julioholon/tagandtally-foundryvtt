@@ -4,9 +4,9 @@
     <span class="tt-scene-no"><i class="fa-solid fa-clapperboard"></i> {{localize "TAGANDTALLY.Loop.SceneNumber" number=scene.number}}</span>
     {{#if calendar}}<span class="tt-calendar" title="{{localize 'TAGANDTALLY.Loop.CalendarHint'}}"><i class="fa-regular fa-calendar"></i> {{calendar}}</span>{{/if}}
     <span class="tt-controls">
-      <button type="button" data-action="addParty"><i class="fa-solid fa-people-group"></i> {{localize "TAGANDTALLY.Downtime.AddParty"}}</button>
-      <button type="button" data-action="addSelected"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Combat.AddSelected"}}</button>
-      <button type="button" data-action="openChronicle" title="{{localize 'TAGANDTALLY.Loop.ChronicleHint'}}"><i class="fa-solid fa-book"></i> {{localize "TAGANDTALLY.Loop.Chronicle"}}</button>
+      <button type="button" class="tt-icon-btn" data-action="addParty" title="{{localize 'TAGANDTALLY.Downtime.AddParty'}}"><i class="fa-solid fa-people-group"></i></button>
+      <button type="button" class="tt-icon-btn" data-action="addSelected" title="{{localize 'TAGANDTALLY.Combat.AddSelected'}}"><i class="fa-solid fa-user-plus"></i></button>
+      <button type="button" class="tt-icon-btn" data-action="openChronicle" title="{{localize 'TAGANDTALLY.Loop.Chronicle'}}: {{localize 'TAGANDTALLY.Loop.ChronicleHint'}}"><i class="fa-solid fa-book"></i></button>
     </span>
   </div>
   <p class="hint">{{localize "TAGANDTALLY.Loop.Hint"}}</p>
@@ -15,40 +15,48 @@
     {{#if hasScene}}
       <p class="tt-loop-sentence"><em>{{scene.sentence}}</em>{{#if isGM}} <a data-action="reroll" data-field="sentence" title="{{localize 'TAGANDTALLY.Travel.Reroll'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}</p>
       <div class="tt-loop-facts">
-        <span><strong>{{localize "TAGANDTALLY.Level.Level"}}</strong> {{scene.level}} · {{levelLabel}} <small class="dim">({{scene.levelDetail}})</small>{{#if isGM}} <a data-action="reroll" data-field="level" title="{{localize 'TAGANDTALLY.Travel.Reroll'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}{{#if canApplyLevel}} <a data-action="applyLevel" title="{{localize 'TAGANDTALLY.Travel.ApplyLevelHint'}}"><i class="fa-solid fa-arrow-right-to-bracket"></i> {{localize "TAGANDTALLY.Travel.ApplyLevel"}}</a>{{/if}}</span>
-        {{#each (tt-array "timeOfDay" "weather" "season") as |m|}}<span><strong>{{localize (concat "TAGANDTALLY.Loop.Modifier." m)}}</strong> {{#if (lookup ../scene.modifiers m)}}{{lookup ../scene.modifiers m}}{{else}}—{{/if}}{{#if ../isGM}} <a data-action="reroll" data-field="{{m}}" title="{{localize 'TAGANDTALLY.Travel.Reroll'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}</span>{{/each}}
+        <span class="tt-chip" title="{{localize 'TAGANDTALLY.Level.Level'}}: {{scene.levelDetail}}"><strong>{{localize "TAGANDTALLY.Level.Level"}} {{scene.level}}</strong> {{levelLabel}}{{#if isGM}} <a data-action="reroll" data-field="level" title="{{localize 'TAGANDTALLY.Travel.Reroll'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}{{#if canApplyLevel}} <a data-action="applyLevel" title="{{localize 'TAGANDTALLY.Travel.ApplyLevelHint'}}"><i class="fa-solid fa-arrow-right-to-bracket"></i></a>{{/if}}</span>
+        {{#each (tt-array "timeOfDay" "weather" "season") as |m|}}<span class="tt-chip" title="{{localize (concat 'TAGANDTALLY.Loop.Modifier.' m)}}">{{#if (lookup ../scene.modifiers m)}}{{lookup ../scene.modifiers m}}{{else}}—{{/if}}{{#if ../isGM}} <a data-action="reroll" data-field="{{m}}" title="{{localize 'TAGANDTALLY.Travel.Reroll'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}</span>{{/each}}
       </div>
     {{else}}
       <p class="tt-empty">{{localize "TAGANDTALLY.Loop.NoScene"}} {{#if isGM}}<button type="button" class="tt-roll-btn" data-action="rollScene"><i class="fa-solid fa-dice"></i> {{localize "TAGANDTALLY.Loop.RollScene"}}</button>{{/if}}</p>
     {{/if}}
-    <div class="tt-grid two">
-      <div class="form-group"><label>{{localize "TAGANDTALLY.Loop.Scope"}} <small class="hint">{{localize "TAGANDTALLY.Loop.ScopeHint"}}</small></label>
-        <select name="scope">{{#each scopes as |s|}}<option value="{{s.id}}" {{#if s.selected}}selected{{/if}}>{{s.label}}</option>{{/each}}</select></div>
-      <div class="form-group"><label>{{localize "TAGANDTALLY.Quest.Quest"}} <a data-action="newQuest" title="{{localize 'TAGANDTALLY.Loop.NewQuestHint'}}"><i class="fa-solid fa-plus"></i></a></label>
-        <select name="questUuid"><option value="">{{localize "TAGANDTALLY.Loop.NoQuest"}}</option>{{#each quests as |q|}}<option value="{{q.uuid}}" {{#if q.selected}}selected{{/if}}>{{q.name}}</option>{{/each}}</select></div>
-      {{#if quest}}<div class="tt-loop-quest span2"><a data-action="openQuest" title="{{quest.name}}"><i class="fa-solid fa-scroll"></i> {{quest.name}}</a>{{#each questTallies as |t|}}<span><strong>{{t.label}}</strong> <span class="tt-boxes {{#if t.small}}small{{/if}}">{{#each t.boxes as |b|}}<span class="tt-box {{#if b}}filled{{/if}}"></span>{{/each}}</span> <small class="dim">{{t.value}}/{{t.max}}</small></span>{{/each}}{{#if quest.ready}}<span class="tt-tag">{{localize "TAGANDTALLY.Quest.Ready"}}</span>{{/if}}</div>{{/if}}
-      <div class="form-group"><label>{{localize "TAGANDTALLY.Loop.Intent"}}</label><textarea name="intent" rows="2" placeholder="{{localize 'TAGANDTALLY.Loop.IntentPlaceholder'}}">{{scene.intent}}</textarea></div>
-      <div class="form-group"><label>{{localize "TAGANDTALLY.Loop.Stakes"}}</label><textarea name="stakes" rows="2" placeholder="{{localize 'TAGANDTALLY.Loop.StakesPlaceholder'}}">{{scene.stakes}}</textarea></div>
-      <div class="form-group span2 tt-stakes-lines">
-        <label>{{localize "TAGANDTALLY.Loop.StakeLines"}} <small class="hint">{{localize "TAGANDTALLY.Loop.StakeLinesHint"}}</small>
-          <a data-action="addStake" data-pol="+"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Loop.StakeBoon"}}</a>
-          <a data-action="addStake" data-pol="-"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Loop.StakeConsequence"}}</a></label>
+    <div class="tt-loop-setup">
+      <div class="form-group tt-loop-scope"><label title="{{localize 'TAGANDTALLY.Loop.ScopeHint'}}">{{localize "TAGANDTALLY.Loop.Scope"}}</label>
+        <select name="scope" title="{{localize 'TAGANDTALLY.Loop.ScopeHint'}}">{{#each scopes as |s|}}<option value="{{s.id}}" {{#if s.selected}}selected{{/if}}>{{s.label}}</option>{{/each}}</select></div>
+      <div class="form-group tt-loop-questpick"><label>{{localize "TAGANDTALLY.Quest.Quest"}}</label>
+        <div class="tt-inline-field">
+          <select name="questUuid"><option value="">{{localize "TAGANDTALLY.Loop.NoQuest"}}</option>{{#each quests as |q|}}<option value="{{q.uuid}}" {{#if q.selected}}selected{{/if}}>{{q.name}}</option>{{/each}}</select>
+          <button type="button" class="tt-icon-btn" data-action="openQuest" title="{{localize 'TAGANDTALLY.Loop.OpenQuest'}}" {{#unless quest}}disabled{{/unless}}><i class="fa-solid fa-scroll"></i></button>
+          <button type="button" class="tt-icon-btn" data-action="newQuest" title="{{localize 'TAGANDTALLY.Loop.NewQuestHint'}}"><i class="fa-solid fa-plus"></i></button>
+        </div></div>
+    </div>
+    <div class="form-group tt-loop-intent"><label>{{localize "TAGANDTALLY.Loop.Intent"}}</label><textarea name="intent" rows="2" placeholder="{{localize 'TAGANDTALLY.Loop.IntentPlaceholder'}}">{{scene.intent}}</textarea></div>
+
+    <fieldset class="tt-loop-stakes">
+      <legend>{{localize "TAGANDTALLY.Loop.Stakes"}}</legend>
+      <div class="tt-stakes-head">
+        <span class="hint">{{localize "TAGANDTALLY.Loop.StakeLinesHint"}}</span>
+        <button type="button" class="tt-add-boon" data-action="addStake" data-pol="+"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Loop.StakeBoon"}}</button>
+        <button type="button" class="tt-add-consequence" data-action="addStake" data-pol="-"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Loop.StakeConsequence"}}</button>
+      </div>
+      {{#if stakeLines.length}}
         <ul class="tt-stake-list">
           {{#each stakeLines as |s|}}
             <li class="{{s.sign}}" data-stake="{{s.id}}">
-              <i class="fa-solid {{s.icon}}"></i>
+              <span class="tt-stake-sign" title="{{#if (tt-eq s.sign 'pos')}}{{localize 'TAGANDTALLY.Loop.StakeBoon'}}{{else}}{{localize 'TAGANDTALLY.Loop.StakeConsequence'}}{{/if}}"><i class="fa-solid {{#if (tt-eq s.sign 'pos')}}fa-plus{{else}}fa-minus{{/if}}"></i></span>
+              <i class="fa-solid {{s.icon}} tt-stake-icon"></i>
               <select name="stakeKind">{{#each s.kinds as |k|}}<option value="{{k.value}}" {{#if k.selected}}selected{{/if}}>{{k.label}}</option>{{/each}}</select>
-              {{#if s.nameable}}<label class="tt-toggle"><input type="checkbox" name="stakeRandom" {{checked s.random}} /> {{localize "TAGANDTALLY.Loop.StakeRandom"}}</label><input type="text" name="stakeName" value="{{s.name}}" placeholder="{{localize 'TAGANDTALLY.Loop.StakeNamePlaceholder'}}" {{#if s.random}}disabled{{/if}} />{{/if}}
+              {{#if s.nameable}}
+                <label class="tt-toggle" title="{{localize 'TAGANDTALLY.Loop.StakeRandomHint'}}"><input type="checkbox" name="stakeRandom" {{checked s.random}} /> {{localize "TAGANDTALLY.Loop.StakeRandom"}}</label>
+                <input type="text" name="stakeName" value="{{s.name}}" placeholder="{{localize 'TAGANDTALLY.Loop.StakeNamePlaceholder'}}" {{#if s.random}}disabled{{/if}} />
+              {{else}}<span class="tt-stake-fill"></span>{{/if}}
               <a data-action="removeStake" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-trash"></i></a>
             </li>
           {{/each}}
         </ul>
-      </div>
-      <div class="form-group span2 tt-verdict-row">
-        <label>{{localize "TAGANDTALLY.Aftermath.Verdict.Label"}} <small class="hint">{{localize "TAGANDTALLY.Loop.VerdictHint"}}</small></label>
-        <span>{{#each verdicts as |v|}}<button type="button" class="tt-verdict-btn {{v.id}} {{#if v.active}}active{{/if}}" data-action="setVerdict" data-verdict="{{v.id}}" {{#unless ../isGM}}disabled{{/unless}}>{{v.label}}</button>{{/each}} {{#if votesText}}<small class="dim">{{votesText}}</small>{{/if}}</span>
-      </div>
-    </div>
+      {{else}}<p class="tt-empty dim">{{localize "TAGANDTALLY.Loop.NoStakes"}}</p>{{/if}}
+    </fieldset>
   </section>
 
   <ol class="tt-loop-list">
@@ -58,10 +66,9 @@
           <img src="{{p.img}}" alt="" />
           <strong>{{p.name}}</strong>
           <span class="tt-boxes" title="{{localize 'TAGANDTALLY.Loop.Actions'}}">{{#each p.pips as |filled|}}<span class="tt-box {{#if filled}}filled{{/if}}"></span>{{/each}}</span>
-          {{#if p.canAct}}<span class="tt-vote" title="{{localize 'TAGANDTALLY.Loop.VoteHint'}}">{{#each p.votes as |v|}}<a class="tt-vote-btn {{v.id}} {{#if v.active}}active{{/if}}" data-action="vote" data-vote="{{v.id}}">{{v.label}}</a>{{/each}}</span>{{/if}}
           {{#if p.canAct}}<a class="tt-refund" data-action="refund" title="{{localize 'TAGANDTALLY.Loop.RefundHint'}}"><i class="fa-solid fa-rotate-left"></i></a>{{/if}}
           <span class="tt-controls">
-            {{#if p.canAct}}<button type="button" class="tt-ready {{#if p.ready}}on{{/if}}" data-action="ready"><i class="fa-solid {{#if p.ready}}fa-circle-check{{else}}fa-circle{{/if}}"></i> {{localize "TAGANDTALLY.Loop.Ready"}}</button>{{else}}<span class="tt-ready-state"><i class="fa-solid {{#if p.ready}}fa-circle-check{{else}}fa-circle{{/if}}"></i> {{localize (tt-ternary p.ready "TAGANDTALLY.Loop.Ready" "TAGANDTALLY.Loop.NotReadyYet")}}</span>{{/if}}
+            {{#if p.canAct}}<span class="tt-ready-vote" title="{{localize 'TAGANDTALLY.Loop.ReadyVoteHint'}}"><span class="dim">{{localize "TAGANDTALLY.Loop.Ready"}}</span><span class="tt-segmented">{{#each p.votes as |v|}}<button type="button" class="tt-verdict-btn {{v.id}} {{#if v.active}}active{{/if}}" data-action="vote" data-vote="{{v.id}}" title="{{v.label}}"><i class="fa-solid {{v.icon}}"></i></button>{{/each}}</span></span>{{else}}<span class="tt-ready-state"><i class="fa-solid {{#if p.ready}}fa-circle-check{{else}}fa-circle{{/if}}"></i> {{#if p.ready}}{{localize "TAGANDTALLY.Loop.Ready"}}{{#if p.voteLabel}} · {{p.voteLabel}}{{/if}}{{else}}{{localize "TAGANDTALLY.Loop.NotReadyYet"}}{{/if}}</span>{{/if}}
             {{#if ../isGM}}<a data-action="remove" data-uuid="{{p.uuid}}" title="{{localize 'TAGANDTALLY.Relations.Remove'}}"><i class="fa-solid fa-xmark"></i></a>{{/if}}
           </span>
         </header>
@@ -76,7 +83,12 @@
   </ol>
 
   <div class="tt-loop-advance">
-    <span class="hint">{{#if allReady}}{{localize "TAGANDTALLY.Loop.AllReady"}}{{else}}{{localize "TAGANDTALLY.Loop.WaitingReady"}}{{/if}}</span>
+    <span class="tt-loop-readycount" title="{{#if allReady}}{{localize 'TAGANDTALLY.Loop.AllReady'}}{{else}}{{localize 'TAGANDTALLY.Loop.WaitingReady'}}{{/if}}"><strong>{{localize "TAGANDTALLY.Loop.ReadyCount" ready=readyCount total=participants.length}}</strong>{{#if votesText}} <small class="dim">{{votesText}}</small>{{/if}}</span>
+    <span class="tt-verdict-row" title="{{localize 'TAGANDTALLY.Loop.VerdictHint'}}">
+      <span>{{localize "TAGANDTALLY.Aftermath.Verdict.Label"}}</span>
+      <span class="tt-segmented">{{#each verdicts as |v|}}<button type="button" class="tt-verdict-btn {{v.id}} {{#if v.active}}active{{/if}} {{#if v.byVote}}byvote{{/if}}" data-action="setVerdict" data-verdict="{{v.id}}" {{#unless ../isGM}}disabled{{/unless}} title="{{v.label}}{{#if v.byVote}} ({{localize 'TAGANDTALLY.Loop.ByVote'}}){{/if}}"><i class="fa-solid {{v.icon}}"></i></button>{{/each}}</span>
+      <small class="dim">{{verdictLabel}}</small>
+    </span>
     <span class="tt-controls">
       {{#if isGM}}<a data-action="resetActions" title="{{localize 'TAGANDTALLY.Loop.ResetActionsHint'}}"><i class="fa-solid fa-rotate-left"></i></a>{{/if}}
       <button type="button" class="tt-roll-btn" data-action="advance" {{#unless canAdvance}}disabled{{/unless}}><i class="fa-solid fa-forward"></i> {{localize "TAGANDTALLY.Loop.Advance"}} <small>({{localize scopeDef.label}})</small></button>

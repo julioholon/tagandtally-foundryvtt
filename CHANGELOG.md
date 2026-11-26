@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.13.4 (2026-11-26)
+
+Game loop tidied (checked live on Foundry 14):
+- **Ready is the vote.** Each character's Ready is three buttons, 👍 Good / ⚖ Mixed / 👎 Bad: done with the
+  scene, you mark Ready with the outcome you would take (Good keeps the boons, Bad the consequences,
+  Mixed both). Clicking it again takes it back.
+- **Verdict next to Advance time**, in the footer with the ready count and the vote tally; it shows the
+  result by vote, and the GM can pick one instead.
+- Scene block: time scope is a narrow select beside the quest picker, which gets an "open quest" button
+  and a "+" (the tally rows under it are gone); intent takes the full width; the Stakes text box is
+  replaced by a Stakes section with **+ Boon** / **+ Consequence** buttons and aligned rows (sign, kind,
+  Random, name, delete).
+- More compact: the toolbar is one line with icon buttons (tooltips), level / time / weather / season are
+  chips on one line, the instructions are shorter, the window is 760 px wide so a character's action
+  buttons fit on one line.
+
 ## 0.13.3 (2026-11-26)
 
 - Game loop: the 0.13.2 redesign is reverted (its tabs did not respond: Foundry reserves the `tab`
