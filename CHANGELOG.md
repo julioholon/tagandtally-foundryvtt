@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.3 (2026-11-26)
+
+- Game loop: the 0.13.2 redesign is reverted (its tabs did not respond: Foundry reserves the `tab`
+  action name). The window is back to the 0.13.1 layout, instructions and Stakes text included, with
+  one change: it no longer grows past the screen. It opens at most 780 px tall (less on small screens),
+  its content scrolls inside it, and the scroll position is kept when it re-renders after a roll.
+- The Good / Mixed / Bad verdict buttons sit on one line.
+
 ## 0.13.2 (2026-11-26)
 
 - Game loop redesigned to be lighter. The window has a fixed size and only its content scrolls, with a
