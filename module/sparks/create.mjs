@@ -43,10 +43,10 @@ export async function createWoundItemFromSpark(actor, { injuryType = "lingeringT
 
 /* ---------------------------- Appearance -------------------------------- */
 
-export async function generateAppearanceFor(actor) {
-  const r = await generate("appearance", { theme: theme() });
+/** The appearance fields of a generated "appearance" sentence, as actor update paths. */
+export function appearanceUpdate(r) {
   const v = r.values;
-  const update = {
+  return {
     "system.pronoun": plain(v["character-pronoun"]),
     "system.appearance.height": r.text.match(/Height:\s*(.+)/)?.[1]?.trim() ?? "",
     "system.appearance.build": plain(v["character-build-height"]),
@@ -57,6 +57,11 @@ export async function generateAppearanceFor(actor) {
     "system.appearance.voice": plain(v["character-voice"]),
     "system.appearance.distinguishing": plain(v["character-distinguishing-feature"])
   };
+}
+
+export async function generateAppearanceFor(actor) {
+  const r = await generate("appearance", { theme: theme() });
+  const update = appearanceUpdate(r);
   if (actor.type === "character") return actor.update(update);
   return actor.update({ "system.notes": `${actor.system.notes ?? ""}<p>${r.html}</p>` });
 }

@@ -792,7 +792,20 @@
       "TagTally2": "{name} ganha um tally",
       "Hinders": "atrapalha",
       "GotTag": "Novo {type}: {name}",
-      "GotFlaw": "Novo {type}: {name} (atrapalha)"
+      "GotFlaw": "Novo {type}: {name} (atrapalha)",
+      "Verdict": {
+        "Label": "Veredito",
+        "Hint": "Bom mantém os benefícios e descarta as consequências, Ruim o contrário, Misto deixa você escolher linha a linha. Cada veredito acrescenta um resultado extra do lado que favorece.",
+        "good": "Bom",
+        "mixed": "Misto",
+        "bad": "Ruim"
+      },
+      "Scene": {
+        "Title": "Cena {number}"
+      },
+      "Restore": "Recolocar",
+      "Extra": "extra",
+      "NamePlaceholder": "Aleatório, ou digite um nome"
     },
     "Interaction": {
       "Title": "Interação com PNJ",
@@ -1369,7 +1382,17 @@
       "QuestPressed": "Pressão do tempo: a Contagem de {quest} enche {n}.",
       "LootHint": "O que você vasculha?",
       "LootSearch": "Buscar na área",
-      "LootFallen": "Saquear os caídos"
+      "LootFallen": "Saquear os caídos",
+      "StakeLines": "Benefícios e consequências",
+      "StakeLinesHint": "Rolados ou nomeados agora, definidos na Consequência da Cena quando ela termina",
+      "StakeBoon": "Benefício",
+      "StakeConsequence": "Consequência",
+      "StakeRandom": "Aleatório",
+      "StakeRandomKind": "Tipo aleatório",
+      "StakeNamePlaceholder": "Nomeie (item, habilidade, lugar, NPC...)",
+      "VerdictHint": "O veredito do GM vale mais que os votos dos jogadores",
+      "VoteHint": "Como a cena foi para este personagem?",
+      "Votes": "Votos: {good} bom, {mixed} misto, {bad} ruim"
     },
     "And": "e",
     "Tarot": {
@@ -1523,6 +1546,10 @@
       "Grant": "Conceder as habilidades e a fraqueza ao personagem agora",
       "GrantHint": "Num personagem, habilidades e fraqueza viram tags conforme você edita.",
       "Synced": "{name}: {count} tags concedidas a {actor}."
+    },
+    "Reroll": {
+      "Field": "Rolar só este",
+      "Nothing": "Nada foi rolado para esse campo; tente de novo."
     }
   }
 }

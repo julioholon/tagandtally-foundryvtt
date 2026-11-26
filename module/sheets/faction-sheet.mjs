@@ -167,13 +167,8 @@ export default class FactionSheet extends HandlebarsApplicationMixin(ActorSheetV
     const r = await generate("faction", { theme: game.settings.get("tagandtally", "sparkTheme") ?? "fantasy" });
     const v = r.values ?? {};
     const plain = (s) => String(s ?? "").replace(/[`*\[\]]/g, "").trim();
-    const update = {
-      "system.sentence.descriptor": plain(v["faction-descriptor"]),
-      "system.sentence.organizationType": plain(v["faction-organization-type"]),
-      "system.sentence.coreFunction": plain(v["faction-core-function"]),
-      "system.sentence.goal": plain(`${v["faction-goal-verb"] ?? ""} ${v["faction-goal-noun"] ?? ""}`).toLowerCase(),
-      "system.sentence.secret": plain(`${v["faction-secret-verb"] ?? ""} ${v["faction-secret-noun"] ?? ""}`).toLowerCase()
-    };
+    const { factionSentence } = await import("../reroll.mjs");
+    const update = Object.fromEntries(Object.entries(factionSentence(v)).map(([k, val]) => [`system.sentence.${k}`, val]));
     const name = plain(v["faction-name-pattern"] ?? r.name);
     if (name && /^New |^Nov[oa] /.test(this.actor.name)) update.name = name;
     return this.actor.update(update);

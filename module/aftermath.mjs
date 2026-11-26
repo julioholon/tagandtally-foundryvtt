@@ -60,6 +60,25 @@ function recipients(base) {
   return list.length ? list : (base ? [base] : []);
 }
 
+/** Kinds whose content can be named by hand (a specific item, skill, place, NPC...) instead of rolled. */
+export const NAMEABLE = new Set(["item", "coins", "lead", "leadCatch", "place", "npc", "combat", "tagSkill", "tagTrait", "tagRep", "tagFlaw", "tagBadRep"]);
+
+/** Swap a rolled result's name for the one typed by hand (coins: an amount). Tags take the name while rolling. */
+function patchNamed(kind, result, text) {
+  const named = String(text ?? "").trim();
+  if (!named || !NAMEABLE.has(kind) || kind in AFTERMATH.tags) return result;
+  const p = result.payload;
+  if (kind === "coins") {
+    const amount = Math.round(Number(named));
+    if (p?.coins && amount > 0) { p.coins = amount; result.html = T("CoinsGained", { n: amount }); }
+    return result;
+  }
+  if (p?.data) p.data.name = named;
+  if (kind === "place") { p.name = named; p.text = ""; result.html = `<strong>${esc(named)}</strong>`; return result; }
+  result.html = result.html.replace(/<strong>.*?<\/strong>/, `<strong>${esc(named)}</strong>`);
+  return result;
+}
+
 /** Open insight targets: factions that are still running and NPC secrets not yet revealed. */
 function insightTargets() {
   const out = [];
@@ -149,11 +168,12 @@ const KINDS = {
 };
 
 /** A new tag for the recipient: a skill, trait, flaw or reputation drawn from the Sparks tables. A skill they already have gains a tally instead. */
-async function tagKind(kind, actor) {
+async function tagKind(kind, actor, named = "") {
   const def = AFTERMATH.tags[kind];
   for (let i = 0; i < 4; i++) {
-    let name;
-    if (def.table) name = plain((await sparkTables.roll(def.table))?.value);
+    let name = String(named ?? "").trim();
+    if (name) { /* typed by hand */ }
+    else if (def.table) name = plain((await sparkTables.roll(def.table))?.value);
     else {
       const [adjective, noun] = await Promise.all(["inspiration-adjective", "inspiration-noun"].map(async (t) => plain((await sparkTables.roll(t))?.value)));
       name = `${adjective} ${noun}`.trim().toLowerCase().replace(/^./, (c) => c.toUpperCase());
@@ -162,14 +182,14 @@ async function tagKind(kind, actor) {
     const existing = actor.items.find((x) => x.type === "tag" && x.system.tagType === def.tagType && x.name.toLowerCase() === name.toLowerCase());
     const label = game.i18n.localize(TAGANDTALLY.tagTypes[def.tagType]);
     if (existing) {
-      if (!existing.system.canTier) continue;
+      if (!existing.system.canTier) { if (named) return null; continue; }
       return { html: `<strong>${esc(existing.name)}</strong> <small>${esc(label)} · ${esc(T("TagTally"))}</small>`, payload: { tallyId: existing.id } };
     }
     return { html: `<strong>${esc(name)}</strong> <small>${esc(label)}${def.hinders ? ` · ${esc(T("Hinders"))}` : ""}</small>`, payload: { name, tagType: def.tagType, source: def.table ?? "", hinders: def.hinders } };
   }
   return null;
 }
-for (const kind of Object.keys(AFTERMATH.tags)) KINDS[kind] = ({ actor }) => tagKind(kind, actor);
+for (const kind of Object.keys(AFTERMATH.tags)) KINDS[kind] = ({ actor, named }) => tagKind(kind, actor, named);
 
 async function relationChange(actor, dir) {
   const rows = [];
@@ -288,7 +308,7 @@ export class AftermathApp extends HandlebarsApplicationMixin(ApplicationV2) {
     classes: ["tagandtally", "aftermath"],
     position: { width: 640, height: "auto" },
     window: { title: "TAGANDTALLY.Aftermath.Title", icon: "fa-solid fa-hourglass-end", resizable: true },
-    actions: { reroll: AftermathApp.#onReroll, apply: AftermathApp.#onApply, skip: AftermathApp.#onSkip, applyAll: AftermathApp.#onApplyAll, add: AftermathApp.#onAdd }
+    actions: { restore: AftermathApp.#onRestore, verdict: AftermathApp.#onVerdict, reroll: AftermathApp.#onReroll, apply: AftermathApp.#onApply, skip: AftermathApp.#onSkip, applyAll: AftermathApp.#onApplyAll, add: AftermathApp.#onAdd }
   };
 
   static PARTS = { body: { template: "systems/tagandtally/templates/apps/aftermath.hbs", scrollable: [".tt-aftermath-lines"] } };
@@ -308,15 +328,16 @@ export class AftermathApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const base = ctx.actor?.isToken ? game.actors.get(ctx.actor.id) ?? ctx.actor : ctx.actor;
     app.ctx.actor = base;
     const specs = ctx.lines ?? (ctx.polarities ?? ["+"]).map((pol) => ({ pol }));
-    for (const spec of specs) await app.addLine(spec.pol, { pool: spec.pool });
+    for (const spec of specs) await app.addLine(spec.pol, { kind: spec.kind, named: spec.named, pool: spec.pool, extra: spec.extra });
+    if (app.ctx.verdict) { await app.ensureExtras(); app.setVerdict(app.ctx.verdict); }
     await app.render({ force: true });
     return app;
   }
 
   /** Roll one line of a sign for `recipient` (default: the roller). */
-  async addLine(pol, { kind, recipient, pool } = {}) {
+  async addLine(pol, { kind, recipient, pool, named = "", extra = false } = {}) {
     const actor = recipient ?? this.ctx.actor;
-    const line = { id: nextLine++, pol, pool, kind: null, recipient: actor?.uuid, html: "", payload: null, status: "pending" };
+    const line = { id: nextLine++, pol, pool, named, extra, auto: false, kind: null, recipient: actor?.uuid, html: "", payload: null, status: "pending" };
     this.lines.push(line);
     await this.fill(line, kind);
     return line;
@@ -328,7 +349,8 @@ export class AftermathApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const pool = { ...(line.pool ?? AFTERMATH.pools[line.pol]) };
     for (let i = 0; i < 8; i++) {
       const k = kind ?? weighted(pool);
-      const result = await KINDS[k]?.({ actor, level: this.ctx.level, ctx: this.ctx }).catch((err) => { console.warn(`${SYSTEM_ID} | aftermath ${k}`, err); return null; });
+      let result = await KINDS[k]?.({ actor, level: this.ctx.level, ctx: this.ctx, named: line.named }).catch((err) => { console.warn(`${SYSTEM_ID} | aftermath ${k}`, err); return null; });
+      if (result && line.named) result = patchNamed(k, result, line.named);
       if (result) { Object.assign(line, { kind: k, html: result.html, payload: result.payload, status: "pending" }); return true; }
       if (kind) return false;
       delete pool[k];
@@ -336,6 +358,23 @@ export class AftermathApp extends HandlebarsApplicationMixin(ApplicationV2) {
     }
     Object.assign(line, { kind: null, html: esc(T("Nothing")), payload: null });
     return false;
+  }
+
+  /** Lines on the side the verdict rejects are crossed out (and restored when it changes), unless applied or crossed out by hand. */
+  setVerdict(verdict) {
+    this.ctx.verdict = verdict;
+    for (const line of this.lines) {
+      if (line.status === "applied") continue;
+      const rejected = (verdict === "good" && line.pol === "-") || (verdict === "bad" && line.pol === "+");
+      if (rejected && line.status === "pending") { line.status = "skipped"; line.auto = true; }
+      else if (!rejected && line.status === "skipped" && line.auto) { line.status = "pending"; line.auto = false; }
+    }
+  }
+
+  /** A verdict can add an extra line on each side it favours (Good: a boon, Bad: a consequence, Mixed: one of each). */
+  async ensureExtras() {
+    const sides = { good: ["+"], bad: ["-"], mixed: ["+", "-"] }[this.ctx.verdict] ?? [];
+    for (const pol of sides) if (!this.lines.some((l) => l.extra && l.pol === pol)) await this.addLine(pol, { extra: true });
   }
 
   async _prepareContext() {
@@ -348,16 +387,30 @@ export class AftermathApp extends HandlebarsApplicationMixin(ApplicationV2) {
       kinds: Object.keys(AFTERMATH.pools[l.pol]).map((k) => ({ value: k, label: T(`Kind.${k}`), selected: k === l.kind })),
       recipients: options.map((a) => ({ value: a.uuid, label: a.name, selected: a.uuid === l.recipient })),
       done: l.status === "applied", skipped: l.status === "skipped",
-      canApply: l.status === "pending" && Boolean(l.kind)
+      canApply: l.status === "pending" && Boolean(l.kind),
+      nameable: l.status === "pending" && NAMEABLE.has(l.kind)
     }));
-    return { title: this.ctx.title ?? "", note: this.ctx.note ?? "", lines, pending: lines.some((l) => l.canApply) };
+    const v = this.ctx.verdict;
+    return {
+      title: this.ctx.title ?? "", note: this.ctx.note ?? "", lines, pending: lines.some((l) => l.canApply),
+      isScene: Boolean(this.ctx.scene), votes: this.ctx.votes ?? "",
+      verdicts: ["good", "mixed", "bad"].map((id) => ({ id, label: T(`Verdict.${id}`), active: v === id }))
+    };
   }
 
   _onRender() {
     this.element.querySelectorAll("select[data-kind]").forEach((el) => el.addEventListener("change", async (ev) => {
       const line = this.lines.find((l) => l.id === Number(el.dataset.kind));
       if (!line) return;
+      line.named = "";
       if (!(await this.fill(line, ev.target.value))) ui.notifications.warn(T("CannotApply"));
+      this.render();
+    }));
+    this.element.querySelectorAll("input[data-name]").forEach((el) => el.addEventListener("change", async (ev) => {
+      const line = this.lines.find((l) => l.id === Number(el.dataset.name));
+      if (!line) return;
+      line.named = ev.target.value.trim();
+      await this.fill(line, line.kind ?? undefined);
       this.render();
     }));
     this.element.querySelectorAll("select[data-recipient]").forEach((el) => el.addEventListener("change", async (ev) => {
@@ -374,13 +427,26 @@ export class AftermathApp extends HandlebarsApplicationMixin(ApplicationV2) {
   static async #onReroll(event, target) {
     const line = this.line(target);
     if (!line || line.status !== "pending") return;
-    await this.fill(line);
+    await this.fill(line, line.named ? line.kind : undefined);
     return this.render();
   }
 
   static async #onSkip(event, target) {
     const line = this.line(target);
-    if (line) line.status = "skipped";
+    if (line) { line.status = "skipped"; line.auto = false; }
+    return this.render();
+  }
+
+  static async #onRestore(event, target) {
+    const line = this.line(target);
+    if (line?.status === "skipped") { line.status = "pending"; line.auto = false; }
+    return this.render();
+  }
+
+  static async #onVerdict(event, target) {
+    this.setVerdict(target.dataset.verdict);
+    await this.ensureExtras();
+    this.setVerdict(this.ctx.verdict);
     return this.render();
   }
 
@@ -456,6 +522,19 @@ export async function rollSpoils({ actor, level = sceneLevel(), source = "search
   }[band];
   if (lines) await AftermathApp.open({ actor: result.actor ?? actor, lines, level, title: title || T(`Spoils.${source}`), note: T(`SpoilsNote.${band}`) });
   return result;
+}
+
+/**
+ * The Scene Aftermath: the stakes' boons and consequences (rolled now, or the name typed by hand)
+ * plus the verdict's extras, for the party to take or drop. `verdict` is good / mixed / bad, or empty
+ * to decide line by line.
+ */
+export async function openSceneAftermath({ scene, verdict = "", actor, level, votes = "" } = {}) {
+  const lines = (scene.stakeLines ?? []).map((s) => ({ pol: s.pol, kind: s.kind || undefined, named: s.random === false ? String(s.name ?? "").trim() : "" }));
+  return AftermathApp.open({
+    actor, lines, level: level ?? sceneLevel(), verdict: verdict || null, scene: true, votes,
+    title: T("Scene.Title", { number: scene.number }), note: scene.stakes || ""
+  });
 }
 
 /** A chat button that opens an Aftermath for a roll (set up with `offerAftermath`). */

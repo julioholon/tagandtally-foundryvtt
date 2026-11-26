@@ -1,6 +1,14 @@
 <section class="tt-aftermath">
   {{#if title}}<h3>{{title}}</h3>{{/if}}
   {{#if note}}<p class="hint">{{note}}</p>{{/if}}
+  {{#if isScene}}
+    <div class="tt-verdict">
+      <strong>{{localize "TAGANDTALLY.Aftermath.Verdict.Label"}}</strong>
+      {{#each verdicts as |v|}}<button type="button" class="tt-verdict-btn {{v.id}} {{#if v.active}}active{{/if}}" data-action="verdict" data-verdict="{{v.id}}">{{v.label}}</button>{{/each}}
+      {{#if votes}}<small class="dim">{{votes}}</small>{{/if}}
+    </div>
+    <p class="hint">{{localize "TAGANDTALLY.Aftermath.Verdict.Hint"}}</p>
+  {{/if}}
   <ol class="tt-aftermath-lines">
     {{#each lines as |l|}}
       <li class="tt-aftermath-line {{l.sign}} {{#if l.done}}done{{/if}} {{#if l.skipped}}skipped{{/if}}" data-line="{{l.id}}">
@@ -11,7 +19,8 @@
             <span class="dim">{{localize "TAGANDTALLY.Aftermath.To"}}</span>
             <select data-recipient="{{l.id}}" {{#unless l.canApply}}disabled{{/unless}}>{{#each l.recipients as |r|}}<option value="{{r.value}}" {{#if r.selected}}selected{{/if}}>{{r.label}}</option>{{/each}}</select>
           </div>
-          <div class="tt-aftermath-text">{{{l.html}}}</div>
+          {{#if l.nameable}}<input type="text" class="tt-aftermath-name" data-name="{{l.id}}" value="{{l.named}}" placeholder="{{localize 'TAGANDTALLY.Aftermath.NamePlaceholder'}}" />{{/if}}
+          <div class="tt-aftermath-text">{{#if l.extra}}<small class="tt-extra">{{localize "TAGANDTALLY.Aftermath.Extra"}}</small> {{/if}}{{{l.html}}}</div>
         </div>
         <span class="tt-controls">
           {{#if l.canApply}}
@@ -19,7 +28,7 @@
             <a data-action="apply" title="{{localize 'TAGANDTALLY.Aftermath.Apply'}}"><i class="fa-solid fa-check"></i></a>
             <a data-action="skip" title="{{localize 'TAGANDTALLY.Aftermath.Skip'}}"><i class="fa-solid fa-xmark"></i></a>
           {{else if l.done}}<i class="fa-solid fa-circle-check" title="{{localize 'TAGANDTALLY.Aftermath.Applied'}}"></i>
-          {{else if l.skipped}}<i class="fa-solid fa-ban dim"></i>{{/if}}
+          {{else if l.skipped}}<a data-action="restore" title="{{localize 'TAGANDTALLY.Aftermath.Restore'}}"><i class="fa-solid fa-rotate-left"></i></a>{{/if}}
         </span>
       </li>
     {{/each}}

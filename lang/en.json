@@ -792,7 +792,20 @@
       "TagTally2": "{name} gains a tally",
       "Hinders": "hinders",
       "GotTag": "New {type}: {name}",
-      "GotFlaw": "New {type}: {name} (hinders)"
+      "GotFlaw": "New {type}: {name} (hinders)",
+      "Verdict": {
+        "Label": "Verdict",
+        "Hint": "Good keeps the boons and drops the consequences, Bad the opposite, Mixed lets you choose line by line. Each verdict adds an extra outcome on the side it favours.",
+        "good": "Good",
+        "mixed": "Mixed",
+        "bad": "Bad"
+      },
+      "Scene": {
+        "Title": "Scene {number}"
+      },
+      "Restore": "Put it back",
+      "Extra": "extra",
+      "NamePlaceholder": "Random, or type a name"
     },
     "Interaction": {
       "Title": "NPC interaction",
@@ -1369,7 +1382,17 @@
       "QuestPressed": "Time pressure: {quest}'s Countdown fills by {n}.",
       "LootHint": "What are you looking through?",
       "LootSearch": "Search the area",
-      "LootFallen": "Loot the fallen"
+      "LootFallen": "Loot the fallen",
+      "StakeLines": "Boons and consequences",
+      "StakeLinesHint": "Rolled or named now, settled in the Scene Aftermath when the scene closes",
+      "StakeBoon": "Boon",
+      "StakeConsequence": "Consequence",
+      "StakeRandom": "Random",
+      "StakeRandomKind": "Random kind",
+      "StakeNamePlaceholder": "Name it (item, skill, place, NPC...)",
+      "VerdictHint": "The GM's verdict wins over the players' votes",
+      "VoteHint": "How did the scene go for this character?",
+      "Votes": "Votes: {good} good, {mixed} mixed, {bad} bad"
     },
     "And": "and",
     "Tarot": {
@@ -1523,6 +1546,10 @@
       "Grant": "Grant the abilities and weakness to the character now",
       "GrantHint": "On a character the abilities and weakness become tags as you edit them.",
       "Synced": "{name}: {count} tags granted to {actor}."
+    },
+    "Reroll": {
+      "Field": "Reroll this one",
+      "Nothing": "Nothing was rolled for that field; try again."
     }
   }
 }

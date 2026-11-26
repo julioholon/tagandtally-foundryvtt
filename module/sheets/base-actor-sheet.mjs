@@ -34,6 +34,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
       openWorkshop: BaseActorSheet.#onOpenWorkshop,
       questTally: BaseActorSheet.#onQuestTally,
       rollQuestStep: BaseActorSheet.#onRollQuestStep,
+      rerollField: BaseActorSheet.#onRerollField,
       toggleHealed: BaseActorSheet.#onToggleHealed,
       rollTemporary: BaseActorSheet.#onRollTemporary,
       generateAppearance: BaseActorSheet.#onGenerateAppearance,
@@ -261,6 +262,13 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
     const current = item.system.tallies[key].value;
     const value = index < current ? index : index + 1;
     return item.tickTally(key, value - current);
+  }
+
+  /** Reroll one sentence or appearance field from its Sparks table. */
+  static async #onRerollField(event, target) {
+    if (!this.actor.isOwner) return;
+    const { rerollField } = await import("../reroll.mjs");
+    return rerollField(this.actor, target.dataset.field);
   }
 
   /** Attempt a quest task from the quest list. */
