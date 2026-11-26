@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.13.6 (2026-11-26)
+
+- Quick rerolls fixed on the Faction sheet: its dice did nothing (the faction sheet did not have the
+  action). A reroll now tries again when it lands on the value already there (short tables such as
+  species repeat often), so every click changes the field.
+- The dice sit on the right of their field instead of under it (NPC / creature, faction, appearance).
+- New quick rerolls on item sheets, from the same Sparks tables that fill them: a quest's type,
+  objective (for its current type), goal, reward and consequence; a gear's descriptor, material,
+  subtype, special and damage type; a wound's descriptor, mark, body part, damage type and hindrance;
+  a spell's descriptor. The quest's "regenerate" wand moves beside the objective.
+
 ## 0.13.5 (2026-11-26)
 
 - Game loop: the verdict is no longer chosen twice. The footer only shows it (the result of the players'
