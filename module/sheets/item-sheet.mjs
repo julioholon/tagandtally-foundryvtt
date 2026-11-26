@@ -13,6 +13,7 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
       use: TagAndTallyItemSheet.#onUse,
       toChat: TagAndTallyItemSheet.#onToChat,
       toggleAxis: TagAndTallyItemSheet.#onToggleAxis,
+      rerollField: TagAndTallyItemSheet.#onRerollField,
       addStep: TagAndTallyItemSheet.#onAddStep,
       removeStep: TagAndTallyItemSheet.#onRemoveStep,
       rerollStep: TagAndTallyItemSheet.#onRerollStep,
@@ -144,6 +145,13 @@ export default class TagAndTallyItemSheet extends HandlebarsApplicationMixin(Ite
       list.push(key);
     }
     return this.item.update({ [`system.${axis}`]: list });
+  }
+
+  /** Reroll one tag-like field from its Sparks tables. */
+  static async #onRerollField(event, target) {
+    if (!this.item.isOwner) return;
+    const { rerollItemField } = await import("../reroll.mjs");
+    return rerollItemField(this.item, target.dataset.field);
   }
 
   /** + rolls a Verb Adjective Noun task, editable and rerollable before it is added. */

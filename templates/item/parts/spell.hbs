@@ -1,6 +1,6 @@
 <section class="tab {{tab.cssClass}} tt-spell-builder" data-tab="{{tab.id}}" data-group="{{tab.group}}">
   <div class="tt-grid two">
-    <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.Descriptor"}}</label><input type="text" name="system.descriptor" value="{{system.descriptor}}" /></div>
+    <div class="form-group"><label>{{localize "TAGANDTALLY.TagType.Descriptor"}}</label><div class="tt-with-reroll"><input type="text" name="system.descriptor" value="{{system.descriptor}}" />{{#if item.isOwner}}<a class="tt-reroll" data-action="rerollField" data-field="system.descriptor" title="{{localize 'TAGANDTALLY.Reroll.Field'}}"><i class="fa-solid fa-dice"></i></a>{{/if}}</div></div>
     <div class="form-group"><label>{{localize "TAGANDTALLY.Spell.Effect"}}</label><input type="text" name="system.effect" value="{{system.effect}}" />{{#if isGM}}<a data-action="generateSentence" title="{{localize 'TAGANDTALLY.Sparks.Regenerate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></a>{{/if}}</div>
   </div>
   <div class="tt-axis">
