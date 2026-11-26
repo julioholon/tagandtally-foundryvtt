@@ -29,6 +29,25 @@
       {{#if quest}}<div class="tt-loop-quest span2"><a data-action="openQuest" title="{{quest.name}}"><i class="fa-solid fa-scroll"></i> {{quest.name}}</a>{{#each questTallies as |t|}}<span><strong>{{t.label}}</strong> <span class="tt-boxes {{#if t.small}}small{{/if}}">{{#each t.boxes as |b|}}<span class="tt-box {{#if b}}filled{{/if}}"></span>{{/each}}</span> <small class="dim">{{t.value}}/{{t.max}}</small></span>{{/each}}{{#if quest.ready}}<span class="tt-tag">{{localize "TAGANDTALLY.Quest.Ready"}}</span>{{/if}}</div>{{/if}}
       <div class="form-group"><label>{{localize "TAGANDTALLY.Loop.Intent"}}</label><textarea name="intent" rows="2" placeholder="{{localize 'TAGANDTALLY.Loop.IntentPlaceholder'}}">{{scene.intent}}</textarea></div>
       <div class="form-group"><label>{{localize "TAGANDTALLY.Loop.Stakes"}}</label><textarea name="stakes" rows="2" placeholder="{{localize 'TAGANDTALLY.Loop.StakesPlaceholder'}}">{{scene.stakes}}</textarea></div>
+      <div class="form-group span2 tt-stakes-lines">
+        <label>{{localize "TAGANDTALLY.Loop.StakeLines"}} <small class="hint">{{localize "TAGANDTALLY.Loop.StakeLinesHint"}}</small>
+          <a data-action="addStake" data-pol="+"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Loop.StakeBoon"}}</a>
+          <a data-action="addStake" data-pol="-"><i class="fa-solid fa-plus"></i> {{localize "TAGANDTALLY.Loop.StakeConsequence"}}</a></label>
+        <ul class="tt-stake-list">
+          {{#each stakeLines as |s|}}
+            <li class="{{s.sign}}" data-stake="{{s.id}}">
+              <i class="fa-solid {{s.icon}}"></i>
+              <select name="stakeKind">{{#each s.kinds as |k|}}<option value="{{k.value}}" {{#if k.selected}}selected{{/if}}>{{k.label}}</option>{{/each}}</select>
+              {{#if s.nameable}}<label class="tt-toggle"><input type="checkbox" name="stakeRandom" {{checked s.random}} /> {{localize "TAGANDTALLY.Loop.StakeRandom"}}</label><input type="text" name="stakeName" value="{{s.name}}" placeholder="{{localize 'TAGANDTALLY.Loop.StakeNamePlaceholder'}}" {{#if s.random}}disabled{{/if}} />{{/if}}
+              <a data-action="removeStake" title="{{localize 'TAGANDTALLY.Delete'}}"><i class="fa-solid fa-trash"></i></a>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="form-group span2 tt-verdict-row">
+        <label>{{localize "TAGANDTALLY.Aftermath.Verdict.Label"}} <small class="hint">{{localize "TAGANDTALLY.Loop.VerdictHint"}}</small></label>
+        <span>{{#each verdicts as |v|}}<button type="button" class="tt-verdict-btn {{v.id}} {{#if v.active}}active{{/if}}" data-action="setVerdict" data-verdict="{{v.id}}" {{#unless ../isGM}}disabled{{/unless}}>{{v.label}}</button>{{/each}} {{#if votesText}}<small class="dim">{{votesText}}</small>{{/if}}</span>
+      </div>
     </div>
   </section>
 
@@ -39,6 +58,7 @@
           <img src="{{p.img}}" alt="" />
           <strong>{{p.name}}</strong>
           <span class="tt-boxes" title="{{localize 'TAGANDTALLY.Loop.Actions'}}">{{#each p.pips as |filled|}}<span class="tt-box {{#if filled}}filled{{/if}}"></span>{{/each}}</span>
+          {{#if p.canAct}}<span class="tt-vote" title="{{localize 'TAGANDTALLY.Loop.VoteHint'}}">{{#each p.votes as |v|}}<a class="tt-vote-btn {{v.id}} {{#if v.active}}active{{/if}}" data-action="vote" data-vote="{{v.id}}">{{v.label}}</a>{{/each}}</span>{{/if}}
           {{#if p.canAct}}<a class="tt-refund" data-action="refund" title="{{localize 'TAGANDTALLY.Loop.RefundHint'}}"><i class="fa-solid fa-rotate-left"></i></a>{{/if}}
           <span class="tt-controls">
             {{#if p.canAct}}<button type="button" class="tt-ready {{#if p.ready}}on{{/if}}" data-action="ready"><i class="fa-solid {{#if p.ready}}fa-circle-check{{else}}fa-circle{{/if}}"></i> {{localize "TAGANDTALLY.Loop.Ready"}}</button>{{else}}<span class="tt-ready-state"><i class="fa-solid {{#if p.ready}}fa-circle-check{{else}}fa-circle{{/if}}"></i> {{localize (tt-ternary p.ready "TAGANDTALLY.Loop.Ready" "TAGANDTALLY.Loop.NotReadyYet")}}</span>{{/if}}

@@ -8,6 +8,7 @@ import { DowntimeApp, expireDayTags } from "./downtime.mjs";
 import { rollHexLevel } from "./travel.mjs";
 import { allFactions, addTally, addInsight } from "./factions.mjs";
 import { planRoom, proposeTasks, addTasks } from "./quest-tasks.mjs";
+import { AFTERMATH, NAMEABLE, openSceneAftermath } from "./aftermath.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin, DialogV2 } = foundry.applications.api;
 
@@ -41,8 +42,21 @@ export async function rollScene({ fromLevel } = {}) {
 }
 
 function blankScene(number = 1) {
-  return { number, level: null, levelDetail: "", sentence: "", modifiers: { timeOfDay: "", weather: "", season: "" }, scope: "day", intent: "", stakes: "", questUuid: "", startedDay: 1, log: [] };
+  return { number, level: null, levelDetail: "", sentence: "", modifiers: { timeOfDay: "", weather: "", season: "" }, scope: "day", intent: "", stakes: "", stakeLines: [], verdict: "", questUuid: "", startedDay: 1, log: [] };
 }
+
+const VERDICTS = ["good", "mixed", "bad"];
+
+/** The scene's verdict by vote: the plurality, "mixed" on a tie, "" with no votes. */
+function majority(votes) {
+  const counts = Object.fromEntries(VERDICTS.map((v) => [v, votes.filter((x) => x === v).length]));
+  const top = Math.max(...Object.values(counts));
+  if (!top) return "";
+  const winners = VERDICTS.filter((v) => counts[v] === top);
+  return winners.length > 1 ? "mixed" : winners[0];
+}
+
+const votesLabel = (votes) => (votes.length ? L("Votes", Object.fromEntries(VERDICTS.map((v) => [v, votes.filter((x) => x === v).length]))) : "");
 
 /**
  * The solo / play-by-post game loop: one shared scene at a time with a time scope, intent,
@@ -74,7 +88,11 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       resetActions: GameLoopApp.#onResetActions,
       openChronicle: GameLoopApp.#onOpenChronicle,
       openScene: GameLoopApp.#onOpenScene,
-      clearLog: GameLoopApp.#onClearLog
+      clearLog: GameLoopApp.#onClearLog,
+      addStake: GameLoopApp.#onAddStake,
+      removeStake: GameLoopApp.#onRemoveStake,
+      vote: GameLoopApp.#onVote,
+      setVerdict: GameLoopApp.#onSetVerdict
     }
   };
 
@@ -117,6 +135,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       const left = Math.max(0, GameLoopApp.maxActions - p.spent);
       participants.push({
         uuid: p.uuid, name: actor.name, img: actor.img, canAct: actor.isOwner, ready: p.ready, left,
+        votes: VERDICTS.map((id) => ({ id, label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: p.vote === id })),
         pips: Array.from({ length: GameLoopApp.maxActions }, (_, i) => i < left),
         actions: Object.entries(TAGANDTALLY.loop.actions).map(([id, a]) => ({ id, label: game.i18n.localize(a.label), icon: a.icon, hint: game.i18n.localize(a.hint) }))
       });
@@ -126,7 +145,15 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const quest = scene.questUuid ? fromUuidSync(scene.questUuid) : null;
     const questTallies = quest ? Object.entries(quest.system.tallies).filter(([, t]) => t.enabled).map(([key, t]) => ({ key, label: game.i18n.localize(TAGANDTALLY.questTallies[key].label), boxes: t.boxes, value: t.value, max: t.max, small: t.max > 6 })) : [];
     const day = DowntimeApp.state.get().day;
+    const stakeLines = (scene.stakeLines ?? []).map((s) => ({
+      id: s.id, sign: s.pol === "+" ? "pos" : "neg", icon: s.kind ? AFTERMATH.icons[s.kind] : "fa-dice",
+      kinds: [{ value: "", label: L("StakeRandomKind"), selected: !s.kind }, ...Object.keys(AFTERMATH.pools[s.pol]).map((k) => ({ value: k, label: game.i18n.localize(`TAGANDTALLY.Aftermath.Kind.${k}`), selected: k === s.kind }))],
+      nameable: NAMEABLE.has(s.kind), random: s.random !== false, name: s.name ?? ""
+    }));
+    const votes = Object.values(state.participants).map((p) => p.vote).filter(Boolean);
     return {
+      stakeLines, votesText: votesLabel(votes),
+      verdicts: VERDICTS.map((id) => ({ id, label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: scene.verdict === id })),
       state, scene, scopes, participants, quests, isGM: game.user.isGM, day,
       quest: quest ? { uuid: quest.uuid, name: quest.name, status: quest.system.status, ready: quest.system.readyToResolve } : null, questTallies,
       calendar: GameLoopApp.calendarDate(),
@@ -149,6 +176,13 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       if (name === "scope") state.scene.scope = ev.target.value;
       else if (name === "questUuid") state.scene.questUuid = ev.target.value;
       else if (name === "intent" || name === "stakes") state.scene[name] = ev.target.value.trim();
+      else if (["stakeKind", "stakeRandom", "stakeName"].includes(name)) {
+        const line = (state.scene.stakeLines ?? []).find((s) => s.id === ev.target.closest("[data-stake]")?.dataset.stake);
+        if (!line) return;
+        if (name === "stakeKind") line.kind = ev.target.value;
+        else if (name === "stakeRandom") line.random = ev.target.checked;
+        else line.name = ev.target.value.trim();
+      }
       else return;
       await GameLoopApp.state.set(state);
     });
@@ -180,6 +214,41 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!game.user.isGM || !state.scene.level || !canvas?.scene) return;
     await canvas.scene.setFlag(SYSTEM_ID, "level", state.scene.level);
     ui.notifications.info(game.i18n.format("TAGANDTALLY.Travel.LevelApplied", { level: state.scene.level, scene: canvas.scene.name }));
+  }
+
+  /* ----------------------- Boons, consequences, verdict ------------------- */
+
+  /** Add a boon (+) or a consequence (-) to the scene's stakes; random until a kind is picked. */
+  static async #onAddStake(event, target) {
+    const state = GameLoopApp.state.get();
+    state.scene.stakeLines ??= [];
+    state.scene.stakeLines.push({ id: foundry.utils.randomID(), pol: target.dataset.pol === "-" ? "-" : "+", kind: "", random: true, name: "" });
+    return GameLoopApp.state.set(state);
+  }
+
+  static async #onRemoveStake(event, target) {
+    const state = GameLoopApp.state.get();
+    const id = target.closest("[data-stake]")?.dataset.stake;
+    state.scene.stakeLines = (state.scene.stakeLines ?? []).filter((s) => s.id !== id);
+    return GameLoopApp.state.set(state);
+  }
+
+  /** A player's vote on how the scene went; clicking it again takes it back. */
+  static async #onVote(event, target) {
+    const state = GameLoopApp.state.get();
+    const p = state.participants[target.closest("[data-uuid]")?.dataset.uuid];
+    const actor = p ? await fromUuid(p.uuid) : null;
+    if (!actor?.isOwner) return;
+    p.vote = p.vote === target.dataset.vote ? "" : target.dataset.vote;
+    return GameLoopApp.state.set(state);
+  }
+
+  /** The GM's verdict wins over the vote. */
+  static async #onSetVerdict(event, target) {
+    if (!game.user.isGM) return;
+    const state = GameLoopApp.state.get();
+    state.scene.verdict = state.scene.verdict === target.dataset.verdict ? "" : target.dataset.verdict;
+    return GameLoopApp.state.set(state);
   }
 
   /* ------------------------------ Participants ---------------------------- */
@@ -482,11 +551,15 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!ok) return;
     const closed = foundry.utils.deepClone(state.scene);
     closed.endedDay = DowntimeApp.state.get().day;
+    const votes = participants.map((p) => p.vote).filter(Boolean);
+    closed.verdict = closed.verdict || majority(votes);
+    closed.votesText = votesLabel(votes);
+    closed.partyUuids = participants.map((p) => p.uuid);
     state.history.push({ number: closed.number, sentence: closed.sentence, level: closed.level, scope: closed.scope, intent: closed.intent, day: closed.startedDay }).length > 30 && state.history.shift();
     const next = blankScene(closed.number + 1);
     next.questUuid = closed.questUuid; next.scope = closed.scope; next.startedDay = closed.endedDay + scopeDef.days;
     state.scene = next;
-    for (const p of participants) { p.spent = 0; p.ready = false; }
+    for (const p of participants) { p.spent = 0; p.ready = false; p.vote = ""; }
     await GameLoopApp.state.set(state, { advance: { closed, days: scopeDef.days, factionTicks: scopeDef.factionTicks, scope: state.scene.scope } });
   }
 
@@ -522,6 +595,13 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       speaker: { alias: L("Title") },
       content: `<div class="tagandtally chat-card tt-loop-card"><h3><i class="fa-solid fa-arrows-spin"></i> ${L("SceneClosed", { number: closed.number })}</h3>${closed.intent ? `<p><strong>${L("Intent")}</strong>: ${esc(closed.intent)}</p>` : ""}${lines.map((l) => `<p>${l}</p>`).join("")}${page ? `<p>@UUID[${page.uuid}]{${esc(page.name)}}</p>` : ""}</div>`
     });
+    // The stakes' boons and consequences, with the verdict's extras, for the party to take or drop.
+    if (closed.stakeLines?.length || closed.verdict) {
+      try {
+        const first = await fromUuid(closed.partyUuids?.[0] ?? "");
+        if (first) await openSceneAftermath({ scene: closed, verdict: closed.verdict, actor: first, level: closed.level, votes: closed.votesText });
+      } catch (err) { console.warn(`${SYSTEM_ID} | scene aftermath not opened`, err); }
+    }
   }
 
   /** The campaign Chronicle journal, created on demand. */
@@ -544,6 +624,8 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       [game.i18n.localize("TAGANDTALLY.Level.Level"), scene.level ? `${scene.level} · ${game.i18n.localize(TAGANDTALLY.levels[scene.level])}` : "—"],
       [L("Scope"), scopeDef ? game.i18n.localize(scopeDef.label) : scene.scope],
       [L("Intent"), scene.intent || "—"], [L("Stakes"), scene.stakes || "—"],
+      ...(scene.stakeLines?.length ? [[L("StakeLines"), scene.stakeLines.map((s) => esc(`${s.pol === "+" ? "+" : "−"} ${s.kind ? game.i18n.localize(`TAGANDTALLY.Aftermath.Kind.${s.kind}`) : L("StakeRandomKind")}${s.random === false && s.name ? `: ${s.name}` : ""}`)).join("; ")]] : []),
+      ...(scene.verdict ? [[game.i18n.localize("TAGANDTALLY.Aftermath.Verdict.Label"), `${esc(game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${scene.verdict}`))}${scene.votesText ? ` (${esc(scene.votesText)})` : ""}`]] : []),
       [game.i18n.localize("TAGANDTALLY.Quest.Quest"), quest ? `@UUID[${quest.uuid}]{${esc(quest.name)}}` : "—"]
     ];
     const mods = Object.values(scene.modifiers ?? {}).filter(Boolean).map(esc).join(" · ");

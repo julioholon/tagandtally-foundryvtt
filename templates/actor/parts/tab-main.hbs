@@ -21,7 +21,7 @@
       <h3>{{localize "TAGANDTALLY.Character.Appearance"}} <a data-action="generateAppearance" title="{{localize 'TAGANDTALLY.Sparks.Generate'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></a></h3>
       <div class="tt-grid two compact">
         {{#each (tt-array "height" "build" "hair" "eyes" "skin" "clothing" "voice" "distinguishing") as |key|}}
-          <div class="form-group"><label>{{localize (concat "TAGANDTALLY.Appearance." key)}}</label><input type="text" name="system.appearance.{{key}}" value="{{lookup ../system.appearance key}}" /></div>
+          <div class="form-group"><label>{{localize (concat "TAGANDTALLY.Appearance." key)}}</label><input type="text" name="system.appearance.{{key}}" value="{{lookup ../system.appearance key}}" /><a class="tt-reroll" data-action="rerollField" data-field="system.appearance.{{key}}" title="{{localize 'TAGANDTALLY.Reroll.Field'}}"><i class="fa-solid fa-dice"></i></a></div>
         {{/each}}
       </div>
 

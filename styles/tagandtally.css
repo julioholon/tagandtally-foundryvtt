@@ -485,3 +485,24 @@
 .tagandtally .tt-aftermath-footer button { margin-left: auto; width: auto; }
 .tagandtally.tt-aftermath-card.pos h3 { color: #4a8; }
 .tagandtally.tt-aftermath-card.neg h3 { color: #c55; }
+
+/* 0.13 stakes, verdict, rerolls */
+.tagandtally .tt-stake-list { list-style: none; margin: 0.2rem 0; padding: 0; }
+.tagandtally .tt-stake-list li { display: flex; gap: 0.4rem; align-items: center; margin: 0.2rem 0; padding-left: 0.4rem; border-left: 3px solid var(--color-border-light-tertiary, #888); }
+.tagandtally .tt-stake-list li.pos { border-left-color: #4a8; }
+.tagandtally .tt-stake-list li.neg { border-left-color: #c55; }
+.tagandtally .tt-stake-list li input[type="text"] { flex: 1; min-width: 6rem; }
+.tagandtally .tt-verdict { display: flex; gap: 0.4rem; align-items: center; margin: 0.3rem 0; }
+.tagandtally .tt-verdict-btn { width: auto; padding: 0 0.7rem; }
+.tagandtally .tt-verdict-btn.active.good { background: #4a8; color: #fff; }
+.tagandtally .tt-verdict-btn.active.mixed { background: #b94; color: #fff; }
+.tagandtally .tt-verdict-btn.active.bad { background: #c55; color: #fff; }
+.tagandtally .tt-vote { display: inline-flex; gap: 0.25rem; margin-left: auto; font-size: 0.8em; }
+.tagandtally .tt-vote-btn { padding: 0 0.35rem; border: 1px solid var(--color-border-light-tertiary, #888); border-radius: 3px; cursor: pointer; }
+.tagandtally .tt-vote-btn.active.good { background: #4a8; color: #fff; }
+.tagandtally .tt-vote-btn.active.mixed { background: #b94; color: #fff; }
+.tagandtally .tt-vote-btn.active.bad { background: #c55; color: #fff; }
+.tagandtally .tt-aftermath-name { width: 100%; margin-top: 0.2rem; }
+.tagandtally .tt-extra { text-transform: uppercase; font-size: 0.7em; opacity: 0.7; }
+.tagandtally .tt-reroll { margin-left: 0.3rem; opacity: 0.55; }
+.tagandtally .tt-reroll:hover { opacity: 1; }

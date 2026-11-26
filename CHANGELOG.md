@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.13.1 (2026-11-26)
+
+- Quick rerolls: a dice icon beside each field rerolls just that value from the Sparks generator it
+  came from. On the NPC / creature Main tab (sentence fields and the hidden ones), on the Faction
+  sentence (descriptor, organization type, core function, goal, secret) and on each Appearance field
+  of a character. A creature's attack, special ability, strength and weakness are rolled for its
+  current type and damage type. Fields you cannot see yet have no button: reveal them first.
+
+## 0.13.0 (2026-11-26)
+
+- Game loop stakes: under the Stakes text, **+ Boon** and **+ Consequence** add lines. Each line is a
+  random kind or a chosen one (item, coins, skill, trait, flaw, reputation, place, NPC, lead, combat,
+  gear lost, hazard...), and for the kinds that can be named a **Random** checkbox lets you type the
+  exact thing instead (the Scorched Wand, an NPC's name, a skill, a place, an amount of coins).
+- Verdict: each character votes Good / Mixed / Bad on how the scene went, and the GM can set the
+  verdict, which wins over the votes (a tie is Mixed). Closing the scene writes the stakes and the
+  verdict into the Chronicle.
+- Scene Aftermath: Advance time opens the Aftermath window on the GM's screen with the scene's lines
+  rolled (or named), the verdict applied (Good crosses out the consequences, Bad the boons, Mixed
+  leaves the choice) and an extra outcome on each side the verdict favours (Good: a boon, Bad: a
+  consequence, Mixed: one of each). Any line can be put back or crossed out by hand, rerolled, changed
+  or given to another character, then applied.
+- The Aftermath window also lets you type a name for item, coins, skill, trait, flaw, reputation,
+  place, NPC, lead and combat outcomes, in quest results and spoils too.
+- Manual check list (not testable offline): add boons and consequences with both random and named
+  lines, vote as two players, set the verdict as GM, Advance time and use the Scene Aftermath, the
+  Chronicle page, and the dice buttons on an NPC, a creature, a faction and a character.
+
 ## 0.12.1 (2026-11-25)
 
 - Aftermath can grant new tags. Good: a new skill, a new trait, a good reputation. Bad: a new flaw
