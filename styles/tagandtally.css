@@ -507,48 +507,8 @@
 .tagandtally .tt-reroll { margin-left: 0.3rem; opacity: 0.55; }
 .tagandtally .tt-reroll:hover { opacity: 1; }
 
-/* 0.13.2 Game loop: fixed window, banner, tabs, scrolling panels, fixed footer */
-.tagandtally.game-loop .window-content { display: flex; flex-direction: column; overflow: hidden; padding: 0.5rem 0.7rem; }
-.tagandtally.game-loop .tt-loop { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 0.35rem; }
-.tagandtally .tt-loop-head { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
-.tagandtally .tt-loop-head .tt-controls { margin-left: auto; display: flex; gap: 0.7rem; font-size: 1.05em; }
-.tagandtally .tt-loop-head .tt-controls a { cursor: pointer; opacity: 0.75; }
-.tagandtally .tt-loop-head .tt-controls a:hover, .tagandtally .tt-loop-head .tt-controls a.on { opacity: 1; }
-.tagandtally .tt-loop-help { margin: 0; }
-.tagandtally .tt-loop-banner { border: 1px solid var(--tt-border); border-radius: 6px; padding: 0.35rem 0.6rem; }
-.tagandtally .tt-loop-banner .tt-loop-sentence { margin: 0 0 0.25rem; }
-.tagandtally .tt-loop-banner .tt-empty { margin: 0; }
-.tagandtally .tt-loop-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; font-size: 0.85em; }
-.tagandtally .tt-chip { border: 1px solid var(--tt-border); border-radius: 999px; padding: 0 0.6rem; white-space: nowrap; }
-.tagandtally .tt-chip a { cursor: pointer; opacity: 0.6; }
-.tagandtally .tt-chip a:hover { opacity: 1; }
-.tagandtally .tt-loop-tabs { display: flex; gap: 0.2rem; border-bottom: 1px solid var(--tt-border); }
-.tagandtally .tt-loop-tab { padding: 0.25rem 0.8rem; cursor: pointer; border: 1px solid transparent; border-bottom: none; border-radius: 6px 6px 0 0; opacity: 0.75; }
-.tagandtally .tt-loop-tab.active { opacity: 1; border-color: var(--tt-border); font-weight: 700; }
-.tagandtally .tt-loop-tab small { opacity: 0.7; }
-.tagandtally .tt-loop-panels { flex: 1; min-height: 0; overflow-y: auto; padding: 0.2rem 0.1rem; }
-.tagandtally .tt-panel { display: none; }
-.tagandtally .tt-panel.active { display: block; }
-.tagandtally .tt-panel .tt-grid { margin-bottom: 0.3rem; }
-.tagandtally .tt-panel input[type="text"] { width: 100%; }
-.tagandtally .tt-loop-advance { margin: 0; padding-top: 0.35rem; border-top: 1px solid var(--tt-border); }
-.tagandtally .tt-stakes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin: 0.4rem 0; }
-.tagandtally .tt-stake-col h4 { margin: 0 0 0.2rem; display: flex; gap: 0.4rem; align-items: center; border-bottom: 2px solid var(--tt-border); }
-.tagandtally .tt-stake-col.pos h4 { border-color: #4a8; }
-.tagandtally .tt-stake-col.neg h4 { border-color: #c55; }
-.tagandtally .tt-stake-col h4 a { margin-left: auto; cursor: pointer; }
-.tagandtally .tt-stake-col .tt-stake-list li { flex-wrap: wrap; border-left: none; padding-left: 0; }
-.tagandtally .tt-stake-col .tt-stake-list select { flex: 1; min-width: 6rem; }
-.tagandtally .tt-stake-col .tt-stake-list li input[type="text"] { flex-basis: 100%; }
-.tagandtally .tt-verdict-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.4rem; }
-.tagandtally .tt-segmented { display: inline-flex; }
-.tagandtally .tt-segmented .tt-verdict-btn { border-radius: 0; margin: 0; }
-.tagandtally .tt-segmented .tt-verdict-btn:first-child { border-radius: 4px 0 0 4px; }
-.tagandtally .tt-segmented .tt-verdict-btn:last-child { border-radius: 0 4px 4px 0; }
-.tagandtally .tt-loop-row { padding: 0.3rem 0.5rem; }
-.tagandtally .tt-loop-actions { gap: 0.25rem; margin-top: 0.3rem; }
-.tagandtally .tt-loop-actions button { width: 2.2rem; padding: 0.15rem 0; text-align: center; }
-.tagandtally .tt-loop-row .tt-vote { margin: 0; display: inline-flex; gap: 0.2rem; }
-.tagandtally .tt-loop-row .tt-vote-btn { padding: 0 0.4rem; }
-.tagandtally .tt-loop-log { max-height: none; border-top: none; padding: 0; }
-.tagandtally .tt-loop-history { margin: 0.2rem 0 0 1.2rem; }
+/* 0.13.3 Game loop: the window keeps its size and its content scrolls */
+.tagandtally.game-loop .window-content { display: flex; flex-direction: column; overflow: hidden; }
+.tagandtally.game-loop .tt-loop { flex: 1; min-height: 0; overflow-y: auto; padding-right: 0.3rem; }
+.tagandtally .tt-verdict-row > span { display: flex; gap: 0.3rem; align-items: center; flex-wrap: wrap; }
+.tagandtally .tt-verdict-row > span .tt-verdict-btn { flex: 0 0 auto; }

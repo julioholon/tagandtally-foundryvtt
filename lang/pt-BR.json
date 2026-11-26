@@ -1384,27 +1384,15 @@
       "LootSearch": "Buscar na área",
       "LootFallen": "Saquear os caídos",
       "StakeLines": "Benefícios e consequências",
-      "StakeLinesHint": "Benefícios e consequências desta cena. Deixe a linha aleatória ou digite a coisa em si; são definidos na Consequência da Cena quando ela termina.",
+      "StakeLinesHint": "Rolados ou nomeados agora, definidos na Consequência da Cena quando ela termina",
       "StakeBoon": "Benefício",
       "StakeConsequence": "Consequência",
       "StakeRandom": "Aleatório",
       "StakeRandomKind": "Tipo aleatório",
-      "StakeNamePlaceholder": "Aleatório, ou digite um nome",
+      "StakeNamePlaceholder": "Nomeie (item, habilidade, lugar, NPC...)",
       "VerdictHint": "O veredito do GM vale mais que os votos dos jogadores",
       "VoteHint": "Como a cena foi para este personagem?",
-      "Votes": "{good} bom · {mixed} misto · {bad} ruim",
-      "Tab": {
-        "scene": "Cena",
-        "party": "Grupo",
-        "between": "Entre cenas",
-        "log": "Registro"
-      },
-      "Boons": "Benefícios",
-      "Consequences": "Consequências",
-      "StakeAdd": "Adicionar uma linha",
-      "BetweenHint": "Antes ou depois de uma cena, ou sem cena em jogo: criação, tempo livre, tudo que não faz parte da cena em si.",
-      "HelpToggle": "Como funciona o ciclo de jogo",
-      "ReadyCount": "{ready}/{total} prontos"
+      "Votes": "Votos: {good} bom, {mixed} misto, {bad} ruim"
     },
     "And": "e",
     "Tarot": {

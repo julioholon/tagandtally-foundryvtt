@@ -152,9 +152,9 @@ would change the character or the situation.
   information, or on the bad side coins lost, combat, gear lost, hazard...) and a recipient, so loot can
   be split between characters. Outcomes include new tags: a skill, trait or good reputation, or on the bad side a flaw or bad reputation. Reroll, change the kind, apply or skip each line; **Add** more if the
   story calls for it. A task closed with "Success, and" offers one good outcome the same way.
-- **Scene stakes**: the Game loop has four tabs (Scene, Party, Between scenes, Log). On the Scene tab,
-  the **Boons** and **Consequences** columns list what the scene may give or cost. Leave a line random,
-  or type the actual item, skill, place or NPC. Players vote on how the scene went; the GM's verdict wins. **Advance time** then opens the
+- **Scene stakes**: in the Game loop, **+ Boon / + Consequence** under the Stakes text list what the
+  scene may give or cost. Leave **Random** on, or untick it and type the actual item, skill, place or
+  NPC. Players vote on how the scene went; the GM's verdict wins. **Advance time** then opens the
   **Scene Aftermath** with those lines, the verdict applied and an extra outcome on the favoured
   side, ready to be handed to the characters.
 - **Quick rerolls**: a dice icon beside each NPC / creature, faction and appearance field rerolls that

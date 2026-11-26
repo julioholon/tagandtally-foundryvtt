@@ -1384,27 +1384,15 @@
       "LootSearch": "Search the area",
       "LootFallen": "Loot the fallen",
       "StakeLines": "Boons and consequences",
-      "StakeLinesHint": "Boons and consequences of this scene. Leave a line random or type the actual thing; they are settled in the Scene Aftermath when the scene closes.",
+      "StakeLinesHint": "Rolled or named now, settled in the Scene Aftermath when the scene closes",
       "StakeBoon": "Boon",
       "StakeConsequence": "Consequence",
       "StakeRandom": "Random",
       "StakeRandomKind": "Random kind",
-      "StakeNamePlaceholder": "Random, or type a name",
+      "StakeNamePlaceholder": "Name it (item, skill, place, NPC...)",
       "VerdictHint": "The GM's verdict wins over the players' votes",
       "VoteHint": "How did the scene go for this character?",
-      "Votes": "{good} good · {mixed} mixed · {bad} bad",
-      "Tab": {
-        "scene": "Scene",
-        "party": "Party",
-        "between": "Between scenes",
-        "log": "Log"
-      },
-      "Boons": "Boons",
-      "Consequences": "Consequences",
-      "StakeAdd": "Add a line",
-      "BetweenHint": "Before or after a scene, or while none is in play: crafting, downtime, anything that is not part of the scene itself.",
-      "HelpToggle": "How the game loop works",
-      "ReadyCount": "{ready}/{total} ready"
+      "Votes": "Votes: {good} good, {mixed} mixed, {bad} bad"
     },
     "And": "and",
     "Tarot": {
