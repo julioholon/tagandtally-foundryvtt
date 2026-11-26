@@ -13,6 +13,7 @@ export default class FactionSheet extends HandlebarsApplicationMixin(ActorSheetV
     window: { resizable: true, icon: "fa-solid fa-flag" },
     form: { submitOnChange: true },
     actions: {
+      rerollField: FactionSheet.#onRerollField,
       insight: FactionSheet.#onInsight,
       countdown: FactionSheet.#onCountdown,
       nextPhase: FactionSheet.#onNextPhase,
@@ -159,6 +160,13 @@ export default class FactionSheet extends HandlebarsApplicationMixin(ActorSheetV
     const journal = findAugurFaction(this.actor);
     if (!journal) return;
     if (!(await openAugurDossier(journal))) journal.sheet.render({ force: true });
+  }
+
+  /** Reroll one sentence field from the Sparks faction tables. */
+  static async #onRerollField(event, target) {
+    if (!this.actor.isOwner) return;
+    const { rerollField } = await import("../reroll.mjs");
+    return rerollField(this.actor, target.dataset.field);
   }
 
   /** Fill the sentence from the Sparks faction generator. */

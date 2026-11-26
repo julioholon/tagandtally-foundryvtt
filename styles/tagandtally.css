@@ -564,3 +564,7 @@
 .tagandtally .tt-verdict-tag.good { background: rgba(68, 170, 136, 0.85); }
 .tagandtally .tt-verdict-tag.mixed { background: rgba(187, 153, 68, 0.85); }
 .tagandtally .tt-verdict-tag.bad { background: rgba(204, 85, 85, 0.85); }
+/* 0.13.6: reroll dice inside the field row, on the right */
+.tagandtally .tt-with-reroll { display: flex; align-items: center; gap: 0.3rem; flex: 1; min-width: 0; }
+.tagandtally .tt-with-reroll > input { flex: 1; min-width: 0; width: auto; }
+.tagandtally .tt-with-reroll > .tt-reroll { flex: 0 0 auto; margin: 0; cursor: pointer; }
