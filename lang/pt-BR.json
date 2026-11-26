@@ -1390,7 +1390,7 @@
       "StakeRandom": "Aleatório",
       "StakeRandomKind": "Tipo aleatório",
       "StakeNamePlaceholder": "ex.: a Varinha Chamuscada",
-      "VerdictHint": "O resultado que a Consequência da Cena aplica. Os votos dos jogadores decidem, a não ser que o GM escolha um.",
+      "VerdictHint": "Decidido pelos votos de Pronto dos jogadores; o GM pode mudá-lo na Consequência da Cena quando ela termina.",
       "VoteHint": "Como a cena foi para este personagem?",
       "Votes": "{good} bom · {mixed} misto · {bad} ruim",
       "OpenQuest": "Abrir a missão",
