@@ -46,6 +46,7 @@ function blankScene(number = 1) {
 }
 
 const VERDICTS = ["good", "mixed", "bad"];
+const VERDICT_ICONS = { good: "fa-thumbs-up", mixed: "fa-scale-balanced", bad: "fa-thumbs-down" };
 
 /** The scene's verdict by vote: the plurality, "mixed" on a tie, "" with no votes. */
 function majority(votes) {
@@ -55,6 +56,9 @@ function majority(votes) {
   const winners = VERDICTS.filter((v) => counts[v] === top);
   return winners.length > 1 ? "mixed" : winners[0];
 }
+
+/** The scene's actions (between = false) or the ones that belong between scenes (Workshop, Downtime). */
+const actionList = (between) => Object.entries(TAGANDTALLY.loop.actions).filter(([, a]) => Boolean(a.between) === between).map(([id, a]) => ({ id, label: game.i18n.localize(a.label), icon: a.icon, hint: game.i18n.localize(a.hint) }));
 
 const votesLabel = (votes) => (votes.length ? L("Votes", Object.fromEntries(VERDICTS.map((v) => [v, votes.filter((x) => x === v).length]))) : "");
 
@@ -70,7 +74,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
     id: "tt-game-loop",
     classes: ["tagandtally", "game-loop"],
-    position: { width: 720, height: "auto" },
+    position: { width: 720, height: 700 },
     window: { title: "TAGANDTALLY.Loop.Title", icon: "fa-solid fa-arrows-spin", resizable: true },
     actions: {
       addParty: GameLoopApp.#onAddParty,
@@ -89,6 +93,8 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       openChronicle: GameLoopApp.#onOpenChronicle,
       openScene: GameLoopApp.#onOpenScene,
       clearLog: GameLoopApp.#onClearLog,
+      tab: GameLoopApp.#onTab,
+      toggleHelp: GameLoopApp.#onToggleHelp,
       addStake: GameLoopApp.#onAddStake,
       removeStake: GameLoopApp.#onRemoveStake,
       vote: GameLoopApp.#onVote,
@@ -96,7 +102,11 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   };
 
-  static PARTS = { body: { template: "systems/tagandtally/templates/apps/game-loop.hbs", scrollable: [".tt-loop-log"] } };
+  static PARTS = { body: { template: "systems/tagandtally/templates/apps/game-loop.hbs", scrollable: [".tt-loop-panels"] } };
+
+  /** The tab being shown (client side only); with no scene in play it starts on "Between scenes". */
+  tab = null;
+  showHelp = false;
 
   static registerSetting() {
     GameLoopApp.state.register();
@@ -135,9 +145,9 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       const left = Math.max(0, GameLoopApp.maxActions - p.spent);
       participants.push({
         uuid: p.uuid, name: actor.name, img: actor.img, canAct: actor.isOwner, ready: p.ready, left,
-        votes: VERDICTS.map((id) => ({ id, label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: p.vote === id })),
+        votes: VERDICTS.map((id) => ({ id, icon: VERDICT_ICONS[id], label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: p.vote === id })),
         pips: Array.from({ length: GameLoopApp.maxActions }, (_, i) => i < left),
-        actions: Object.entries(TAGANDTALLY.loop.actions).map(([id, a]) => ({ id, label: game.i18n.localize(a.label), icon: a.icon, hint: game.i18n.localize(a.hint) }))
+        actions: actionList(false), betweenActions: actionList(true)
       });
       for (const q of actor.items.filter((i) => i.type === "quest" && i.system.status === "active")) quests.push({ uuid: q.uuid, name: `${q.name} (${actor.name})`, selected: q.uuid === scene.questUuid });
     }
@@ -146,14 +156,23 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const questTallies = quest ? Object.entries(quest.system.tallies).filter(([, t]) => t.enabled).map(([key, t]) => ({ key, label: game.i18n.localize(TAGANDTALLY.questTallies[key].label), boxes: t.boxes, value: t.value, max: t.max, small: t.max > 6 })) : [];
     const day = DowntimeApp.state.get().day;
     const stakeLines = (scene.stakeLines ?? []).map((s) => ({
-      id: s.id, sign: s.pol === "+" ? "pos" : "neg", icon: s.kind ? AFTERMATH.icons[s.kind] : "fa-dice",
+      id: s.id, pol: s.pol, sign: s.pol === "+" ? "pos" : "neg", icon: s.kind ? AFTERMATH.icons[s.kind] : "fa-dice",
       kinds: [{ value: "", label: L("StakeRandomKind"), selected: !s.kind }, ...Object.keys(AFTERMATH.pools[s.pol]).map((k) => ({ value: k, label: game.i18n.localize(`TAGANDTALLY.Aftermath.Kind.${k}`), selected: k === s.kind }))],
       nameable: NAMEABLE.has(s.kind), random: s.random !== false, name: s.name ?? ""
     }));
     const votes = Object.values(state.participants).map((p) => p.vote).filter(Boolean);
+    const tab = this.tab ?? (scene.level ? "scene" : "between");
     return {
-      stakeLines, votesText: votesLabel(votes),
-      verdicts: VERDICTS.map((id) => ({ id, label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: scene.verdict === id })),
+      stakeColumns: [{ pol: "+", sign: "pos", label: L("Boons"), lines: stakeLines.filter((s) => s.pol === "+") }, { pol: "-", sign: "neg", label: L("Consequences"), lines: stakeLines.filter((s) => s.pol === "-") }],
+      votesText: votesLabel(votes),
+      tab, showHelp: this.showHelp, readyCount: participants.filter((p) => p.ready).length,
+      tabs: [
+        { id: "scene", icon: "fa-clapperboard", label: L("Tab.scene"), active: tab === "scene" },
+        { id: "party", icon: "fa-people-group", label: L("Tab.party"), count: participants.length, active: tab === "party" },
+        { id: "between", icon: "fa-hourglass-half", label: L("Tab.between"), active: tab === "between" },
+        { id: "log", icon: "fa-list", label: L("Tab.log"), count: scene.log.length || "", active: tab === "log" }
+      ],
+      verdicts: VERDICTS.map((id) => ({ id, icon: VERDICT_ICONS[id], label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: scene.verdict === id })),
       state, scene, scopes, participants, quests, isGM: game.user.isGM, day,
       quest: quest ? { uuid: quest.uuid, name: quest.name, status: quest.system.status, ready: quest.system.readyToResolve } : null, questTallies,
       calendar: GameLoopApp.calendarDate(),
@@ -175,13 +194,13 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       const state = GameLoopApp.state.get();
       if (name === "scope") state.scene.scope = ev.target.value;
       else if (name === "questUuid") state.scene.questUuid = ev.target.value;
-      else if (name === "intent" || name === "stakes") state.scene[name] = ev.target.value.trim();
-      else if (["stakeKind", "stakeRandom", "stakeName"].includes(name)) {
+      else if (name === "intent") { if (!game.user.isGM) return; state.scene.intent = ev.target.value.trim(); }
+      else if (["stakeKind", "stakeName"].includes(name)) {
+        if (!game.user.isGM) return;
         const line = (state.scene.stakeLines ?? []).find((s) => s.id === ev.target.closest("[data-stake]")?.dataset.stake);
         if (!line) return;
-        if (name === "stakeKind") line.kind = ev.target.value;
-        else if (name === "stakeRandom") line.random = ev.target.checked;
-        else line.name = ev.target.value.trim();
+        if (name === "stakeKind") { line.kind = ev.target.value; line.name = ""; line.random = true; }
+        else { line.name = ev.target.value.trim(); line.random = !line.name; }
       }
       else return;
       await GameLoopApp.state.set(state);
@@ -218,8 +237,19 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
 
   /* ----------------------- Boons, consequences, verdict ------------------- */
 
+  static #onTab(event, target) {
+    this.tab = target.dataset.tab;
+    return this.render();
+  }
+
+  static #onToggleHelp() {
+    this.showHelp = !this.showHelp;
+    return this.render();
+  }
+
   /** Add a boon (+) or a consequence (-) to the scene's stakes; random until a kind is picked. */
   static async #onAddStake(event, target) {
+    if (!game.user.isGM) return;
     const state = GameLoopApp.state.get();
     state.scene.stakeLines ??= [];
     state.scene.stakeLines.push({ id: foundry.utils.randomID(), pol: target.dataset.pol === "-" ? "-" : "+", kind: "", random: true, name: "" });
@@ -227,6 +257,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static async #onRemoveStake(event, target) {
+    if (!game.user.isGM) return;
     const state = GameLoopApp.state.get();
     const id = target.closest("[data-stake]")?.dataset.stake;
     state.scene.stakeLines = (state.scene.stakeLines ?? []).filter((s) => s.id !== id);
@@ -623,7 +654,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
       [L("Day"), `${scene.startedDay}${scene.endedDay && scene.endedDay !== scene.startedDay ? ` → ${scene.endedDay}` : ""}`],
       [game.i18n.localize("TAGANDTALLY.Level.Level"), scene.level ? `${scene.level} · ${game.i18n.localize(TAGANDTALLY.levels[scene.level])}` : "—"],
       [L("Scope"), scopeDef ? game.i18n.localize(scopeDef.label) : scene.scope],
-      [L("Intent"), scene.intent || "—"], [L("Stakes"), scene.stakes || "—"],
+      [L("Intent"), scene.intent || "—"], ...(scene.stakes ? [[L("Stakes"), esc(scene.stakes)]] : []),
       ...(scene.stakeLines?.length ? [[L("StakeLines"), scene.stakeLines.map((s) => esc(`${s.pol === "+" ? "+" : "−"} ${s.kind ? game.i18n.localize(`TAGANDTALLY.Aftermath.Kind.${s.kind}`) : L("StakeRandomKind")}${s.random === false && s.name ? `: ${s.name}` : ""}`)).join("; ")]] : []),
       ...(scene.verdict ? [[game.i18n.localize("TAGANDTALLY.Aftermath.Verdict.Label"), `${esc(game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${scene.verdict}`))}${scene.votesText ? ` (${esc(scene.votesText)})` : ""}`]] : []),
       [game.i18n.localize("TAGANDTALLY.Quest.Quest"), quest ? `@UUID[${quest.uuid}]{${esc(quest.name)}}` : "—"]

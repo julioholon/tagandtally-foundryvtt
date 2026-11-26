@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.13.2 (2026-11-26)
+
+- Game loop redesigned to be lighter. The window has a fixed size and only its content scrolls, with a
+  fixed footer (ready count and Advance time). A one-line header with icon buttons (add party, add
+  selected tokens, Chronicle, help) and a banner with the scene sentence and level / time / weather /
+  season chips replace the long instruction paragraph, which now opens from the `?` icon.
+- Four tabs: **Scene** (scope, quest, intent, boons and consequences, verdict), **Party** (one compact row
+  per character with action pips, vote icons and Ready, and an icon-only action bar with tooltips),
+  **Between scenes** (Workshop and Downtime per character; it opens by default when no scene is in
+  play) and **Log** (scene log and previous scenes).
+- The Stakes text box is gone: boons and consequences are two columns. A line is a kind and, for kinds
+  that can be named, a field that is random while empty and specific once you type a name (no checkbox).
+- Intent, boons, consequences and the verdict are edited by GMs only.
+- Votes are thumbs up / balance / thumbs down icons; the verdict is a Good | Mixed | Bad control.
+
 ## 0.13.1 (2026-11-26)
 
 - Quick rerolls: a dice icon beside each field rerolls just that value from the Sparks generator it
