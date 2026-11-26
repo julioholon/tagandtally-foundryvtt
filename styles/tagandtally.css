@@ -544,3 +544,18 @@
 .tagandtally .tt-segmented .tt-verdict-btn:last-child { border-radius: 0 4px 4px 0; }
 .tagandtally .tt-loop-row .tt-loop-actions { gap: 0.25rem; }
 .tagandtally .tt-loop-row .tt-loop-actions button { font-size: 0.8em; padding: 0.1rem 0.4rem; flex: 0 0 auto; width: auto; }
+/* 0.13.4: chips, ready-as-vote, verdict in the footer */
+.tagandtally .tt-loop .tt-toolbar .tt-controls .tt-icon-btn { width: 2.2rem; }
+.tagandtally .tt-loop-facts { gap: 0.35rem; align-items: center; }
+.tagandtally .tt-loop-facts .tt-chip { border: 1px solid var(--tt-border); border-radius: 999px; padding: 0 0.55rem; white-space: nowrap; }
+.tagandtally .tt-ready-vote { display: inline-flex; align-items: center; gap: 0.35rem; }
+.tagandtally .tt-segmented .tt-verdict-btn { line-height: 1.6; }
+.tagandtally .tt-verdict-btn.active.good, .tagandtally .tt-verdict-btn.byvote.good { background: rgba(68, 170, 136, 0.85); color: #fff; }
+.tagandtally .tt-verdict-btn.active.mixed, .tagandtally .tt-verdict-btn.byvote.mixed { background: rgba(187, 153, 68, 0.85); color: #fff; }
+.tagandtally .tt-verdict-btn.active.bad, .tagandtally .tt-verdict-btn.byvote.bad { background: rgba(204, 85, 85, 0.85); color: #fff; }
+.tagandtally .tt-verdict-btn.byvote:not(.active) { opacity: 0.6; }
+.tagandtally .tt-loop-advance { gap: 0.8rem; }
+.tagandtally .tt-loop-advance .tt-verdict-row { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0; padding: 0; border: none; }
+.tagandtally .tt-segmented { gap: 0; }
+.tagandtally .tt-segmented .tt-verdict-btn { margin: 0; flex: 0 0 auto; width: 2.6rem; }
+.tagandtally .tt-verdict-row > .tt-segmented { gap: 0; flex-wrap: nowrap; }

@@ -1292,7 +1292,7 @@
       "Title": "Ciclo de jogo",
       "Chronicle": "Crônica da campanha",
       "ChronicleHint": "O diário em que cada cena encerrada é escrita",
-      "Hint": "Uma cena de cada vez. Defina o escopo de tempo, declare intenção e riscos, escolha a missão que ela serve. Cada personagem tem 10 ações na cena: uma rolagem resolvida gasta uma, onde quer que seja rolada (as fases de combate antes da Resolução são livres); abrir uma ferramenta não custa nada. Quando todos estiverem Prontos, Avançar o tempo encerra a cena na Crônica, move o mundo pelo escopo e rola a próxima cena.",
+      "Hint": "Uma cena por vez: defina escopo, intenção, missão e apostas. Cada personagem tem 10 ações; uma rolagem resolvida gasta uma. Quando todos estiverem Prontos, Avançar o tempo fecha a cena na Crônica e rola a próxima.",
       "SceneNumber": "Cena {number}",
       "NoScene": "Nenhuma cena ainda.",
       "RollScene": "Rolar a cena",
@@ -1390,12 +1390,16 @@
       "StakeRandom": "Aleatório",
       "StakeRandomKind": "Tipo aleatório",
       "StakeNamePlaceholder": "ex.: a Varinha Chamuscada",
-      "VerdictHint": "O veredito do GM vale mais que os votos dos jogadores",
+      "VerdictHint": "O resultado que a Consequência da Cena aplica. Os votos dos jogadores decidem, a não ser que o GM escolha um.",
       "VoteHint": "Como a cena foi para este personagem?",
-      "Votes": "Votos: {good} bom, {mixed} misto, {bad} ruim",
+      "Votes": "{good} bom · {mixed} misto · {bad} ruim",
       "OpenQuest": "Abrir a missão",
       "NoStakes": "Nenhum benefício ou consequência ainda. Adicione o que esta cena pode ganhar ou custar.",
-      "StakeRandomHint": "Desmarque para nomear a coisa exata (item, habilidade, lugar, NPC, quantia...)"
+      "StakeRandomHint": "Desmarque para nomear a coisa exata (item, habilidade, lugar, NPC, quantia...)",
+      "ReadyVoteHint": "Terminou esta cena? Marque Pronto com o resultado que você levaria: Bom fica com os benefícios, Ruim com as consequências, Misto com ambos. Clique de novo para desfazer.",
+      "ByVote": "por voto",
+      "NoVerdict": "sem votos ainda",
+      "ReadyCount": "{ready}/{total} prontos"
     },
     "And": "e",
     "Tarot": {

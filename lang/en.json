@@ -1292,7 +1292,7 @@
       "Title": "Game loop",
       "Chronicle": "Campaign Chronicle",
       "ChronicleHint": "The journal every closed scene is written to",
-      "Hint": "One scene at a time. Set its time scope, declare intent and stakes, pick the quest it serves. Every character has 10 actions in the scene: a resolved roll spends one, wherever it was rolled (combat phases before the Resolution are free); opening a tool costs nothing. When everyone is Ready, Advance time closes the scene into the Chronicle, moves the world by the scope and rolls the next scene.",
+      "Hint": "One scene at a time: set its scope, intent, quest and stakes. Each character has 10 actions; a resolved roll spends one. When everyone is Ready, Advance time closes the scene into the Chronicle and rolls the next.",
       "SceneNumber": "Scene {number}",
       "NoScene": "No scene yet.",
       "RollScene": "Roll the scene",
@@ -1390,12 +1390,16 @@
       "StakeRandom": "Random",
       "StakeRandomKind": "Random kind",
       "StakeNamePlaceholder": "e.g. the Scorched Wand",
-      "VerdictHint": "The GM's verdict wins over the players' votes",
+      "VerdictHint": "The outcome the Scene Aftermath applies. The players' votes decide it unless the GM picks one.",
       "VoteHint": "How did the scene go for this character?",
-      "Votes": "Votes: {good} good, {mixed} mixed, {bad} bad",
+      "Votes": "{good} good · {mixed} mixed · {bad} bad",
       "OpenQuest": "Open the quest",
       "NoStakes": "No boons or consequences yet. Add what this scene can win or cost.",
-      "StakeRandomHint": "Untick to name the exact thing (item, skill, place, NPC, amount...)"
+      "StakeRandomHint": "Untick to name the exact thing (item, skill, place, NPC, amount...)",
+      "ReadyVoteHint": "Done with this scene? Mark Ready with the outcome you'd take: Good keeps the boons, Bad the consequences, Mixed both. Click again to take it back.",
+      "ByVote": "by vote",
+      "NoVerdict": "no votes yet",
+      "ReadyCount": "{ready}/{total} ready"
     },
     "And": "and",
     "Tarot": {

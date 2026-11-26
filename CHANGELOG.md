@@ -2,11 +2,19 @@
 
 ## 0.13.4 (2026-11-26)
 
-- Game loop scene block tidied (tested live): time scope is a narrow select next to the quest picker,
-  which gets an "open quest" button and a "+" (the Plan / Location / Countdown rows below it are gone);
-  intent takes the full width; the Stakes text box is replaced by a Stakes section with real
-  **+ Boon** and **+ Consequence** buttons, aligned rows (sign, kind, Random, name, delete) and the
-  verdict at its foot. The window is 760 px wide so a character's action buttons fit on one line.
+Game loop tidied (checked live on Foundry 14):
+- **Ready is the vote.** Each character's Ready is three buttons, 👍 Good / ⚖ Mixed / 👎 Bad: done with the
+  scene, you mark Ready with the outcome you would take (Good keeps the boons, Bad the consequences,
+  Mixed both). Clicking it again takes it back.
+- **Verdict next to Advance time**, in the footer with the ready count and the vote tally; it shows the
+  result by vote, and the GM can pick one instead.
+- Scene block: time scope is a narrow select beside the quest picker, which gets an "open quest" button
+  and a "+" (the tally rows under it are gone); intent takes the full width; the Stakes text box is
+  replaced by a Stakes section with **+ Boon** / **+ Consequence** buttons and aligned rows (sign, kind,
+  Random, name, delete).
+- More compact: the toolbar is one line with icon buttons (tooltips), level / time / weather / season are
+  chips on one line, the instructions are shorter, the window is 760 px wide so a character's action
+  buttons fit on one line.
 
 ## 0.13.3 (2026-11-26)
 
