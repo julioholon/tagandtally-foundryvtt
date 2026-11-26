@@ -84,11 +84,7 @@
 
   <div class="tt-loop-advance">
     <span class="tt-loop-readycount" title="{{#if allReady}}{{localize 'TAGANDTALLY.Loop.AllReady'}}{{else}}{{localize 'TAGANDTALLY.Loop.WaitingReady'}}{{/if}}"><strong>{{localize "TAGANDTALLY.Loop.ReadyCount" ready=readyCount total=participants.length}}</strong>{{#if votesText}} <small class="dim">{{votesText}}</small>{{/if}}</span>
-    <span class="tt-verdict-row" title="{{localize 'TAGANDTALLY.Loop.VerdictHint'}}">
-      <span>{{localize "TAGANDTALLY.Aftermath.Verdict.Label"}}</span>
-      <span class="tt-segmented">{{#each verdicts as |v|}}<button type="button" class="tt-verdict-btn {{v.id}} {{#if v.active}}active{{/if}} {{#if v.byVote}}byvote{{/if}}" data-action="setVerdict" data-verdict="{{v.id}}" {{#unless ../isGM}}disabled{{/unless}} title="{{v.label}}{{#if v.byVote}} ({{localize 'TAGANDTALLY.Loop.ByVote'}}){{/if}}"><i class="fa-solid {{v.icon}}"></i></button>{{/each}}</span>
-      <small class="dim">{{verdictLabel}}</small>
-    </span>
+    <span class="tt-verdict-row" title="{{localize 'TAGANDTALLY.Loop.VerdictHint'}}"><span class="dim">{{localize "TAGANDTALLY.Aftermath.Verdict.Label"}}</span> {{#if verdictId}}<span class="tt-verdict-tag {{verdictId}}"><i class="fa-solid {{verdictIcon}}"></i> {{verdictLabel}}</span>{{else}}<small class="dim">{{verdictLabel}}</small>{{/if}}</span>
     <span class="tt-controls">
       {{#if isGM}}<a data-action="resetActions" title="{{localize 'TAGANDTALLY.Loop.ResetActionsHint'}}"><i class="fa-solid fa-rotate-left"></i></a>{{/if}}
       <button type="button" class="tt-roll-btn" data-action="advance" {{#unless canAdvance}}disabled{{/unless}}><i class="fa-solid fa-forward"></i> {{localize "TAGANDTALLY.Loop.Advance"}} <small>({{localize scopeDef.label}})</small></button>

@@ -1390,7 +1390,7 @@
       "StakeRandom": "Random",
       "StakeRandomKind": "Random kind",
       "StakeNamePlaceholder": "e.g. the Scorched Wand",
-      "VerdictHint": "The outcome the Scene Aftermath applies. The players' votes decide it unless the GM picks one.",
+      "VerdictHint": "Decided by the players' Ready votes; the GM can change it in the Scene Aftermath when the scene closes.",
       "VoteHint": "How did the scene go for this character?",
       "Votes": "{good} good · {mixed} mixed · {bad} bad",
       "OpenQuest": "Open the quest",

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.13.5 (2026-11-26)
+
+- Game loop: the verdict is no longer chosen twice. The footer only shows it (the result of the players'
+  Ready votes, e.g. "Good (by vote)"); the GM verdict buttons are gone from the loop. The GM can still
+  change the verdict in the Scene Aftermath window when the scene closes. A GM verdict stored on a scene
+  by 0.13.4 is ignored.
+
 ## 0.13.4 (2026-11-26)
 
 Game loop tidied (checked live on Foundry 14):

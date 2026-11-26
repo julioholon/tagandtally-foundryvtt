@@ -559,3 +559,8 @@
 .tagandtally .tt-segmented { gap: 0; }
 .tagandtally .tt-segmented .tt-verdict-btn { margin: 0; flex: 0 0 auto; width: 2.6rem; }
 .tagandtally .tt-verdict-row > .tt-segmented { gap: 0; flex-wrap: nowrap; }
+/* 0.13.5: the footer shows the verdict, it does not set it */
+.tagandtally .tt-verdict-tag { border-radius: 999px; padding: 0 0.6rem; color: #fff; white-space: nowrap; }
+.tagandtally .tt-verdict-tag.good { background: rgba(68, 170, 136, 0.85); }
+.tagandtally .tt-verdict-tag.mixed { background: rgba(187, 153, 68, 0.85); }
+.tagandtally .tt-verdict-tag.bad { background: rgba(204, 85, 85, 0.85); }

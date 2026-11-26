@@ -157,7 +157,8 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     return {
       stakeLines, votesText: votesLabel(votes),
       verdicts: VERDICTS.map((id) => ({ id, icon: VERDICT_ICONS[id], label: game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${id}`), active: scene.verdict === id, byVote: !scene.verdict && majority(votes) === id })),
-      verdictLabel: scene.verdict ? game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${scene.verdict}`) : majority(votes) ? `${game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${majority(votes)}`)} (${L("ByVote")})` : L("NoVerdict"),
+      verdictId: majority(votes), verdictIcon: VERDICT_ICONS[majority(votes)] ?? "",
+      verdictLabel: majority(votes) ? `${game.i18n.localize(`TAGANDTALLY.Aftermath.Verdict.${majority(votes)}`)} (${L("ByVote")})` : L("NoVerdict"),
       readyCount: participants.filter((p) => p.ready).length,
       state, scene, scopes, participants, quests, isGM: game.user.isGM, day,
       quest: quest ? { uuid: quest.uuid, name: quest.name, status: quest.system.status, ready: quest.system.readyToResolve } : null, questTallies,
@@ -560,7 +561,8 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
     const closed = foundry.utils.deepClone(state.scene);
     closed.endedDay = DowntimeApp.state.get().day;
     const votes = participants.map((p) => p.vote).filter(Boolean);
-    closed.verdict = closed.verdict || majority(votes);
+    // The players' Ready votes set the verdict; the GM can still change it in the Scene Aftermath.
+    closed.verdict = majority(votes);
     closed.votesText = votesLabel(votes);
     closed.partyUuids = participants.map((p) => p.uuid);
     state.history.push({ number: closed.number, sentence: closed.sentence, level: closed.level, scope: closed.scope, intent: closed.intent, day: closed.startedDay }).length > 30 && state.history.shift();
