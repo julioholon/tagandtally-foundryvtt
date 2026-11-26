@@ -70,7 +70,7 @@ export class GameLoopApp extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
     id: "tt-game-loop",
     classes: ["tagandtally", "game-loop"],
-    position: { width: 720, height: 780 },
+    position: { width: 760, height: 780 },
     window: { title: "TAGANDTALLY.Loop.Title", icon: "fa-solid fa-arrows-spin", resizable: true },
     actions: {
       addParty: GameLoopApp.#onAddParty,

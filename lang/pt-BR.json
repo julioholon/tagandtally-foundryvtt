@@ -1384,15 +1384,18 @@
       "LootSearch": "Buscar na área",
       "LootFallen": "Saquear os caídos",
       "StakeLines": "Benefícios e consequências",
-      "StakeLinesHint": "Rolados ou nomeados agora, definidos na Consequência da Cena quando ela termina",
+      "StakeLinesHint": "O que a cena pode ganhar ou custar; definido na Consequência da Cena quando ela termina.",
       "StakeBoon": "Benefício",
       "StakeConsequence": "Consequência",
       "StakeRandom": "Aleatório",
       "StakeRandomKind": "Tipo aleatório",
-      "StakeNamePlaceholder": "Nomeie (item, habilidade, lugar, NPC...)",
+      "StakeNamePlaceholder": "ex.: a Varinha Chamuscada",
       "VerdictHint": "O veredito do GM vale mais que os votos dos jogadores",
       "VoteHint": "Como a cena foi para este personagem?",
-      "Votes": "Votos: {good} bom, {mixed} misto, {bad} ruim"
+      "Votes": "Votos: {good} bom, {mixed} misto, {bad} ruim",
+      "OpenQuest": "Abrir a missão",
+      "NoStakes": "Nenhum benefício ou consequência ainda. Adicione o que esta cena pode ganhar ou custar.",
+      "StakeRandomHint": "Desmarque para nomear a coisa exata (item, habilidade, lugar, NPC, quantia...)"
     },
     "And": "e",
     "Tarot": {

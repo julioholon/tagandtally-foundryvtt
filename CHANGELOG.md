@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.4 (2026-11-26)
+
+- Game loop scene block tidied (tested live): time scope is a narrow select next to the quest picker,
+  which gets an "open quest" button and a "+" (the Plan / Location / Countdown rows below it are gone);
+  intent takes the full width; the Stakes text box is replaced by a Stakes section with real
+  **+ Boon** and **+ Consequence** buttons, aligned rows (sign, kind, Random, name, delete) and the
+  verdict at its foot. The window is 760 px wide so a character's action buttons fit on one line.
+
 ## 0.13.3 (2026-11-26)
 
 - Game loop: the 0.13.2 redesign is reverted (its tabs did not respond: Foundry reserves the `tab`

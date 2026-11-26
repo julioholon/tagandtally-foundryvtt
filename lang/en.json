@@ -1384,15 +1384,18 @@
       "LootSearch": "Search the area",
       "LootFallen": "Loot the fallen",
       "StakeLines": "Boons and consequences",
-      "StakeLinesHint": "Rolled or named now, settled in the Scene Aftermath when the scene closes",
+      "StakeLinesHint": "What the scene can win or cost; settled in the Scene Aftermath when it closes.",
       "StakeBoon": "Boon",
       "StakeConsequence": "Consequence",
       "StakeRandom": "Random",
       "StakeRandomKind": "Random kind",
-      "StakeNamePlaceholder": "Name it (item, skill, place, NPC...)",
+      "StakeNamePlaceholder": "e.g. the Scorched Wand",
       "VerdictHint": "The GM's verdict wins over the players' votes",
       "VoteHint": "How did the scene go for this character?",
-      "Votes": "Votes: {good} good, {mixed} mixed, {bad} bad"
+      "Votes": "Votes: {good} good, {mixed} mixed, {bad} bad",
+      "OpenQuest": "Open the quest",
+      "NoStakes": "No boons or consequences yet. Add what this scene can win or cost.",
+      "StakeRandomHint": "Untick to name the exact thing (item, skill, place, NPC, amount...)"
     },
     "And": "and",
     "Tarot": {
